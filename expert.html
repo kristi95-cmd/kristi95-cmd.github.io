@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Еда без тревоги</title>
+<meta name="description" content="Лендинг онлайн-курса нутрициолога: программа, стоимость, ответы на вопросы.">
+<script>document.documentElement.className+=" has-js";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kurale&family=Commissioner:wght@300;400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<style>
+  /* Другой визуальный мир: глубокий индиго и оливковый лайм, слэб-серифный заголовок,
+     холодная бумага. Общий каркас тот же, перекрашены только токены. */
+  :root {
+    color-scheme: light;
+    --paper:        #F6F7F3;
+    --surface:      #FFFFFF;
+    --surface-sunk: #ECEEE5;
+    --ink:          #1B2030;
+    --muted:        #5E6479;
+    --line:         #DCDFD2;
+    --accent:       #37307E;
+    --accent-ink:   #FFFFFF;
+    --accent-soft:  #E4E3F2;
+    --lime:         #7E9B22;
+    --sand:         #B07D2E;
+    --display: "Kurale", Georgia, "Times New Roman", serif;
+    --body:    "Commissioner", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --mono:    "Martian Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --paper:        #12141C;
+      --surface:      #1A1D27;
+      --surface-sunk: #20242F;
+      --ink:          #E7E9F0;
+      --muted:        #9AA0B4;
+      --line:         #2B3040;
+      --accent:       #9D96E8;
+      --accent-ink:   #15162A;
+      --accent-soft:  #23253D;
+      --lime:         #A9C94A;
+      --sand:         #D9A94F;
+    }
+  }
+  /* у Kurale одно начертание, поэтому иерархия идет размером, а не жирностью */
+  h1, h2, h3 { font-weight: 400; letter-spacing: 0; }
+  h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: 1.02; }
+  .lede { font-weight: 300; }
+  .eyebrow { color: var(--lime); }
+  .week { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--line); }
+  .week__row { display: grid; grid-template-columns: 1fr; gap: .3rem 1.5rem; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
+  @media (min-width: 720px) { .week__row { grid-template-columns: 9rem 1fr; } }
+  .week__n { font-family: var(--mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); }
+  .week__row h3 { font-size: 1.1rem; margin-bottom: .2rem; }
+  .week__row p { font-size: .97rem; color: var(--muted); }
+  .tiers { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .tiers { grid-template-columns: repeat(3, 1fr); } }
+  .tier { display: flex; flex-direction: column; gap: .75rem; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1.5rem; }
+  .tier--pick { border-color: var(--accent); border-width: 2px; }
+  .tier__price { font-family: var(--display); font-size: 2rem; font-weight: 400; line-height: 1; }
+  .tier ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: .35rem; font-size: .95rem; color: var(--muted); }
+  .tier .btn { margin-top: auto; justify-content: center; }
+  .tier__mark { font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+
+  /* ---------- тарелка в шапке ---------- */
+  .hero__side { display: flex; flex-direction: column; gap: 1.6rem; }
+  .plate { margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+  .plate svg { width: 100%; max-width: 22rem; height: auto; display: block; }
+  .plate__rim { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .plate__core { fill: var(--paper); stroke: var(--line); stroke-width: 1; }
+  .plate__ring2 { fill: none; stroke: var(--line); stroke-width: 1; }
+  .plate__shadow { fill: var(--ink); opacity: .07; }
+  .cutlery { fill: none; stroke: var(--muted); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .75; }
+  .bite { stroke: var(--surface); stroke-width: 3; transform-origin: 130px 150px; }
+  .bite--veg { fill: var(--lime); }
+  .bite--pro { fill: var(--accent); }
+  .bite--car { fill: var(--sand); }
+  .steam path { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; opacity: 0; }
+  .has-js .steam path { animation: steam 5s ease-in-out infinite; }
+  .has-js .steam path:nth-child(2) { animation-delay: 1.1s; }
+  .has-js .steam path:nth-child(3) { animation-delay: 2.2s; }
+  @keyframes steam {
+    0%   { opacity: 0; transform: translateY(10px); }
+    30%  { opacity: .45; }
+    65%  { opacity: .3; }
+    100% { opacity: 0; transform: translateY(-14px); }
+  }
+  .has-js .bite { animation: bite-in .75s cubic-bezier(.34, 1.4, .5, 1) both; }
+  .has-js .bite--veg { animation-delay: .35s; }
+  .has-js .bite--pro { animation-delay: .5s; }
+  .has-js .bite--car { animation-delay: .62s; }
+  @keyframes bite-in { from { transform: scale(.25); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .has-js .cutlery path { stroke-dasharray: 120; stroke-dashoffset: 120; animation: cut-draw 1s ease .1s both; }
+  @keyframes cut-draw { to { stroke-dashoffset: 0; } }
+  .plate__leg { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .45rem; }
+  .plate__leg li { display: flex; align-items: baseline; gap: .55rem; font-size: .92rem; color: var(--muted); }
+  .plate__leg i { width: .62rem; height: .62rem; border-radius: 2px; flex: none; transform: translateY(.05rem); }
+  .plate__leg b { color: var(--ink); font-weight: 500; }
+  .plate figcaption { font-size: .86rem; color: var(--muted); max-width: 32ch; }
+  @media (max-width: 600px) { .plate svg { max-width: 15rem; } }
+
+  .has-js .plate__leg li { opacity: 0; animation: leg-in .6s ease .9s both; }
+  .has-js .plate__leg li:nth-child(2) { animation-delay: 1s; }
+  .has-js .plate__leg li:nth-child(3) { animation-delay: 1.1s; }
+  @keyframes leg-in { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .has-js .steam path { animation: none; opacity: .3; }
+    .has-js .bite { animation: none; opacity: 1; transform: none; }
+    .has-js .cutlery path { animation: none; stroke-dashoffset: 0; }
+    .has-js .plate__leg li { opacity: 1; animation: none; }
+  }
+
+  /* ---------- шкала голода ---------- */
+  .scale { display: flex; flex-direction: column; gap: 1.1rem; max-width: 44rem; width: 100%; }
+  .scale__track { position: relative; padding-top: 2rem; }
+  .scale__zonelbl {
+    position: absolute; left: 22.2%; right: 33.3%; top: 0; text-align: center;
+    font-family: var(--mono); font-size: .56rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+  }
+  .scale__zone {
+    position: absolute; left: 22.2%; right: 33.3%; top: 2.75rem; height: .5rem;
+    transform: translateY(-50%); background: var(--accent-soft);
+    border-left: 1px solid var(--accent); border-right: 1px solid var(--accent);
+  }
+  .scale input[type="range"] { position: relative; -webkit-appearance: none; appearance: none; width: 100%; height: 1.5rem; display: block; background: transparent; margin: 0; cursor: pointer; }
+  .scale input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--line); }
+  .scale input[type="range"]::-moz-range-track { height: 2px; background: var(--line); }
+  .scale input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 1.5rem; height: 1.5rem; margin-top: -.73rem;
+    border-radius: 50%; background: var(--lime); border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--lime); transition: transform .18s ease;
+  }
+  .scale input[type="range"]::-moz-range-thumb {
+    width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--lime);
+    border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--lime);
+  }
+  .scale input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.12); }
+  .scale__ticks { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .6rem; color: var(--muted); padding-top: .5rem; }
+  .scale__ticks span { width: 1rem; text-align: center; }
+  .scale__ticks span.on { color: var(--lime); }
+  .scale__out { display: flex; align-items: baseline; gap: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; min-height: 4.2rem; }
+  .scale__n { font-family: var(--display); font-size: 2.6rem; line-height: 1; color: var(--accent); flex: none; font-variant-numeric: tabular-nums; }
+  .scale__t { font-size: 1rem; max-width: 36ch; }
+  .scale__t b { font-weight: 500; }
+
+  /* ---------- дорожка недель ---------- */
+  @media (min-width: 720px) {
+    .week__row { position: relative; }
+    .week__row::before { content: ""; position: absolute; left: 9.72rem; top: 0; bottom: 0; width: 1px; background: var(--line); }
+    .week__row::after {
+      content: ""; position: absolute; left: 9.4rem; top: 1.45rem; width: .66rem; height: .66rem;
+      border-radius: 50%; background: var(--paper); border: 1px solid var(--line);
+      transition: background .45s ease, border-color .45s ease, box-shadow .45s ease;
+    }
+    .week__row.is-passed::after { background: var(--lime); border-color: var(--lime); box-shadow: 0 0 0 .28rem var(--accent-soft); }
+    .week__row.is-passed::before { background: var(--lime); opacity: .45; }
+  }
+
+  .tier { transition: transform .3s cubic-bezier(.19, 1, .22, 1), border-color .3s ease; }
+  @media (hover: hover) { .tier:hover { transform: translateY(-4px); border-color: var(--accent); } }
+
+  /* ---------- бегущая строка с внутренним голосом ---------- */
+  .voices { overflow: hidden; border-block: 1px solid var(--line); background: var(--surface); padding-block: 1.1rem; }
+  .voices__lbl { font-family: var(--mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--lime); padding-bottom: .5rem; }
+  .voices__row { display: flex; width: max-content; }
+  .voices__row span {
+    font-family: var(--display); font-size: clamp(1.3rem, 3.4vw, 2.1rem);
+    color: var(--muted); white-space: nowrap; padding-right: 2.2rem;
+  }
+  .voices__row span::after { content: "·"; padding-left: 2.2rem; color: var(--lime); }
+  .has-js .voices__row { animation: voices 46s linear infinite; }
+  @keyframes voices { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+  @media (prefers-reduced-motion: reduce) { .has-js .voices__row { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar">
+  <div class="wrap backbar__in">
+    <a href="index.html">← Портфолио Кристины Васильевой</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__name" href="index.html">Кристина Васильева</a>
+    <nav class="topbar__nav">
+      <a href="#about">Про курс</a>
+      <a href="#scale">Шкала голода</a>
+      <a href="#program">Программа</a>
+      <a href="#expert">Автор</a>
+      <a href="#price">Стоимость</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="stack stack--lg">
+        <p class="eyebrow">Онлайн-курс · 6 недель · старт 17 ноября</p>
+        <h1>Еда без тревоги</h1>
+        <p class="lede">Шесть недель, за которые еда перестает быть задачей с правильным ответом: без запретов, подсчета калорий и списка плохих продуктов.</p>
+        <div class="btn-row">
+          <a class="btn" href="#price">Записаться</a>
+          <a class="btn btn--ghost" href="#program">Что внутри</a>
+        </div>
+      </div>
+      <div class="hero__side">
+        <figure class="plate">
+          <svg viewBox="0 0 260 260" role="img" aria-label="Тарелка: половина овощи, четверть белок, четверть гарнир">
+            <g class="steam">
+              <path d="M108 58 c-9 -11 9 -16 0 -27 c-9 -11 9 -16 0 -27"/>
+              <path d="M130 54 c-9 -11 9 -16 0 -27 c-9 -11 9 -16 0 -27"/>
+              <path d="M152 58 c-9 -11 9 -16 0 -27 c-9 -11 9 -16 0 -27"/>
+            </g>
+
+            <ellipse class="plate__shadow" cx="130" cy="243" rx="74" ry="7"/>
+
+            <g class="cutlery">
+              <path d="M21 92 v30 M31 92 v30 M41 92 v30"/>
+              <path d="M21 122 h20"/>
+              <path d="M31 122 v92"/>
+              <path d="M229 92 c11 13 11 38 0 52 z"/>
+              <path d="M229 144 v70"/>
+            </g>
+
+            <circle class="plate__rim" cx="130" cy="150" r="84"/>
+            <circle class="plate__ring2" cx="130" cy="150" r="70"/>
+
+            <g class="food">
+              <path class="bite bite--veg" d="M130 150 L130 94 A56 56 0 0 1 130 206 Z"/>
+              <path class="bite bite--pro" d="M130 150 L130 206 A56 56 0 0 1 74 150 Z"/>
+              <path class="bite bite--car" d="M130 150 L74 150 A56 56 0 0 1 130 94 Z"/>
+            </g>
+          </svg>
+          <ul class="plate__leg">
+            <li><i style="background:var(--lime)"></i><span><b>Половина</b> - любые овощи и зелень</span></li>
+            <li><i style="background:var(--accent)"></i><span><b>Четверть</b> - белок: мясо, рыба, яйца, творог</span></li>
+            <li><i style="background:var(--sand)"></i><span><b>Четверть</b> - крупа, картошка или хлеб</span></li>
+          </ul>
+          <figcaption>Так тарелка собирается на третьей неделе: без весов и приложений.</figcaption>
+        </figure>
+        <dl class="facts">
+          <div class="fact"><dt>Формат</dt><dd>Шесть встреч в зуме по средам, записи остаются навсегда</dd></div>
+          <div class="fact"><dt>Нагрузка</dt><dd>Полтора часа встречи плюс 15 минут в день на практику</dd></div>
+          <div class="fact"><dt>Группа</dt><dd>До 20 человек, чат с куратором на все время курса</dd></div>
+          <div class="fact"><dt>Автор</dt><dd>Нутрициолог, 7 лет практики</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="about">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Для кого</p>
+        <h2>Это про вас, если знакомо хоть одно</h2>
+      </div>
+      <ul class="pains">
+        <li>Вы знаете про питание больше, чем любой ваш знакомый, и все равно едите не так, как хотели бы.</li>
+        <li>Понедельник начинается с решения питаться нормально, а в среду вечером вы стоите у холодильника.</li>
+        <li>После еды приходит чувство вины, даже когда съели обычный ужин.</li>
+        <li>Вы перепробовали пять подходов, на каждом держались от трех недель до двух месяцев.</li>
+        <li>В голове есть список запрещенного, и половину жизни вы тратите на то, чтобы в него не залезть.</li>
+      </ul>
+      <div class="stack stack--sm">
+        <h3>Когда сначала нужен врач</h3>
+        <p>Если есть расстройство пищевого поведения в диагнозе, лечение щитовидной железы или беременность, курс не заменит работу с врачом. Напишите мне до оплаты, и я скажу прямо, стоит ли идти сейчас или сначала к специалисту.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="voices">
+    <p class="voices__lbl wrap">Голоса в голове</p>
+    <div class="voices__row" aria-hidden="true">
+      <span>с понедельника начну</span><span>это вредное</span><span>я же только что ела</span><span>надо отработать</span><span>сегодня уже нельзя</span><span>еще кусочек и хватит</span><span>я сорвалась</span><span>завтра все исправлю</span><span>с понедельника начну</span><span>это вредное</span><span>я же только что ела</span><span>надо отработать</span><span>сегодня уже нельзя</span><span>еще кусочек и хватит</span><span>я сорвалась</span><span>завтра все исправлю</span>
+    </div>
+  </div>
+
+  <section class="band" id="scale">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Инструмент со второй недели</p>
+        <h2>Шкала голода</h2>
+        <p>Потяните ползунок и посмотрите, как это называется словами. На второй неделе мы учимся узнавать эти состояния у себя, поэтому вопрос, пора ли есть, перестает решаться по часам и по размеру порции.</p>
+      </div>
+
+      <div class="scale">
+        <div class="scale__track">
+          <span class="scale__zonelbl">здесь удобно начинать и заканчивать</span>
+          <span class="scale__zone"></span>
+          <input type="range" min="1" max="10" step="1" value="5" id="hunger" aria-label="Шкала голода от 1 до 10">
+          <div class="scale__ticks" id="hunger-ticks" aria-hidden="true"></div>
+        </div>
+        <div class="scale__out">
+          <span class="scale__n" id="hunger-n">5</span>
+          <span class="scale__t" id="hunger-t"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="program">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Программа</p>
+        <h2>Шесть недель, одна тема в каждой</h2>
+        <p>Недели идут по порядку и опираются друг на друга, поэтому пропустить одну и прийти на следующую не получится.</p>
+      </div>
+
+      <div class="week">
+        <div class="week__row">
+          <p class="week__n">Неделя 1</p>
+          <div>
+            <h3>Откуда взялся ваш список запретов</h3>
+            <p>Разбираем, где вы взяли свои правила про еду, и какие из них вообще не ваши. Домашнее задание на неделю: ничего не менять, только записывать.</p>
+          </div>
+        </div>
+        <div class="week__row">
+          <p class="week__n">Неделя 2</p>
+          <div>
+            <h3>Голод, аппетит и то, что между ними</h3>
+            <p>Как отличить физический голод от желания заесть вечер. Шкала голода и как ей пользоваться, не превращая ее в новый контроль.</p>
+          </div>
+        </div>
+        <div class="week__row">
+          <p class="week__n">Неделя 3</p>
+          <div>
+            <h3>Тарелка, которая собирается сама</h3>
+            <p>Принцип сборки еды без взвешивания и приложений. Что делать, когда готовить некогда, и как выглядит нормальный перекус.</p>
+          </div>
+        </div>
+        <div class="week__row">
+          <p class="week__n">Неделя 4</p>
+          <div>
+            <h3>Срывы</h3>
+            <p>Самая тяжелая неделя. Что происходит за два часа до срыва, и почему его почти всегда можно поймать раньше. Разбираем ваши настоящие случаи.</p>
+          </div>
+        </div>
+        <div class="week__row">
+          <p class="week__n">Неделя 5</p>
+          <div>
+            <h3>Люди вокруг</h3>
+            <p>Семейный стол, корпоратив, мама с пирогом и коллега на диете. Как есть среди людей и не объясняться.</p>
+          </div>
+        </div>
+        <div class="week__row">
+          <p class="week__n">Неделя 6</p>
+          <div>
+            <h3>Как жить дальше без куратора</h3>
+            <p>Собираем ваши собственные правила вместо чужих. Что делать через месяц, когда все забудется, и по каким признакам понять, что откатились.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="expert">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Автор</p>
+        <h2>Кто ведет курс</h2>
+      </div>
+      <div class="stack">
+        <p>Нутрициолог, семь лет практики, больше 600 человек на личных консультациях. До этого одиннадцать лет своей истории с подсчетом калорий, качелями веса и тем самым списком запрещенного, про который идет первая неделя курса.</p>
+        <p>Я не ставлю целей по килограммам и не считаю с клиентами калории. Ко мне приходят, когда еда превратилась в источник тревоги, и за шесть недель мы разбираем, откуда эта тревога взялась и что с ней делать каждый день.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="price">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Стоимость</p>
+        <h2>Три варианта участия</h2>
+        <p>Разница только в обратной связи. Программа и записи одинаковые везде.</p>
+      </div>
+      <div class="tiers">
+
+        <div class="tier">
+          <p class="tier__mark">Самостоятельно</p>
+          <p class="tier__price">7 900 ₽</p>
+          <ul>
+            <li>Шесть встреч и записи навсегда</li>
+            <li>Рабочая тетрадь с заданиями</li>
+            <li>Общий чат потока</li>
+          </ul>
+          <a class="btn btn--ghost" href="#cta">Выбрать</a>
+        </div>
+
+        <div class="tier tier--pick">
+          <p class="tier__mark">С куратором · берут чаще всего</p>
+          <p class="tier__price">14 900 ₽</p>
+          <ul>
+            <li>Все из первого варианта</li>
+            <li>Проверка домашних заданий каждую неделю</li>
+            <li>Ответы куратора в чате в течение дня</li>
+            <li>Разбор вашего случая на встрече</li>
+          </ul>
+          <a class="btn" href="#cta">Выбрать</a>
+        </div>
+
+        <div class="tier">
+          <p class="tier__mark">С личными встречами</p>
+          <p class="tier__price">29 000 ₽</p>
+          <ul>
+            <li>Все из второго варианта</li>
+            <li>Три личные встречи со мной по 50 минут</li>
+            <li>Индивидуальный разбор ваших срывов</li>
+            <li>Четыре места</li>
+          </ul>
+          <a class="btn btn--ghost" href="#cta">Выбрать</a>
+        </div>
+
+      </div>
+      <p>Можно разделить на две части: половина при оплате, половина через три недели. Если после первой встречи поймете, что это не ваше, вернем деньги целиком.</p>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="faq">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Вопросы</p>
+        <h2>О чем спрашивают чаще всего</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Похудею ли я на курсе</summary>
+          <p>Я не обещаю снижение веса и не ставлю его целью. У части участников вес меняется сам, когда уходят качели и переедания, у части не меняется. Если ваша задача минус десять килограммов к дате, этот курс не про то.</p>
+        </details>
+        <details>
+          <summary>Нужно ли вести дневник питания</summary>
+          <p>Первую неделю да, но без калорий и граммов: только что, когда и в каком состоянии. Дальше дневник не нужен, иначе он сам превращается в новый контроль.</p>
+        </details>
+        <details>
+          <summary>Что будет, если я пропущу встречу</summary>
+          <p>Запись приходит в тот же вечер и остается у вас навсегда. Вопросы можно задать в чате, я отвечу на них в начале следующей встречи.</p>
+        </details>
+        <details>
+          <summary>Будут ли меню и рецепты</summary>
+          <p>Готового меню не будет. Будет принцип сборки тарелки и примеры на разные ситуации, включая вариант, когда готовить нет сил.</p>
+        </details>
+        <details>
+          <summary>Можно ли с особенностями здоровья</summary>
+          <p>С большинством да, но напишите мне до оплаты и расскажите, что у вас. При некоторых состояниях я попрошу сначала сходить к врачу и скажу об этом прямо.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="cta">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Старт 17 ноября, набор идет</h2>
+        <p>Оставьте заявку, и я пришлю программу подробно и ссылку на оплату. Если сомневаетесь, напишите вопрос, отвечу лично.</p>
+        <a class="btn" href="#price">Выбрать вариант участия</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__links">
+      <a href="index.html">Портфолио</a>
+      <a href="content-case.html">Контент-план на месяц</a>
+      <a href="deck.html">Презентация для клиента</a>
+      <a href="bot.html">Сценарий чат-бота</a>
+      <a href="english.html">Уроки английского языка</a>
+      <a href="texts.html">Тексты до и после</a>
+      <a href="calc.html">Калькулятор</a>
+    </div>
+    <small>Собрано мной целиком: структура, тексты и оформление. Компания и герои вымышленные. Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+<script>
+(function(){
+  /* шкала голода */
+  var WORDS = [
+    '',
+    '<b>Пустой желудок.</b> Кружится голова, раздражает все подряд, и за столом вы съедите больше, чем собирались.',
+    '<b>Сильный голод.</b> Думать о чем-то, кроме еды, уже тяжело.',
+    '<b>Ощутимый голод.</b> Желудок напомнил о себе. Хорошая точка, чтобы сесть за стол спокойно.',
+    '<b>Легкий голод.</b> Можно поесть, а можно спокойно подождать минут двадцать.',
+    '<b>Нейтрально.</b> Не голодны и не сыты, про еду сейчас не думаете.',
+    '<b>Немного поели.</b> Острота прошла, место еще есть.',
+    '<b>Приятная сытость.</b> Хорошая точка, чтобы остановиться: через двадцать минут вы почувствуете себя ровно.',
+    '<b>Наелись плотно.</b> Двигаться чуть тяжелее, тянет посидеть.',
+    '<b>Переели.</b> Хочется расстегнуть джинсы, и обычно следом приходит вина.',
+    '<b>Тяжесть.</b> Хочется лечь и ничего не делать.'
+  ];
+  var inp = document.getElementById('hunger');
+  var num = document.getElementById('hunger-n');
+  var txt = document.getElementById('hunger-t');
+  var ticks = document.getElementById('hunger-ticks');
+
+  if (inp && num && txt) {
+    if (ticks) {
+      for (var i = 1; i <= 10; i++) ticks.innerHTML += '<span data-n="' + i + '">' + i + '</span>';
+    }
+    var paint = function () {
+      var v = parseInt(inp.value, 10);
+      num.textContent = v;
+      txt.innerHTML = WORDS[v];
+      if (ticks) {
+        ticks.querySelectorAll('span').forEach(function (sp) {
+          sp.classList.toggle('on', parseInt(sp.dataset.n, 10) === v);
+        });
+      }
+    };
+    inp.addEventListener('input', paint);
+    paint();
+  }
+
+  /* дорожка недель заполняется по мере чтения */
+  var rows = document.querySelectorAll('.week__row');
+  if (rows.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-passed');
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -45% 0px' });
+    rows.forEach(function (r) { io.observe(r); });
+  }
+})();
+</script>
+</body>
+</html>

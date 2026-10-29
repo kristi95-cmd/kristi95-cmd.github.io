@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Уроки английского языка</title>
+<meta name="description" content="Разговорный английский онлайн для взрослых и подростков от 16 лет. С нуля и с начального уровня. Первое пробное занятие бесплатно, дальше 1000 рублей за час.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Cormorant+Infant:ital,wght@1,400;1,600&family=Fira+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<style>
+/* Мир учебника: глубокий синий, коралловый акцент, читающий сериф в заголовках. */
+:root {
+  color-scheme: light;
+  --paper:        #F3F5F7;
+  --surface:      #FFFFFF;
+  --surface-sunk: #E6EBF0;
+  --ink:          #131C27;
+  --muted:        #566576;
+  --line:         #D5DEE6;
+  --accent:       #1B4D8F;
+  --accent-ink:   #FFFFFF;
+  --accent-soft:  #DDE7F3;
+  --coral:        #D45B43;
+  --display: "Tenor Sans", "Helvetica Neue", Arial, sans-serif;
+  --body:    "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:    "Martian Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper:        #0F151C;
+    --surface:      #172029;
+    --surface-sunk: #1D2832;
+    --ink:          #E6EDF4;
+    --muted:        #93A4B5;
+    --line:         #27333F;
+    --accent:       #79AEEC;
+    --accent-ink:   #0B1520;
+    --accent-soft:  #1B2A3A;
+    --coral:        #F08A72;
+  }
+}
+/* у Tenor Sans одно начертание, иерархия строится размером */
+h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
+.eyebrow { color: var(--coral); }
+.pains li::before { background: var(--coral); }
+.hooks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; max-width: 46ch; }
+.hooks li { position: relative; padding-left: 1.15rem; font-size: 1.05rem; line-height: 1.5; }
+.hooks li::before { content: ""; position: absolute; left: 0; top: .72em; width: .55rem; height: 1px; background: var(--coral); }
+
+/* живой диалог в шапке: мысль по-русски и то, что человек говорит вслух */
+.hero__side { display: flex; flex-direction: column; gap: 1.6rem; }
+.talk { display: flex; flex-direction: column; gap: .55rem; }
+.talk__lbl { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
+.talk__ru, .talk__en { margin: 0; padding: .75rem 1rem; border-radius: 14px; max-width: 90%; font-size: 1rem; line-height: 1.4; transition: opacity .4s ease, transform .4s ease; }
+.talk__ru { align-self: flex-start; border-radius: 14px 14px 14px 3px; background: var(--surface-sunk); color: var(--muted); }
+.talk__en { align-self: flex-end; border-radius: 14px 14px 3px 14px; background: var(--accent-soft); color: var(--accent); font-family: "Cormorant Infant", Georgia, serif; font-style: italic; font-size: 1.3rem; }
+.talk.is-out .talk__ru, .talk.is-out .talk__en { opacity: 0; transform: translateY(6px); }
+.talk.is-wait .talk__en { opacity: 0; transform: translateY(6px); }
+
+/* курсор: на светлой странице белая точка не читалась, поэтому коралловое кольцо */
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 95; pointer-events: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1.5px solid var(--coral); background: rgba(212, 91, 67, .14);
+  transition: width .25s ease, height .25s ease, background .25s ease;
+}
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* выносная цитата */
+.pull { position: relative; margin: 0; background: var(--accent-soft); border-radius: 4px; padding: 2.2rem 1.5rem; }
+.pull::before { content: ""; position: absolute; left: 1.5rem; top: 1.3rem; width: 2.4rem; height: 2px; background: var(--coral); }
+.pull p {
+  font-family: "Cormorant Infant", Georgia, "Times New Roman", serif;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(1.45rem, 3.8vw, 2.15rem); line-height: 1.3;
+  max-width: 34ch; margin: 0; color: var(--ink);
+}
+@media (min-width: 760px) { .pull { padding: 3rem 3rem 2.8rem; } .pull::before { left: 3rem; top: 1.9rem; } }
+
+/* живые фразы */
+.phrases { display: grid; gap: .8rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .phrases { grid-template-columns: repeat(2, 1fr); } }
+.phrase { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.phrase summary { cursor: pointer; list-style: none; padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: .3rem; }
+.phrase summary::-webkit-details-marker { display: none; }
+.phrase__where { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral); }
+.phrase__ru { font-size: 1rem; line-height: 1.4; }
+.phrase__hint { font-family: var(--mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
+.phrase[open] .phrase__hint { display: none; }
+.phrase__en {
+  margin: 0; padding: 0 1.15rem 1.1rem;
+  font-family: "Cormorant Infant", Georgia, serif; font-style: italic;
+  font-size: 1.4rem; line-height: 1.3; color: var(--accent);
+  animation: phrase-in .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+@keyframes phrase-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .phrase__en { animation: none; } }
+.steps li::before { color: var(--coral); border-color: var(--coral); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar">
+  <div class="wrap backbar__in">
+    <a href="index.html">← Портфолио Кристины Васильевой</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__name" href="index.html">Кристина Васильева</a>
+    <nav class="topbar__nav">
+      <a href="#who">Кому подойдет</a>
+      <a href="#trial">Пробное</a>
+      <a href="#levels">Уровни</a>
+      <a href="#phrases">Фразы</a>
+      <a href="#me">Про меня</a>
+      <a href="#price">Цена</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="stack stack--lg">
+        <p class="eyebrow">Разговорный английский · онлайн</p>
+        <h1>Вы понимаете английский, но говорить страшно</h1>
+        <ul class="hooks">
+          <li>Слова в голове есть, но, когда нужно ответить вслух, они куда-то деваются, и в разговоре остается один кивок.</li>
+          <li>Собеседника понимаете, а сказать в ответ получается только yes, no и okay.</li>
+          <li>Учили в школе и в институте, сейчас не вспомните и половины, и начинать заново страшно.</li>
+          <li>Английского не было совсем, и кажется, что сейчас уже поздно.</li>
+        </ul>
+        <p class="lede">Знакомо? Значит, вам ко мне. Говорить вы начнете на первом же занятии, теми словами, которые у вас уже есть, а чего не хватит, доберем по ходу. Первое занятие пробное и бесплатное, так что попробовать вам ничего не стоит.</p>
+        <div class="btn-row">
+          <a class="btn" href="#price">Записаться на пробное занятие</a>
+          <a class="btn btn--ghost" href="#who">Кому подойдет</a>
+        </div>
+      </div>
+      <div class="hero__side">
+        <div class="talk" id="talk">
+          <p class="talk__lbl">На занятии это звучит так</p>
+          <p class="talk__ru" id="talk-ru"></p>
+          <p class="talk__en" id="talk-en"></p>
+        </div>
+        <dl class="facts">
+        <div class="fact"><dt>Формат</dt><dd>Онлайн, 60 минут, один на один</dd></div>
+        <div class="fact"><dt>Знакомство</dt><dd>Пробное занятие бесплатно, 30-40 минут</dd></div>
+        <div class="fact"><dt>Цена</dt><dd>1 000 ₽ за занятие</dd></div>
+        <div class="fact"><dt>Уровень</dt><dd>С нуля, начальный, Elementary и выше</dd></div>
+        <div class="fact"><dt>Возраст</dt><dd>От 16 лет, взрослые любого возраста</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="who">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Кому подойдет</p>
+        <h2>Я беру, если это про вас</h2>
+      </div>
+      <ul class="pains">
+        <li>Учили английский в школе и в институте, но так ни разу на нем и не заговорили. Начинать с нуля вам не придется: мы берем то, что уже лежит в голове, и выводим это в речь.</li>
+        <li>Переезжаете или много путешествуете. Аренда, врач, банк, разговор с соседом: с языком вы решаете это сами и в своем темпе, а не через переводчик в телефоне и чужую помощь.</li>
+        <li>Ходите на свидания с иностранцами или только собираетесь. Флиртовать, шутить и рассказывать о себе учебными фразами не выходит, поэтому мы тренируем живой разговор, в котором вы остаетесь собой.</li>
+        <li>Начинали несколько раз, доходили до present perfect и бросали. У меня грамматика идет внутри разговора, поэтому вы не застреваете в упражнениях и видите результат сразу, на занятии.</li>
+        <li>Хотите просто для себя: читать, смотреть без субтитров, свободно разговаривать в поездках и не терять язык.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <section class="band" id="trial">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Первый шаг</p>
+        <h2>Что вы получите на бесплатном пробном</h2>
+        <p>30-40 минут, за которые вы поймете, подходит ли вам заниматься со мной, а я пойму, как вас учить. Это полноценный разговор, а не анкета и не презентация курса.</p>
+      </div>
+      <ol class="steps">
+        <li><p><strong>Скажете первые фразы вслух</strong>Говорить начинаем сразу, даже если вы давно не пробовали или не пробовали никогда. Самое страшное обычно проходит в первые десять минут.</p></li>
+        <li><p><strong>Узнаете свой уровень</strong>Я слушаю, как вы говорите, и говорю прямо, где вы сейчас и что именно вам мешает. Без тестов на сто вопросов.</p></li>
+        <li><p><strong>Разберем ваш запрос</strong>Зачем вам английский: поездки, переезд, работа, общение с иностранцами или просто для себя. Под это я и подбираю, с чего начать и какие слова взять первыми.</p></li>
+        <li><p><strong>Получите план</strong>С чего начинаем, как часто заниматься и что будет на ближайших занятиях. План ваш, даже если заниматься вы потом решите не со мной.</p></li>
+      </ol>
+      <div class="btn-row">
+        <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="levels">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Уровни</p>
+        <h2>Откуда вы начинаете</h2>
+        <p>Я беру с нуля и с любого начального уровня. На пробном занятии мы вместе посмотрим, где вы сейчас: что понимаете на слух, что получается сказать, где спотыкаетесь. Готовить для этого ничего не надо.</p>
+        <p>И у вас может быть свой запрос, с которым вы приходите: работа, переезд, поездки, общение с иностранцами. Программу я собираю под этот запрос, поэтому мы занимаемся вашим английским, а не курсом вообще.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="levels">
+          <thead>
+            <tr><th scope="col">Уровень</th><th scope="col">Как это выглядит сейчас</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">С нуля</th>
+              <td>Английского не было вообще или он забылся полностью. Чтение дается тяжело, слова на слух не распознаются.</td>
+            </tr>
+            <tr>
+              <th scope="row">Начальный</th>
+              <td>Школьные слова в голове есть, но собрать из них предложение не получается. Знакомый текст понимаете, свою мысль сказать не можете.</td>
+            </tr>
+            <tr>
+              <th scope="row">Elementary</th>
+              <td>Простое сказать можете, но теряетесь, когда с вами говорят в обычном темпе, и отвечаете двумя словами.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="goals">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Результат</p>
+        <h2>К чему мы идем</h2>
+        <p>Цель у нас простая и измеримая в жизни: вы перестаете зависеть от переводчика в телефоне и от людей, которые говорят за вас.</p>
+      </div>
+      <div class="pitch">
+        <div class="tile">
+          <h3>Поездки без посредников</h3>
+          <p>Аэропорт, отель, аптека, кафе, вопрос прохожему на улице. Вы едете куда хотите и не держитесь за человека, который знает язык.</p>
+        </div>
+        <div class="tile">
+          <h3>Жизнь в другой стране</h3>
+          <p>Врач, аренда, банк, мастер, доставка. Это ровно те разговоры, которые у меня здесь каждую неделю, поэтому я знаю, какие фразы в них работают.</p>
+        </div>
+        <div class="tile">
+          <h3>Общение в удовольствие</h3>
+          <p>Знакомства, свидания, разговоры с друзьями из других стран, кино и сериалы без субтитров. Вы остаетесь собой и на английском тоже.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="phrases">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Какой английский мы учим</p>
+        <h2>Фразы, которые нужны в жизни</h2>
+        <p>Это разговоры, которые бывают у меня здесь каждую неделю. Нажмите на ситуацию и посмотрите, как она звучит по-английски. Примерно так же выглядит и занятие: сначала ваша мысль, потом рабочая фраза под нее.</p>
+      </div>
+      <div class="phrases">
+        <details class="phrase">
+          <summary><span class="phrase__where">У врача</span><span class="phrase__ru">Мне кажется, у меня поднялась температура</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">I think I'm running a fever.</p>
+        </details>
+        <details class="phrase">
+          <summary><span class="phrase__where">Аренда жилья</span><span class="phrase__ru">Кондиционер не холодит, можете прислать мастера?</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">The AC isn't cooling. Could you send someone to fix it?</p>
+        </details>
+        <details class="phrase">
+          <summary><span class="phrase__where">В кафе</span><span class="phrase__ru">Можно не острое и лайм отдельно?</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">Could I get it not spicy, with the lime on the side?</p>
+        </details>
+        <details class="phrase">
+          <summary><span class="phrase__where">Знакомство</span><span class="phrase__ru">Я тут недавно, переехала пару месяцев назад</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">I'm new here, I moved a couple of months ago.</p>
+        </details>
+        <details class="phrase">
+          <summary><span class="phrase__where">Байк и мастера</span><span class="phrase__ru">Байк не заводится, можете посмотреть?</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">The bike won't start. Could you take a look at it?</p>
+        </details>
+        <details class="phrase">
+          <summary><span class="phrase__where">В дороге</span><span class="phrase__ru">Остановите, пожалуйста, вон у того поворота</span><span class="phrase__hint">показать по-английски</span></summary>
+          <p class="phrase__en">Could you stop at that turn up ahead, please?</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="me">
+    <div class="wrap stack stack--lg">
+      <div class="stack stack--lg">
+        <p class="eyebrow">Про меня</p>
+        <h2>Кристина Васильева</h2>
+        <p>Английский со мной практически всю жизнь. Путешествовать я начала совсем маленькой и свои первые фразы говорила в живой среде еще детсадовским ребенком, задолго до первого школьного урока английского. Позже я училась в США и в Англии, и там язык прибавлялся сам: говорение, лексика, обычный разговор с носителями вместо упражнений в тетради.</p>
+        <p>Два года английский был моим рабочим инструментом каждый день: я представляла ведомство на международных торговых переговорах, переводила профильные тексты и вела англоязычную соцсеть российского государственного ведомства.</p>
+        <p>Сейчас я живу на Бали, и английский тут мой главный инструмент. На нем я договариваюсь с хозяином дома, с врачами и мастерами, делаю заказы в кафе и ресторанах, знакомлюсь и хожу на свидания. Поэтому на занятиях мы берем те фразы, которые работают в живом разговоре, и я сразу говорю, где вас поймут, а где переспросят.</p>
+        <dl class="facts">
+          <div class="fact"><dt>Язык в среде</dt><dd>Училась в США и в Англии, говорение и лексика с носителями</dd></div>
+          <div class="fact"><dt>Практика</dt><dd>2 года английского как рабочего языка в российском государственном ведомстве: переговоры, перевод, англоязычная соцсеть</dd></div>
+          <div class="fact"><dt>Образование</dt><dd>Два магистра МГЮА имени Кутафина</dd></div>
+          <div class="fact"><dt>Сейчас</dt><dd>Живу на Бали и говорю по-английски каждый день вне занятий: врачи, аренда, мастера, кафе, свидания</dd></div>
+        </dl>
+        <figure class="pull">
+          <p>Английский дал мне свободу: жить там, где нравится, работать откуда угодно и разговаривать с людьми со всего мира. То же самое он может дать вам, и начать никогда не поздно.</p>
+        </figure>
+        <div class="pitch">
+          <div class="tile">
+            <h3>Я живу в языке каждый день</h3>
+            <p>Английский у меня рабочий инструмент на каждый день: я говорю на нем вне занятий постоянно. Поэтому на занятиях вы получаете те фразы, которые люди правда говорят.</p>
+          </div>
+          <div class="tile">
+            <h3>Занятие собирается под вас</h3>
+            <p>Программа идет от вашего запроса и вашего уровня. Если вам нужен язык для поездок, мы не будем проходить деловую переписку.</p>
+          </div>
+          <div class="tile">
+            <h3>Большую часть часа говорите вы</h3>
+            <p>Главная практика это ваша собственная речь, поэтому молчать на занятии у вас не выйдет. Я слушаю, подсказываю и поправляю так, чтобы вас не сбивать.</p>
+          </div>
+        </div>
+        <div class="btn-row">
+          <a class="btn" href="#price">Записаться на пробное</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="price">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Цена</p>
+        <h2>1 000 ₽ за занятие</h2>
+        <p>Полный час один на один, в котором говорите в основном вы. Я слушаю, подсказываю и поправляю по ходу, а грамматику разбираем там, где она мешает вас понять.</p>
+      </div>
+      <div class="pitch">
+        <div class="tile">
+          <h3>Пробное занятие бесплатно</h3>
+          <p>30-40 минут на знакомство. Вы смотрите, как я объясняю и подходит ли вам такой формат, а я слушаю, как вы говорите сейчас, и расспрашиваю, зачем вам английский. К концу разговора мне понятен ваш уровень и ваш запрос, и под них я подбираю методику и собираю программу лично для вас. Платить за это знакомство не надо, решение вы принимаете после него.</p>
+        </div>
+        <div class="tile">
+          <h3>Время занятий</h3>
+          <p>Подстраиваюсь под ваш день, включая раннее утро и вечер. Скажите, в какие часы вам удобно говорить, и мы поставим занятие на это время, а если график поменяется, подвинем.</p>
+        </div>
+        <div class="tile">
+          <h3>Перенос и отмена</h3>
+          <p>Перенести или отменить занятие без списания можно не позднее чем за 6 часов до начала. Если предупредить позже, занятие считается проведенным.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Вопросы</p>
+        <h2>О чем спрашивают до первого занятия</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>У меня совсем нулевой уровень, не будет стыдно?</summary>
+          <p>С нуля я работаю и это самый спокойный вариант: нет старых ошибок, которые придется переучивать. Первые занятия идут с русским языком рядом, дальше его становится меньше.</p>
+        </details>
+        <details>
+          <summary>Нужен ли учебник и сколько он стоит</summary>
+          <p>Покупать ничего не надо. Материалы я собираю сама под вашу задачу и присылаю файлом после занятия.</p>
+        </details>
+        <details>
+          <summary>Я стесняюсь говорить, особенно с ошибками</summary>
+          <p>На занятии нас двое, и оценивать вас некому. Я не перебиваю на каждом слове: даю договорить мысль до конца, а потом показываю, что поправить. Ошибки на первых порах есть у всех, и они не мешают вас понимать.</p>
+        </details>
+        <details>
+          <summary>Я уже занимался с репетиторами и бросал</summary>
+          <p>Расскажите на пробном, что именно надоело: учебник, домашние задания, ощущение, что вы молчите весь урок. Я соберу занятие по-другому, под то, ради чего вам язык нужен сейчас.</p>
+        </details>
+        <details>
+          <summary>Я живу не в России, в другом часовом поясе</summary>
+          <p>Это не помеха, я сама живу за границей и занимаюсь онлайн с людьми из разных стран. Скажите свое время, и мы найдем удобные для обоих часы.</p>
+        </details>
+        <details>
+          <summary>На какой платформе проходят занятия</summary>
+          <p>Там, где вам удобно: зум, телеграм, гугл-мит. Нужен только интернет и наушники.</p>
+        </details>
+        <details>
+          <summary>Можно заниматься раз в неделю</summary>
+          <p>Можно, но тогда между занятиями нужна небольшая практика самостоятельно, иначе половина часа уходит на вспоминание. Я скажу, что делать, это 15 минут в день.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Напишите, и договоримся о пробном занятии</h2>
+        <p>Расскажите в двух словах, какой у вас уровень и зачем нужен английский. Отвечу в тот же день и предложу время для бесплатного пробного.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://t.me/kris_tinav21">Написать в телеграм</a>
+          <a class="btn" href="mailto:christivas21@gmail.com">christivas21@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__links">
+      <a href="index.html">Портфолио</a>
+      <a href="content-case.html">Контент-план на месяц</a>
+      <a href="deck.html">Презентация для клиента</a>
+      <a href="bot.html">Сценарий чат-бота</a>
+      <a href="expert.html">Лендинг онлайн-курса</a>
+    </div>
+    <small>Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+<script>
+(function(){
+  var PAIRS = [
+    ['Сколько это стоит?',                 "How much is it?"],
+    ['У меня болит голова со вчера',       "I've had a headache since yesterday"],
+    ['Можно счет, пожалуйста',             "Could we have the bill, please?"],
+    ['Я бы хотела посмотреть эту квартиру',"I'd like to see the apartment"],
+    ['Байк не заводится',                  "The bike won't start"],
+    ['Мне без льда, пожалуйста',           "No ice for me, please"]
+  ];
+  var box = document.getElementById('talk');
+  var ru = document.getElementById('talk-ru');
+  var en = document.getElementById('talk-en');
+  if (!box || !ru || !en) return;
+
+  var i = 0;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function put(n){
+    ru.textContent = PAIRS[n][0];
+    en.textContent = PAIRS[n][1];
+  }
+
+  put(0);
+  if (reduce) return;
+
+  box.classList.add('is-wait');
+  setTimeout(function(){ box.classList.remove('is-wait'); }, 700);
+
+  setInterval(function(){
+    box.classList.add('is-out');
+    setTimeout(function(){
+      i = (i + 1) % PAIRS.length;
+      put(i);
+      box.classList.remove('is-out');
+      box.classList.add('is-wait');
+      setTimeout(function(){ box.classList.remove('is-wait'); }, 650);
+    }, 420);
+  }, 4200);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Сценарий чат-бота</title>
+<meta name="description" content="Сценарий телеграм-бота для сбора заявок: весь диалог по шагам, тексты и кнопки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<style>
+/* Единственная темная страница на сайте: интерфейсный мир, терминальные заголовки,
+   янтарный акцент. Тема одна и та же в любой системе, это осознанно. */
+:root {
+  color-scheme: dark;
+  --paper:        #0F1419;
+  --surface:      #171E26;
+  --surface-sunk: #1C242E;
+  --ink:          #E4ECF4;
+  --muted:        #8A9AAB;
+  --line:         #27323D;
+  --accent:       #E8A33D;
+  --accent-ink:   #140D03;
+  --accent-soft:  #2A2114;
+  --display: "Tektur", "Arial Narrow", Arial, sans-serif;
+  --body:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+h1, h2, h3 { font-weight: 900; letter-spacing: -.01em; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.08; }
+h2 { font-size: clamp(1.45rem, 3.6vw, 2.2rem); }
+h3 { font-size: 1.05rem; letter-spacing: -.005em; }
+.btn { border-radius: 2px; }
+.bubble { background: #202A35; border: 1px solid var(--line); border-radius: 3px 14px 14px 14px; }
+.btns span { border-color: #3C4A59; color: var(--accent); background: #19222B; }
+.step-b__note { border-left-color: var(--accent); color: var(--muted); }
+.prices tbody td:last-child { color: var(--accent); }
+.card, .tile { background: var(--surface); }
+
+/* ---------- живой демо-бот ---------- */
+.demo{border:1px solid var(--line);border-radius:4px;background:#141B23;overflow:hidden;max-width:34rem;width:100%}
+.demo__top{display:flex;align-items:center;gap:.6rem;padding:.7rem .9rem;border-bottom:1px solid var(--line);background:#19222B}
+.demo__av{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--accent);color:#140D03;display:grid;place-items:center;font-size:.7rem;font-weight:700;flex:none}
+.demo__who{display:flex;flex-direction:column;line-height:1.2}
+.demo__who b{font-size:.9rem;font-weight:600}
+.demo__who span{font-size:.7rem;color:var(--muted)}
+.demo__reset{margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:2px;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .5rem;cursor:pointer}
+.demo__reset:hover{color:var(--accent);border-color:var(--accent)}
+.demo__feed{padding:1rem .9rem;display:flex;flex-direction:column;gap:.55rem;min-height:19rem;max-height:26rem;overflow-y:auto;scroll-behavior:smooth}
+.msg{max-width:88%;padding:.6rem .8rem;border-radius:3px 12px 12px 12px;background:#202A35;font-size:.95rem;line-height:1.45;animation:pop .35s ease both}
+.msg--me{align-self:flex-end;border-radius:12px 3px 12px 12px;background:var(--accent);color:#140D03;font-weight:500}
+.msg b{color:var(--accent);font-weight:600}
+.msg--me b{color:inherit}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.typing{display:flex;gap:.25rem;align-self:flex-start;padding:.7rem .8rem;background:#202A35;border-radius:3px 12px 12px 12px}
+.typing i{width:.35rem;height:.35rem;border-radius:50%;background:var(--muted);animation:dot 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3}30%{opacity:1}}
+.demo__btns{display:flex;flex-wrap:wrap;gap:.4rem;padding:.8rem .9rem;border-top:1px solid var(--line);background:#19222B;min-height:3.4rem}
+.demo__btns button{background:#1B242E;border:1px solid #3C4A59;color:var(--accent);border-radius:14px;padding:.4rem .8rem;font-family:var(--body);font-size:.86rem;cursor:pointer;transition:background .2s,border-color .2s}
+.demo__btns button:hover{background:var(--accent);color:#140D03;border-color:var(--accent)}
+.demo__done{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:.2rem 0}
+
+/* маршрут: подсвечивается тот шаг, на котором сейчас человек */
+.try{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start;width:100%}
+.map{flex:1 1 13rem;min-width:12rem;max-width:17rem}
+.map__lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
+.map__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.map__list li{position:relative;padding-left:1.4rem}
+.map__list li::before{content:"";position:absolute;left:.42rem;top:-.5rem;bottom:50%;width:1px;background:var(--line)}
+.map__list li:first-child::before{display:none}
+.map__dot{position:absolute;left:0;top:.34rem;width:.85rem;height:.85rem;border-radius:50%;border:1px solid var(--line);background:var(--paper);transition:background .35s ease,border-color .35s ease,box-shadow .35s ease}
+.map__t{display:block;font-size:.88rem;color:var(--muted);transition:color .35s ease}
+.map__split{padding-left:0!important;display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+.map__split::before{display:none}
+.map__split span[data-node]{position:relative;padding-left:0;display:block}
+.map__split .map__t{padding-left:1.4rem}
+.map__list .is-done .map__dot{border-color:var(--accent);background:var(--accent-soft)}
+.map__list .is-done .map__t{color:var(--ink)}
+.map__list .is-now .map__dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 .3rem var(--accent-soft)}
+.map__list .is-now .map__t{color:var(--accent)}
+@media(max-width:720px){.map{max-width:none;flex-basis:100%}}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar">
+  <div class="wrap backbar__in">
+    <a href="index.html">← Портфолио Кристины Васильевой</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__name" href="index.html">Кристина Васильева</a>
+    <nav class="topbar__nav">
+      <a href="#try">Попробовать</a>
+      <a href="#task">Задача</a>
+      <a href="#flow">Диалог</a>
+      <a href="#out">Заявки</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap stack stack--lg">
+      <p class="eyebrow">Чат-бот</p>
+      <h1>Бот, который собирает заявки вместо переписки в сообщениях</h1>
+      <p class="lede">Психолог набирает людей в групповую программу. До бота каждый интересующийся писал в директ, и на одни и те же четыре вопроса она отвечала руками по тридцать раз за неделю.</p>
+      <div class="btn-row">
+        <a class="btn" href="#flow">Смотреть диалог</a>
+        <a class="btn btn--ghost" href="content-case.html">Контент-план этого же клиента</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="try">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Попробуйте</p>
+        <h2>Бот работает прямо здесь</h2>
+        <p>Пройдите сценарий кнопками, как это сделал бы клиент. Ниже тот же разговор разложен по шагам, с текстами и кнопками.</p>
+      </div>
+
+      <div class="try">
+        <div class="demo">
+          <div class="demo__top">
+            <span class="demo__av">Б</span>
+            <span class="demo__who"><b>Бот психолога</b><span id="demo-state">онлайн</span></span>
+            <button class="demo__reset" type="button" id="demo-reset">Сначала</button>
+          </div>
+          <div class="demo__feed" id="demo-feed"></div>
+          <div class="demo__btns" id="demo-btns"></div>
+        </div>
+
+        <div class="map" aria-hidden="true">
+          <p class="map__lbl">Где вы сейчас</p>
+          <ol class="map__list" id="map">
+            <li data-node="start"><span class="map__dot"></span><span class="map__t">Старт</span></li>
+            <li data-node="about"><span class="map__dot"></span><span class="map__t">Про группу</span></li>
+            <li data-node="price"><span class="map__dot"></span><span class="map__t">Цена</span></li>
+            <li data-node="q"><span class="map__dot"></span><span class="map__t">Три вопроса</span></li>
+            <li class="map__split">
+              <span data-node="ok"><span class="map__dot"></span><span class="map__t">Подходит</span></span>
+              <span data-node="no"><span class="map__dot"></span><span class="map__t">Не группа</span></span>
+            </li>
+            <li data-node="contact"><span class="map__dot"></span><span class="map__t">Контакт</span></li>
+            <li data-node="sent"><span class="map__dot"></span><span class="map__t">Заявка в таблице</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="task">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Задача</p>
+        <h2>Что болело</h2>
+      </div>
+      <ul class="pains">
+        <li>Вопросы приходили в три разных места: директ инстаграма, личные сообщения в телеграме и комментарии под постом.</li>
+        <li>Половина спрашивала цену, узнавала и пропадала, не доходя до разговора.</li>
+        <li>Заявки терялись: человек написал в понедельник, ответ пришел в четверг, человек уже остыл.</li>
+        <li>В группу приходили люди с острым состоянием, которым групповой формат не подходит, и это выяснялось уже на первой встрече.</li>
+      </ul>
+      <div class="stack stack--sm">
+        <h3>Что предложила</h3>
+        <p>Бот отвечает на четыре частых вопроса сам, мягко отсеивает тех, кому группа не подходит, и собирает контакт только у тех, кто дошел до конца. Психолог получает список людей, которые уже прочитали условия и знают цену, и пишет сразу им.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="flow">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Диалог</p>
+        <h2>Весь сценарий по шагам</h2>
+        <p>Слева шаг, справа то, что видит человек. Серым под сообщением короткое пояснение.</p>
+      </div>
+
+      <div class="flow">
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 1 · старт</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Здравствуйте. Это бот группы по выгоранию, отвечает психолог лично.</p>
+              <p>Шесть недель, восемь человек, по вторникам в 19:00 по Москве, в зуме. Старт 17 ноября, свободно три места.</p>
+              <div class="btns"><span>Что внутри по неделям</span><span>Сколько стоит</span><span>Подойдет ли мне</span><span>Хочу один на один</span></div>
+            </div>
+            <p class="step-b__note">Два сообщения, и в них уже есть даты, время, формат и число мест. Пересказывать, как бот будет работать, не нужно: человек видит кнопки.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 2 · программа</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>По неделям так:<br>1. Откуда взялся режим износа<br>2. Границы<br>3. Вина за отдых<br>4. Тело<br>5. Деньги<br>6. Что дальше</p>
+              <p>Встреча полтора часа, камеру включать не обязательно. Записи остаются навсегда.</p>
+              <div class="btns"><span>Сколько стоит</span><span>Подойдет ли мне</span></div>
+            </div>
+            <p class="step-b__note">Программа списком, а не абзацем: с телефона это читают по диагонали.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 3 · цена</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>24 000 ₽ за шесть недель. Можно двумя частями: половина сейчас, половина через три недели.</p>
+              <p>Входит все: шесть встреч, записи, практики на каждую неделю и чат, где психолог отвечает между встречами.</p>
+              <div class="btns"><span>Записаться</span><span>Что внутри по неделям</span></div>
+            </div>
+            <p class="step-b__note">Цена названа прямо. Те, кому дорого, уходят здесь и не занимают время психолога.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 4 · три вопроса</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Три коротких вопроса, чтобы понять, ваш это формат или нет.</p>
+              <p>Первый. Как давно отдых перестал помогать?</p>
+              <div class="btns"><span>Пару месяцев</span><span>Около года</span><span>Несколько лет</span></div>
+            </div>
+            <div class="bubble">
+              <p>Второй. Что из этого про вас сейчас?</p>
+              <div class="btns"><span>Тяжело просыпаться</span><span>Срываюсь на близких</span><span>Не могу отдыхать без вины</span><span>Ничего из этого</span></div>
+            </div>
+            <div class="bubble">
+              <p>Третий. Бывают панические состояния, бессонница каждую ночь или мысли, что все бессмысленно?</p>
+              <div class="btns"><span>Да, часто</span><span>Иногда</span><span>Нет</span></div>
+            </div>
+            <p class="step-b__note">Третий вопрос стоит ради одного ответа: да, часто. Такого человека нельзя вести в группу, и лучше узнать об этом здесь, чем на первой встрече при восьми свидетелях.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 5а · группа подходит</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Группа вам подойдет. Рядом будут люди с похожей историей, и для этой темы это работает лучше, чем разговор один на один.</p>
+              <p>Напишите, как к вам обращаться. Передам психологу, она ответит сегодня или завтра утром.</p>
+            </div>
+            <p class="step-b__note">Передам психологу работает лучше, чем оставьте заявку: человек чувствует, что идет к специалисту, и охотнее оставляет контакт.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 5б · группа не подходит</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Спасибо, что ответили честно. Сейчас группа не лучший выбор: в ней мало времени на каждого, а вам нужна отдельная работа.</p>
+              <p>Психолог берет такие запросы один на один. Передать ей ваш вопрос?</p>
+              <div class="btns"><span>Да, передайте</span><span>Пока почитаю канал</span></div>
+            </div>
+            <p class="step-b__note">У отказа есть продолжение: второй вариант и третий, в котором от человека ничего не требуют.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 6 · контакт</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Записала. Куда удобнее ответить: сюда или на почту?</p>
+              <div class="btns"><span>Сюда, в телеграм</span><span>На почту</span></div>
+            </div>
+            <div class="bubble">
+              <p>Готово. Психолог напишет в ближайший рабочий день.</p>
+              <p>Пока можно посмотреть, как проходят встречи и что будет на каждой неделе.</p>
+              <div class="btns"><span>Программа по неделям</span><span>Канал психолога</span></div>
+            </div>
+            <p class="step-b__note">Телефон не спрашиваем: в этой теме лишнее поле отпугивает сильнее, чем помогает.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 7 · через два дня</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Вы заходили почитать про группу и не дошли до конца. Если что-то осталось непонятным, напишите вопрос сюда, я передам психологу.</p>
+              <p>Старт 17 ноября, свободно три места из восьми.</p>
+              <div class="btns"><span>Задать вопрос</span><span>Больше не напоминать</span></div>
+            </div>
+            <p class="step-b__note">Одно напоминание, и у него есть кнопка выключить. Второго нет: оно превращает бота в спам, и человек блокирует весь канал.</p>
+          </div>
+        </div>
+
+        <div class="step-b">
+          <p class="step-b__id">Шаг 8 · написали своими словами</p>
+          <div class="step-b__body">
+            <div class="bubble">
+              <p>Я пока понимаю только кнопки ниже. Если вопрос срочный, напишите его одним сообщением, и психолог ответит сама.</p>
+              <div class="btns"><span>Вернуться в начало</span></div>
+            </div>
+            <p class="step-b__note">Ответ на то, что в сценарий не заложено. Без этого шага бот отвечает молчанием, и человек уходит.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="out">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Заявки</p>
+        <h2>Одна строка в таблице на каждого человека</h2>
+        <p>Таблица обновляется сама. Психолог открывает ее утром и видит, кому писать первым.</p>
+      </div>
+
+      <div class="table-scroll">
+        <table class="prices">
+          <caption>Поля, которые бот записывает</caption>
+          <thead>
+            <tr><th scope="col">Поле</th><th scope="col">Откуда берется</th><th scope="col">Пример</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Имя</td><td>Человек написал сам на шаге 5</td><td>Марина</td></tr>
+            <tr><td>Связь</td><td>Кнопка на шаге 6</td><td>телеграм</td></tr>
+            <tr><td>Сколько длится</td><td>Первый вопрос</td><td>несколько лет</td></tr>
+            <tr><td>Что беспокоит</td><td>Второй вопрос</td><td>не могу отдыхать без вины</td></tr>
+            <tr><td>Острое состояние</td><td>Третий вопрос</td><td>нет</td></tr>
+            <tr><td>Вердикт</td><td>Считает бот по ответам</td><td>группа подходит</td></tr>
+            <tr><td>Видел цену</td><td>Доходил ли до шага 3</td><td>да</td></tr>
+            <tr><td>Когда пришел</td><td>Время первого сообщения</td><td>12 ноября, 21:40</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stack stack--sm">
+        <h3>Границы бота</h3>
+        <p>Бот не принимает оплату, не ставит диагнозы и не советует ничего по состоянию. На любое свободное сообщение он отвечает, что передаст вопрос психологу, и правда передает, поэтому человек не остается без ответа, а психолог не читает переписку целиком.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Соберу такого бота под вашу задачу</h2>
+        <p>Напишу сценарий, соберу бота и подключу таблицу, куда падают заявки. Сценарий отдаю в документе, поэтому тексты вы сможете править без меня, а переделки в первый месяц входят в цену. Напишите в телеграм, и я скажу срок и цену.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://t.me/kris_tinav21">Написать в телеграм</a>
+          <a class="btn" href="mailto:christivas21@gmail.com">christivas21@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__links">
+      <a href="index.html">Портфолио</a>
+      <a href="content-case.html">Контент-план на месяц</a>
+      <a href="deck.html">Презентация для клиента</a>
+      <a href="expert.html">Лендинг онлайн-курса</a>
+      <a href="english.html">Уроки английского языка</a>
+      <a href="texts.html">Тексты до и после</a>
+      <a href="calc.html">Калькулятор</a>
+    </div>
+    <small>Собрано мной целиком: структура, тексты и оформление. Компания и герои вымышленные. Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var FLOW = {
+    start: {msgs:[
+      'Здравствуйте. Это бот группы по выгоранию, отвечает психолог лично.',
+      'Шесть недель, восемь человек, по вторникам в 19:00 по Москве, в зуме. Старт 17 ноября, свободно три места.'
+    ], btns:[['Что внутри по неделям','weeks'],['Сколько стоит','price'],['Подойдет ли мне','q1'],['Хочу один на один','solo']]},
+
+    weeks: {msgs:[
+      'По неделям так:\n1. Откуда взялся режим износа\n2. Границы\n3. Вина за отдых\n4. Тело\n5. Деньги\n6. Что дальше',
+      'Встреча полтора часа, камеру включать не обязательно. Записи остаются навсегда.'
+    ], btns:[['Сколько стоит','price'],['Подойдет ли мне','q1']]},
+
+    price: {msgs:[
+      '24 000 ₽ за шесть недель. Можно двумя частями: половина сейчас, половина через три недели.',
+      'Входит все: шесть встреч, записи, практики на каждую неделю и чат, где психолог отвечает между встречами.'
+    ], btns:[['Записаться','q1'],['Что внутри по неделям','weeks']]},
+
+    q1: {msgs:[
+      'Три коротких вопроса, чтобы понять, ваш это формат или нет.',
+      'Первый. Как давно отдых перестал помогать?'
+    ], btns:[['Пару месяцев','q2'],['Около года','q2'],['Несколько лет','q2']]},
+
+    q2: {msgs:['Второй. Что из этого про вас сейчас?'],
+      btns:[['Тяжело просыпаться','q3'],['Срываюсь на близких','q3'],['Не могу отдыхать без вины','q3'],['Ничего из этого','q3']]},
+
+    q3: {msgs:['Третий. Бывают панические состояния, бессонница каждую ночь или мысли, что все бессмысленно?'],
+      btns:[['Да, часто','no'],['Иногда','ok'],['Нет','ok']]},
+
+    ok: {msgs:[
+      'Группа вам подойдет. Рядом будут люди с похожей историей, и для этой темы это работает лучше, чем разговор один на один.',
+      'Напишите, как к вам обращаться. Передам психологу, она ответит сегодня или завтра утром.'
+    ], btns:[['Марина','contact']]},
+
+    no: {msgs:[
+      'Спасибо, что ответили честно. Сейчас группа не лучший выбор: в ней мало времени на каждого, а вам нужна отдельная работа.',
+      'Психолог берет такие запросы один на один. Передать ей ваш вопрос?'
+    ], btns:[['Да, передайте','sent'],['Пока почитаю канал','bye']]},
+
+    solo: {msgs:[
+      'Личные встречи по 50 минут, онлайн. Психолог берет новых людей через короткий разговор на 15 минут.',
+      'Передать ей ваш вопрос?'
+    ], btns:[['Да, передайте','sent'],['Сначала про группу','weeks']]},
+
+    contact: {msgs:['Записала. Куда удобнее ответить: сюда или на почту?'],
+      btns:[['Сюда, в телеграм','sent'],['На почту','sent']]},
+
+    sent: {msgs:[
+      'Готово. Психолог напишет в ближайший рабочий день.',
+      'Пока можно посмотреть, как проходят встречи и что будет на каждой неделе.'
+    ], end:'Заявка ушла в таблицу психолога'},
+
+    bye: {msgs:['Хорошо. Если передумаете, напишите сюда в любой момент.'], end:'Диалог закрыт без заявки'}
+  };
+
+  var feed = document.getElementById('demo-feed');
+  var btns = document.getElementById('demo-btns');
+  var stateEl = document.getElementById('demo-state');
+  var reset = document.getElementById('demo-reset');
+  if(!feed) return;
+  var busy = false;
+
+  function scroll(){ feed.scrollTop = feed.scrollHeight; }
+
+  function add(text, mine){
+    var el = document.createElement('div');
+    el.className = 'msg' + (mine ? ' msg--me' : '');
+    el.innerHTML = String(text).replace(/\n/g,'<br>');
+    feed.appendChild(el); scroll();
+  }
+
+  function typing(on){
+    var t = document.getElementById('typing');
+    if(on){
+      if(t) return;
+      t = document.createElement('div');
+      t.className='typing'; t.id='typing';
+      t.innerHTML='<i></i><i></i><i></i>';
+      feed.appendChild(t); scroll();
+    } else if(t){ t.remove(); }
+  }
+
+  var MAP = {start:'start',weeks:'about',price:'price',q1:'q',q2:'q',q3:'q',
+             ok:'ok',no:'no',solo:'no',bye:'no',contact:'contact',sent:'sent'};
+  var ORDER = ['start','about','price','q','ok','no','contact','sent'];
+  var mapEl = document.getElementById('map');
+
+  function mark(key){
+    if(!mapEl) return;
+    var now = MAP[key];
+    var k = ORDER.indexOf(now);
+    mapEl.querySelectorAll('[data-node]').forEach(function(el){
+      var n = el.dataset.node;
+      var j = ORDER.indexOf(n);
+      el.classList.toggle('is-now', n === now);
+      el.classList.toggle('is-done', j < k && n !== now);
+    });
+  }
+
+  function go(key){
+    var node = FLOW[key];
+    if(!node || busy) return;
+    mark(key);
+    busy = true;
+    btns.innerHTML = '';
+    var i = 0;
+    (function next(){
+      if(i >= node.msgs.length){
+        busy = false;
+        if(node.btns){
+          node.btns.forEach(function(b){
+            var el = document.createElement('button');
+            el.type='button'; el.textContent = b[0];
+            el.addEventListener('click', function(){ add(b[0], true); go(b[1]); });
+            btns.appendChild(el);
+          });
+        } else {
+          var d = document.createElement('span');
+          d.className='demo__done'; d.textContent = node.end || '';
+          btns.appendChild(d);
+          if(stateEl) stateEl.textContent = 'диалог завершен';
+        }
+        return;
+      }
+      typing(true);
+      setTimeout(function(){
+        typing(false);
+        add(node.msgs[i]); i++;
+        setTimeout(next, 260);
+      }, 650);
+    })();
+  }
+
+  function restart(){
+    feed.innerHTML=''; btns.innerHTML=''; busy=false;
+    if(stateEl) stateEl.textContent='онлайн';
+    go('start');
+  }
+  reset.addEventListener('click', restart);
+
+  // запускаем, когда блок появился на экране
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(e){
+      if(e[0].isIntersecting){ io.disconnect(); restart(); }
+    }, {threshold:.25});
+    io.observe(feed);
+  } else { restart(); }
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+</body>
+</html>

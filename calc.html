@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Калькулятор стоимости</title>
+<meta name="description" content="Соберите объем работ и увидите цену и срок до того, как напишете мне.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Geologica:wght@300;400;500&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0A0B0C; --bg-2:#101314; --ink:#F0F2EF; --muted:#8A9490;
+  --accent:#C8FF4D; --line:#1D2123; --line-2:#2B3335;
+  --display:"Oranienbaum",Georgia,"Times New Roman",serif;
+  --body:"Geologica",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --g:max(18px,env(safe-area-inset-left,0px));
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.wrap{width:100%;max-width:76rem;margin-inline:auto;padding-left:var(--g);padding-right:max(18px,env(safe-area-inset-right,0px))}
+.lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0}
+.lbl--acc{color:var(--accent)}
+
+.backbar{border-bottom:1px solid var(--line);background:var(--bg-2)}
+.backbar__in{padding-block:.6rem}
+.backbar a{font-family:var(--mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.backbar a:hover{color:var(--accent)}
+
+.hero{padding-block:clamp(2.2rem,6vw,4rem) clamp(1.5rem,4vw,2.5rem)}
+h1{margin:.6rem 0 0;font-family:var(--display);font-weight:400;font-size:clamp(2rem,7vw,4rem);line-height:1.02;max-width:16ch}
+.lead{margin:1rem 0 0;color:var(--muted);max-width:46ch}
+
+.layout{display:grid;grid-template-columns:1fr;gap:1.6rem;padding-bottom:4rem}
+@media(min-width:900px){.layout{grid-template-columns:1fr 20rem;gap:2.5rem;align-items:start}}
+
+/* строки услуг */
+.svc{border-top:1px solid var(--line)}
+.svc__row{display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem;align-items:center;padding-block:1rem;border-bottom:1px solid var(--line);transition:background .25s}
+.svc__row.on{background:rgba(200,255,77,.04)}
+.svc__name{display:flex;flex-direction:column;gap:.15rem}
+.svc__name b{font-weight:500;font-size:1.02rem}
+.svc__name span{font-size:.88rem;color:var(--muted)}
+.svc__ctl{display:flex;align-items:center;gap:.5rem}
+.svc__price{grid-column:1/-1;font-family:var(--mono);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.svc__row.on .svc__price{color:var(--accent)}
+
+.toggle{width:2.6rem;height:1.5rem;border-radius:1rem;border:1px solid var(--line-2);background:transparent;position:relative;cursor:pointer;flex:none;transition:border-color .25s,background .25s}
+.toggle::after{content:"";position:absolute;top:50%;left:.2rem;transform:translateY(-50%);width:1rem;height:1rem;border-radius:50%;background:var(--muted);transition:left .25s cubic-bezier(.19,1,.22,1),background .25s}
+.toggle[aria-pressed="true"]{border-color:var(--accent);background:rgba(200,255,77,.12)}
+.toggle[aria-pressed="true"]::after{left:calc(100% - 1.2rem);background:var(--accent)}
+
+.qty{display:flex;align-items:center;gap:.1rem;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
+.qty button{width:2rem;height:2rem;background:transparent;border:0;color:var(--ink);font-size:1.1rem;line-height:1;cursor:pointer;transition:background .2s,color .2s}
+.qty button:hover{background:rgba(200,255,77,.12);color:var(--accent)}
+.qty input{width:3.2rem;height:2rem;background:transparent;border:0;color:var(--ink);text-align:center;font-family:var(--mono);font-size:.78rem;-moz-appearance:textfield}
+.qty input::-webkit-outer-spin-button,.qty input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.qty[hidden]{display:none}
+
+/* итог */
+.total{position:sticky;top:1rem;background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:1.3rem;display:flex;flex-direction:column;gap:.9rem}
+.total__sum{font-family:var(--display);font-size:clamp(2.2rem,8vw,3.4rem);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.mix{display:flex;gap:2px;height:.7rem;border-radius:2px;overflow:hidden;background:var(--line)}
+.mix i{display:block;height:100%;width:0;transition:width .5s cubic-bezier(.19,1,.22,1)}
+.mix[hidden]{display:none}
+.total__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem;border-top:1px solid var(--line);padding-top:.8rem;max-height:14rem;overflow:auto}
+.total__list li b{display:inline-block;width:.5rem;height:.5rem;border-radius:1px;margin-right:.45rem}
+.total__list li{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem}
+.total__list li span:first-child{color:var(--muted)}
+.total__list li span:last-child{font-family:var(--mono);font-size:.7rem;white-space:nowrap}
+.total__empty{color:var(--muted);font-size:.9rem}
+.total__time{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;border-top:1px solid var(--line);padding-top:.8rem}
+.total__time b{font-weight:500}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--body);font-weight:500;font-size:.95rem;padding:.85rem 1.2rem;border-radius:3px;border:1px solid var(--accent);background:var(--accent);color:#0A0B0C;cursor:pointer;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn[disabled]{opacity:.35;cursor:default}
+.note{font-size:.82rem;color:var(--muted)}
+.foot{border-top:1px solid var(--line);background:var(--bg-2);padding-block:1.6rem;padding-bottom:calc(1.6rem + env(safe-area-inset-bottom,0px))}
+.foot__in{display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;justify-content:space-between;align-items:center}
+.foot a{color:var(--muted);margin-right:1.1rem;font-size:.88rem}
+.foot a:hover{color:var(--accent)}
+.foot small{color:var(--muted);font-size:.78rem}
+.said{font-family:var(--mono);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);min-height:1rem}
+
+/* на узком экране итог живет полосой у нижнего края, чтобы сумма была видна,
+   пока включаешь услуги */
+@media(max-width:899px){
+  .layout{padding-bottom:1.2rem}
+  .total{
+    position:sticky;top:auto;bottom:0;z-index:6;
+    flex-direction:row;align-items:center;flex-wrap:wrap;gap:.3rem .9rem;
+    border-radius:4px 4px 0 0;border-bottom:0;
+    padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -14px 30px rgba(10,11,12,.6);
+  }
+  .total > div:first-child{display:flex;align-items:baseline;gap:.6rem}
+  .total__sum{font-size:1.7rem}
+  .total__list,.total__time,.note,.btn--ghost,.mix{display:none}
+  .total .btn{margin-left:auto}
+  .said{width:100%;min-height:0}
+}
+
+/* курсор и появление блоков */
+.cursor{position:fixed;top:0;left:0;z-index:95;pointer-events:none;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--accent);background:transparent;transition:width .25s ease,height .25s ease}
+@media(hover:none),(pointer:coarse){.cursor{display:none}}
+.has-reveal .reveal{opacity:0;transform:translateY(20px)}
+.has-reveal .reveal.is-in{opacity:1;transform:none;transition:opacity .75s cubic-bezier(.19,1,.22,1),transform .75s cubic-bezier(.19,1,.22,1)}
+@media(prefers-reduced-motion:reduce){.has-reveal .reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar"><div class="wrap backbar__in"><a href="index.html">&#8592; Портфолио Кристины Васильевой</a></div></div>
+
+<section class="wrap hero">
+  <p class="lbl lbl--acc">Калькулятор</p>
+  <h1>Соберите объем и увидите цену</h1>
+  <p class="lead">Включите то, что нужно, и поставьте количество. Цены здесь те же, что в моем прайсе, поэтому сумма выйдет близкой к настоящей. Точную я назову, когда увижу продукт и аудиторию.</p>
+</section>
+
+<div class="wrap layout">
+  <div class="svc" id="svc"></div>
+
+  <aside class="total">
+    <div>
+      <p class="lbl">Примерно</p>
+      <p class="total__sum" id="sum">0 ₽</p>
+    </div>
+    <div class="mix" id="mix" hidden aria-hidden="true"></div>
+    <ul class="total__list" id="lines"><li class="total__empty">Пока ничего не выбрано</li></ul>
+    <div class="total__time"><span>Срок</span><b id="time">-</b></div>
+    <button class="btn" id="copy" disabled>Скопировать заявку</button>
+    <p class="said" id="said"></p>
+    <a class="btn btn--ghost" href="https://t.me/kris_tinav21">Написать в телеграм</a>
+    <p class="note">Заявка копируется в буфер обмена. Вставьте ее в сообщение, и я отвечу в тот же день.</p>
+  </aside>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div>
+      <a href="index.html">Портфолио</a>
+      <a href="content-case.html">Контент-план</a>
+      <a href="deck.html">Презентация</a>
+      <a href="bot.html">Чат-бот</a>
+      <a href="expert.html">Лендинг курса</a>
+      <a href="english.html">Английский</a>
+      <a href="texts.html">Тексты до и после</a>
+    </div>
+    <small>Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+<script>
+(function(){
+  // u1 - как пишем после "за", f - три формы для счета
+  var SERVICES = [
+    {id:'smm',   n:'Ведение соцсетей',           d:'контент-план, тексты, оформление, публикации', u1:'площадку',       f:['площадка','площадки','площадок'],            price:13000, qty:1, max:5,  days:30},
+    {id:'cm',    n:'Контент-менеджмент',         d:'публикации по вашему готовому плану',          u1:'месяц',          f:['месяц','месяца','месяцев'],                  price:5000,  qty:1, max:12, days:30},
+    {id:'copy',  n:'Копирайтинг',                d:'посты, описания, рассылки',                    u1:'тысячу знаков',  f:['тысяча знаков','тысячи знаков','тысяч знаков'], price:300, qty:5, max:100, days:3},
+    {id:'edit',  n:'Монтаж вертикального видео', d:'сборка из дублей, субтитры, цвет',             u1:'ролик',          f:['ролик','ролика','роликов'],                  price:500,   qty:4, max:60, days:2},
+    {id:'ugc',   n:'UGC-ролик на английском',    d:'снимаю сама по вашему сценарию',               u1:'ролик',          f:['ролик','ролика','роликов'],                  price:500,   qty:4, max:60, days:3},
+    {id:'ads',   n:'Таргет в инстаграме и вк',   d:'ведение кабинета, тексты и макеты',            u1:'месяц',          f:['месяц','месяца','месяцев'],                  price:13000, qty:1, max:12, days:30},
+    {id:'direct',n:'Настройка Яндекс.Директа',   d:'сбор запросов, объявления, запуск',            u1:'запуск',         f:['запуск','запуска','запусков'],               price:6000,  qty:1, max:5,  days:7},
+    {id:'bot',   n:'Чат-бот',                    d:'телеграм или инстаграм, сбор заявок',          u1:'бота',           f:['бот','бота','ботов'],                        price:3500,  qty:1, max:5,  days:7},
+    {id:'deck',  n:'Оформление презентации',     d:'до 15 слайдов',                                u1:'презентацию',    f:['презентация','презентации','презентаций'],   price:2000,  qty:1, max:10, days:5},
+    {id:'page',  n:'Страница под услугу',        d:'лендинг на один продукт, тексты и верстка',    u1:'страницу',       f:['страница','страницы','страниц'],             price:8000,  qty:1, max:5,  days:10},
+    {id:'eng',   n:'Английский язык',            d:'разговорный, от 16 лет, онлайн',               u1:'занятие',        f:['занятие','занятия','занятий'],               price:1000,  qty:8, max:40, days:30}
+  ];
+
+  function plural(n, f){
+    var a = n % 10, b = n % 100;
+    if (a === 1 && b !== 11) return f[0];
+    if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) return f[1];
+    return f[2];
+  }
+
+  var state = {};
+  SERVICES.forEach(function(s){ state[s.id] = {on:false, qty:s.qty}; });
+
+  var box = document.getElementById('svc');
+  var sumEl = document.getElementById('sum');
+  var linesEl = document.getElementById('lines');
+  var timeEl = document.getElementById('time');
+  var copyBtn = document.getElementById('copy');
+  var saidEl = document.getElementById('said');
+
+  function money(n){ return n.toLocaleString('ru-RU').replace(/ /g,' ') + ' ₽'; }
+
+  function render(){
+    SERVICES.forEach(function(s){
+      var st = state[s.id];
+      var row = document.getElementById('row-'+s.id);
+      row.classList.toggle('on', st.on);
+      row.querySelector('.toggle').setAttribute('aria-pressed', st.on ? 'true' : 'false');
+      var q = row.querySelector('.qty');
+      q.hidden = !st.on;
+      q.querySelector('input').value = st.qty;
+      row.querySelector('.svc__price').textContent =
+        st.on ? money(s.price) + ' за ' + s.u1 + ' · итого ' + money(s.price*st.qty)
+              : money(s.price) + ' за ' + s.u1;
+    });
+
+    var total = 0, days = 0, lines = [];
+    SERVICES.forEach(function(s){
+      var st = state[s.id];
+      if(!st.on) return;
+      var sub = s.price * st.qty;
+      total += sub;
+      days = Math.max(days, s.days);
+      lines.push({n:s.n + ' · ' + st.qty + ' ' + plural(st.qty, s.f), v:money(sub), sum:sub});
+    });
+
+    // полоса состава суммы: видно, что занимает основную часть бюджета
+    lines.forEach(function(l, i){ l.c = 'hsl(' + (76 + i*4) + ',' + (88 - i*6) + '%,' + (72 - i*9) + '%)'; });
+    var mixEl = document.getElementById('mix');
+    if (mixEl) {
+      mixEl.hidden = !lines.length;
+      if (lines.length) {
+        if (mixEl.children.length !== lines.length) {
+          mixEl.innerHTML = lines.map(function(){ return '<i></i>'; }).join('');
+        }
+        lines.forEach(function(l, i){
+          var el = mixEl.children[i];
+          el.style.background = l.c;
+          el.style.width = (l.sum / total * 100) + '%';
+          el.title = l.n + ' · ' + l.v;
+        });
+      }
+    }
+
+    sumEl.textContent = total ? 'от ' + money(total) : '0 ₽';
+    timeEl.textContent = total ? (days >= 30 ? 'месяц работы' : 'примерно ' + days + ' дн.') : "-";
+    copyBtn.disabled = !total;
+
+    if(!lines.length){
+      linesEl.innerHTML = '<li class="total__empty">Пока ничего не выбрано</li>';
+    } else {
+      linesEl.innerHTML = lines.map(function(l){
+        return '<li><span><b style="background:'+l.c+'"></b>'+l.n+'</span><span>'+l.v+'</span></li>';
+      }).join('');
+    }
+  }
+
+  SERVICES.forEach(function(s){
+    var row = document.createElement('div');
+    row.className = 'svc__row';
+    row.id = 'row-'+s.id;
+    row.innerHTML =
+      '<div class="svc__name"><b>'+s.n+'</b><span>'+s.d+'</span></div>'+
+      '<div class="svc__ctl">'+
+        '<div class="qty" hidden>'+
+          '<button type="button" data-step="-1" aria-label="Меньше">&#8722;</button>'+
+          '<input type="number" inputmode="numeric" min="1" max="'+s.max+'" value="'+s.qty+'" aria-label="Количество">'+
+          '<button type="button" data-step="1" aria-label="Больше">+</button>'+
+        '</div>'+
+        '<button type="button" class="toggle" aria-pressed="false" aria-label="Включить услугу '+s.n+'"></button>'+
+      '</div>'+
+      '<p class="svc__price"></p>';
+    box.appendChild(row);
+
+    row.querySelector('.toggle').addEventListener('click', function(){
+      state[s.id].on = !state[s.id].on;
+      render();
+    });
+    row.querySelectorAll('.qty button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var step = parseInt(b.dataset.step, 10);
+        var v = state[s.id].qty + step;
+        state[s.id].qty = Math.min(s.max, Math.max(1, v));
+        render();
+      });
+    });
+    row.querySelector('.qty input').addEventListener('input', function(e){
+      var v = parseInt(e.target.value, 10);
+      state[s.id].qty = isNaN(v) ? 1 : Math.min(s.max, Math.max(1, v));
+      render();
+    });
+  });
+
+  copyBtn.addEventListener('click', function(){
+    var lines = [], total = 0;
+    SERVICES.forEach(function(s){
+      var st = state[s.id];
+      if(!st.on) return;
+      var sub = s.price*st.qty;
+      total += sub;
+      lines.push('- ' + s.n + ': ' + st.qty + ' ' + plural(st.qty, s.f) + ' = ' + money(sub));
+    });
+    var text = 'Здравствуйте! Вот что получилось в калькуляторе на сайте:\n\n' + lines.join('\n') +
+               '\n\nИтого примерно от ' + money(total) + '\n\nРасскажу подробнее про продукт и аудиторию.';
+    function done(){ saidEl.textContent = 'Скопировано, вставляйте в телеграм'; setTimeout(function(){ saidEl.textContent=''; }, 4000); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){ saidEl.textContent = 'Не вышло скопировать, выделите вручную'; }
+      document.body.removeChild(ta);
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

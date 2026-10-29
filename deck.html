@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Презентация для клиента</title>
+<meta name="description" content="Пример оформления презентации: коммерческое предложение на десять слайдов, структура и тексты.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@500;700;800&family=Scada:wght@400;700&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<style>
+/* Мир слайда: почти черная типографика на холодной бумаге, один желтый сигнал. */
+:root {
+  color-scheme: light;
+  --paper:        #ECEEEF;
+  --surface:      #FFFFFF;
+  --surface-sunk: #DFE3E5;
+  --ink:          #0E1113;
+  --muted:        #5A646A;
+  --line:         #CBD2D6;
+  --accent:       #0E1113;
+  --accent-ink:   #FFFFFF;
+  --accent-soft:  #DFE3E5;
+  --signal:       #E3B505;
+  --display: "Alumni Sans", "Haettenschweiler", "Arial Narrow", Arial, sans-serif;
+  --body:    "Scada", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:    "Martian Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper:        #0D0F10;
+    --surface:      #16191B;
+    --surface-sunk: #1C2022;
+    --ink:          #EBEEEF;
+    --muted:        #98A2A8;
+    --line:         #272C2F;
+    --accent:       #EBEEEF;
+    --accent-ink:   #0D0F10;
+    --accent-soft:  #1C2022;
+    --signal:       #F2C94C;
+  }
+}
+h1, h2, h3 { font-weight: 800; letter-spacing: -.005em; line-height: .96; }
+h1 { font-size: clamp(3rem, 9vw, 5.6rem); }
+h2 { font-size: clamp(2rem, 5.5vw, 3.2rem); }
+h3 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); }
+.slide h3 { font-size: clamp(1.3rem, 5.4cqi, 3.1rem); }
+.slide__big { font-family: var(--display); font-weight: 800; letter-spacing: -.005em; font-size: clamp(1.5rem, 5.6cqi, 3rem); }
+.lede { font-size: 1.05rem; }
+
+/* желтый на светлом не читался, поэтому надписи-рубрики стали желтыми плашками */
+.eyebrow {
+  display: inline-flex; align-items: center; align-self: flex-start;
+  background: var(--signal); color: #0E1113;
+  padding: .32rem .62rem .28rem; letter-spacing: .14em; font-weight: 500;
+}
+.slide__lead { color: var(--ink); display: flex; align-items: center; gap: .45rem; }
+.slide__lead::before { content: ""; width: .5rem; height: .5rem; background: var(--signal); flex: none; }
+.btn { border-radius: 0; }
+.slide, .card, .tile { border-radius: 0; }
+.slide__n { color: var(--signal); }
+.slide--cover { background: var(--ink); border-color: var(--ink); }
+.slide--cover h3, .slide--cover p { color: var(--paper); }
+.slide--cover .slide__lead, .slide--cover .slide__n { color: var(--signal); opacity: 1; }
+.slide__big { color: var(--ink); }
+.steps li::before { color: var(--ink); border-color: var(--ink); background: var(--signal); }
+.pains li::before { background: var(--signal); }
+.cta { background: var(--ink); }
+.cta h2, .cta p { color: var(--paper); }
+.cta .btn { background: var(--signal); color: var(--ink); border-color: var(--signal); }
+
+/* ---------- листалка слайдов ---------- */
+/* без js все десять слайдов просто лежат лентой, как раньше */
+.deck.is-player{display:block;position:relative;overflow:hidden}
+.deck.is-player .slide{display:none}
+.deck.is-player .slide.now{display:flex;animation:slidein .4s cubic-bezier(.19,1,.22,1) both}
+@keyframes slidein{from{opacity:0;transform:translateX(var(--from,24px))}to{opacity:1;transform:none}}
+.deckbar{display:flex;align-items:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap}
+.deckbar button{
+  width:2.6rem;height:2.6rem;flex:none;display:grid;place-items:center;cursor:pointer;
+  background:transparent;border:1px solid var(--line);color:var(--ink);
+  font-size:1.1rem;line-height:1;transition:background .2s,color .2s,border-color .2s;
+}
+.deckbar button:hover:not([disabled]){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.deckbar button[disabled]{opacity:.3;cursor:default}
+.deckbar__n{font-family:var(--mono);font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.deckbar__dots{display:flex;gap:.3rem;flex-wrap:wrap;margin-left:auto}
+.deckbar__dots i{width:1.5rem;height:3px;background:var(--line);display:block;cursor:pointer;transition:background .2s}
+.deckbar__dots i.on{background:var(--signal)}
+.deckbar__hint{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);width:100%}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar">
+  <div class="wrap backbar__in">
+    <a href="index.html">← Портфолио Кристины Васильевой</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__name" href="index.html">Кристина Васильева</a>
+    <nav class="topbar__nav">
+      <a href="#task">Подход</a>
+      <a href="#deck">Слайды</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap stack stack--lg">
+      <p class="eyebrow">Оформление презентаций</p>
+      <h1>Коммерческое предложение на десять слайдов</h1>
+      <p class="lede">Студия растяжки предлагает компаниям занятия для сотрудников. Презентацию отправляют холодно в почту эйчару, который откроет ее между двумя созвонами и за несколько секунд решит, читать дальше или закрыть.</p>
+      <div class="btn-row">
+        <a class="btn" href="#deck">Смотреть слайды</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="task">
+    <div class="wrap stack stack--lg">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Подход</p>
+        <h2>Как я собираю такую презентацию</h2>
+      </div>
+      <p>Холодное письмо смотрят секунд десять. Поэтому на первом экране стоит боль аудитории: ноет спина, затекает шея, к вечеру нет сил. Дальше решение, потом цены, потом что потребуется от компании. История и состав тренеров уходят в конец, на холодном контакте их читают последними.</p>
+    </div>
+  </section>
+
+  <section class="band" id="deck">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Слайды</p>
+        <h2>Десять слайдов целиком</h2>
+        <p>Листайте кнопками, точками под слайдами или смахиванием на телефоне.</p>
+      </div>
+
+      <div class="deck">
+
+        <div class="slide slide--cover">
+          <span class="slide__n">01</span>
+          <p class="slide__lead">Коммерческое предложение</p>
+          <h3>Растяжка и здоровая спина для вашей команды</h3>
+          <p>Занятия в вашем офисе или в нашем зале, группы до восьми человек, одно занятие 60 минут.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">02</span>
+          <p class="slide__lead">С чего начинается разговор</p>
+          <h3>Восемь часов за столом заканчиваются одинаково</h3>
+          <ul>
+            <li>К вечеру ноют шея и поясница, а к пятнице это копится</li>
+            <li>Сотрудник не пойдет в зал после работы, потому что сил уже нет</li>
+            <li>Корпоративный абонемент в фитнес берут единицы, а платит компания за всех</li>
+          </ul>
+          <p class="slide__note">В понедельник человек садится за стол уже уставшим, и неделя начинается с этого.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">03</span>
+          <p class="slide__lead">Решение</p>
+          <h3>Занятие приходит к сотруднику само</h3>
+          <p>Тренер приезжает в офис в рабочее время, занятие идет час, никуда ехать и собираться с вечера не нужно. Коврики и инвентарь привозим свои.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">04</span>
+          <p class="slide__lead">Форматы</p>
+          <h3>Три формата на выбор</h3>
+          <div class="slide__cols">
+            <div><span class="slide__big">В офисе</span><span class="slide__cap">Тренер приезжает к вам. Нужна свободная комната от 25 квадратных метров</span></div>
+            <div><span class="slide__big">В студии</span><span class="slide__cap">Сотрудники приходят к нам по корпоративным местам в расписании</span></div>
+            <div><span class="slide__big">Гибрид</span><span class="slide__cap">Раз в неделю в офисе, второй раз желающие приходят в студию</span></div>
+          </div>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">05</span>
+          <p class="slide__lead">Как проходит занятие</p>
+          <h3>Час, после которого можно вернуться к работе</h3>
+          <ul>
+            <li>10 минут разогрев, без прыжков и без шума для соседних кабинетов</li>
+            <li>30 минут работа с шеей, грудным отделом и поясницей</li>
+            <li>15 минут растяжка ног и спины</li>
+            <li>5 минут дыхание и восстановление, после него можно сразу идти на встречу</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">06</span>
+          <p class="slide__lead">Что нужно от вас</p>
+          <h3>Комната, час и список участников</h3>
+          <ul>
+            <li>Свободное помещение от 25 квадратных метров, подойдет переговорная со сдвинутыми столами</li>
+            <li>Один час в неделю в рабочем графике, обычно берут 12:00 или 17:00</li>
+            <li>Список участников до 8 человек на группу</li>
+            <li>Короткая анкета о здоровье: бланк пришлем сами, заполнить нужно до первого занятия</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">07</span>
+          <p class="slide__lead">Стоимость</p>
+          <h3>Оплата только за занятия, которые прошли</h3>
+          <div class="slide__cols">
+            <div><span class="slide__big">6 400 ₽</span><span class="slide__cap">Одно занятие в офисе, группа до 8 человек</span></div>
+            <div><span class="slide__big">23 000 ₽</span><span class="slide__cap">Четыре занятия в месяц, одно в неделю</span></div>
+            <div><span class="slide__big">42 000 ₽</span><span class="slide__cap">Восемь занятий в месяц, два в неделю</span></div>
+          </div>
+          <p class="slide__note">Считаем по факту: если занятие перенесли или отменили за сутки, оно не оплачивается.</p>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">08</span>
+          <p class="slide__lead">Документы и отчетность</p>
+          <h3>Закрывающие документы приходят вовремя</h3>
+          <ul>
+            <li>Договор, счет и закрывающие документы каждый месяц</li>
+            <li>График занятий согласуем заранее и присылаем в календарь ответственному</li>
+            <li>После каждого месяца отправляем отчет о посещаемости по группам</li>
+            <li>Если у сотрудника травма или ограничение, тренер подбирает замену упражнения на месте</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <span class="slide__n">09</span>
+          <p class="slide__lead">Кто будет вести</p>
+          <h3>Двое тренеров, оба ведут занятия лично</h3>
+          <ul>
+            <li>Тренер по растяжке: 12 лет в танцах, 9 лет тренером, ведет группы начинающих</li>
+            <li>Тренер по работе со спиной: образование в адаптивной физкультуре, 6 лет работы с людьми после травм</li>
+          </ul>
+          <p class="slide__note">Замену тренера без предупреждения не делаем: к своему привыкают, и это часть результата.</p>
+        </div>
+
+        <div class="slide slide--cover">
+          <span class="slide__n">10</span>
+          <p class="slide__lead">Следующий шаг</p>
+          <h3>Первое занятие бесплатно</h3>
+          <p>Приедем к вам, проведем час с любой группой и после этого обсудим формат. Ответьте на это письмо или напишите в телеграм, подберем дату на следующей неделе.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Соберу такую презентацию под вашу задачу</h2>
+        <p>Отдаю редактируемые слайды и pdf для отправки, поэтому поменять цифру или собрать версию под другого клиента вы сможете сами. Напишите в телеграм: посмотрю, что и кому вы предлагаете, и назову срок и цену.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://t.me/kris_tinav21">Написать в телеграм</a>
+          <a class="btn" href="mailto:christivas21@gmail.com">christivas21@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__links">
+      <a href="index.html">Портфолио</a>
+      <a href="content-case.html">Контент-план на месяц</a>
+      <a href="bot.html">Сценарий чат-бота</a>
+      <a href="expert.html">Лендинг онлайн-курса</a>
+      <a href="english.html">Уроки английского языка</a>
+    </div>
+    <small>Собрано мной целиком: структура, тексты и оформление. Компания и герои вымышленные. Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var deck = document.querySelector('.deck');
+  if(!deck) return;
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  if(slides.length < 2) return;
+
+  deck.classList.add('is-player');
+  var i = 0;
+
+  var bar = document.createElement('div');
+  bar.className = 'deckbar';
+  bar.innerHTML =
+    '<button type="button" id="dk-prev" aria-label="Предыдущий слайд">&#8592;</button>'+
+    '<button type="button" id="dk-next" aria-label="Следующий слайд">&#8594;</button>'+
+    '<span class="deckbar__n" id="dk-n"></span>'+
+    '<span class="deckbar__dots" id="dk-dots"></span>'+
+    '<span class="deckbar__hint">Листайте стрелками на клавиатуре или смахиванием</span>';
+  deck.parentNode.insertBefore(bar, deck.nextSibling);
+
+  var prev = document.getElementById('dk-prev');
+  var next = document.getElementById('dk-next');
+  var nEl  = document.getElementById('dk-n');
+  var dots = document.getElementById('dk-dots');
+
+  slides.forEach(function(_, k){
+    var d = document.createElement('i');
+    d.addEventListener('click', function(){ show(k); });
+    dots.appendChild(d);
+  });
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function show(k, dir){
+    i = Math.max(0, Math.min(slides.length-1, k));
+    slides.forEach(function(sl, idx){
+      sl.classList.toggle('now', idx === i);
+      if(idx === i) sl.style.setProperty('--from', (dir === -1 ? '-24px' : '24px'));
+    });
+    nEl.textContent = pad(i+1) + ' / ' + pad(slides.length);
+    prev.disabled = i === 0;
+    next.disabled = i === slides.length-1;
+    Array.prototype.forEach.call(dots.children, function(d, idx){ d.classList.toggle('on', idx === i); });
+  }
+
+  prev.addEventListener('click', function(){ show(i-1, -1); });
+  next.addEventListener('click', function(){ show(i+1, 1); });
+
+  document.addEventListener('keydown', function(e){
+    var r = deck.getBoundingClientRect();
+    if(r.bottom < 0 || r.top > innerHeight) return;
+    if(e.key === 'ArrowLeft'){ show(i-1,-1); }
+    if(e.key === 'ArrowRight'){ show(i+1,1); }
+  });
+
+  var x0 = null;
+  deck.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  deck.addEventListener('touchend', function(e){
+    if(x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx) > 45) show(dx < 0 ? i+1 : i-1, dx < 0 ? 1 : -1);
+    x0 = null;
+  }, {passive:true});
+
+  show(0);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+</body>
+</html>

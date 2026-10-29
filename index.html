@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Кристина Васильева</title>
+<meta name="description" content="Соцсети, тексты, монтаж вертикального видео, таргет, чат-боты и страницы под услугу. Разговорный английский и UGC-ролики на английском. Дистанционно.">
+<script>document.documentElement.className+=" has-js";setTimeout(function(){var c=document.getElementById("curtain");if(c)c.style.display="none";},3500);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Geologica:wght@300;400;500&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+/* Кинематографичная темная сцена. Заголовки - Ораниенбаум, контрастная антиква
+   с единственным начертанием, поэтому иерархия строится размером, а не жирностью.
+   Цвет живет только в акценте и в проявляющихся скриншотах работ. */
+
+:root{
+  --bg:#0A0B0C; --bg-2:#101314; --ink:#F0F2EF; --muted:#8A9490;
+  --accent:#C8FF4D; --line:#1D2123; --line-2:#2B3335;
+  --display:"Oranienbaum",Georgia,"Times New Roman",serif;
+  --body:"Geologica",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --g:max(18px,env(safe-area-inset-left,0px));
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.wrap{width:100%;max-width:76rem;margin-inline:auto;padding-left:var(--g);padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+.lbl{font-family:var(--mono);font-size:.6rem;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0}
+.lbl--acc{color:var(--accent)}
+
+/* ---------- занавес ---------- */
+.curtain{display:none}
+.has-js .curtain{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;background:var(--bg-2);padding:var(--g) var(--g) calc(var(--g) + env(safe-area-inset-bottom,0px));will-change:transform}
+.curtain__n{font-family:var(--display);font-size:clamp(3.5rem,16vw,11rem);line-height:.75;font-variant-numeric:tabular-nums;color:var(--ink)}
+.curtain__t{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-bottom:.4rem}
+
+/* ---------- курсор ---------- */
+.cursor{position:fixed;top:0;left:0;z-index:95;pointer-events:none;width:12px;height:12px;border-radius:50%;background:#fff;mix-blend-mode:difference;transition:width .25s ease,height .25s ease}
+.cursor--big{width:48px;height:48px}
+@media(hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ---------- сцена ---------- */
+.scene{position:relative;min-height:94svh;display:flex;flex-direction:column;justify-content:space-between;gap:1.6rem;overflow:hidden;padding-bottom:2rem}
+.bgs{position:absolute;inset:0;z-index:0}
+.bgs figure{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .55s ease,transform 7s linear}
+.bgs figure.on{opacity:.62;transform:scale(1.07)}
+.bgs img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08)}
+.scene::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(10,11,12,.96) 0%,rgba(10,11,12,.86) 40%,rgba(10,11,12,.42) 100%),linear-gradient(180deg,rgba(10,11,12,.25) 0%,rgba(10,11,12,.55) 60%,rgba(10,11,12,.9) 100%)}
+.scene > *{position:relative;z-index:2}
+
+.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:1.3rem}
+.bar__name{font-family:var(--display);font-size:1.15rem;letter-spacing:.01em}
+.pill{display:inline-flex;align-items:center;gap:.5rem}
+.pill i{width:.4rem;height:.4rem;border-radius:50%;background:var(--accent);display:block;animation:bl 2.6s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.25}}
+
+.title{margin:0;font-family:var(--display);font-weight:400;letter-spacing:-.005em;line-height:.98;font-size:clamp(2.6rem,10.5vw,7rem);max-width:13ch}
+.title span{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.title span i{display:block;font-style:normal;animation:up 1.1s cubic-bezier(.19,1,.22,1) both}
+.title span:nth-child(2) i{animation-delay:.09s}
+.title span:nth-child(3) i{animation-delay:.18s}
+.title em{font-style:normal;color:var(--accent);position:relative;display:inline-block}
+.scribble{position:absolute;left:-.01em;bottom:-.09em;width:100.5%;height:.16em;overflow:visible}
+.scribble path{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
+.has-js .scribble path{stroke-dasharray:230;stroke-dashoffset:230;animation:scribble 1s cubic-bezier(.4,.1,.2,1) 1.05s forwards}
+@keyframes scribble{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.has-js .scribble path{animation:none;stroke-dashoffset:0}}
+@keyframes up{from{transform:translateY(106%)}to{transform:none}}
+.lead{margin:1.1rem 0 0;max-width:40ch;color:var(--muted);font-size:clamp(1rem,2.2vw,1.15rem)}
+
+.list{border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:2.4rem 1fr auto;gap:.9rem;align-items:center;padding-block:.9rem;border-bottom:1px solid var(--line);transition:color .3s,border-color .3s,padding-left .35s cubic-bezier(.19,1,.22,1)}
+.item__n{font-family:var(--mono);font-size:.6rem;color:var(--muted)}
+.item__t{font-family:var(--display);font-size:clamp(1.15rem,3.4vw,1.9rem);letter-spacing:.005em}
+.item__go{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .3s}
+.item:hover{color:var(--accent);border-color:#39491F;padding-left:.6rem}
+.item:hover .item__n,.item:hover .item__go{color:var(--accent);opacity:1}
+
+/* ---------- бегущая строка ---------- */
+.ticker{position:relative;background:var(--ink);color:var(--bg);overflow:hidden;user-select:none;-webkit-user-select:none}
+.ticker__row{display:flex;width:max-content;will-change:transform}
+.ticker__row a{
+  font-family:var(--display);font-size:clamp(1rem,2.4vw,1.5rem);
+  padding:.6rem 0;white-space:nowrap;text-decoration:none;color:inherit;
+  transition:opacity .2s ease;
+}
+.ticker__row a::after{content:"/";padding-inline:1.1rem;opacity:.35}
+.ticker__row a:hover{opacity:.55}
+.ticker__row a:hover{text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1px}
+
+/* подписи на краях объясняют управление и видны всегда */
+.ticker__edge{
+  position:absolute;top:0;bottom:0;z-index:2;pointer-events:none;
+  display:flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;
+  color:rgba(11,17,14,.55);transition:color .3s ease;
+}
+.ticker__edge b{font-weight:400;font-size:.8rem;letter-spacing:0}
+.ticker__edge{background:var(--ink)}
+.ticker__edge--l{left:0;padding-left:var(--g);padding-right:.5rem}
+.ticker__edge--r{right:0;padding-right:max(18px,env(safe-area-inset-right,0px));padding-left:.5rem}
+/* мягкий хвост наружу, чтобы плашка не обрубала строку */
+.ticker__edge--l::after,.ticker__edge--r::before{
+  content:"";position:absolute;top:0;bottom:0;width:2.6rem;
+}
+.ticker__edge--l::after{left:100%;background:linear-gradient(90deg,var(--ink),transparent)}
+.ticker__edge--r::before{right:100%;background:linear-gradient(270deg,var(--ink),transparent)}
+.ticker:hover .ticker__edge{color:rgba(11,17,14,.9)}
+@media(max-width:620px){.ticker__edge span{display:none}.ticker__edge--l{padding-right:1rem}.ticker__edge--r{padding-left:1rem}}
+
+
+/* ---------- полосы ---------- */
+.band{padding-block:clamp(3.2rem,8vw,6rem)}
+.band--sunk{background:var(--bg-2)}
+.head{display:flex;flex-direction:column;gap:.75rem;margin-bottom:clamp(2rem,5vw,3.2rem)}
+h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(1.9rem,6vw,3.6rem);line-height:1.02;letter-spacing:-.005em;max-width:17ch}
+h3{margin:0;font-family:var(--display);font-weight:400;font-size:1.2rem;letter-spacing:.005em}
+p{margin:0;max-width:58ch}
+.sub{color:var(--muted);max-width:50ch}
+.reveal{will-change:transform,opacity}
+
+/* что я делаю */
+.do{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:900px){.do{grid-template-columns:15rem 1fr;gap:0 3rem}}
+.do__side{display:none}
+@media(min-width:900px){
+  .do__side{display:block;position:sticky;top:5rem;align-self:start}
+  .do__side ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+  .do__side li{font-family:var(--mono);font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+  .do__side li.on{color:var(--accent)}
+}
+.do__list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.do__g{padding-block:clamp(1.5rem,3vw,2.2rem);border-bottom:1px solid var(--line)}
+.do__g ul{list-style:none;margin:1rem 0 0;padding:0;display:flex;flex-direction:column;gap:.95rem}
+.do__g li{position:relative;padding-left:1.15rem;font-size:1.05rem;font-weight:500}
+.do__g li::before{content:"";position:absolute;left:0;top:.7em;width:.34rem;height:.34rem;background:var(--accent);border-radius:50%}
+.do__g li span{display:block;font-weight:400;font-size:.95rem;color:var(--muted);line-height:1.5;margin-top:.15rem}
+
+/* цены */
+.table-scroll{overflow-x:auto;width:100%}
+.prices{width:100%;border-collapse:collapse;font-size:1rem}
+.prices th,.prices td{text-align:left;padding:.95rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+.prices thead th{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.prices td:first-child{font-weight:500}
+.prices td:nth-child(2){color:var(--muted);font-size:.93rem}
+.prices td:last-child{text-align:right;white-space:nowrap;font-family:var(--display);font-size:1.15rem;color:var(--accent)}
+.prices caption{text-align:left;color:var(--muted);font-size:.85rem;padding-bottom:.9rem;font-family:var(--mono);letter-spacing:.03em}
+
+.calcbtn{align-self:flex-start;margin-top:.4rem;font-family:var(--body);font-weight:500;font-size:.95rem;padding:.8rem 1.3rem;border:1px solid var(--accent);color:var(--accent);border-radius:3px;transition:background .25s,color .25s}
+.calcbtn:hover{background:var(--accent);color:#0A0B0C}
+
+/* шаги */
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:1.6rem;grid-template-columns:1fr}
+@media(min-width:820px){.steps{grid-template-columns:repeat(2,1fr);gap:2.4rem 3rem}}
+.steps li{counter-increment:s;display:flex;flex-direction:column;gap:.5rem;border-top:1px solid var(--line);padding-top:1rem}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:.6rem;color:var(--accent)}
+.steps p{color:var(--muted);font-size:.97rem;max-width:40ch}
+
+/* контакты */
+.links{display:flex;flex-direction:column;gap:.2rem;margin-top:2rem}
+.links a{font-family:var(--display);font-size:clamp(1.5rem,5.5vw,3rem);display:inline-flex;align-items:baseline;gap:.9rem;width:fit-content;transition:color .25s}
+.links a span{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.links a:hover{color:var(--accent)}
+.foot{border-top:1px solid var(--line);padding-block:1.6rem;padding-bottom:calc(1.6rem + env(safe-area-inset-bottom,0px))}
+.foot__in{display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;justify-content:space-between;align-items:center}
+.foot a{color:var(--muted);margin-right:1.1rem;font-size:.88rem}
+.foot a:hover{color:var(--ink)}
+.foot small{color:var(--muted);font-size:.78rem}
+</style>
+</head>
+<body>
+
+<div class="curtain" id="curtain" aria-hidden="true">
+  <span class="curtain__n" id="curtain-n">00</span>
+  <span class="curtain__t">Кристина Васильева</span>
+</div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<main>
+
+  <section class="scene wrap">
+    <div class="bgs" id="bgs" aria-hidden="true">
+      <figure data-k="0"><img src="shots/content-case.jpg" alt=""></figure>
+      <figure data-k="1"><img src="shots/deck.jpg" alt=""></figure>
+      <figure data-k="2"><img src="shots/bot.jpg" alt=""></figure>
+      <figure data-k="3"><img src="shots/expert.jpg" alt=""></figure>
+      <figure data-k="4"><img src="shots/english.jpg" alt=""></figure>
+      <figure data-k="5"><img src="shots/calc.jpg" alt=""></figure>
+      <figure data-k="6"><img src="shots/texts.jpg" alt=""></figure>
+    </div>
+
+    <header class="bar">
+      <span class="bar__name">Кристина Васильева</span>
+      <span class="lbl pill"><i></i> Открыта для заказов</span>
+    </header>
+
+    <div>
+      <h1 class="title">
+        <span><i>Контент,</i></span>
+        <span><i>реклама</i></span>
+        <span><i>и <em>английский<svg class="scribble" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 38 3, 66 12, 104 6 S 168 4, 197 8" vector-effect="non-scaling-stroke"/></svg></em></i></span>
+      </h1>
+      <p class="lead">Веду соцсети, пишу тексты, монтирую вертикальное видео и собираю чат-боты.</p>
+    </div>
+
+    <div class="list" id="list">
+      <a class="item" href="content-case.html" data-k="0"><span class="item__n">01</span><span class="item__t">Контент-план на месяц</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="deck.html" data-k="1"><span class="item__n">02</span><span class="item__t">Презентация для клиента</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="bot.html" data-k="2"><span class="item__n">03</span><span class="item__t">Сценарий чат-бота</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="expert.html" data-k="3"><span class="item__n">04</span><span class="item__t">Лендинг онлайн-курса</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="english.html" data-k="4"><span class="item__n">05</span><span class="item__t">Уроки английского языка</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="texts.html" data-k="6"><span class="item__n">06</span><span class="item__t">Тексты до и после</span><span class="item__go">смотреть</span></a>
+      <a class="item" href="calc.html" data-k="5"><span class="item__n">07</span><span class="item__t">Калькулятор стоимости</span><span class="item__go">посчитать</span></a>
+    </div>
+  </section>
+
+  <div class="ticker" id="tick">
+    <div class="ticker__row" id="ticker"></div>
+    <span class="ticker__edge ticker__edge--l" aria-hidden="true"><b>&#8592;</b><span>назад</span></span>
+    <span class="ticker__edge ticker__edge--r" aria-hidden="true"><span>вперед</span><b>&#8594;</b></span>
+  </div>
+
+  <section class="band" id="do">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="lbl lbl--acc">Что я делаю</p>
+        <h2>Задачи, которые можно отдать мне</h2>
+        <p class="sub">Можно взять одну задачу, а можно ведение целиком.</p>
+      </div>
+
+      <div class="do">
+        <div class="do__side">
+          <ol>
+            <li>01 Соцсети и тексты</li>
+            <li>02 Видео</li>
+            <li>03 Реклама</li>
+            <li>04 Автоматизация и страницы</li>
+            <li>05 Английский</li>
+          </ol>
+        </div>
+
+        <div class="do__list">
+          <div class="do__g reveal">
+            <p class="lbl lbl--acc">01 · Соцсети и тексты</p>
+            <ul>
+              <li>Ведение соцсетей под ключ <span>контент-план, тексты, оформление, публикации, ответы в комментариях</span></li>
+              <li>Контент-план на месяц <span>сетка по дням с целью каждой недели, под продукт и аудиторию</span></li>
+              <li>Копирайтинг <span>посты, описания услуг, рассылки, тексты для сайта, сценарии</span></li>
+              <li>Контент-менеджмент <span>публикации по готовому плану, если тексты у вас уже есть</span></li>
+              <li>Оформление презентаций <span>коммерческие предложения, продуктовые и учебные презентации</span></li>
+            </ul>
+          </div>
+          <div class="do__g reveal">
+            <p class="lbl lbl--acc">02 · Видео</p>
+            <ul>
+              <li>Монтаж вертикального видео <span>рилсы, шортсы, клипы для телеграма: сборка из дублей, субтитры по словам, цвет, перебивки, музыка</span></li>
+              <li>UGC-ролики на английском <span>снимаю сама по сценарию бренда, живое видео без рекламной подачи</span></li>
+              <li>Сценарии и раскадровки <span>с таймкодами, чтобы снять мог любой человек</span></li>
+            </ul>
+          </div>
+          <div class="do__g reveal">
+            <p class="lbl lbl--acc">03 · Реклама</p>
+            <ul>
+              <li>Таргет в инстаграме и вк <span>ведение кабинета, тексты и макеты объявлений, отчет по тратам</span></li>
+              <li>Настройка Яндекс.Директа <span>сбор запросов, объявления, запуск</span></li>
+            </ul>
+          </div>
+          <div class="do__g reveal">
+            <p class="lbl lbl--acc">04 · Автоматизация и страницы</p>
+            <ul>
+              <li>Чат-боты в телеграме и инстаграме <span>сбор заявок, ответы на частые вопросы, запись</span></li>
+              <li>Страницы под услугу <span>лендинг на одну услугу или продукт, тексты и верстка мои</span></li>
+            </ul>
+          </div>
+          <div class="do__g reveal">
+            <p class="lbl lbl--acc">05 · Английский</p>
+            <ul>
+              <li>Разговорный английский <span>взрослые и подростки от 16, с нуля и с начального уровня, онлайн</span></li>
+              <li>Английский для жизни за границей <span>аренда, врач, банк, бытовые разговоры. То, с чем я сама сталкиваюсь каждый день</span></li>
+              <li>Снятие языкового барьера <span>для тех, кто все понимает, но в ответ молчит. Говорим с первого занятия</span></li>
+              <li>Разговорная практика <span>если база есть, но применять ее негде и язык забывается</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="prices">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="lbl lbl--acc">Стоимость</p>
+        <h2>Сколько стоит работа</h2>
+        <p class="sub">Точную сумму называю, когда понятен объем: сколько постов в месяц, сколько роликов, какой срок. Или соберите объем сами в калькуляторе.</p>
+        <a class="calcbtn" href="calc.html">Посчитать стоимость</a>
+      </div>
+      <div class="table-scroll reveal">
+        <table class="prices">
+          <caption>Цены в рублях, актуальны на октябрь 2026</caption>
+          <thead><tr><th scope="col">Услуга</th><th scope="col">Что входит</th><th scope="col">Цена</th></tr></thead>
+          <tbody>
+            <tr><td>Ведение соцсетей</td><td>Контент-план, тексты, оформление, публикации. Месяц</td><td>от 13 000</td></tr>
+            <tr><td>Продвижение в телеграме, вк, инстаграме</td><td>Месяц ведения, каждая площадка отдельно</td><td>от 13 000</td></tr>
+            <tr><td>Контент-менеджмент</td><td>Публикации по готовому плану. Месяц</td><td>от 5 000</td></tr>
+            <tr><td>Копирайтинг</td><td>Посты, описания, рассылки. За 1 000 знаков</td><td>от 300</td></tr>
+            <tr><td>Монтаж вертикального видео</td><td>Сборка из дублей, субтитры, цвет. За ролик</td><td>от 500</td></tr>
+            <tr><td>UGC-ролик на английском</td><td>Съемка по вашему сценарию, монтаж, субтитры</td><td>от 500</td></tr>
+            <tr><td>Таргет в инстаграме и вк</td><td>Месяц ведения. Рекламный бюджет отдельно, в вашем кабинете</td><td>от 13 000</td></tr>
+            <tr><td>Настройка Яндекс.Директа</td><td>Сбор запросов, объявления, запуск</td><td>от 6 000</td></tr>
+            <tr><td>Чат-бот</td><td>Телеграм или инстаграм, сбор заявок</td><td>от 3 500</td></tr>
+            <tr><td>Оформление презентации</td><td>До 15 слайдов</td><td>от 2 000</td></tr>
+            <tr><td>Страница под услугу</td><td>Лендинг на один продукт, тексты и верстка</td><td>от 8 000</td></tr>
+            <tr><td>Английский язык</td><td>Разговорный, взрослые и подростки от 16. Час. Пробное занятие бесплатно</td><td>от 1 000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="lbl lbl--acc">Как идет работа</p>
+        <h2>Четыре шага, одинаковые на любом заказе</h2>
+      </div>
+      <ol class="steps">
+        <li class="reveal"><h3>Уточняю детали</h3><p>Спрашиваю про продукт, аудиторию и то, что вы уже пробовали. Собираю всю информацию до начала работы.</p></li>
+        <li class="reveal"><h3>Называю цену и срок</h3><p>Когда понятен объем, называю точную сумму и дату.</p></li>
+        <li class="reveal"><h3>Отдаю первую часть на проверку</h3><p>Один пост, один ролик или одну неделю плана. Вы правите тон до того, как сделан весь объем.</p></li>
+        <li class="reveal"><h3>Доделываю и остаюсь на связи</h3><p>До пяти правок входит в цену. На сообщения отвечаю в тот же день.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="contact">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="lbl lbl--acc">Связаться</p>
+        <h2>Напишите, что нужно сделать</h2>
+        <p class="sub">Отвечу в тот же день.</p>
+      </div>
+      <div class="links reveal">
+        <a href="https://t.me/kris_tinav21">@kris_tinav21 <span>телеграм</span></a>
+        <a href="mailto:christivas21@gmail.com">christivas21@gmail.com <span>почта</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="band--sunk">
+  <div class="wrap foot">
+    <div class="foot__in">
+      <div>
+        <a href="content-case.html">Контент-план</a>
+        <a href="deck.html">Презентация</a>
+        <a href="bot.html">Чат-бот</a>
+        <a href="expert.html">Лендинг курса</a>
+        <a href="english.html">Английский</a>
+        <a href="texts.html">Тексты до и после</a>
+        <a href="calc.html">Калькулятор</a>
+      </div>
+      <small>Кристина Васильева, 2026</small>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+</body>
+</html>

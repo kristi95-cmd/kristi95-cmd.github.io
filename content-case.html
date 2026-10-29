@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Контент-план на месяц</title>
+<meta name="description" content="Контент-план на четыре недели для психолога: сетка по дням, цель каждой недели и готовые тексты.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@500;700;800&family=Manrope:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=6">
+<style>
+/* Редакционный мир: узкий прописной гротеск и ягодный акцент на холодной бумаге. */
+:root {
+  color-scheme: light;
+  --paper:        #F4F1F3;
+  --surface:      #FFFFFF;
+  --surface-sunk: #E9E3E7;
+  --ink:          #17121A;
+  --muted:        #6B5F68;
+  --line:         #DCD3D8;
+  --accent:       #A8123E;
+  --accent-ink:   #FFFFFF;
+  --accent-soft:  #F6E1E8;
+  --display: "Piazzolla", Georgia, "Times New Roman", serif;
+  --body:    "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:    "Martian Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper:        #140F16;
+    --surface:      #1D161F;
+    --surface-sunk: #241C26;
+    --ink:          #EFE7EC;
+    --muted:        #A4939E;
+    --line:         #2E2430;
+    --accent:       #FF7BA3;
+    --accent-ink:   #1A0710;
+    --accent-soft:  #331823;
+  }
+}
+h1, h2, h3 { font-weight: 800; letter-spacing: -.025em; }
+h1 { font-size: clamp(2.2rem, 7vw, 4.2rem); line-height: .98; }
+h2 { font-size: clamp(1.7rem, 4.6vw, 2.7rem); line-height: 1; }
+h3 { font-size: 1.1rem; letter-spacing: .02em; }
+.btn { border-radius: 0; text-transform: uppercase; letter-spacing: .04em; }
+.post, .script, .card { border-radius: 0; }
+.post__where { font-family: var(--mono); font-size: .62rem; letter-spacing: .04em; }
+
+/* ---------- живой календарь ---------- */
+.plan td{padding:0}
+.plan .plan__st{padding:.6rem .7rem;color:var(--muted);font-size:.86rem}
+.cell{
+  display:block;width:100%;height:100%;text-align:left;cursor:pointer;
+  background:transparent;border:0;padding:.6rem .7rem;
+  font-family:var(--body);font-size:.92rem;line-height:1.45;color:var(--ink);
+  transition:background .2s,color .2s;
+}
+.cell:hover{background:var(--accent-soft)}
+.cell[data-ref]::after{content:"читать";display:block;margin-top:.3rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.cell.on{background:var(--accent);color:var(--accent-ink)}
+.cell.on .fmt,.cell.on::after{color:var(--accent-ink)}
+.plan__hint{margin:1rem 0 0;font-family:var(--mono);font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+
+/* фильтр по площадке */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.chip{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;padding:.4rem .7rem;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chip b{font-weight:400;opacity:.65;padding-left:.3rem}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip.on b{opacity:.8}
+.cell,.plan__st{transition:opacity .3s ease}
+.cell.dim,.plan__st.dim{opacity:.2}
+
+.peek{margin-top:1.2rem;border:1px solid var(--line);background:var(--surface);border-radius:0;padding:1.3rem;animation:peek .3s ease both}
+@keyframes peek{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.peek__bar{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:.7rem;margin-bottom:1rem}
+.peek__bar b{font-family:var(--display);text-transform:uppercase;font-size:1rem;letter-spacing:.02em}
+.peek__close{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:0;font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;padding:.3rem .55rem;cursor:pointer}
+.peek__close:hover{color:var(--accent);border-color:var(--accent)}
+.peek .post,.peek .script{border:0;padding:0;background:transparent}
+.peek__brief{color:var(--muted);max-width:60ch}
+.post__text strong{font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="backbar">
+  <div class="wrap backbar__in">
+    <a href="index.html">← Портфолио Кристины Васильевой</a>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__name" href="index.html">Кристина Васильева</a>
+    <nav class="topbar__nav">
+      <a href="#task">Задача</a>
+      <a href="#plan">План на месяц</a>
+      <a href="#posts">Посты</a>
+      <a href="#delivery">Что получает клиент</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="stack stack--lg">
+        <p class="eyebrow">Ведение соцсетей</p>
+        <h1>Месяц контента для психолога</h1>
+        <p class="lede">Так выглядит то, что я отдаю клиенту в первую неделю работы: сетка на четыре недели с целью каждой и готовые тексты, которые можно публиковать без правок.</p>
+        <div class="btn-row">
+          <a class="btn" href="#plan">Смотреть план</a>
+          <a class="btn btn--ghost" href="#posts">Читать посты</a>
+        </div>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Клиент</dt><dd>Психолог, работает с тревогой и выгоранием у взрослых</dd></div>
+        <div class="fact"><dt>Площадки</dt><dd>Инстаграм и телеграм-канал</dd></div>
+        <div class="fact"><dt>Объем</dt><dd>16 единиц контента и сторис-линия на месяц</dd></div>
+        <div class="fact"><dt>Цель месяца</dt><dd>Набор в групповую программу</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="task">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Задача</p>
+        <h2>Что было на входе</h2>
+      </div>
+      <ul class="pains">
+        <li>Блог личный и теплый, но без системы: посты выходят, когда есть настроение, и все про одно и то же.</li>
+        <li>Подписчики приходят и молчат. Заявки на консультации идут только от знакомых.</li>
+        <li>Телеграм-канал есть, но в нем дублируются инстаграмные посты, поэтому его не читают.</li>
+        <li>Через месяц старт групповой программы, а продавать ее пока нечем: аудитория про нее ничего не знает.</li>
+      </ul>
+
+      <div class="stack stack--sm">
+        <h3>Что я предложила</h3>
+        <p>Развести площадки по задачам. Инстаграм ведет новых людей от знакомства к доверию, телеграм работает с теми, кто уже пришел, и там выходит то, что не влезает в инстаграм: разборы, цены, условия. Месяц разбит на четыре недели, у каждой одна цель, и к четвертой аудитория приходит подготовленной к анонсу программы, а не узнает о ней внезапно.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="plan">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Контент-план</p>
+        <h2>Четыре недели, у каждой своя цель</h2>
+        <p>Публикации стоят по дням, формат подписан над темой. Сторис идут каждый день и держат связку между постами.</p>
+      </div>
+
+      <div class="chips" id="chips" role="group" aria-label="Фильтр по площадке">
+        <button type="button" class="chip on" data-f="all">Весь месяц<b></b></button>
+        <button type="button" class="chip" data-f="Инстаграм">Инстаграм<b></b></button>
+        <button type="button" class="chip" data-f="Телеграм">Телеграм<b></b></button>
+        <button type="button" class="chip" data-f="Рилс">Рилс<b></b></button>
+      </div>
+
+      <div class="table-scroll">
+        <table class="plan">
+          <thead>
+            <tr>
+              <th scope="col">Неделя</th>
+              <th scope="col">Понедельник</th>
+              <th scope="col">Среда</th>
+              <th scope="col">Пятница</th>
+              <th scope="col">Воскресенье</th>
+              <th scope="col">Сторис-линия</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1<br>Знакомство</th>
+              <td><button type="button" class="cell" data-brief="Рилс на неделю знакомства. Три реплики, которые люди произносят на первой встрече, и финал о том, что все трое пришли вовремя. Снимается в кресле за один заход."><span class="fmt">Рилс</span>Три фразы, которые я слышу от каждого второго на первой встрече</button></td>
+              <td><button type="button" class="cell" data-ref="post-1"><span class="fmt">Инстаграм, пост</span>Почему я ушла из корпорации в психологию</button></td>
+              <td><button type="button" class="cell" data-brief="Короткий телеграм-пост с одним упражнением на ночную тревогу. Написан как инструкция, с честной оговоркой, что с первого раза работает не у всех."><span class="fmt">Телеграм</span>Что делать с тревогой в два часа ночи. Одно упражнение</button></td>
+              <td><button type="button" class="cell" data-brief="Второй рилс недели знакомства. Четыре признака, по которым усталость отличается от состояния, с которым уже идут к специалисту. Снимается в том же кадре, что и первый, за один заход."><span class="fmt">Рилс</span>Усталость или выгорание. Четыре признака, по которым видно разницу</button></td>
+              <td class="plan__st">Рабочий день изнутри, опрос про знакомые состояния, ответы на него в конце недели</td>
+            </tr>
+            <tr>
+              <th scope="row">2<br>Метод</th>
+              <td><button type="button" class="cell" data-brief="Пост про телесную сторону тревоги без терминов: что происходит с дыханием и сердцем и почему уговорить себя не тревожиться нельзя. Заканчивается вопросом в комментарии."><span class="fmt">Инстаграм, пост</span>Тревога и характер. Что на самом деле происходит в теле</button></td>
+              <td><button type="button" class="cell" data-brief="Рилс с самопроверкой по четырем стадиям выгорания. Человек называет свою цифру в комментариях, и это дает охват."><span class="fmt">Рилс</span>Стадии выгорания. Проверьте себя по четырем признакам</button></td>
+              <td><button type="button" class="cell" data-ref="post-4"><span class="fmt">Телеграм</span>Разбор запроса: клиент не может отдыхать в отпуске</button></td>
+              <td><button type="button" class="cell" data-brief="Подборка из пяти книг и двух каналов, каждый с одной строчкой, кому он зайдет. Такой пост живет в сохраненных и приводит новых подписчиков из репостов."><span class="fmt">Инстаграм, пост</span>Что я читаю сама и что советую клиентам</button></td>
+              <td class="plan__st">Опрос по стадиям выгорания, разбор результатов, короткое упражнение на вечер</td>
+            </tr>
+            <tr>
+              <th scope="row">3<br>Возражения</th>
+              <td><button type="button" class="cell" data-brief="Рилс, который снимает главный страх перед первой встречей. Тот же кадр, что и в первом рилсе, 28 секунд."><span class="fmt">Рилс</span>Нет, копаться в детстве никто не заставит</button></td>
+              <td><button type="button" class="cell" data-brief="Текст про самое частое возражение. Честно объясняет, от чего зависит срок, и называет вилку вместо обещания. Заканчивается тем, по каким признакам понять, что пора заканчивать."><span class="fmt">Инстаграм, пост</span>Сколько длится терапия и почему никто не назовет точный срок</button></td>
+              <td><button type="button" class="cell" data-brief="Пост с прямой ценой и разбором, что входит в час работы помимо самого часа. Снимает половину вопросов в личных сообщениях."><span class="fmt">Телеграм</span>Сколько стоит работа со мной и из чего складывается цена</button></td>
+              <td><button type="button" class="cell" data-brief="Разбор одного запроса от первой встречи до результата, с измененными деталями и письменным согласием. Первой строкой стоит оговорка про согласие, это обязательное условие в теме психологии."><span class="fmt">Инстаграм, пост</span>История клиента, опубликована с разрешения</button></td>
+              <td class="plan__st">Как проходит сессия онлайн, что видно в кадре, ответы на вопросы про конфиденциальность</td>
+            </tr>
+            <tr>
+              <th scope="row">4<br>Набор в группу</th>
+              <td><button type="button" class="cell" data-brief="Рилс, который снимает главное возражение перед покупкой группы. Два формата сравниваются по четырем пунктам, без вывода в пользу дорогого."><span class="fmt">Рилс</span>Группа или один на один. Чем отличается и кому что</button></td>
+              <td><button type="button" class="cell" data-brief="Продающий пост четвертой недели: что внутри по неделям, для кого, цена, рассрочка и число мест. Цена названа прямо в посте."><span class="fmt">Инстаграм, пост</span>Анонс программы: что внутри, для кого, сколько мест</button></td>
+              <td><button type="button" class="cell" data-brief="Короткий пост с открытием записи: цена, рассрочка, дата старта, число мест и ссылка. Выходит в телеграме, потому что туда уже пришли самые теплые."><span class="fmt">Телеграм</span>Запись открыта. Условия, рассрочка, дата старта</button></td>
+              <td><button type="button" class="cell" data-brief="Шесть реальных вопросов из сообщений с короткими ответами. Последним идет вопрос про цену, чтобы закрыть его перед стартом."><span class="fmt">Инстаграм, пост</span>Ответы на вопросы, которые пришли за неделю</button></td>
+              <td class="plan__st">Обратный отсчет до старта, остались места, разбор вопросов из личных сообщений</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="plan__hint" id="plan-hint">Нажмите на любую публикацию в сетке, и она раскроется целиком.</p>
+      <div class="peek" id="peek" hidden></div>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="posts">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Готовые тексты</p>
+        <h2>Два поста целиком</h2>
+        <p>Это те же посты, что стоят в плане выше, в том виде, в котором они уходят клиенту.</p>
+      </div>
+
+      <div class="posts">
+
+        <article class="post" id="post-1">
+          <div class="post__head">
+            <span class="post__where">Инстаграм · неделя 1, среда</span>
+            <span class="tc">891 знаков</span>
+          </div>
+          <div class="post__text">
+            <p>Два года я приезжала в офис на десять минут раньше, чтобы посидеть в машине на парковке и не заходить внутрь.</p>
+            <p>До психологии я восемь лет работала в финансах, согласовывала бюджеты. Была уверена, что просто устала, и лечила усталость, как умела: отпуск, массаж, витамины, перевод на новую должность. Хватало недели на две.</p>
+            <p>К психологу я пришла с запросом починить работоспособность. На третьей встрече сказала вслух то, что знала лет пять: мне там не нравится вообще ничего. До этого я не произносила эту фразу даже наедине с собой.</p>
+            <p>Дальше были два года терапии, переобучение и первые клиенты за символические деньги. Было страшно, что я никому не нужна.</p>
+            <p>Сейчас ко мне приходят люди с той же парковки. За несколько встреч обычно становится ясно, что именно забирает силы, и что из этого можно поменять уже на этой неделе.</p>
+            <p>Если вы узнали себя, напишите мне в сообщения. Я знаю, как вам помочь.</p>
+          </div>
+        </article>
+
+        <article class="post" id="post-4">
+          <div class="post__head">
+            <span class="post__where">Телеграм · неделя 2, пятница</span>
+            <span class="tc">1 315 знаков</span>
+          </div>
+          <div class="post__text">
+            <p>Разбор запроса. Детали изменены, согласие на публикацию есть.</p>
+            <p><strong>Запрос.</strong> Женщина, 36 лет, руководит отделом. Дословно: "не могу отдыхать в отпуске, две недели на море, и все две недели чувство, что время уходит зря".</p>
+            <p><strong>Что уже пробовала.</strong> Цифровой детокс, режим сна, приложение с медитациями. Хватало на три-четыре дня, потом все возвращалось.</p>
+            <p><strong>Что нашли.</strong> В ее семье отдых надо было заслужить, и мерой было количество сделанного. Фразу отца она помнит дословно: сначала сделай, потом отдыхай. В детстве правило работало: сделал уроки, иди во двор.</p>
+            <p><strong>Почему оно сломалось.</strong> У взрослого человека с ее работой список дел не кончается никогда. Условие сначала сделай не выполняется в принципе, поэтому любой отдых получается краденым, даже оплаченный отпуск.</p>
+            <p><strong>Что делали.</strong> Установку мы не выключали, она так не выключается. Искали обход: отделили сделано от сдано, ввели правило достаточно на сегодня и договорились, что в отпуске у нее одна маленькая задача в день. Любая, хоть открытка домой. Условие формально выполнено, запрет снят.</p>
+            <p><strong>Что в итоге.</strong> Через четыре месяца она впервые провела выходные дома, не открыв рабочий ноутбук, и не чувствовала себя виноватой.</p>
+            <p>Это не рецепт: у похожей жалобы бывает совсем другая причина. Но если вы узнали здесь себя, начните с одного вопроса. Чьим голосом вам говорят, что отдыхать еще рано?</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="band band--sunk" id="delivery">
+    <div class="wrap stack stack--xl">
+      <div class="stack stack--sm">
+        <p class="eyebrow">Что получает клиент</p>
+        <h2>В каком виде это приходит</h2>
+      </div>
+      <div class="pitch">
+        <div class="tile">
+          <h3>Таблица с планом</h3>
+          <p>Гугл-таблица с датами, форматами, темами и целью недели. Видно сразу весь месяц, можно двигать и комментировать.</p>
+        </div>
+        <div class="tile">
+          <h3>Тексты в документе</h3>
+          <p>Каждый пост отдельным блоком, готовый к публикации. Правки принимаю комментариями в том же документе.</p>
+        </div>
+        <div class="tile">
+          <h3>Сценарии для съемки</h3>
+          <p>Таймкоды, что в кадре, что говорит эксперт и что выводим субтитром поверх. Если нужен монтаж и субтитры, беру их на себя отдельно.</p>
+        </div>
+      </div>
+
+      <div class="stack stack--sm">
+        <h3>Что я гарантирую</h3>
+        <p>Объем в срок, одну логику на весь месяц вместо случайных постов и тексты, которые не надо переписывать после меня. Конкретных цифр по подписчикам и продажам я не обещаю: на них вместе с контентом влияют цена, продукт и то, как эксперт отвечает в сообщениях.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Соберу такой же месяц для вашего проекта</h2>
+        <p>Отдаю таблицу с планом, тексты в документе и сценарии с раскадровкой, поэтому снимать и публиковать можно сразу. Напишите в телеграм, чем вы занимаетесь, и я скажу срок и цену.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://t.me/kris_tinav21">Написать в телеграм</a>
+          <a class="btn" href="mailto:christivas21@gmail.com">christivas21@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__links">
+      <a href="index.html">Портфолио</a>
+      <a href="bot.html">Сценарий чат-бота</a>
+      <a href="deck.html">Презентация для клиента</a>
+      <a href="expert.html">Лендинг онлайн-курса</a>
+      <a href="english.html">Уроки английского языка</a>
+      <a href="texts.html">Тексты до и после</a>
+      <a href="calc.html">Калькулятор</a>
+    </div>
+    <small>Собрано мной целиком: структура, тексты и оформление. Компания и герои вымышленные. Кристина Васильева, 2026</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* фильтр по площадке: сетка показывает только выбранный формат */
+  var chips = document.querySelectorAll('#chips .chip');
+  var allCells = document.querySelectorAll('.plan .cell');
+  var stories = document.querySelectorAll('.plan .plan__st');
+
+  if (chips.length && allCells.length) {
+    var fmt = function (cell) {
+      var f = cell.querySelector('.fmt');
+      return f ? f.textContent : '';
+    };
+    chips.forEach(function (ch) {
+      var f = ch.dataset.f;
+      var n = f === 'all' ? allCells.length
+            : [].filter.call(allCells, function (c) { return fmt(c).indexOf(f) === 0; }).length;
+      ch.querySelector('b').textContent = n;
+      ch.addEventListener('click', function () {
+        chips.forEach(function (x) { x.classList.toggle('on', x === ch); });
+        allCells.forEach(function (c) {
+          c.classList.toggle('dim', f !== 'all' && fmt(c).indexOf(f) !== 0);
+        });
+        stories.forEach(function (st) { st.classList.toggle('dim', f !== 'all'); });
+      });
+    });
+  }
+
+  var cells = document.querySelectorAll('.cell');
+  var peek = document.getElementById('peek');
+  var hint = document.getElementById('plan-hint');
+  if(!cells.length || !peek) return;
+
+  function close(){
+    peek.hidden = true; peek.innerHTML = '';
+    cells.forEach(function(c){ c.classList.remove('on'); });
+    if(hint) hint.textContent = 'Нажмите на любую публикацию в сетке, и она раскроется целиком.';
+  }
+
+  cells.forEach(function(cell){
+    cell.addEventListener('click', function(){
+      if(cell.classList.contains('on')){ close(); return; }
+      cells.forEach(function(c){ c.classList.remove('on'); });
+      cell.classList.add('on');
+
+      var ref = cell.dataset.ref;
+      var title = (cell.querySelector('.fmt') ? cell.querySelector('.fmt').textContent : '') ;
+      var body;
+
+      if(ref && document.getElementById(ref)){
+        body = document.getElementById(ref).cloneNode(true);
+        body.removeAttribute('id');
+      } else {
+        body = document.createElement('p');
+        body.className = 'peek__brief';
+        body.textContent = cell.dataset.brief || 'Текст этой публикации в портфолио не выкладываю.';
+      }
+
+      peek.innerHTML = '';
+      var bar = document.createElement('div');
+      bar.className = 'peek__bar';
+      bar.innerHTML = '<b>' + title + '</b>';
+      var x = document.createElement('button');
+      x.type='button'; x.className='peek__close'; x.textContent='Закрыть';
+      x.addEventListener('click', close);
+      bar.appendChild(x);
+      peek.appendChild(bar);
+      peek.appendChild(body);
+      peek.hidden = false;
+
+      if(hint) hint.textContent = ref ? 'Это готовый текст, который уходит клиенту' : 'Коротко, что в этой публикации';
+      peek.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+  });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="site.js?v=6" defer></script>
+</body>
+</html>
