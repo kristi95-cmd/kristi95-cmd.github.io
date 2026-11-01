@@ -84,13 +84,16 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 /* высоту блока считает скрипт по самой длинной паре, иначе список фактов
    под ним дергался вниз каждые четыре секунды */
 .talk { cursor: pointer; }
+/* У кнопок свой line-height от браузера, от body он не наследуется,
+   поэтому строку и размер задаем явно: иначе 10,6px и сжатая строка. */
 .talk__next {
-  align-self: flex-start; margin: .15rem 0 0; padding: 0;
-  font-family: var(--mono); font-size: .62rem; letter-spacing: .09em; text-transform: uppercase;
+  align-self: flex-start; margin: .15rem 0 0; padding: .2rem 0;
+  font-family: var(--mono); font-size: .72rem; line-height: 1.45;
+  letter-spacing: .09em; text-transform: uppercase;
   color: var(--muted); background: none; border: 0; cursor: pointer;
 }
 .talk__next:hover { color: var(--coral-ink); }
-@media (hover: none), (pointer: coarse) { .talk__next { font-size: .66rem; padding: .35rem 0; } }
+@media (hover: none), (pointer: coarse) { .talk__next { padding: .4rem 0; } }
 
 /* курсор: на светлой странице белая точка не читалась, поэтому коралловое кольцо */
 .cursor {
@@ -118,7 +121,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 .phrase { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
 .phrase summary { cursor: pointer; list-style: none; padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: .3rem; }
 .phrase summary::-webkit-details-marker { display: none; }
-.phrase__where { font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral-ink); }
+.phrase__where { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral-ink); }
 .phrase__ru { font-size: 1rem; line-height: 1.4; }
 .phrase__hint { font-family: var(--mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
 .phrase[open] .phrase__hint { display: none; }

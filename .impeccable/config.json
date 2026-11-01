@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "english.html"
+        ],
+        "createdAt": "2026-11-01T18:00:15.672Z",
+        "reason": "Claude: замерено в браузере, отступы есть, но у вложенной обёртки. band 88px по вертикали и 20px у .wrap, cta 44px, fact 12.8px, summary в faq 15.2px, backbar__in 8.8px. Детектор меряет внешнюю полосу, а инсет даёт блок внутри неё. Это структура style.css, общая для всех восьми страниц"
+      }
+    ]
+  }
+}
