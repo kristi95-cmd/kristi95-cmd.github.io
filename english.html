@@ -23,6 +23,8 @@
   --accent-ink:   #FFFFFF;
   --accent-soft:  #DDE7F3;
   --coral:        #D45B43;
+  /* тот же коралловый, но затемненный до контраста 5:1 — для мелкого текста */
+  --coral-ink:    #B4442C;
   --display: "Tenor Sans", "Helvetica Neue", Arial, sans-serif;
   --body:    "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   --mono:    "Martian Mono", ui-monospace, Menlo, monospace;
@@ -40,12 +42,32 @@
     --accent-ink:   #0B1520;
     --accent-soft:  #1B2A3A;
     --coral:        #F08A72;
+    /* на темном фоне светлый коралл и так дает 6:1, затемнять нечего */
+    --coral-ink:    #F08A72;
   }
 }
 /* у Tenor Sans одно начертание, иерархия строится размером */
 h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
-.eyebrow { color: var(--coral); }
+.eyebrow { color: var(--coral-ink); }
 .pains li::before { background: var(--coral); }
+
+/* шапка: на телефоне семь пунктов меню уезжали в две строки и съедали
+   пятую часть экрана. Там их нет, вместо них кнопка записи, которая
+   едет вместе со страницей. */
+.topbar__cta { flex: none; padding: .5rem .95rem; font-size: .88rem; }
+/* Меню из семи пунктов помещается в строку с именем и кнопкой только
+   от 1040px. Ниже его нет: кнопка записи важнее семи якорей. */
+@media (max-width: 1039px) {
+  .topbar__nav { display: none; }
+  .backbar__in { padding-block: .4rem; }
+}
+@media (min-width: 1040px) {
+  .topbar__in { flex-wrap: nowrap; }
+  .topbar__nav { margin-left: auto; margin-right: 1.1rem; }
+}
+
+/* что будет после нажатия: человек должен знать, что попадет в телеграм */
+.btn-note { font-size: .88rem; color: var(--muted); max-width: 44ch; margin: .1rem 0 0; }
 .hooks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; max-width: 46ch; }
 .hooks li { position: relative; padding-left: 1.15rem; font-size: 1.05rem; line-height: 1.5; }
 .hooks li::before { content: ""; position: absolute; left: 0; top: .72em; width: .55rem; height: 1px; background: var(--coral); }
@@ -53,12 +75,22 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 /* живой диалог в шапке: мысль по-русски и то, что человек говорит вслух */
 .hero__side { display: flex; flex-direction: column; gap: 1.6rem; }
 .talk { display: flex; flex-direction: column; gap: .55rem; }
-.talk__lbl { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
+.talk__lbl { font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .25rem; }
 .talk__ru, .talk__en { margin: 0; padding: .75rem 1rem; border-radius: 14px; max-width: 90%; font-size: 1rem; line-height: 1.4; transition: opacity .4s ease, transform .4s ease; }
 .talk__ru { align-self: flex-start; border-radius: 14px 14px 14px 3px; background: var(--surface-sunk); color: var(--muted); }
 .talk__en { align-self: flex-end; border-radius: 14px 14px 3px 14px; background: var(--accent-soft); color: var(--accent); font-family: "Cormorant Infant", Georgia, serif; font-style: italic; font-size: 1.3rem; }
 .talk.is-out .talk__ru, .talk.is-out .talk__en { opacity: 0; transform: translateY(6px); }
 .talk.is-wait .talk__en { opacity: 0; transform: translateY(6px); }
+/* высоту блока считает скрипт по самой длинной паре, иначе список фактов
+   под ним дергался вниз каждые четыре секунды */
+.talk { cursor: pointer; }
+.talk__next {
+  align-self: flex-start; margin: .15rem 0 0; padding: 0;
+  font-family: var(--mono); font-size: .62rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); background: none; border: 0; cursor: pointer;
+}
+.talk__next:hover { color: var(--coral-ink); }
+@media (hover: none), (pointer: coarse) { .talk__next { font-size: .66rem; padding: .35rem 0; } }
 
 /* курсор: на светлой странице белая точка не читалась, поэтому коралловое кольцо */
 .cursor {
@@ -86,7 +118,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 .phrase { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
 .phrase summary { cursor: pointer; list-style: none; padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: .3rem; }
 .phrase summary::-webkit-details-marker { display: none; }
-.phrase__where { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral); }
+.phrase__where { font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral-ink); }
 .phrase__ru { font-size: 1rem; line-height: 1.4; }
 .phrase__hint { font-family: var(--mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
 .phrase[open] .phrase__hint { display: none; }
@@ -123,6 +155,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
       <a href="#price">Цена</a>
       <a href="#faq">Вопросы</a>
     </nav>
+    <a class="btn topbar__cta" href="https://t.me/kris_tinav21">Записаться</a>
   </div>
 </header>
 
@@ -141,15 +174,17 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
         </ul>
         <p class="lede">Знакомо? Значит, вам ко мне. Говорить вы начнете на первом же занятии, теми словами, которые у вас уже есть, а чего не хватит, доберем по ходу. Первое занятие пробное и бесплатное, так что попробовать вам ничего не стоит.</p>
         <div class="btn-row">
-          <a class="btn" href="#price">Записаться на пробное занятие</a>
+          <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное занятие</a>
           <a class="btn btn--ghost" href="#who">Кому подойдет</a>
         </div>
+        <p class="btn-note">Бесплатно, 30-40 минут. Откроется телеграм, напишите мне пару слов о себе, и я предложу время.</p>
       </div>
       <div class="hero__side">
         <div class="talk" id="talk">
           <p class="talk__lbl">На занятии это звучит так</p>
           <p class="talk__ru" id="talk-ru"></p>
-          <p class="talk__en" id="talk-en"></p>
+          <p class="talk__en" id="talk-en" lang="en"></p>
+          <button class="talk__next" id="talk-next" type="button">следующая фраза →</button>
         </div>
         <dl class="facts">
         <div class="fact"><dt>Формат</dt><dd>Онлайн, 60 минут, один на один</dd></div>
@@ -322,8 +357,9 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
           </div>
         </div>
         <div class="btn-row">
-          <a class="btn" href="#price">Записаться на пробное</a>
+          <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное</a>
         </div>
+        <p class="btn-note">Бесплатно, 30-40 минут, в телеграме.</p>
       </div>
     </div>
   </section>
@@ -434,9 +470,11 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
   var box = document.getElementById('talk');
   var ru = document.getElementById('talk-ru');
   var en = document.getElementById('talk-en');
+  var next = document.getElementById('talk-next');
   if (!box || !ru || !en) return;
 
   var i = 0;
+  var timer = null;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function put(n){
@@ -444,22 +482,54 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     en.textContent = PAIRS[n][1];
   }
 
+  /* Высоту резервируем по самой длинной паре: без этого блок то вырастал,
+     то сжимался, и список фактов под ним уезжал вниз на каждой смене фразы.
+     Считаем после загрузки шрифтов и пересчитываем при смене ширины. */
+  function reserve(){
+    box.style.minHeight = '';
+    var max = 0;
+    for (var n = 0; n < PAIRS.length; n++) {
+      put(n);
+      max = Math.max(max, box.getBoundingClientRect().height);
+    }
+    put(i);
+    box.style.minHeight = Math.ceil(max) + 'px';
+  }
+
   put(0);
-  if (reduce) return;
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(reserve);
+  } else {
+    reserve();
+  }
+  var rt;
+  addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(reserve, 200); });
 
-  box.classList.add('is-wait');
-  setTimeout(function(){ box.classList.remove('is-wait'); }, 700);
-
-  setInterval(function(){
+  function show(n){
     box.classList.add('is-out');
     setTimeout(function(){
-      i = (i + 1) % PAIRS.length;
+      i = (n + PAIRS.length) % PAIRS.length;
       put(i);
       box.classList.remove('is-out');
       box.classList.add('is-wait');
       setTimeout(function(){ box.classList.remove('is-wait'); }, 650);
     }, 420);
-  }, 4200);
+  }
+
+  function auto(){ timer = setInterval(function(){ show(i + 1); }, 4200); }
+  function stop(){ clearInterval(timer); timer = null; }
+
+  /* Листать можно самому. Как только человек нажал, автопролистывание
+     выключаем совсем: дальше он управляет сам, а не догоняет таймер. */
+  /* Кнопка лежит внутри блока, поэтому хватает одного обработчика на блоке:
+     нажатие с клавиатуры тоже дает click и всплывает сюда. */
+  box.addEventListener('click', function(e){ e.preventDefault(); stop(); show(i + 1); });
+
+  if (reduce) return;
+
+  box.classList.add('is-wait');
+  setTimeout(function(){ box.classList.remove('is-wait'); }, 700);
+  auto();
 })();
 </script>
 </body>
