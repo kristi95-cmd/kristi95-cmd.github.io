@@ -115,24 +115,6 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 }
 @media (min-width: 760px) { .pull { padding: 3rem 3rem 2.8rem; } .pull::before { left: 3rem; top: 1.9rem; } }
 
-/* живые фразы */
-.phrases { display: grid; gap: .8rem; grid-template-columns: 1fr; }
-@media (min-width: 760px) { .phrases { grid-template-columns: repeat(2, 1fr); } }
-.phrase { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
-.phrase summary { cursor: pointer; list-style: none; padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: .3rem; }
-.phrase summary::-webkit-details-marker { display: none; }
-.phrase__where { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral-ink); }
-.phrase__ru { font-size: 1rem; line-height: 1.4; }
-.phrase__hint { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
-.phrase[open] .phrase__hint { display: none; }
-.phrase__en {
-  margin: 0; padding: 0 1.15rem 1.1rem;
-  font-family: "Cormorant Infant", Georgia, serif; font-style: italic;
-  font-size: 1.4rem; line-height: 1.3; color: var(--accent);
-  animation: phrase-in .45s cubic-bezier(.2, .7, .3, 1) both;
-}
-@keyframes phrase-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .phrase__en { animation: none; } }
 .steps li::before { color: var(--coral); border-color: var(--coral); }
 
 /* Уровни. Раньше это была таблица, и зря: сравнивать там нечего, читают сверху
@@ -185,7 +167,6 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
       <a href="#who">Кому подойдет</a>
       <a href="#trial">Пробное</a>
       <a href="#levels">Уровни</a>
-      <a href="#phrases">Фразы</a>
       <a href="#me">Про меня</a>
       <a href="#price">Цена</a>
       <a href="#faq">Вопросы</a>
@@ -232,7 +213,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     </div>
   </section>
 
-  <section class="band band--sunk" id="who">
+  <section class="band band--line" id="who">
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Кому подойдет</p>
@@ -248,8 +229,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     </div>
   </section>
 
-
-  <section class="band" id="trial">
+  <section class="band band--sunk" id="trial">
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Первый шаг</p>
@@ -268,7 +248,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     </div>
   </section>
 
-  <section class="band band--sunk" id="levels">
+  <section class="band" id="levels">
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Уровни</p>
@@ -293,7 +273,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     </div>
   </section>
 
-  <section class="band" id="goals">
+  <section class="band band--sunk" id="goals">
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Результат</p>
@@ -313,42 +293,6 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
           <h3>Общение в удовольствие</h3>
           <p>Знакомства, свидания, разговоры с друзьями из других стран, кино и сериалы без субтитров. Вы остаетесь собой и на английском тоже.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band band--sunk" id="phrases">
-    <div class="wrap stack stack--xl">
-      <div class="stack stack--sm">
-        <p class="eyebrow">Какой английский мы учим</p>
-        <h2>Фразы, которые нужны в жизни</h2>
-        <p>Это разговоры, которые бывают у меня здесь каждую неделю. Нажмите на ситуацию и посмотрите, как она звучит по-английски. Примерно так же выглядит и занятие: сначала ваша мысль, потом рабочая фраза под нее.</p>
-      </div>
-      <div class="phrases">
-        <details class="phrase">
-          <summary><span class="phrase__where">У врача</span><span class="phrase__ru">Мне кажется, у меня поднялась температура</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">I think I'm running a fever.</p>
-        </details>
-        <details class="phrase">
-          <summary><span class="phrase__where">Аренда жилья</span><span class="phrase__ru">Кондиционер не холодит, можете прислать мастера?</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">The AC isn't cooling. Could you send someone to fix it?</p>
-        </details>
-        <details class="phrase">
-          <summary><span class="phrase__where">В кафе</span><span class="phrase__ru">Можно не острое и лайм отдельно?</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">Could I get it not spicy, with the lime on the side?</p>
-        </details>
-        <details class="phrase">
-          <summary><span class="phrase__where">Знакомство</span><span class="phrase__ru">Я тут недавно, переехала пару месяцев назад</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">I'm new here, I moved a couple of months ago.</p>
-        </details>
-        <details class="phrase">
-          <summary><span class="phrase__where">Байк и мастера</span><span class="phrase__ru">Байк не заводится, можете посмотреть?</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">The bike won't start. Could you take a look at it?</p>
-        </details>
-        <details class="phrase">
-          <summary><span class="phrase__where">В дороге</span><span class="phrase__ru">Остановите, пожалуйста, вон у того поворота</span><span class="phrase__hint">показать по-английски</span></summary>
-          <p class="phrase__en">Could you stop at that turn up ahead, please?</p>
-        </details>
       </div>
     </div>
   </section>
