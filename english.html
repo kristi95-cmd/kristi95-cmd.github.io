@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Уроки английского языка</title>
-<meta name="description" content="Разговорный английский онлайн для взрослых и подростков от 16 лет. С нуля и с начального уровня. Первое пробное занятие бесплатно, дальше 1000 рублей за час.">
+<meta name="description" content="Разговорный английский онлайн для взрослых и подростков от 16 лет. С нуля и с начального уровня. Пробное занятие 500 рублей, дальше 1000 рублей за час, есть пакеты занятий.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Cormorant+Infant:ital,wght@1,400;1,600&family=Fira+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 <style>
 /* Мир учебника: глубокий синий, коралловый акцент, читающий сериф в заголовках. */
 :root {
@@ -23,7 +23,7 @@
   --accent-ink:   #FFFFFF;
   --accent-soft:  #DDE7F3;
   --coral:        #D45B43;
-  /* тот же коралловый, но затемненный до контраста 5:1 — для мелкого текста */
+  /* тот же коралловый, но затемненный до контраста 5:1, для мелкого текста */
   --coral-ink:    #B4442C;
   --display: "Tenor Sans", "Helvetica Neue", Arial, sans-serif;
   --body:    "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -123,7 +123,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 .phrase summary::-webkit-details-marker { display: none; }
 .phrase__where { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--coral-ink); }
 .phrase__ru { font-size: 1rem; line-height: 1.4; }
-.phrase__hint { font-family: var(--mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
+.phrase__hint { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .25rem; }
 .phrase[open] .phrase__hint { display: none; }
 .phrase__en {
   margin: 0; padding: 0 1.15rem 1.1rem;
@@ -134,6 +134,38 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
 @keyframes phrase-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .phrase__en { animation: none; } }
 .steps li::before { color: var(--coral); border-color: var(--coral); }
+
+/* Уровни. Раньше это была таблица, и зря: сравнивать там нечего, читают сверху
+   вниз. Из-за min-width она ездила боком на телефоне, а на большом экране строка
+   доходила до 120 знаков. Теперь три строки списка с подписью уровня слева. */
+.levels { display: flex; flex-direction: column; margin: 0; border-top: 1px solid var(--line); }
+.level { display: grid; grid-template-columns: 1fr; gap: .25rem; padding-block: 1.15rem; border-bottom: 1px solid var(--line); }
+.level__name { font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.level__says { margin: 0; max-width: 62ch; }
+@media (min-width: 760px) {
+  .level { grid-template-columns: 11rem minmax(0, 62ch); gap: 1.6rem; align-items: baseline; }
+}
+
+/* Цена. Сумма набрана заголовочным шрифтом и выровнена по правому краю строки,
+   чтобы 500 и 1 000 читались одним движением глаз. */
+.rates { display: flex; flex-direction: column; margin: 0; border-top: 1px solid var(--line); }
+.rate { display: grid; grid-template-columns: 1fr auto; gap: .3rem 1.2rem; padding-block: 1.3rem; border-bottom: 1px solid var(--line); align-items: baseline; }
+.rate__what { font-size: 1.1rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .55rem; }
+.rate__len { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.rate__sum {
+  margin: 0; grid-column: 2; grid-row: 1;
+  font-family: var(--display); font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+  line-height: 1; letter-spacing: -.01em; white-space: nowrap;
+}
+.rate__note { grid-column: 1 / -1; margin: 0; font-size: .95rem; color: var(--muted); max-width: 62ch; }
+@media (min-width: 760px) {
+  .rate { grid-template-columns: minmax(0, 1fr) auto; }
+  .rate__note { grid-column: 1; }
+}
+.rates__note { font-size: .95rem; color: var(--muted); max-width: 62ch; }
+
+/* две плитки вместо трех: в сетке на три колонки одна оставалась пустой */
+@media (min-width: 760px) { .pitch--2 { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 <body>
@@ -175,12 +207,12 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
           <li>Учили в школе и в институте, сейчас не вспомните и половины, и начинать заново страшно.</li>
           <li>Английского не было совсем, и кажется, что сейчас уже поздно.</li>
         </ul>
-        <p class="lede">Знакомо? Значит, вам ко мне. Говорить вы начнете на первом же занятии, теми словами, которые у вас уже есть, а чего не хватит, доберем по ходу. Первое занятие пробное и бесплатное, так что попробовать вам ничего не стоит.</p>
+        <p class="lede">Знакомо? Значит, вам ко мне. Говорить вы начнете на первом же занятии, теми словами, которые у вас уже есть, а чего не хватит, доберем по ходу. Начинаем с пробного занятия за 500 рублей: 40 минут, за которые вы успеете поговорить, посмотреть, как я объясняю, и решить, идем ли мы дальше.</p>
         <div class="btn-row">
           <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное занятие</a>
           <a class="btn btn--ghost" href="#who">Кому подойдет</a>
         </div>
-        <p class="btn-note">Бесплатно, 30-40 минут. Откроется телеграм, напишите мне пару слов о себе, и я предложу время.</p>
+        <p class="btn-note">Пробное занятие 500 ₽, 40 минут. Откроется телеграм, напишите мне пару слов о себе, и я предложу время.</p>
       </div>
       <div class="hero__side">
         <div class="talk" id="talk">
@@ -191,8 +223,8 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
         </div>
         <dl class="facts">
         <div class="fact"><dt>Формат</dt><dd>Онлайн, 60 минут, один на один</dd></div>
-        <div class="fact"><dt>Знакомство</dt><dd>Пробное занятие бесплатно, 30-40 минут</dd></div>
-        <div class="fact"><dt>Цена</dt><dd>1 000 ₽ за занятие</dd></div>
+        <div class="fact"><dt>Пробное</dt><dd>500 ₽, 40 минут с разбором уровня</dd></div>
+        <div class="fact"><dt>Цена</dt><dd>1 000 ₽ за занятие, есть пакеты</dd></div>
         <div class="fact"><dt>Уровень</dt><dd>С нуля, начальный, Elementary и выше</dd></div>
         <div class="fact"><dt>Возраст</dt><dd>От 16 лет, взрослые любого возраста</dd></div>
         </dl>
@@ -221,8 +253,8 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Первый шаг</p>
-        <h2>Что вы получите на бесплатном пробном</h2>
-        <p>30-40 минут, за которые вы поймете, подходит ли вам заниматься со мной, а я пойму, как вас учить. Это полноценный разговор, а не анкета и не презентация курса.</p>
+        <h2>Что входит в пробное занятие</h2>
+        <p>40 минут за 500 рублей. Это полноценное занятие: вы сразу говорите, видите, как я объясняю и как вообще устроен час со мной, и решаете, подходит ли вам такой формат. Я за это время слышу ваш уровень и понимаю, как вас учить.</p>
       </div>
       <ol class="steps">
         <li><p><strong>Скажете первые фразы вслух</strong>Говорить начинаем сразу, даже если вы давно не пробовали или не пробовали никогда. Самое страшное обычно проходит в первые десять минут.</p></li>
@@ -233,6 +265,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
       <div class="btn-row">
         <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное</a>
       </div>
+      <p class="btn-note">500 ₽, 40 минут. Откроется телеграм.</p>
     </div>
   </section>
 
@@ -244,27 +277,20 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
         <p>Я беру с нуля и с любого начального уровня. На пробном занятии мы вместе посмотрим, где вы сейчас: что понимаете на слух, что получается сказать, где спотыкаетесь. Готовить для этого ничего не надо.</p>
         <p>И у вас может быть свой запрос, с которым вы приходите: работа, переезд, поездки, общение с иностранцами. Программу я собираю под этот запрос, поэтому мы занимаемся вашим английским, а не курсом вообще.</p>
       </div>
-      <div class="table-scroll">
-        <table class="levels">
-          <thead>
-            <tr><th scope="col">Уровень</th><th scope="col">Как это выглядит сейчас</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">С нуля</th>
-              <td>Английского не было вообще или он забылся полностью. Чтение дается тяжело, слова на слух не распознаются.</td>
-            </tr>
-            <tr>
-              <th scope="row">Начальный</th>
-              <td>Школьные слова в голове есть, но собрать из них предложение не получается. Знакомый текст понимаете, свою мысль сказать не можете.</td>
-            </tr>
-            <tr>
-              <th scope="row">Elementary</th>
-              <td>Простое сказать можете, но теряетесь, когда с вами говорят в обычном темпе, и отвечаете двумя словами.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <dl class="levels">
+        <div class="level">
+          <dt class="level__name">С нуля</dt>
+          <dd class="level__says">Английского не было вообще или он забылся полностью. Чтение дается тяжело, слова на слух не распознаются.</dd>
+        </div>
+        <div class="level">
+          <dt class="level__name">Начальный</dt>
+          <dd class="level__says">Школьные слова в голове есть, но собрать из них предложение не получается. Знакомый текст понимаете, свою мысль сказать не можете.</dd>
+        </div>
+        <div class="level">
+          <dt class="level__name" lang="en">Elementary</dt>
+          <dd class="level__says">Простое сказать можете, но теряетесь, когда с вами говорят в обычном темпе, и отвечаете двумя словами.</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
@@ -362,7 +388,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
         <div class="btn-row">
           <a class="btn" href="https://t.me/kris_tinav21">Записаться на пробное</a>
         </div>
-        <p class="btn-note">Бесплатно, 30-40 минут, в телеграме.</p>
+        <p class="btn-note">Пробное занятие 500 ₽, 40 минут, в телеграме.</p>
       </div>
     </div>
   </section>
@@ -371,14 +397,23 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     <div class="wrap stack stack--xl">
       <div class="stack stack--sm">
         <p class="eyebrow">Цена</p>
-        <h2>1 000 ₽ за занятие</h2>
-        <p>Полный час один на один, в котором говорите в основном вы. Я слушаю, подсказываю и поправляю по ходу, а грамматику разбираем там, где она мешает вас понять.</p>
+        <h2>Сколько стоит</h2>
+        <p>Занятие идет час, один на один, и говорите в нем в основном вы. Я слушаю, подсказываю и поправляю по ходу, а грамматику разбираем там, где она мешает вас понять.</p>
       </div>
-      <div class="pitch">
-        <div class="tile">
-          <h3>Пробное занятие бесплатно</h3>
-          <p>30-40 минут на знакомство. Вы смотрите, как я объясняю и подходит ли вам такой формат, а я слушаю, как вы говорите сейчас, и расспрашиваю, зачем вам английский. К концу разговора мне понятен ваш уровень и ваш запрос, и под них я подбираю методику и собираю программу лично для вас. Платить за это знакомство не надо, решение вы принимаете после него.</p>
+      <dl class="rates">
+        <div class="rate">
+          <dt class="rate__what">Пробное занятие <span class="rate__len">40 минут</span></dt>
+          <dd class="rate__sum">500 ₽</dd>
+          <dd class="rate__note">Знакомимся и сразу работаем: вы говорите, я слушаю и понимаю, где вы сейчас, и расспрашиваю, зачем вам английский. К концу разговора у меня есть ваш уровень и ваш запрос, и под них я собираю программу дальнейших занятий.</dd>
         </div>
+        <div class="rate">
+          <dt class="rate__what">Занятие <span class="rate__len">60 минут</span></dt>
+          <dd class="rate__sum">1 000 ₽</dd>
+          <dd class="rate__note">Дальше идут обычные занятия по той программе, которую собрали на пробном. Она меняется по ходу, если у вас меняется запрос.</dd>
+        </div>
+      </dl>
+      <p class="rates__note">Собираетесь заниматься регулярно - есть пакеты занятий сразу на несколько уроков. Спросите при записи, подберем под ваш график.</p>
+      <div class="pitch pitch--2">
         <div class="tile">
           <h3>Время занятий</h3>
           <p>Подстраиваюсь под ваш день, включая раннее утро и вечер. Скажите, в какие часы вам удобно говорить, и мы поставим занятие на это время, а если график поменяется, подвинем.</p>
@@ -398,6 +433,10 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
         <h2>О чем спрашивают до первого занятия</h2>
       </div>
       <div class="faq">
+        <details>
+          <summary>Почему пробное занятие платное</summary>
+          <p>За эти 40 минут вы успеваете поговорить по-английски, разобрать свой уровень и получить программу, собранную под вас. 500 рублей это вдвое меньше обычного часа.</p>
+        </details>
         <details>
           <summary>У меня совсем нулевой уровень, не будет стыдно?</summary>
           <p>С нуля я работаю и это самый спокойный вариант: нет старых ошибок, которые придется переучивать. Первые занятия идут с русским языком рядом, дальше его становится меньше.</p>
@@ -434,7 +473,7 @@ h1, h2, h3, h4 { font-weight: 400; letter-spacing: .005em; }
     <div class="wrap">
       <div class="cta">
         <h2>Напишите, и договоримся о пробном занятии</h2>
-        <p>Расскажите в двух словах, какой у вас уровень и зачем нужен английский. Отвечу в тот же день и предложу время для бесплатного пробного.</p>
+        <p>Расскажите в двух словах, какой у вас уровень и зачем нужен английский. Отвечу в тот же день и предложу время для пробного занятия.</p>
         <div class="btn-row">
           <a class="btn" href="https://t.me/kris_tinav21">Написать в телеграм</a>
           <a class="btn" href="mailto:christivas21@gmail.com">christivas21@gmail.com</a>
