@@ -103,6 +103,17 @@
   .tag.sp{background:#f4f0ea; color:#6b5435}
   .tag.pr{background:#eaf7f0; color:#15663f}
 
+
+  /* ---------- русские диалоги на перевод ---------- */
+  .rd{margin:0 0 4px}
+  .rd .n{font-size:12px; font-weight:800; color:var(--accent); letter-spacing:.06em; margin-bottom:4px}
+  .rd div.l{font-size:18px; padding:4px 0}
+  .rdbox{border-bottom:1px solid var(--line); padding:14px 0}
+  .rdbox:last-child{border-bottom:none}
+  .short{padding:12px 0; border-bottom:1px solid var(--line); font-size:18px}
+  .short:last-child{border-bottom:none}
+  .short .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
+
   .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
 
   @media (max-width:420px){
@@ -117,7 +128,7 @@
     .wrap{max-width:none; padding:0}
     h2{margin-top:22px}
     .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
-    .q,.pair,.note,.hw,.thing,.conj div{break-inside:avoid}
+    .q,.pair,.note,.hw,.thing,.conj div,.rdbox,.short{break-inside:avoid}
     .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
     .top .kicker{color:var(--accent)}
     .top h1 em{color:var(--accent)}
@@ -133,17 +144,12 @@
 <div class="top">
   <div class="kicker">Айна · домашка к уроку 1</div>
   <h1>Is this in stock?<em>am · is · are</em></h1>
-  <p>Три задания, минут двадцать пять. Всё пишешь текстом и присылаешь мне одним сообщением.</p>
-</div>
-
-<div class="note">
-  <b>Как это работает.</b> В первом задании можно нажимать на кнопки и сразу видеть, верно или нет.
-  Но предложения всё равно выпиши целиком, рукой или в заметках - именно от письма слова остаются в голове.
+  <p>Три задания, минут двадцать пять. Первое делаешь прямо здесь, на странице. Второе присылаешь мне текстом, третье - голосовым.</p>
 </div>
 
 <div class="tag">Задание 1</div>
 <h2><span class="num">01</span>Раскрой скобки</h2>
-<p class="lead">Вместо (be) поставь нужную форму: am, is или are. Выпиши все пятнадцать предложений целиком.</p>
+<p class="lead">Вместо (be) поставь нужную форму: am, is или are. Жми на кнопку и сразу увидишь, верно или нет. Присылать мне ничего не надо, это ты делаешь только для себя.</p>
 
 <div class="card">
   <div class="conj">
@@ -162,7 +168,7 @@
 
 <div class="tag wd">Задание 2</div>
 <h2><span class="num">02</span>Шесть вещей</h2>
-<p class="lead">Про каждую вещь напиши два предложения: что это и какого она цвета.</p>
+<p class="lead">Про каждую вещь напиши два предложения: что это и какого она цвета. Это задание присылаешь мне текстом.</p>
 
 <div class="form">
   This is a necklace. It is blue.
@@ -170,8 +176,8 @@
   <span class="ex">Если вещь одна: <b>This is a ... . It is ... .</b></span>
 </div>
 <div class="form">
-  These are earrings. They are gold.
-  <span class="ru2">Это серьги. Они золотые.</span>
+  These are bags. They are red.
+  <span class="ru2">Это сумки. Они красные.</span>
   <span class="ex">Если это пара или их много: <b>These are ... . They are ... .</b></span>
 </div>
 
@@ -208,33 +214,93 @@
 </div>
 
 <div class="tag sp">Задание 3</div>
-<h2><span class="num">03</span>Те же предложения, но вопросом</h2>
-<p class="lead">Возьми свои двенадцать предложений из второго задания и сделай из каждого вопрос. И сама же на него ответь.</p>
-
-<div class="form">
-  This is a necklace. <b>&rarr;</b> Is this a necklace? Yes, it is.<br>
-  It is blue. <b>&rarr;</b> Is it blue? Yes, it is.
-  <span class="ex">Вещь одна - отвечаем <b>Yes, it is</b> или <b>No, it is not</b>.</span>
-</div>
-<div class="form">
-  These are earrings. <b>&rarr;</b> Are these earrings? Yes, they are.<br>
-  They are gold. <b>&rarr;</b> Are they gold? Yes, they are.
-  <span class="ex">Пара или много - отвечаем <b>Yes, they are</b> или <b>No, they are not</b>.</span>
-</div>
+<h2><span class="num">03</span>Переведи голосом</h2>
+<p class="lead">Это задание не пишешь, а наговариваешь. Включи запись в телеграме и переводи вслух на английский, подряд, одним сообщением. Сбилась - просто скажи эту фразу ещё раз, перезаписывать всё заново не надо.</p>
 
 <div class="note">
-  <b>Что делает вопрос вопросом.</b> Глагол is или are просто переезжает в начало,
-  больше в предложении ничего не меняется. This is a ring <b>&rarr;</b> Is this a ring?
+  <b>Как получается вопрос.</b> Глагол is или are переезжает в начало, больше в предложении ничего не меняется.
+  This is a ring <b>&rarr;</b> Is this a ring? These are bags <b>&rarr;</b> Are these bags?
+</div>
+<div class="note">
+  <b>Как получается ответ.</b> Про одну вещь: <b>Yes, it is</b> или <b>No, it is not</b>.
+  Про пару и про много: <b>Yes, they are</b> или <b>No, they are not</b>.
 </div>
 
-<h3>Проверь себя</h3>
-<p class="lead">Сначала скажи сама, потом нажми и сверься.</p>
-<div class="card" id="ex2"></div>
+<h3>Сначала короткие</h3>
+<div class="card">
+  <div class="short"><span class="n2">01</span>Это кольцо? Да, это кольцо.</div>
+  <div class="short"><span class="n2">02</span>Это серьги? Нет, это не серьги.</div>
+  <div class="short"><span class="n2">03</span>Они золотые? Да, они золотые.</div>
+  <div class="short"><span class="n2">04</span>Оно чёрное? Нет, оно не чёрное.</div>
+  <div class="short"><span class="n2">05</span>Эти сумки новые? Да, они новые.</div>
+  <div class="short"><span class="n2">06</span>Это есть в наличии? Нет.</div>
+</div>
+
+<h3>Теперь мини-диалоги</h3>
+<p class="lead">Переводи целиком, обе реплики, как маленький разговор.</p>
+<div class="card">
+  <div class="rdbox"><div class="rd"><div class="n">01</div>
+    <div class="l">- Это кольцо?</div>
+    <div class="l">- Да, это кольцо.</div>
+    <div class="l">- Оно зелёное?</div>
+    <div class="l">- Нет.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">02</div>
+    <div class="l">- Это серьги?</div>
+    <div class="l">- Нет.</div>
+    <div class="l">- Это кольцо?</div>
+    <div class="l">- Да. Оно синее.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">03</div>
+    <div class="l">- Это сумка?</div>
+    <div class="l">- Нет, это не сумка. Это пальто.</div>
+    <div class="l">- Оно чёрное?</div>
+    <div class="l">- Да, оно чёрное.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">04</div>
+    <div class="l">- Это джинсы?</div>
+    <div class="l">- Да, это джинсы.</div>
+    <div class="l">- Они синие?</div>
+    <div class="l">- Нет, они чёрные.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">05</div>
+    <div class="l">- Это платье есть в наличии?</div>
+    <div class="l">- Да, есть.</div>
+    <div class="l">- Какой это размер?</div>
+    <div class="l">- Средний.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">06</div>
+    <div class="l">- Извините, можете повторить?</div>
+    <div class="l">- Эти туфли новые.</div>
+    <div class="l">- Они бежевые?</div>
+    <div class="l">- Нет, они не бежевые. Они белые.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">07</div>
+    <div class="l">- Я байер. Вы мой поставщик?</div>
+    <div class="l">- Да.</div>
+    <div class="l">- Эти сумки кожаные?</div>
+    <div class="l">- Да, они кожаные.</div>
+  </div></div>
+
+  <div class="rdbox"><div class="rd"><div class="n">08</div>
+    <div class="l">- Это футболка?</div>
+    <div class="l">- Нет, это не футболка. Это платье.</div>
+    <div class="l">- Оно белое?</div>
+    <div class="l">- Нет, оно красное.</div>
+  </div></div>
+</div>
 
 <div class="hw">
   <h3>Что прислать</h3>
-  <p>Одно сообщение, в нём три части: пятнадцать предложений из первого задания, двенадцать из второго и вопросы с ответами из третьего.</p>
-  <p class="small">Если какое-то место не даётся - не сиди над ним, напиши рядом знак вопроса, разберём вместе на занятии.</p>
+  <p><b>Текстом</b> - второе задание, двенадцать предложений про шесть вещей.</p>
+  <p><b>Голосовым</b> - третье задание: шесть коротких и восемь диалогов, подряд, одним сообщением.</p>
+  <p class="small">Первое задание присылать не надо, ты делаешь его прямо на странице. Если какое-то место совсем не даётся - пропусти и скажи мне об этом, разберём на занятии.</p>
 </div>
 
 <div class="foot">Айна · домашка к уроку 1</div>
@@ -274,20 +340,6 @@
     });
   }
 
-  function revealBlock(id, items){
-    var host = document.getElementById(id);
-    if(!host) return;
-    items.forEach(function(p){
-      var w = document.createElement("div"); w.className = "pair";
-      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
-      b.textContent = p.ru;
-      var a = document.createElement("div"); a.className = "ans";
-      a.innerHTML = p.en;
-      b.addEventListener("click", function(){ a.classList.toggle("show"); });
-      w.appendChild(b); w.appendChild(a);
-      host.appendChild(w);
-    });
-  }
 
   var AM = ["am","is","are"];
 
@@ -309,20 +361,6 @@
     {stem:'I <b>(be)</b> not a consultant.', ru:'Я не консультант.', opts:AM, ok:0, why:"Верно. not встаёт после am, сам глагол не меняется"}
   ]);
 
-  revealBlock("ex2", [
-    {ru:"Это кольцо?", en:"Is this a ring?"},
-    {ru:"Оно серебряное?", en:"Is it silver?"},
-    {ru:"Это серьги?", en:"Are these earrings?"},
-    {ru:"Они золотые?", en:"Are they gold?"},
-    {ru:"Это футболка?", en:"Is this a T-shirt?"},
-    {ru:"Она зелёная?", en:"Is it green?"},
-    {ru:"Это джинсы?", en:"Are these jeans?"},
-    {ru:"Они синие?", en:"Are they blue?"},
-    {ru:"Да, это так. Про одну вещь", en:"Yes, it is."},
-    {ru:"Нет, это не так. Про одну вещь", en:"No, it is not."},
-    {ru:"Да, это так. Про пару или много", en:"Yes, they are."},
-    {ru:"Нет, это не так. Про пару или много", en:"No, they are not."}
-  ]);
 
 })();
 </script>
