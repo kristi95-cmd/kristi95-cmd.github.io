@@ -450,7 +450,7 @@
 
   <div class="tag pr">практика</div>
   <h2><span class="num">12</span>Скажи «не»</h2>
-  <p class="lead screen-only">Поставь предложение в отрицание.</p>
+  <p class="lead">Переведи сам, вслух, и только потом открывай ответ.</p>
   <div class="card" id="ex3"></div>
 
 
@@ -678,6 +678,39 @@
     ["expensive","дорогой"],["cheap","дешёвый"],["open","открыт"],["closed","закрыт"],
     ["busy","занят"],["tired","уставший"],["hungry","голодный"],["happy","счастливый"]]);
 
+  /* ========== как прочитать гласную ========== */
+  choiceBlock("ex11", [
+    {stem:'n<b>a</b>me', ru:'имя', opts:["э","эй"], ok:1,
+     why:"Верно. В конце немая e, значит a называет своё имя"},
+    {stem:'th<b>i</b>s', ru:'это', opts:["и","ай"], ok:0,
+     why:"Верно. После i идёт s, слог закрытый"},
+    {stem:'n<b>i</b>ce', ru:'приятный', opts:["и","ай"], ok:1,
+     why:"Верно. Немая e на конце открывает слог"},
+    {stem:'M<b>a</b>x', ru:'Макс', opts:["э","эй"], ok:0,
+     why:"Верно. После a идёт x, слог закрытый"},
+    {stem:'h<b>e</b>', ru:'он', opts:["э","и"], ok:1,
+     why:"Верно. Слово кончается на саму гласную, слог открытый"},
+    {stem:'p<b>e</b>n', ru:'ручка', opts:["э","и"], ok:0,
+     why:"Верно. После e идёт n, слог закрытый"},
+    {stem:'h<b>o</b>me', ru:'дом', opts:["о","оу"], ok:1,
+     why:"Верно. Немая e на конце"},
+    {stem:'h<b>o</b>t', ru:'горячий', opts:["о","оу"], ok:0,
+     why:"Верно. Слог закрытый"},
+    {stem:'st<b>u</b>dent', ru:'студент', opts:["а","ю"], ok:1,
+     why:"Верно. Слог открытый, u называет своё имя"},
+    {stem:'b<b>u</b>s', ru:'автобус', opts:["а","ю"], ok:0,
+     why:"Верно. Закрытый слог, и это «а», а не «у»"},
+    {stem:'f<b>i</b>ve', ru:'пять', opts:["и","ай"], ok:1, why:"Верно"},
+    {stem:'s<b>i</b>ster', ru:'сестра', opts:["и","ай"], ok:0,
+     why:"Верно. После i идёт s, слог закрытый"},
+    {stem:'m<b>y</b>', ru:'мой', opts:["и","ай"], ok:1,
+     why:"Верно. y на конце короткого слова читается «ай»"},
+    {stem:'happ<b>y</b>', ru:'счастливый', opts:["и","ай"], ok:0,
+     why:"Верно. В длинном слове y на конце это «и»"},
+    {stem:'h<b>a</b>ve', ru:'иметь', opts:["э","эй"], ok:0,
+     why:"Верно, и это исключение: немая e есть, а гласная всё равно короткая"}
+  ]);
+
   /* ========== согласные ========== */
   choiceBlock("ex13", [
     {stem:'<b>ph</b> в слове photographer', opts:["ф","п"], ok:0, why:"Верно. ph это всегда «ф»"},
@@ -830,19 +863,15 @@
   ]);
 
   /* ========== 11. отрицание ========== */
-  choiceBlock("ex3", [
-    {stem:'я не тренер', opts:["I am not a coach","I not am a coach"], ok:0,
-     why:"Верно. not встаёт сразу после am", full:"I am not a coach."},
-    {stem:'она не блогер', opts:["She not is a blogger","She is not a blogger"], ok:1,
-     why:"Верно. Сначала is, потом not", full:"She is not a blogger."},
-    {stem:'мы не из Испании', opts:["We are not from Spain","We not are from Spain"], ok:0,
-     why:"Верно", full:"We are not from Spain."},
-    {stem:'это недорого', opts:["It aren't expensive","It isn't expensive"], ok:1,
-     why:"Верно. It - это оно, значит isn't", full:"It isn't expensive."},
-    {stem:'они не устали', opts:["They aren't tired","They isn't tired"], ok:0,
-     why:"Верно. they - are, значит aren't", full:"They aren't tired."},
-    {stem:'я не занят', opts:["I amn't busy","I'm not busy"], ok:1,
-     why:"Верно. С I только I'm not", full:"I'm not busy."}
+  revealBlock("ex3", [
+    {ru:"я не тренер", en:"I am not a coach."},
+    {ru:"она не блогер", en:"She is not a blogger."},
+    {ru:"мы не из Испании", en:"We are not from Spain."},
+    {ru:"это недорого", en:"It isn't expensive."},
+    {ru:"они не устали", en:"They aren't tired."},
+    {ru:"я не занят", en:"I'm not busy."},
+    {ru:"он не мой брат", en:"He is not my brother."},
+    {ru:"это не мой отель", en:"It isn't my hotel."}
   ]);
 
   /* ========== 12. собери вопрос ========== */
