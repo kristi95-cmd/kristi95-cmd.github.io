@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Present Simple и Present Continuous. Раскрой скобки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{background:none; padding:0 0 2px; font-weight:600; color:var(--soft); font-size:16px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- раскрытие скобок ---------- */
+  .gap .q{padding:11px 0}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  .txtex{font-size:17px; line-height:2.2}
+  .txtex .n{display:none}
+  @media (max-width:420px){
+    .gap input{width:106px; font-size:15px}
+    .gap .line, .txtex{font-size:16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English &middot; тренажёр</div>
+    <h1>Раскрой скобки<em>Present Simple и Present Continuous</em></h1>
+    <p>Сто с лишним предложений на два настоящих времени: утверждение, отрицание, вопрос, короткие тексты и смешанные блоки. Пишешь форму в поле, страница сразу говорит, верно или нет.</p>
+  </div>
+
+  <div class="note"><b>Как работать.</b> Впиши форму глагола и нажми Enter или просто перейди к следующему полю. Поле станет зелёным, если верно, и красным, если нет. Сокращения можно писать и полностью: <b>doesn't</b> и <b>does not</b> засчитываются одинаково. Кнопка под каждым блоком показывает ответы, но пока не попробовала сама - не нажимай.</div>
+
+  <div class="card">
+    <h3>Шпаргалка на время работы</h3>
+    <div class="form">Present Simple: кто <span class="plus">+</span> глагол <span class="plus">+</span> s у he, she, it
+      <span class="ex">отрицание: don't / doesn't + глагол &middot; вопрос: Do / Does + кто + глагол</span></div>
+    <div class="form">Present Continuous: кто <span class="plus">+</span> am / is / are <span class="plus">+</span> глагол <span class="plus">+</span> ing
+      <span class="ex">отрицание: am not / isn't / aren't + ing &middot; вопрос: Am / Is / Are + кто + ing</span></div>
+    <div class="conj">
+      <div class="p">Simple</div><div class="v">вообще</div><div class="r">always, usually, often, never, every day, on Mondays, twice a week</div>
+      <div class="p">Continuous</div><div class="v">сейчас</div><div class="r">now, at the moment, today, this week, these days, Look!, Listen!</div>
+    </div>
+  </div>
+
+  <div class="tag pr">present simple</div>
+  <h2><span class="num">01</span>Утверждение</h2>
+  <p class="lead screen-only">Следи за третьим лицом: he, she, it забирают s.</p>
+  <div class="card gap" id="g1"></div>
+
+  <div class="tag pr">present simple</div>
+  <h2><span class="num">02</span>Отрицание</h2>
+  <p class="lead screen-only">Пиши всю форму целиком: don't work, doesn't work.</p>
+  <div class="card gap" id="g2"></div>
+
+  <div class="tag pr">present simple</div>
+  <h2><span class="num">03</span>Вопрос</h2>
+  <p class="lead screen-only">В первое поле идёт Do или Does, во второе сам глагол.</p>
+  <div class="card gap" id="g3"></div>
+
+  <div class="tag pr">present simple</div>
+  <h2><span class="num">04</span>Всё вперемешку</h2>
+  <p class="lead screen-only">Теперь утверждение, отрицание и вопрос идут вразнобой. Смотри на смысл фразы.</p>
+  <div class="card gap" id="g4"></div>
+
+  <div class="tag pr">present continuous</div>
+  <h2><span class="num">05</span>Утверждение</h2>
+  <p class="lead screen-only">Пиши обе части: am, is или are плюс глагол с -ing.</p>
+  <div class="card gap" id="g5"></div>
+
+  <div class="tag pr">present continuous</div>
+  <h2><span class="num">06</span>Отрицание</h2>
+  <div class="card gap" id="g6"></div>
+
+  <div class="tag pr">present continuous</div>
+  <h2><span class="num">07</span>Вопрос</h2>
+  <p class="lead screen-only">В первое поле Am, Is или Are, во второе глагол с -ing.</p>
+  <div class="card gap" id="g7"></div>
+
+  <div class="tag pr">present continuous</div>
+  <h2><span class="num">08</span>Всё вперемешку</h2>
+  <div class="card gap" id="g8"></div>
+
+  <div class="tag">важное</div>
+  <h2><span class="num">09</span>Как выбрать между ними</h2>
+
+  <div class="card">
+    <p>Дальше идут смешанные блоки, и там надо каждый раз решать, какое время брать. Три вещи, на которые смотреть.</p>
+    <div class="conj">
+      <div class="p">слово-маркер</div><div class="v">every day, usually, never &rarr; Simple</div><div class="r">now, at the moment, today, Look! &rarr; Continuous</div>
+      <div class="p">смысл</div><div class="v">так бывает всегда &rarr; Simple</div><div class="r">так происходит сейчас или в этот период &rarr; Continuous</div>
+      <div class="p">сам глагол</div><div class="v">know, want, like, need, see, have (иметь) &rarr; только Simple</div><div class="r">в Continuous они не ставятся никогда</div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">I'm knowing the answer<small>знать это состояние</small></div>
+      <div class="wr y">I know the answer<small>только Simple</small></div>
+    </div>
+    <p>И ещё одно: <b>расписание</b> идёт в Simple (<b>The train leaves at eight</b>), а <b>твоя собственная договорённость</b> на будущее - в Continuous (<b>I'm flying on Friday</b>, билет уже куплен).</p>
+  </div>
+
+  <div class="tag pr">simple или continuous</div>
+  <h2><span class="num">10</span>Выбери время: первая серия</h2>
+  <div class="card gap" id="g9"></div>
+
+  <div class="tag pr">simple или continuous</div>
+  <h2><span class="num">11</span>Выбери время: вторая серия</h2>
+  <p class="lead screen-only">Здесь попадаются глаголы, которые в Continuous не ставят.</p>
+  <div class="card gap" id="g10"></div>
+
+  <div class="tag pr">тексты</div>
+  <h2><span class="num">12</span>Текст: My sister</h2>
+  <p class="lead screen-only">Связный текст. Все глаголы в Present Simple.</p>
+  <div class="card gap txtex" id="t1"></div>
+
+  <div class="tag pr">тексты</div>
+  <h2><span class="num">13</span>Текст: A call from the airport</h2>
+  <p class="lead screen-only">Здесь всё происходит прямо сейчас.</p>
+  <div class="card gap txtex" id="t2"></div>
+
+  <div class="tag pr">тексты</div>
+  <h2><span class="num">14</span>Текст: Anna this week</h2>
+  <p class="lead screen-only">А тут оба времени вперемешку.</p>
+  <div class="card gap txtex" id="t3"></div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">15</span>Где здесь чаще всего ошибаются</h2>
+
+  <div class="card">
+    <div class="wrong-right">
+      <div class="wr n">He doesn't works<small>s стоит дважды</small></div>
+      <div class="wr y">He doesn't work<small>s осталась в doesn't</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">Does she flies?<small>то же самое в вопросе</small></div>
+      <div class="wr y">Does she fly?<small>глагол голый</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">I waiting<small>потеряли am</small></div>
+      <div class="wr y">I'm waiting<small>обе части на месте</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">She don't know<small>she берёт doesn't</small></div>
+      <div class="wr y">She doesn't know<small>вот так</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">They are runing<small>короткий слог, нужна двойная</small></div>
+      <div class="wr y">They are running<small>вот так</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">I'm wanting coffee<small>want в Continuous не ставят</small></div>
+      <div class="wr y">I want coffee<small>только Simple</small></div>
+    </div>
+  </div>
+
+  <div class="foot">Тренажёр &middot; Present Simple и Present Continuous</div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function norm(s){
+    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
+  }
+  function expand(a){
+    var out = [];
+    a.forEach(function(v){
+      out.push(v);
+      var m = norm(v);
+      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
+                   ["aren't","are not"],["i'm","i am"],["he's","he is"],["she's","she is"],
+                   ["it's","it is"],["we're","we are"],["they're","they are"],["you're","you are"]];
+      pairs.forEach(function(p){
+        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
+        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
+      });
+    });
+    return out.map(norm);
+  }
+
+  function makeGap(item, idx, showNum){
+    var q = document.createElement("div"); q.className = "q";
+    var line = document.createElement("div"); line.className = "line";
+    if(showNum){
+      var n = document.createElement("span"); n.className = "n";
+      n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
+      line.appendChild(n);
+    }
+    if(item.pre){
+      var pre = document.createElement("span"); pre.className = "hint";
+      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
+      pre.textContent = "(" + item.pre + ")";
+      line.appendChild(pre);
+    }
+    var parts = item.s.split("%");
+    var answers = item.ok.slice();
+    var hints = (item.v || "").split("|");
+    var inputs = [];
+    parts.forEach(function(txt, i){
+      line.appendChild(document.createTextNode(txt));
+      if(i < parts.length - 1){
+        var inp = document.createElement("input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        if((answers[i] || "").length > 12) inp.className = "wide";
+        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
+        function check(){
+          var v = norm(inp.value);
+          if(!v){ inp.classList.remove("y","n"); return; }
+          var right = ok.indexOf(v) >= 0;
+          inp.classList.toggle("y", right);
+          inp.classList.toggle("n", !right);
+        }
+        inp.addEventListener("blur", check);
+        inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+        inp.dataset.ans = answers[i];
+        line.appendChild(inp);
+        inputs.push(inp);
+        if(hints[i]){
+          var h = document.createElement("span"); h.className = "hint";
+          h.textContent = " (" + hints[i] + ")";
+          line.appendChild(h);
+        }
+      }
+    });
+    q.appendChild(line);
+    if(item.ru){
+      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
+      q.appendChild(ru);
+    }
+    q._inputs = inputs;
+    return q;
+  }
+
+  function gapBlock(id, items, opts){
+    var host = document.getElementById(id);
+    if(!host) return;
+    opts = opts || {};
+    var all = [];
+    if(opts.intro){
+      var p = document.createElement("p");
+      p.style.cssText = "margin:0 0 6px;color:var(--soft);font-size:15px";
+      p.textContent = opts.intro;
+      host.appendChild(p);
+    }
+    items.forEach(function(it, i){
+      var q = makeGap(it, i, !opts.text);
+      if(opts.text){ q.style.cssText = "padding:0;border:none;display:inline"; }
+      host.appendChild(q);
+      all = all.concat(q._inputs);
+    });
+    var bar = document.createElement("div"); bar.className = "score";
+    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
+    btn.textContent = "Показать ответы";
+    var cnt = document.createElement("span"); cnt.className = "cnt";
+    var shown = false;
+    btn.addEventListener("click", function(){
+      shown = !shown;
+      all.forEach(function(inp){
+        if(shown){
+          if(!inp.value) { inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
+          inp.classList.remove("n"); inp.classList.add("y");
+        } else if(inp.dataset.filled === "1"){
+          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
+        }
+      });
+      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
+      btn.classList.toggle("on", shown);
+    });
+    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
+    chk.textContent = "Проверить блок";
+    chk.addEventListener("click", function(){
+      var right = 0, filled = 0;
+      all.forEach(function(inp){
+        inp.dispatchEvent(new Event("blur"));
+        if(inp.value) filled++;
+        if(inp.classList.contains("y")) right++;
+      });
+      cnt.textContent = right + " из " + all.length + " верно" + (filled < all.length ? ", пустых " + (all.length - filled) : "");
+    });
+    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
+    host.appendChild(bar);
+  }
+
+  /* ========== 01. Simple: утверждение ========== */
+  gapBlock("g1", [
+    {s:"My sister % at the airport.", v:"work", ok:["works"], ru:"моя сестра работает в аэропорту"},
+    {s:"I % to Dubai twice a year.", v:"fly", ok:["fly"], ru:"я летаю в Дубай два раза в год"},
+    {s:"The train % at eight twenty.", v:"leave", ok:["leaves"], ru:"поезд отходит в восемь двадцать"},
+    {s:"We % in Moscow.", v:"live", ok:["live"], ru:"мы живём в Москве"},
+    {s:"She % English at university.", v:"study", ok:["studies"], ru:"она изучает английский в университете"},
+    {s:"He % to work by bus every morning.", v:"go", ok:["goes"], ru:"он ездит на работу на автобусе каждое утро"},
+    {s:"My parents % a small house near the sea.", v:"have", ok:["have"], ru:"у моих родителей домик у моря"},
+    {s:"Anna % TV in the evening.", v:"watch", ok:["watches"], ru:"Анна смотрит телевизор по вечерам"},
+    {s:"The shop % at nine and % at eight.", v:"open|close", ok:["opens","closes"], ru:"магазин открывается в девять и закрывается в восемь"},
+    {s:"You % too much.", v:"travel", ok:["travel"], ru:"ты слишком много путешествуешь"},
+    {s:"It % a lot in autumn.", v:"rain", ok:["rains"], ru:"осенью часто идёт дождь"},
+    {s:"My husband % two suitcases with him.", v:"carry", ok:["carries"], ru:"муж везёт с собой два чемодана"}
+  ]);
+
+  /* ========== 02. Simple: отрицание ========== */
+  gapBlock("g2", [
+    {s:"I % coffee in the evening.", v:"not drink", ok:["don't drink"], ru:"я не пью кофе вечером"},
+    {s:"She % English very well.", v:"not speak", ok:["doesn't speak"], ru:"она не очень хорошо говорит по-английски"},
+    {s:"They % in winter.", v:"not travel", ok:["don't travel"], ru:"они не путешествуют зимой"},
+    {s:"The lift % . It is broken.", v:"not work", ok:["doesn't work"], ru:"лифт не работает, он сломан"},
+    {s:"We % our luggage.", v:"not check", ok:["don't check"], ru:"мы не сдаём багаж"},
+    {s:"My brother % flying.", v:"not like", ok:["doesn't like"], ru:"мой брат не любит летать"},
+    {s:"I % what you mean.", v:"not understand", ok:["don't understand"], ru:"я не понимаю, о чём ты"},
+    {s:"This plane % in Dubai.", v:"not land", ok:["doesn't land"], ru:"этот самолёт не садится в Дубае"},
+    {s:"You % a visa for this country.", v:"not need", ok:["don't need"], ru:"виза в эту страну не нужна"},
+    {s:"He % on Saturdays.", v:"not work", ok:["doesn't work"], ru:"он не работает по субботам"}
+  ]);
+
+  /* ========== 03. Simple: вопрос ========== */
+  gapBlock("g3", [
+    {s:"% you % a window seat?", pre:"have", ok:["Do","have"], ru:"у вас есть место у окна?"},
+    {s:"% she % here?", pre:"work", ok:["Does","work"], ru:"она здесь работает?"},
+    {s:"What time % the plane % ?", pre:"land", ok:["does","land"], ru:"во сколько самолёт приземляется?"},
+    {s:"Where % you % ?", pre:"live", ok:["do","live"], ru:"где ты живёшь?"},
+    {s:"How often % they % abroad?", pre:"travel", ok:["do","travel"], ru:"как часто они ездят за границу?"},
+    {s:"% your flight % in the morning?", pre:"leave", ok:["Does","leave"], ru:"твой рейс вылетает утром?"},
+    {s:"% I % in here?", pre:"check", ok:["Do","check"], ru:"мне здесь регистрироваться?"},
+    {s:"What % your sister % ?", pre:"do", ok:["does","do"], ru:"кем работает твоя сестра?"},
+    {s:"% we % a boarding pass for this?", pre:"need", ok:["Do","need"], ru:"нам для этого нужен посадочный?"},
+    {s:"Why % he % to fly at night?", pre:"prefer", ok:["does","prefer"], ru:"почему он предпочитает летать ночью?"}
+  ]);
+
+  /* ========== 04. Simple: вперемешку ========== */
+  gapBlock("g4", [
+    {s:"My flight % at seven in the morning.", v:"leave", ok:["leaves"], ru:"мой рейс вылетает в семь утра"},
+    {s:"% you % a lot of luggage?", pre:"take", ok:["Do","take"], ru:"ты берёшь много багажа?"},
+    {s:"She % at the last minute.", v:"never pack", ok:["never packs"], ru:"она никогда не собирается в последнюю минуту"},
+    {s:"I % to the airport by taxi.", v:"usually go", ok:["usually go"], ru:"я обычно еду в аэропорт на такси"},
+    {s:"The hotel % breakfast.", v:"not include", ok:["doesn't include"], ru:"завтрак в отель не входит"},
+    {s:"What % this ticket % ?", pre:"cost", ok:["does","cost"], ru:"сколько стоит этот билет?"},
+    {s:"We % in a hotel near the beach every summer.", v:"stay", ok:["stay"], ru:"каждое лето мы останавливаемся в отеле у пляжа"},
+    {s:"He % his passport with him.", v:"always carry", ok:["always carries"], ru:"он всегда носит паспорт с собой"},
+    {s:"% the shop % on Sunday?", pre:"open", ok:["Does","open"], ru:"магазин работает в воскресенье?"},
+    {s:"They % to the sea in winter.", v:"not fly", ok:["don't fly"], ru:"зимой они к морю не летают"},
+    {s:"Boarding % thirty minutes before departure.", v:"start", ok:["starts"], ru:"посадка начинается за тридцать минут до вылета"},
+    {s:"How many bags % she % ?", pre:"have", ok:["does","have"], ru:"сколько у неё сумок?"}
+  ]);
+
+  /* ========== 05. Continuous: утверждение ========== */
+  gapBlock("g5", [
+    {s:"I % for my luggage.", v:"wait", ok:["am waiting"], alt:{0:["i'm waiting"]}, ru:"я жду свой багаж"},
+    {s:"Look! The plane % .", v:"take off", ok:["is taking off"], ru:"смотри, самолёт взлетает"},
+    {s:"She % at the moment.", v:"sleep", ok:["is sleeping"], ru:"она сейчас спит"},
+    {s:"We % at a hotel near the beach this week.", v:"stay", ok:["are staying"], ru:"на этой неделе мы живём в отеле у пляжа"},
+    {s:"They % to the gate.", v:"run", ok:["are running"], ru:"они бегут к выходу"},
+    {s:"He % a photo of the plane.", v:"take", ok:["is taking"], ru:"он фотографирует самолёт"},
+    {s:"I % a very good book these days.", v:"read", ok:["am reading"], alt:{0:["i'm reading"]}, ru:"я сейчас читаю очень хорошую книгу"},
+    {s:"My phone % .", v:"charge", ok:["is charging"], ru:"мой телефон заряжается"},
+    {s:"The children % in the pool.", v:"swim", ok:["are swimming"], ru:"дети плавают в бассейне"},
+    {s:"It % outside, but the planes % normally.", v:"rain|take off", ok:["is raining","are taking off"], ru:"на улице дождь, но самолёты летают как обычно"},
+    {s:"We % to Dubai on Friday. The tickets are ready.", v:"fly", ok:["are flying"], ru:"мы летим в Дубай в пятницу, билеты уже есть"},
+    {s:"Anna % coffee next to me.", v:"drink", ok:["is drinking"], ru:"Анна пьёт кофе рядом со мной"}
+  ]);
+
+  /* ========== 06. Continuous: отрицание ========== */
+  gapBlock("g6", [
+    {s:"I % today.", v:"not work", ok:["am not working"], alt:{0:["i'm not working"]}, ru:"сегодня я не работаю"},
+    {s:"She % to us.", v:"not listen", ok:["isn't listening"], ru:"она нас не слушает"},
+    {s:"They % to Dubai now.", v:"not fly", ok:["aren't flying"], ru:"сейчас они не летят в Дубай"},
+    {s:"He % TV right now.", v:"not watch", ok:["isn't watching"], ru:"он сейчас не смотрит телевизор"},
+    {s:"We % in the hotel this week.", v:"not stay", ok:["aren't staying"], ru:"на этой неделе мы не живём в отеле"},
+    {s:"The plane % yet.", v:"not board", ok:["isn't boarding"], ru:"посадка на самолёт ещё не идёт"},
+    {s:"I % for my suitcase, I % for my friend.", v:"not wait|wait", ok:["am not waiting","am waiting"], alt:{0:["i'm not waiting"],1:["i'm waiting"]}, ru:"я жду не чемодан, я жду подругу"},
+    {s:"My parents % this year.", v:"not travel", ok:["aren't travelling"], alt:{0:["aren't traveling"]}, ru:"в этом году мои родители не путешествуют"},
+    {s:"It % at the moment.", v:"not rain", ok:["isn't raining"], ru:"сейчас дождя нет"},
+    {s:"You % me.", v:"not help", ok:["aren't helping"], ru:"ты мне не помогаешь"}
+  ]);
+
+  /* ========== 07. Continuous: вопрос ========== */
+  gapBlock("g7", [
+    {s:"% you % now?", pre:"work", ok:["Are","working"], ru:"ты сейчас работаешь?"},
+    {s:"What % you % ?", pre:"do", ok:["are","doing"], ru:"что ты делаешь?"},
+    {s:"Where % she % ?", pre:"go", ok:["is","going"], ru:"куда она идёт?"},
+    {s:"% the plane % ?", pre:"land", ok:["Is","landing"], ru:"самолёт садится?"},
+    {s:"Who % you % with?", pre:"travel", ok:["are","travelling"], alt:{1:["traveling"]}, ru:"с кем ты едешь?"},
+    {s:"% they % for us?", pre:"wait", ok:["Are","waiting"], ru:"они нас ждут?"},
+    {s:"Why % he % ?", pre:"run", ok:["is","running"], ru:"почему он бежит?"},
+    {s:"What % your family % now?", pre:"do", ok:["is","doing"], ru:"что сейчас делает твоя семья?"},
+    {s:"% it % outside?", pre:"rain", ok:["Is","raining"], ru:"на улице дождь?"},
+    {s:"What time % you % tomorrow?", pre:"fly", ok:["are","flying"], ru:"во сколько ты летишь завтра?"}
+  ]);
+
+  /* ========== 08. Continuous: вперемешку ========== */
+  gapBlock("g8", [
+    {s:"I % in the queue to check in.", v:"stand", ok:["am standing"], alt:{0:["i'm standing"]}, ru:"я стою в очереди на регистрацию"},
+    {s:"% you % your boarding pass?", pre:"look for", ok:["Are","looking for"], ru:"ты ищешь посадочный?"},
+    {s:"She % her suitcase at the moment.", v:"pack", ok:["is packing"], ru:"она сейчас собирает чемодан"},
+    {s:"We % by bus this week because the car is at the garage.", v:"go", ok:["are going"], ru:"на этой неделе мы ездим на автобусе, машина в сервисе"},
+    {s:"They % their holiday right now.", v:"not plan", ok:["aren't planning"], ru:"они сейчас не планируют отпуск"},
+    {s:"Listen! Somebody % your name.", v:"call", ok:["is calling"], ru:"послушай, кто-то называет твоё имя"},
+    {s:"What % the people around you % ?", pre:"do", ok:["are","doing"], ru:"что делают люди вокруг тебя?"},
+    {s:"My sister % English this year.", v:"learn", ok:["is learning"], ru:"в этом году сестра учит английский"},
+    {s:"I % with my phone, the battery % .", v:"not play|die", ok:["am not playing","is dying"], alt:{0:["i'm not playing"]}, ru:"я не играю с телефоном, он разряжается"},
+    {s:"% we % on time?", pre:"leave", ok:["Are","leaving"], ru:"мы вылетаем вовремя?"}
+  ]);
+
+  /* ========== 10. Simple или Continuous: первая серия ========== */
+  gapBlock("g9", [
+    {s:"I % to work by car every day, but today I % the bus.", v:"go|take", ok:["go","am taking"], alt:{1:["i'm taking"]}, ru:"обычно я езжу на машине, но сегодня еду на автобусе"},
+    {s:"She usually % at seven, but this week she % at six.", v:"get up|get up", ok:["gets up","is getting up"], ru:"обычно она встаёт в семь, но на этой неделе встаёт в шесть"},
+    {s:"Be quiet! The baby % .", v:"sleep", ok:["is sleeping"], ru:"тише, ребёнок спит"},
+    {s:"My flight % at seven every Friday.", v:"leave", ok:["leaves"], ru:"мой рейс вылетает в семь каждую пятницу"},
+    {s:"Look, it % again!", v:"rain", ok:["is raining"], ru:"смотри, опять дождь"},
+    {s:"We % to Turkey every summer.", v:"travel", ok:["travel"], ru:"мы ездим в Турцию каждое лето"},
+    {s:"Where is Anna? She % her suitcase.", v:"pack", ok:["is packing"], ru:"где Анна? она собирает чемодан"},
+    {s:"He % at the airport, but today he % at home.", v:"work|work", ok:["works","is working"], ru:"он работает в аэропорту, но сегодня работает из дома"},
+    {s:"The shop % at nine, so we % now.", v:"close|leave", ok:["closes","are leaving"], ru:"магазин закрывается в девять, так что мы уходим"},
+    {s:"I % to Dubai on Friday. I already % the ticket.", v:"fly|have", ok:["am flying","have"], alt:{0:["i'm flying"]}, ru:"я лечу в Дубай в пятницу, билет уже есть"}
+  ]);
+
+  /* ========== 11. Simple или Continuous: вторая серия ========== */
+  gapBlock("g10", [
+    {s:"I % what you mean.", v:"not understand", ok:["don't understand"], ru:"я не понимаю, о чём ты"},
+    {s:"She % a coffee right now.", v:"want", ok:["wants"], ru:"она сейчас хочет кофе"},
+    {s:"We % three suitcases with us this time.", v:"have", ok:["have"], ru:"в этот раз у нас три чемодана"},
+    {s:"Listen, I % you very well, the line is bad.", v:"not hear", ok:["don't hear"], alt:{0:["can't hear"]}, ru:"слушай, я тебя плохо слышу, связь плохая"},
+    {s:"He % lunch at the moment.", v:"have", ok:["is having"], ru:"он сейчас обедает"},
+    {s:"% you % this hotel?", pre:"like", ok:["Do","like"], ru:"тебе нравится этот отель?"},
+    {s:"I % she % at the airport now.", v:"think|wait", ok:["think","is waiting"], ru:"я думаю, она сейчас ждёт в аэропорту"},
+    {s:"This ticket % two hundred dollars.", v:"cost", ok:["costs"], ru:"этот билет стоит двести долларов"},
+    {s:"They % us, they % at their phones.", v:"not see|look", ok:["don't see","are looking"], ru:"они нас не видят, они смотрят в телефоны"},
+    {s:"I % a shower, call me later.", v:"have", ok:["am having"], alt:{0:["i'm having"]}, ru:"я в душе, перезвони попозже"}
+  ]);
+
+  /* ========== 12-14. тексты ========== */
+  gapBlock("t1", [
+    {s:"My sister % in Spain. ", v:"live", ok:["lives"]},
+    {s:"She % as a nurse and she % her job very much. ", v:"work|not like", ok:["works","doesn't like"]},
+    {s:"Every morning she % up at six and % to the hospital by bus. ", v:"get|go", ok:["gets","goes"]},
+    {s:"She % at four. ", v:"finish", ok:["finishes"]},
+    {s:"In the evening she usually % or % TV. ", v:"read|watch", ok:["reads","watches"]},
+    {s:"She % out on weekdays. ", v:"not go", ok:["doesn't go"]},
+    {s:"Twice a year she % us in Moscow.", v:"visit", ok:["visits"]}
+  ], {text:true});
+
+  gapBlock("t2", [
+    {s:"Hi, Mum! I % at the airport right now. ", v:"sit", ok:["am sitting"], alt:{0:["i'm sitting"]}},
+    {s:"My flight % until seven, so I % . ", v:"not leave|wait", ok:["doesn't leave","am waiting"], alt:{1:["i'm waiting"]}},
+    {s:"Anna % coffee next to me and % at her phone. ", v:"drink|look", ok:["is drinking","is looking"]},
+    {s:"A lot of people % to their gates. ", v:"run", ok:["are running"]},
+    {s:"It % outside, but the planes % normally. ", v:"rain|take off", ok:["is raining","are taking off"]},
+    {s:"We % to Dubai tonight!", v:"fly", ok:["are flying"]}
+  ], {text:true});
+
+  gapBlock("t3", [
+    {s:"Anna % at a school in Moscow. ", v:"work", ok:["works"]},
+    {s:"She usually % at nine, but this week she % from home. ", v:"start|work", ok:["starts","is working"]},
+    {s:"Right now she % at the kitchen table and % a lesson. ", v:"sit|prepare", ok:["is sitting","is preparing"]},
+    {s:"She % working from home: she % her students. ", v:"not like|miss", ok:["doesn't like","misses"]},
+    {s:"«I % people around me», she % . ", v:"need|say", ok:["need","says"]},
+    {s:"On Friday she % to the sea for a week. The tickets % on her phone already.", v:"fly|be", ok:["is flying","are"]}
+  ], {text:true});
+
+})();
+</script>
+
+</body>
+</html>
