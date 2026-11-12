@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 1. Where are you flying?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{background:none; padding:0 0 2px; font-weight:600; color:var(--soft); font-size:16px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for travel &middot; урок 1</div>
+    <h1>Where are you flying?<em>Два настоящих времени и дорога</em></h1>
+    <p>В русском настоящее время одно, в английском их два. Сегодня разбираемся, чем они отличаются, как собираются и как не путать их в разговоре. Вся лексика дорожная: аэропорт, рейс, багаж.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>К концу занятия ты говоришь о том, что делаешь обычно, и о том, что происходит прямо сейчас, и не путаешь одно с другим.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Собираешь вопрос и отрицание в обоих временах, не задумываясь над порядком слов.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Говоришь о времени: <b>at</b> seven, <b>on</b> Monday, <b>in</b> the morning.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Этот лист мы разбираем вместе на занятии: читаем правило, тут же делаем упражнение к нему, говорим вслух. Дома ты по нему же повторяешь, искать ничего не нужно.</div>
+
+  <div class="tag wd">фразы</div>
+  <h2><span class="num">01</span>Фразы урока</h2>
+  <p class="lead">Двенадцать фраз, которые сегодня прозвучат вслух много раз. В каждой спрятано одно из двух времён, к концу занятия будет видно, какое и почему.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">Where are you flying?</div><div class="ru">куда ты летишь</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">I'm flying to Dubai.</div><div class="ru">я лечу в Дубай</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">My flight leaves at seven.</div><div class="ru">мой рейс вылетает в семь</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">I'm travelling with my family.</div><div class="ru">я еду с семьёй</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">Where do I check in?</div><div class="ru">где мне зарегистрироваться на рейс</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">Do you have a window seat?</div><div class="ru">есть место у окна</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">What time does the plane land?</div><div class="ru">во сколько самолёт приземляется</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">I'm looking for gate 12.</div><div class="ru">я ищу выход 12</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">I'm waiting for my luggage.</div><div class="ru">я жду свой багаж</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I don't speak English very well.</div><div class="ru">я не очень хорошо говорю по-английски</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">How often do you travel?</div><div class="ru">как часто ты путешествуешь</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">I usually fly in the morning.</div><div class="ru">я обычно летаю утром</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>Почему настоящих времён два</h2>
+
+  <div class="card">
+    <p>По-русски «я лечу» годится и для сегодняшнего рейса, и для рассказа о том, что ты вообще часто летаешь. Время одно, а смысл достраивается из разговора. В английском эти два смысла разведены по разным временам, и выбрать придётся до того, как ты откроешь рот.</p>
+
+    <div class="conj">
+      <div class="p">Present Simple</div><div class="v">вообще</div><div class="r">всегда, обычно, каждый день, по расписанию, такова жизнь</div>
+      <div class="p">Present Continuous</div><div class="v">сейчас</div><div class="r">в эту минуту, в эти дни, временно, процесс идёт</div>
+    </div>
+
+    <p>Разница видна на одной паре. <b>I fly a lot</b> значит «я вообще много летаю», это про жизнь в целом, не про сегодня. <b>I'm flying to Dubai</b> значит «я лечу в Дубай», прямо сейчас или в ближайшие дни, это конкретный случай.</p>
+
+    <div class="wrong-right">
+      <div class="wr y">I fly a lot<small>вообще, по жизни</small></div>
+      <div class="wr y">I'm flying to Dubai<small>сейчас, этот раз</small></div>
+    </div>
+
+    <p><b>Главный вопрос к себе</b> перед фразой: я рассказываю, как бывает всегда, или что происходит в этот момент? Ответ и есть время.</p>
+
+    <h3>Слова-подсказки</h3>
+    <p>Почти всегда во фразе есть слово, которое уже решило за тебя.</p>
+    <div class="conj">
+      <div class="p">Simple</div><div class="v">always, usually, often, sometimes, never</div><div class="r">every day, on Mondays, twice a week</div>
+      <div class="p">Continuous</div><div class="v">now, right now, at the moment</div><div class="r">today, this week, look!, listen!</div>
+    </div>
+
+    <div class="note"><b>Отдельный случай, который удивляет.</b> Расписание всегда идёт в Simple, даже если событие ещё не случилось: <b>My flight leaves at seven</b>, <b>The plane lands at ten</b>, <b>The shop opens at nine</b>. Самолёт улетит в будущем, но расписание существует и сегодня, и завтра, поэтому для английского это «вообще».</p></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>Вообще или сейчас</h2>
+  <p class="lead screen-only">Читаем русскую фразу и решаем, какое время нужно. Пока без форм, только выбор.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Present Simple: как он собирается</h2>
+
+  <div class="card">
+    <p>Самое приятное в этом времени: глагол берётся в словарной форме и ничего с ним не делают. Почти. Есть одно место, где форма меняется, и именно оно даёт больше всего ошибок.</p>
+
+    <h3>Все лица сразу</h3>
+    <div class="conj">
+      <div class="p">I</div><div class="v">work</div><div class="r">I work in an office.</div>
+      <div class="p">you</div><div class="v">work</div><div class="r">You work too much.</div>
+      <div class="p">he</div><div class="v">works</div><div class="r">He works at the airport.</div>
+      <div class="p">she</div><div class="v">works</div><div class="r">She works from home.</div>
+      <div class="p">it</div><div class="v">works</div><div class="r">It works. Лифт работает, план работает, телефон работает.</div>
+      <div class="p">we</div><div class="v">work</div><div class="r">We work together.</div>
+      <div class="p">they</div><div class="v">work</div><div class="r">They work on Saturdays.</div>
+    </div>
+
+    <p>Буква <b>s</b> появляется только в трёх местах: <b>he</b>, <b>she</b>, <b>it</b>. Во всех остальных глагол голый. По-русски мы меняем окончание у каждого лица (я работаю, ты работаешь, он работает), а здесь меняется одно-единственное.</p>
+
+    <p><b>Про it.</b> Это «оно», и в английском им накрывают всё неодушевлённое: самолёт, чемодан, город, погода, рейс. Русскому уху непривычно называть самолёт «оно», но для них живое это he и she, а остальное it. <b>The plane lands at ten. It lands at ten.</b></p>
+
+    <h3>Как именно добавляется s</h3>
+    <div class="conj conj4">
+      <div class="p">обычно</div><div class="v">+ s</div><div class="sh">work &rarr; works</div><div class="r">live &rarr; lives, travel &rarr; travels</div>
+      <div class="p">после s, x, ch, sh, o</div><div class="v">+ es</div><div class="sh">go &rarr; goes</div><div class="r">watch &rarr; watches, miss &rarr; misses, fix &rarr; fixes</div>
+      <div class="p">согласная + y</div><div class="v">y &rarr; ies</div><div class="sh">fly &rarr; flies</div><div class="r">study &rarr; studies, carry &rarr; carries</div>
+      <div class="p">гласная + y</div><div class="v">просто + s</div><div class="sh">stay &rarr; stays</div><div class="r">buy &rarr; buys, play &rarr; plays</div>
+      <div class="p">особый</div><div class="v">have &rarr; has</div><div class="sh">he has</div><div class="r">единственный, который надо запомнить отдельно</div>
+    </div>
+
+    <h3>Отрицание</h3>
+    <p>Само по себе слово «не» к глаголу не приклеивается. Нужен помощник: <b>do not</b> или <b>does not</b>, в речи почти всегда сокращённо <b>don't</b> и <b>doesn't</b>.</p>
+    <div class="conj">
+      <div class="p">I, you, we, they</div><div class="v">don't</div><div class="r">I don't fly often. They don't travel in winter.</div>
+      <div class="p">he, she, it</div><div class="v">doesn't</div><div class="r">He doesn't speak English. It doesn't work.</div>
+    </div>
+    <p>И тут главное: как только появился <b>doesn't</b>, буква <b>s</b> с глагола уходит. Она уже отдана помощнику, второй раз её не ставят.</p>
+    <div class="wrong-right">
+      <div class="wr n">He doesn't works<small>s стоит дважды</small></div>
+      <div class="wr y">He doesn't work<small>s осталась в doesn't</small></div>
+    </div>
+
+    <h3>Вопрос</h3>
+    <p>Тот же помощник, только он выходит вперёд: <b>Do</b> или <b>Does</b> плюс кто плюс глагол.</p>
+    <div class="form">Do / Does <span class="plus">+</span> кто <span class="plus">+</span> глагол
+      <span class="ex">Do you travel a lot? &middot; Does she work here? &middot; Where do I check in?</span></div>
+    <p>Если в вопросе есть вопросительное слово, оно встаёт в самое начало, а дальше всё по той же схеме: <b>What time does the plane land?</b>, <b>How often do you travel?</b></p>
+    <div class="wrong-right">
+      <div class="wr n">Does he works here?<small>снова две s</small></div>
+      <div class="wr y">Does he work here?<small>глагол голый</small></div>
+    </div>
+
+    <h3>Короткий ответ</h3>
+    <p>На такой вопрос по-английски не отвечают одним yes. Отвечают yes или no плюс тот же помощник: <b>Yes, I do. No, I don't. Yes, she does. No, she doesn't.</b> Голое «yes» звучит обрубленно, как будто разговор окончен.</p>
+
+    <h3>Как часто</h3>
+    <p>Слова частоты стоят <b>перед</b> глаголом, а не в конце, как у нас.</p>
+    <div class="conj">
+      <div class="p">always</div><div class="v">всегда</div><div class="r">I always take a carry-on.</div>
+      <div class="p">usually</div><div class="v">обычно</div><div class="r">I usually fly in the morning.</div>
+      <div class="p">often</div><div class="v">часто</div><div class="r">We often travel in summer.</div>
+      <div class="p">sometimes</div><div class="v">иногда</div><div class="r">He sometimes works at night.</div>
+      <div class="p">never</div><div class="v">никогда</div><div class="r">I never check my luggage.</div>
+    </div>
+    <p>Исключение одно: с <b>am, is, are</b> они встают после глагола. <b>I am always late</b>, а не «I always am late».</p>
+    <p><b>Про never.</b> В английском одно отрицание на предложение. <b>I never fly at night</b> - и этого достаточно, don't добавлять не нужно.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">05</span>Нужная форма глагола</h2>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>Собери вопрос и отрицание</h2>
+  <p class="lead screen-only">Нажимай на слова в нужном порядке. Нажмёшь на слово в строке - оно вернётся обратно.</p>
+  <div class="card" id="ex3"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">07</span>Расскажи, как бывает обычно</h2>
+  <p class="lead">Отвечаем вслух, целым предложением, а не одним словом. Сначала говоришь свой вариант, потом открываешь строчку и сверяешься с образцом - он не единственно верный, у тебя будет своё.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">08</span>Present Continuous: am, is, are плюс -ing</h2>
+
+  <div class="card">
+    <p>Это время всегда состоит из двух частей, и обе обязательны. Первая - глагол <b>to be</b> в нужной форме, вторая - основной глагол с хвостом <b>-ing</b>. Потеряешь первую часть, и фразы нет.</p>
+
+    <div class="form">am / is / are <span class="plus">+</span> глагол <span class="plus">+</span> ing
+      <span class="ex">I am waiting. &middot; She is working. &middot; They are flying to Dubai.</span></div>
+
+    <h3>Все лица сразу</h3>
+    <div class="conj conj4">
+      <div class="p">I</div><div class="v">am waiting</div><div class="sh">I'm waiting</div><div class="r">я жду</div>
+      <div class="p">you</div><div class="v">are waiting</div><div class="sh">you're waiting</div><div class="r">ты ждёшь</div>
+      <div class="p">he</div><div class="v">is waiting</div><div class="sh">he's waiting</div><div class="r">он ждёт</div>
+      <div class="p">she</div><div class="v">is waiting</div><div class="sh">she's waiting</div><div class="r">она ждёт</div>
+      <div class="p">it</div><div class="v">is waiting</div><div class="sh">it's waiting</div><div class="r">самолёт, автобус, чемодан</div>
+      <div class="p">we</div><div class="v">are waiting</div><div class="sh">we're waiting</div><div class="r">мы ждём</div>
+      <div class="p">they</div><div class="v">are waiting</div><div class="sh">they're waiting</div><div class="r">они ждут</div>
+    </div>
+
+    <p><b>Самая частая ошибка русскоговорящих</b> именно здесь. У нас «я жду» это одно слово, и рука сама пишет <b>I waiting</b>. Так нельзя: без am фраза не собралась.</p>
+    <div class="wrong-right">
+      <div class="wr n">I waiting for my luggage<small>глагола to be нет</small></div>
+      <div class="wr y">I'm waiting for my luggage<small>обе части на месте</small></div>
+    </div>
+
+    <h3>Как добавляется -ing</h3>
+    <div class="conj conj4">
+      <div class="p">обычно</div><div class="v">+ ing</div><div class="sh">wait &rarr; waiting</div><div class="r">go &rarr; going, look &rarr; looking</div>
+      <div class="p">немая e на конце</div><div class="v">e уходит</div><div class="sh">take &rarr; taking</div><div class="r">leave &rarr; leaving, come &rarr; coming</div>
+      <div class="p">короткий слог, одна гласная</div><div class="v">согласная удваивается</div><div class="sh">sit &rarr; sitting</div><div class="r">get &rarr; getting, run &rarr; running, put &rarr; putting</div>
+      <div class="p">ie на конце</div><div class="v">ie &rarr; y</div><div class="sh">lie &rarr; lying</div><div class="r">die &rarr; dying</div>
+    </div>
+
+    <h3>Отрицание и вопрос</h3>
+    <p>Никаких помощников здесь не нужно, всё делает <b>to be</b>. Для отрицания после него ставится <b>not</b>, для вопроса он сам выходит вперёд.</p>
+    <div class="conj">
+      <div class="p">утверждение</div><div class="v">I'm working</div><div class="r">She is sleeping.</div>
+      <div class="p">отрицание</div><div class="v">I'm not working</div><div class="r">She isn't sleeping. They aren't flying today.</div>
+      <div class="p">вопрос</div><div class="v">Are you working?</div><div class="r">Is she sleeping? What are you doing?</div>
+    </div>
+    <p>Короткий ответ тоже через <b>to be</b>: <b>Yes, I am. No, I'm not. Yes, she is. No, she isn't.</b></p>
+
+    <div class="note"><b>Ещё одно применение, про которое редко рассказывают.</b> Continuous годится не только для «прямо в эту секунду», но и для временного периода вокруг разговора. <b>I'm reading a good book</b> - необязательно с книгой в руках прямо сейчас, просто сейчас такой период. <b>We're staying at a hotel near the beach</b> - мы там живём эти дни, а не вообще.</p></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>Что происходит в эту минуту</h2>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">10</span>Собери фразу про сейчас</h2>
+  <div class="card" id="ex6"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">11</span>Скажи, что происходит сейчас</h2>
+  <p class="lead">Представь, что ты в аэропорту и звонишь домой. Отвечаешь вслух, потом сверяешься.</p>
+  <div class="card" id="ex7"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">12</span>Глаголы, которые не бывают в Continuous</h2>
+
+  <div class="card">
+    <p>Есть группа глаголов, которые описывают не действие, а состояние: знать, хотеть, любить, понимать, нуждаться. Состояние не может «идти процессом», поэтому в Continuous их не ставят, даже когда речь именно про эту минуту.</p>
+    <div class="conj">
+      <div class="p">голова</div><div class="v">know, understand, remember, think (считать), believe</div><div class="r">I know. I don't understand.</div>
+      <div class="p">чувства</div><div class="v">like, love, hate, want, need, prefer</div><div class="r">I want a window seat. I need help.</div>
+      <div class="p">органы чувств</div><div class="v">see, hear, smell, taste</div><div class="r">I see the gate. I hear you.</div>
+      <div class="p">принадлежность</div><div class="v">have (иметь), belong, cost</div><div class="r">I have two suitcases. It costs ten dollars.</div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">I'm wanting a coffee<small>хотеть это не процесс</small></div>
+      <div class="wr y">I want a coffee<small>так и говорят</small></div>
+    </div>
+    <p><b>Where are you flying?</b> - можно, лететь это действие. <b>I'm knowing</b> - нельзя, знать это состояние.</p>
+    <div class="note"><b>Одна оговорка про have.</b> Когда <b>have</b> значит «иметь», он в Continuous не идёт: <b>I have a ticket</b>. Но в устойчивых сочетаниях он значит «делать»: <b>have lunch</b> (обедать), <b>have a shower</b> (принимать душ), <b>have a rest</b> (отдыхать). Это уже действия, и там всё можно: <b>I'm having lunch</b> - я сейчас обедаю.</p></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">13</span>Найди ошибку</h2>
+  <p class="lead screen-only">В каждой паре одна фраза собрана неправильно. Выбираем правильную.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">14</span>at, on, in: предлоги времени</h2>
+
+  <div class="card">
+    <p>Три предлога на всё время, и распределены они по принципу «насколько точно». Чем точнее момент, тем короче предлог.</p>
+    <div class="conj conj4">
+      <div class="p">at</div><div class="v">точка на часах</div><div class="sh">at seven</div><div class="r">at 7:30, at noon, at midnight, at night</div>
+      <div class="p">on</div><div class="v">день или дата</div><div class="sh">on Monday</div><div class="r">on 5 May, on Friday morning, on my birthday</div>
+      <div class="p">in</div><div class="v">большой отрезок</div><div class="sh">in May</div><div class="r">in 2026, in summer, in the morning, in an hour</div>
+    </div>
+    <p>Логика такая: <b>at</b> это момент, <b>on</b> это день целиком, <b>in</b> это что-то большое, внутри чего день помещается. Месяц, год, время года, часть суток.</p>
+    <div class="wrong-right">
+      <div class="wr y">in the morning<small>утро вообще</small></div>
+      <div class="wr y">on Monday morning<small>появился день - стало on</small></div>
+    </div>
+    <p>Как только рядом встаёт конкретный день, он перетягивает предлог на себя, и получается <b>on</b>.</p>
+
+    <h3>Когда предлог не нужен вовсе</h3>
+    <p>Перед словами <b>today, tomorrow, tonight, yesterday, this week, next Monday, every day</b> предлог не ставят. Не «in today», а просто <b>today</b>. Это слова-самоходы.</p>
+    <div class="wrong-right">
+      <div class="wr n">I'm flying in tomorrow<small>лишний предлог</small></div>
+      <div class="wr y">I'm flying tomorrow<small>так</small></div>
+    </div>
+    <div class="note"><b>Про at night и in the morning.</b> Выглядит непоследовательно, и это правда так: ночь попала к <b>at</b>, а утро, день и вечер к <b>in</b>. Логики здесь нет, это просто запоминается: <b>in the morning, in the afternoon, in the evening,</b> но <b>at night</b>.</p></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">15</span>at, on или in</h2>
+  <div class="card" id="ex9"></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">16</span>Аэропорт и дорога</h2>
+  <p class="lead">Существительные, без которых в аэропорту не разобраться.</p>
+  <div class="card"><div class="voc" id="voc1"></div></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">17</span>Что ты делаешь в поездке</h2>
+  <p class="lead">Глаголы. Их мы сегодня же ставим в оба времени.</p>
+  <div class="card"><div class="voc" id="voc2"></div></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">18</span>Как часто</h2>
+  <div class="card"><div class="voc" id="voc3"></div></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">19</span>Диалог на регистрации</h2>
+
+  <div class="card">
+    <div class="dlg" id="dlg">
+      <div class="a"><span class="who">A</span><span class="ln">Good morning. Where are you flying today?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Good morning. I'm flying to Dubai.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Can I see your passport, please?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Here you are.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Thank you. How many bags do you have?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I have one suitcase and a carry-on.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Do you prefer a window or an aisle seat?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">A window seat, please.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Here is your boarding pass. The plane leaves at seven.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Sorry, can you repeat, please? What time does it leave?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">At seven. Your gate is 12. Boarding starts at six thirty.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Thank you very much. Have a nice day!</span></div>
+    </div>
+    <div class="bar">
+      <button class="btn" data-hide="a">Спрятать реплики A</button>
+      <button class="btn" data-hide="b">Спрятать реплики B</button>
+    </div>
+  </div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">20</span>Ты на стойке регистрации</h2>
+
+  <div class="card">
+    <p><b>Первый круг.</b> Ты пассажир, я сотрудник стойки. Я задаю вопросы по диалогу выше, ты отвечаешь про себя: куда летишь, сколько у тебя сумок, какое место хочешь. В бумагу не смотрим.</p>
+    <p><b>Второй круг.</b> Меняемся: теперь ты сотрудник, а я пассажир. Твоя задача - задать мне пять вопросов и выдать посадочный. Вопросы нужны такие, чтобы в них были <b>do</b> и <b>are</b>: <b>Where are you flying? Do you have any bags? Are you travelling alone?</b></p>
+    <p><b>Третий круг.</b> То же самое, но я отвечаю не по сценарию: называю два чемодана вместо одного, прошу место у прохода, не слышу номер выхода. Тебе придётся переспрашивать и выкручиваться. Фраза <b>Sorry, can you repeat, please?</b> разрешена и даже приветствуется.</p>
+  </div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">21</span>Скажи вслух</h2>
+  <p class="lead">Читаем русскую фразу, говорим английскую вслух и только потом открываем. Если получилось не слово в слово, но правильно - значит правильно.</p>
+  <div class="card" id="ex10"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">22</span>Минута без остановки</h2>
+
+  <div class="card">
+    <p>Минута по таймеру на одну тему, говорить не останавливаясь. Кривые фразы не переделываем на ходу, паузу не заполняем русским. Если слово не идёт - <b>let me think</b> и дальше.</p>
+    <div class="check">
+      <label><input type="checkbox"><span>Мой обычный день: во сколько встаю, что делаю, когда заканчиваю</span></label>
+      <label><input type="checkbox"><span>Как я обычно путешествую: как часто, с кем, куда, что беру с собой</span></label>
+      <label><input type="checkbox"><span>Что происходит в моей жизни в эти дни</span></label>
+      <label><input type="checkbox"><span>Аэропорт глазами человека, который там прямо сейчас стоит</span></label>
+    </div>
+  </div>
+
+  <div class="tag later">итог</div>
+  <h2><span class="num">23</span>Что ты теперь умеешь</h2>
+
+  <div class="card">
+    <div class="check">
+      <label><input type="checkbox"><span>Отличаю «вообще» от «сейчас» и выбираю время до того, как начну фразу</span></label>
+      <label><input type="checkbox"><span>Ставлю s в he, she, it и убираю её после doesn't и does</span></label>
+      <label><input type="checkbox"><span>Не теряю am, is, are перед -ing</span></label>
+      <label><input type="checkbox"><span>Собираю вопрос: Do you...? Does she...? Are you...?</span></label>
+      <label><input type="checkbox"><span>Отвечаю коротко: Yes, I do. No, she isn't.</span></label>
+      <label><input type="checkbox"><span>Знаю, что know, want и like в Continuous не ставят</span></label>
+      <label><input type="checkbox"><span>Говорю at seven, on Monday, in the morning</span></label>
+    </div>
+  </div>
+
+  <div class="foot">Урок 1 &middot; Present Simple и Present Continuous &middot; travel</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  function revealBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+  /* ========== 03. вообще или сейчас ========== */
+  choiceBlock("ex1", [
+    {stem:'Я каждое лето летаю к морю.', opts:["Simple","Continuous"], ok:0, why:"Верно. Каждое лето значит вообще"},
+    {stem:'Смотри, самолёт взлетает!', opts:["Simple","Continuous"], ok:1, why:"Верно. Look! почти всегда тянет за собой Continuous"},
+    {stem:'Мой брат работает в аэропорту.', opts:["Simple","Continuous"], ok:0, why:"Верно. Это его работа вообще, а не занятие на эту минуту"},
+    {stem:'Я стою в очереди на регистрацию.', opts:["Simple","Continuous"], ok:1, why:"Верно, процесс идёт прямо сейчас"},
+    {stem:'Поезд отходит в восемь двадцать.', opts:["Simple","Continuous"], ok:0, why:"Верно. Расписание всегда Simple, даже про завтра"},
+    {stem:'В эти дни мы живём в отеле у пляжа.', opts:["Simple","Continuous"], ok:1, why:"Верно. Временно, только в эти дни"},
+    {stem:'Она никогда не сдаёт багаж.', opts:["Simple","Continuous"], ok:0, why:"Верно. Никогда это про привычку"},
+    {stem:'Подожди, я ищу посадочный.', opts:["Simple","Continuous"], ok:1, why:"Верно, ищет в эту секунду"}
+  ]);
+
+  /* ========== 05. нужная форма ========== */
+  choiceBlock("ex2", [
+    {stem:'She <u></u> at the airport.', ru:'она работает в аэропорту', opts:["work","works"], ok:1, why:"Верно. She, значит s"},
+    {stem:'I <u></u> to Dubai twice a year.', ru:'я летаю в Дубай два раза в год', opts:["fly","flies"], ok:0, why:"Верно. С I глагол голый"},
+    {stem:'My flight <u></u> at seven.', ru:'мой рейс вылетает в семь', opts:["leave","leaves"], ok:1, why:"Верно. Рейс это it, значит s"},
+    {stem:'They <u></u> in winter.', ru:'они не путешествуют зимой', opts:["don't travel","doesn't travel"], ok:0, why:"Верно. They берёт don't"},
+    {stem:'He <u></u> English very well.', ru:'он не очень хорошо говорит по-английски', opts:["doesn't speak","doesn't speaks"], ok:0, why:"Верно. S уже отдана в doesn't"},
+    {stem:'<u></u> you have a window seat?', ru:'у вас есть место у окна', opts:["Do","Does"], ok:0, why:"Верно. You берёт Do"},
+    {stem:'What time <u></u> the plane land?', ru:'во сколько самолёт приземляется', opts:["do","does"], ok:1, why:"Верно. Самолёт это it"},
+    {stem:'She <u></u> English at university.', ru:'она изучает английский в университете', opts:["studys","studies"], ok:1, why:"Верно. Согласная плюс y даёт ies"},
+    {stem:'It <u></u>. The lift is broken.', ru:'он не работает, лифт сломан', opts:["doesn't work","don't work"], ok:0, why:"Верно. It берёт doesn't"},
+    {stem:'He <u></u> two suitcases.', ru:'у него два чемодана', opts:["have","has"], ok:1, why:"Верно. have с he превращается в has"}
+  ]);
+
+  /* ========== 06. собери вопрос и отрицание ========== */
+  buildBlock("ex3", [
+    {words:["travel","Do","often","you"], ok:"Do you travel often", ru:"ты часто путешествуешь?"},
+    {words:["She","work","doesn't","on","Saturdays"], ok:"She doesn't work on Saturdays", ru:"она не работает по субботам"},
+    {words:["time","What","does","flight","your","leave"], ok:"What time does your flight leave", ru:"во сколько вылетает твой рейс?"},
+    {words:["fly","I","at","don't","night"], ok:"I don't fly at night", ru:"я не летаю по ночам"},
+    {words:["he","Does","English","speak"], ok:"Does he speak English", ru:"он говорит по-английски?"},
+    {words:["do","Where","check","I","in"], ok:"Where do I check in", ru:"где мне зарегистрироваться?"}
+  ]);
+
+  /* ========== 07. говорение: как бывает обычно ========== */
+  revealBlock("ex4", [
+    {ru:"Во сколько ты обычно встаёшь?", en:"I usually get up at seven."},
+    {ru:"Что ты делаешь каждое утро?", en:"I have breakfast and check my phone."},
+    {ru:"Как часто ты путешествуешь?", en:"I travel two or three times a year."},
+    {ru:"Ты ездишь одна или с кем-то?", en:"I usually travel with my family."},
+    {ru:"Что ты всегда берёшь с собой в поездку?", en:"I always take a carry-on and my passport."},
+    {ru:"В какое время года вы обычно ездите отдыхать?", en:"We usually go in summer."},
+    {ru:"Кто-то из твоих близких не любит летать?", en:"My sister doesn't like flying, but she travels with us."},
+    {ru:"Чего ты никогда не делаешь перед поездкой?", en:"I never pack at the last minute."}
+  ]);
+
+  /* ========== 09. что происходит сейчас ========== */
+  choiceBlock("ex5", [
+    {stem:'I <u></u> for my luggage.', ru:'я жду свой багаж', opts:["wait","am waiting"], ok:1, why:"Верно, процесс идёт сейчас"},
+    {stem:'Look! The plane <u></u>.', ru:'смотри, самолёт взлетает', opts:["takes off","is taking off"], ok:1, why:"Верно"},
+    {stem:'She <u></u> at the moment.', ru:'она сейчас спит', opts:["sleeps","is sleeping"], ok:1, why:"Верно. At the moment это прямая подсказка"},
+    {stem:'We <u></u> at a hotel near the beach this week.', ru:'на этой неделе мы живём в отеле у пляжа', opts:["stay","are staying"], ok:1, why:"Верно. Временно, только эту неделю"},
+    {stem:'<u></u> you working now?', ru:'ты сейчас работаешь?', opts:["Do","Are"], ok:1, why:"Верно. В Continuous вопрос строит сам to be"},
+    {stem:'He <u></u> TV right now.', ru:'он сейчас не смотрит телевизор', opts:["isn't watching","doesn't watching"], ok:0, why:"Верно. Отрицание делает to be, помощник doesn't тут лишний"},
+    {stem:'They are <u></u> to the gate.', ru:'они бегут к выходу', opts:["runing","running"], ok:1, why:"Верно. Короткий слог, согласная удваивается"},
+    {stem:'She is <u></u> a photo.', ru:'она фотографирует', opts:["takeing","taking"], ok:1, why:"Верно. Немая e перед ing уходит"},
+    {stem:'I <u></u> a good book these days.', ru:'я сейчас читаю хорошую книгу', opts:["read","am reading"], ok:1, why:"Верно. Не в эту секунду, но в этот период"}
+  ]);
+
+  /* ========== 10. собери фразу про сейчас ========== */
+  buildBlock("ex6", [
+    {words:["am","I","waiting","my","for","luggage"], ok:"I am waiting for my luggage", ru:"я жду свой багаж"},
+    {words:["aren't","They","flying","Dubai","to","now"], ok:"They aren't flying to Dubai now", ru:"они сейчас не летят в Дубай"},
+    {words:["are","What","doing","you"], ok:"What are you doing", ru:"что ты делаешь?"},
+    {words:["looking","She","is","gate","for","12"], ok:"She is looking for gate 12", ru:"она ищет выход 12"},
+    {words:["sitting","We","are","in","cafe","a"], ok:"We are sitting in a cafe", ru:"мы сидим в кафе"},
+    {words:["working","isn't","He","today"], ok:"He isn't working today", ru:"сегодня он не работает"}
+  ]);
+
+  /* ========== 11. говорение: что сейчас ========== */
+  revealBlock("ex7", [
+    {ru:"Где ты сейчас?", en:"I'm at the airport."},
+    {ru:"Что ты делаешь прямо сейчас?", en:"I'm waiting for my flight."},
+    {ru:"Твой рейс не задерживают?", en:"No, it isn't late. It leaves at seven."},
+    {ru:"Что происходит вокруг тебя?", en:"People are running to their gates."},
+    {ru:"Ты уже зарегистрировалась?", en:"Yes, I'm holding my boarding pass."},
+    {ru:"С тобой кто-то есть?", en:"Yes, my friend is sitting next to me."},
+    {ru:"Что ты пьёшь?", en:"I'm drinking coffee."},
+    {ru:"Чем вы занимаетесь в эти дни?", en:"We're getting ready for the trip."}
+  ]);
+
+  /* ========== 13. найди ошибку ========== */
+  choiceBlock("ex8", [
+    {stem:'Он здесь не работает.', opts:["He doesn't work here.","He doesn't works here."], ok:0, why:"Верно. После doesn't глагол без s"},
+    {stem:'Я жду свой багаж.', opts:["I waiting for my luggage.","I'm waiting for my luggage."], ok:1, why:"Верно. Без am фраза не собирается"},
+    {stem:'Она летает в Дубай?', opts:["Does she fly to Dubai?","Does she flies to Dubai?"], ok:0, why:"Верно. Does уже взял s на себя"},
+    {stem:'Я хочу место у окна.', opts:["I'm wanting a window seat.","I want a window seat."], ok:1, why:"Верно. want в Continuous не ставят"},
+    {stem:'Она не говорит по-английски.', opts:["She doesn't speak English.","She don't speak English."], ok:0, why:"Верно. She берёт doesn't"},
+    {stem:'Во сколько самолёт приземляется?', opts:["What time the plane lands?","What time does the plane land?"], ok:1, why:"Верно. Вопрос без does не строится"},
+    {stem:'Я лечу завтра.', opts:["I'm flying tomorrow.","I'm flying in tomorrow."], ok:0, why:"Верно. Перед tomorrow предлог не нужен"},
+    {stem:'Они бегут к выходу.', opts:["They are runing to the gate.","They are running to the gate."], ok:1, why:"Верно, согласная удваивается"},
+    {stem:'Я вечно опаздываю.', opts:["I'm always late.","I always am late."], ok:0, why:"Верно. С to be слово частоты встаёт после него"}
+  ], true);
+
+  /* ========== 15. at, on или in ========== */
+  choiceBlock("ex9", [
+    {stem:'My flight leaves <u></u> seven.', ru:'мой рейс вылетает в семь', opts:["at","on","in"], ok:0, why:"Верно. Точное время это at"},
+    {stem:'We are flying <u></u> Monday.', ru:'мы летим в понедельник', opts:["at","on","in"], ok:1, why:"Верно. День недели это on"},
+    {stem:'I usually travel <u></u> summer.', ru:'я обычно путешествую летом', opts:["at","on","in"], ok:2, why:"Верно. Время года это in"},
+    {stem:'The shop opens <u></u> nine thirty.', ru:'магазин открывается в девять тридцать', opts:["at","on","in"], ok:0, why:"Верно"},
+    {stem:'Her birthday is <u></u> May.', ru:'её день рождения в мае', opts:["at","on","in"], ok:2, why:"Верно. Месяц это in"},
+    {stem:'We always swim <u></u> the morning.', ru:'мы всегда плаваем утром', opts:["at","on","in"], ok:2, why:"Верно. Часть суток это in"},
+    {stem:'The meeting is <u></u> Friday morning.', ru:'встреча в пятницу утром', opts:["at","on","in"], ok:1, why:"Верно. Появился день, и он перетянул предлог на on"},
+    {stem:'I never work <u></u> night.', ru:'я никогда не работаю ночью', opts:["at","on","in"], ok:0, why:"Верно. Ночь единственная ушла к at"},
+    {stem:'Boarding starts <u></u> six thirty.', ru:'посадка начинается в шесть тридцать', opts:["at","on","in"], ok:0, why:"Верно"},
+    {stem:'We are flying <u></u> 5 May.', ru:'мы летим пятого мая', opts:["at","on","in"], ok:1, why:"Верно. Дата это on"},
+    {stem:'I am flying <u></u> tomorrow.', ru:'я лечу завтра', opts:["at","in","предлог не нужен"], ok:2, why:"Верно. tomorrow идёт без предлога"},
+    {stem:'She travels <u></u> every month.', ru:'она путешествует каждый месяц', opts:["in","on","предлог не нужен"], ok:2, why:"Верно. every month тоже обходится без предлога"}
+  ]);
+
+  /* ========== 16-18. слова ========== */
+  vocab("voc1", [["a flight","рейс"],["a plane","самолёт"],["a gate","выход на посадку"],
+    ["a boarding pass","посадочный талон"],["luggage","багаж, всегда в единственном числе"],
+    ["a suitcase","чемодан"],["a carry-on","ручная кладь"],["a seat","место"],
+    ["a window seat","место у окна"],["an aisle seat","место у прохода"],
+    ["a delay","задержка"],["departure","вылет"],["arrival","прилёт"],
+    ["a passport","паспорт"],["a ticket","билет"],["a trip","поездка"]]);
+
+  vocab("voc2", [["to travel","путешествовать"],["to fly","летать"],["to leave","вылетать, уезжать"],
+    ["to arrive","прибывать"],["to land","приземляться"],["to take off","взлетать"],
+    ["to check in","зарегистрироваться на рейс"],["to wait for","ждать кого-то или что-то"],
+    ["to look for","искать"],["to pack","собирать вещи"],["to book","бронировать"],
+    ["to stay","остановиться, жить где-то временно"]]);
+
+  vocab("voc3", [["always","всегда"],["usually","обычно"],["often","часто"],
+    ["sometimes","иногда"],["rarely","редко"],["never","никогда"],
+    ["every day","каждый день"],["once a week","раз в неделю"],["twice a year","два раза в год"]]);
+
+  /* ========== 21. скажи вслух ========== */
+  revealBlock("ex10", [
+    {ru:"Куда ты летишь?", en:"Where are you flying?"},
+    {ru:"Я лечу в Дубай с семьёй.", en:"I'm flying to Dubai with my family."},
+    {ru:"Мой рейс вылетает в семь утра.", en:"My flight leaves at seven in the morning."},
+    {ru:"Я обычно летаю два раза в год.", en:"I usually fly twice a year."},
+    {ru:"Где мне зарегистрироваться на рейс?", en:"Where do I check in?"},
+    {ru:"У вас есть место у окна?", en:"Do you have a window seat?"},
+    {ru:"Во сколько самолёт приземляется?", en:"What time does the plane land?"},
+    {ru:"Я жду свой багаж.", en:"I'm waiting for my luggage."},
+    {ru:"Он не говорит по-английски.", en:"He doesn't speak English."},
+    {ru:"Извините, можете повторить, пожалуйста?", en:"Sorry, can you repeat, please?"},
+    {ru:"Я никогда не летаю ночью.", en:"I never fly at night."},
+    {ru:"Мы сейчас ищем выход 12.", en:"We're looking for gate 12."}
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
