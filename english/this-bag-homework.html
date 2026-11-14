@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка. This is a bag. This bag is black</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{display:block; background:transparent; padding:2px 0 0; color:var(--soft); font-weight:600}
+    .ans{padding:0 0 6px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label,.vi,.conj div,.wr{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .vi.pic{align-items:center; gap:10px}
+  .vi .ico{flex:none; width:46px; height:46px; border-radius:10px; background:var(--tile);
+    overflow:hidden; display:block}
+  .vi .ico img{width:100%; height:100%; object-fit:cover; display:block}
+  .vi .sw{flex:none; width:26px; height:26px; border-radius:50%; border:1px solid var(--line)}
+  .vi .txt2{display:flex; flex-direction:column}
+  .vi .txt2 .t{margin-top:1px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- раскрытие скобок ---------- */
+  .gap .q{padding:11px 0}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  @media (max-width:420px){
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+
+  /* ---------- текст на чтение ---------- */
+  .story{font-size:18px; line-height:1.75}
+  .story p{margin:0 0 12px}
+  .story p:last-child{margin-bottom:0}
+  .story b{color:var(--accent); font-weight:800}
+  .story .say{color:var(--soft)}
+  .ask{padding:12px 0; border-bottom:1px solid var(--line); font-size:18px; font-weight:600}
+  .ask:last-child{border-bottom:none}
+  .ask .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
+  .ru-task{padding:12px 0; border-bottom:1px solid var(--line); font-size:17px}
+  .ru-task:last-child{border-bottom:none}
+  .ru-task .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
+  .form .ru2{display:block; font-weight:500; color:var(--mute); font-size:14px; margin-top:2px}
+  .form b{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <div class="kicker">Домашка · после занятия про this и these</div>
+  <h1>This is a bag<em>This bag is black. It is black.</em></h1>
+  <p>Сначала разбор трёх предложений, которые легко перепутать, потом два письменных перевода.</p>
+</div>
+
+<div class="tag">Теория</div>
+<h2><span class="num">01</span>Три предложения, которые путаются</h2>
+<p class="lead">Все три про одну и ту же сумку, но говорят разное. Разница в том, что стоит сразу после this.</p>
+
+<div class="form">
+  This <b>is</b> a bag.
+  <span class="ru2">Это сумка.</span>
+  <span class="ex">Ты показываешь на вещь и называешь её. После this сразу идёт is, а потом вещь с маленьким a.</span>
+</div>
+
+<div class="form">
+  This <b>bag</b> is black.
+  <span class="ru2">Эта сумка чёрная.</span>
+  <span class="ex">Вещь уже названа, теперь ты говоришь про неё что-то. This прилипло к слову bag и означает «эта». Между ними ничего не стоит, и a тут не нужно.</span>
+</div>
+
+<div class="form">
+  <b>It</b> is black.
+  <span class="ru2">Она чёрная.</span>
+  <span class="ex">Про вещь уже сказали, второй раз её не называют. Вместо названия ставится it.</span>
+</div>
+
+<div class="note">
+  <b>Как проверить себя за секунду.</b> Смотри на слово сразу после this.
+  Если там <b>is</b>, значит this это «это»: This is a bag.
+  Если там <b>вещь</b>, значит this это «эта»: This bag is black.
+  Третьего не бывает.
+</div>
+
+<h3>То же самое, когда вещей много</h3>
+<div class="card">
+  <div class="conj">
+    <div class="p">These are earrings.</div><div class="v">это</div><div class="r">Это серьги</div>
+    <div class="p">These earrings are gold.</div><div class="v">эти</div><div class="r">Эти серьги золотые</div>
+    <div class="p">They are nice.</div><div class="v">они</div><div class="r">Они красивые</div>
+  </div>
+</div>
+
+<div class="note">
+  <b>Главное про it и they.</b> Одна вещь становится <b>it</b>, несколько вещей становятся <b>they</b>.
+  Слова this и these во второе предложение не возвращаются: по-английски так не говорят.
+</div>
+
+<h3>Так нельзя и так правильно</h3>
+<div class="wrong-right">
+  <div class="wr n">This a bag is black.<small>a между this и вещью не ставится</small></div>
+  <div class="wr y">This bag is black.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">This is bag.<small>забыли a перед вещью</small></div>
+  <div class="wr y">This is a bag.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">It is a black.<small>перед цветом a не нужно</small></div>
+  <div class="wr y">It is black.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">This is black.<small>про уже названную вещь говорят it</small></div>
+  <div class="wr y">It is black.<small></small></div>
+</div>
+
+<div class="tag pr">Упражнение 1</div>
+<h2><span class="num">02</span>Выбери английский вариант</h2>
+<p class="lead">Жми на кнопку и сразу увидишь, верно или нет. Присылать это задание не надо.</p>
+<div class="card" id="ex1"></div>
+
+<div class="tag pr">Упражнение 2</div>
+<h2><span class="num">03</span>Найди правильную строчку</h2>
+<p class="lead">В одной из двух ошибка.</p>
+<div class="card" id="ex2"></div>
+
+<div class="tag wd">Письменно</div>
+<h2><span class="num">04</span>Переведи на английский</h2>
+<p class="lead">В каждом пункте три предложения подряд: назвать вещь, сказать про неё, заменить на it или they. Пиши целиком, все три.</p>
+<div class="card">
+  <div class="ru-task"><span class="n2">01</span>Это серьги. Эти серьги золотые. Они красивые.</div>
+  <div class="ru-task"><span class="n2">02</span>Это сумка. Эта сумка чёрная. Она кожаная.</div>
+  <div class="ru-task"><span class="n2">03</span>Это платье. Это платье белое. Оно новое.</div>
+  <div class="ru-task"><span class="n2">04</span>Это туфли. Эти туфли бежевые. Они красивые.</div>
+  <div class="ru-task"><span class="n2">05</span>Это кольцо. Это кольцо серебряное. Оно маленькое.</div>
+  <div class="ru-task"><span class="n2">06</span>Это джинсы. Эти джинсы синие. Они есть в наличии.</div>
+  <div class="ru-task"><span class="n2">07</span>Это шарф. Этот шарф шёлковый. Он красный.</div>
+  <div class="ru-task"><span class="n2">08</span>Это пальто. Это пальто чёрное. Оно шерстяное.</div>
+</div>
+
+<div class="tag wd">Письменно</div>
+<h2><span class="num">05</span>Переведи на русский</h2>
+<p class="lead">Те же три шага, только теперь наоборот. Пиши тоже целиком, все три предложения.</p>
+<div class="card">
+  <div class="ask"><span class="n2">01</span>This is a belt. This belt is leather. It is black.</div>
+  <div class="ask"><span class="n2">02</span>These are bracelets. These bracelets are silver. They are new.</div>
+  <div class="ask"><span class="n2">03</span>This is a skirt. This skirt is red. It is cotton.</div>
+  <div class="ask"><span class="n2">04</span>These are boxes. These boxes are small. They are in stock.</div>
+  <div class="ask"><span class="n2">05</span>This is a necklace. This necklace is gold. It is very nice.</div>
+  <div class="ask"><span class="n2">06</span>These are trousers. These trousers are white. They are out of stock.</div>
+</div>
+
+<div class="hw">
+  <h3>Что прислать</h3>
+  <p><b>Текстом, одним сообщением</b> - четвёртое задание, восемь пунктов по три предложения, и пятое, шесть пунктов по три предложения.</p>
+  <p class="small">Первые два задания с кнопками ты делаешь прямо здесь, на странице, присылать их не нужно.</p>
+</div>
+
+<div class="foot">This is a bag · This bag is black · It is black</div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+  function vocabPic(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi pic";
+      d.innerHTML = '<span class="ico">' + p[2] + '</span>' +
+        '<span class="txt2"><span class="w">' + p[0] + '</span>' +
+        '<span class="t">' + p[1] + '</span></span>';
+      host.appendChild(d);
+    });
+  }
+
+  function vocabSw(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi pic";
+      var left = p[2].indexOf("data:") === 0
+        ? '<span class="ico"><img src="' + p[2] + '" alt=""></span>'
+        : '<span class="sw" style="background:' + p[2] + '"></span>';
+      d.innerHTML = left + '<span class="txt2"><span class="w">' + p[0] + '</span>' +
+        '<span class="t">' + p[1] + '</span></span>';
+      host.appendChild(d);
+    });
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q build";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  function revealBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+  
+  /* ========== 02. выбери английский вариант ========== */
+  choiceBlock("ex1", [
+    {stem:'Это сумка.', opts:["This is a bag.","This bag is.","It is a bag."], ok:0,
+     why:"Верно. Называем вещь: после this сразу is"},
+    {stem:'Эта сумка чёрная.', opts:["This is a black bag.","This bag is black."], ok:1,
+     why:"Верно. this прилипло к bag и означает «эта»"},
+    {stem:'Она чёрная. Про сумку, которую уже назвали.', opts:["It is black.","This is black."], ok:0,
+     why:"Верно. Названную вещь заменяем на it"},
+    {stem:'Это серьги.', opts:["These earrings are.","These are earrings.","This is earrings."], ok:1,
+     why:"Верно. Называем вещь: после these сразу are"},
+    {stem:'Эти серьги золотые.', opts:["These earrings are gold.","These are gold earrings."], ok:0,
+     why:"Верно. these прилипло к earrings и означает «эти»"},
+    {stem:'Они красивые. Про серьги, которые уже назвали.', opts:["These are nice.","They are nice."], ok:1,
+     why:"Верно. Несколько названных вещей заменяем на they"},
+    {stem:'Это платье.', opts:["This dress is.","This is a dress."], ok:1, why:"Верно"},
+    {stem:'Это платье новое.', opts:["This dress is new.","This is a new."], ok:0,
+     why:"Верно. Сначала this dress, потом is, потом какое оно"},
+    {stem:'Оно кожаное. Про сумку.', opts:["It is leather.","This bag leather."], ok:0, why:"Верно"},
+    {stem:'Эти туфли бежевые.', opts:["These shoes are beige.","This shoes are beige."], ok:0,
+     why:"Верно. shoes всегда во множественном числе, значит these"}
+  ], true);
+
+  /* ========== 03. найди правильную строчку ========== */
+  choiceBlock("ex2", [
+    {stem:'1', opts:["This bag is black.","This a bag is black."], ok:0,
+     why:"Верно. Между this и вещью ничего не ставится"},
+    {stem:'2', opts:["This is bag.","This is a bag."], ok:1, why:"Верно. Перед вещью нужно a"},
+    {stem:'3', opts:["These earrings are gold.","These earrings is gold."], ok:0,
+     why:"Верно. Серёг несколько, значит are"},
+    {stem:'4', opts:["It is a black.","It is black."], ok:1, why:"Верно. Перед цветом a не нужно"},
+    {stem:'5', opts:["This earrings are gold.","These earrings are gold."], ok:1,
+     why:"Верно. earrings во множественном числе, значит these"},
+    {stem:'6', opts:["They are nice.","They is nice."], ok:0, why:"Верно. they всегда с are"},
+    {stem:'7', opts:["These are a bags.","These are bags."], ok:1,
+     why:"Верно. a с множественным числом не ставится"},
+    {stem:'8', opts:["This dress is white.","This is dress is white."], ok:0,
+     why:"Верно. is в предложении одно"}
+  ], true);
+
+})();
+</script>
+</body>
+</html>
