@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Парное занятие. Who are you today?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  ol.task{margin:0; padding-left:7mm; font-size:17px}
+  ol.task li{margin:0 0 10px}
+  ol.task li::marker{color:var(--accent); font-weight:800}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Роберт и Катя &middot; парное занятие</div>
+    <h1>Who are you today?<em>Профессии, возраст, какой человек</em></h1>
+    <p>Сегодня мы учимся рассказывать не только о себе, но и о другом человеке: кем работает, сколько лет, какой он. В конце играем: один придумывает персонажа, второй представляет его людям.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Новое у обоих: профессии, артикль <b>a</b> и <b>an</b>, возраст и слова про характер.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Вопрос дня: <b>What do you do?</b> - кем ты работаешь.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Всё держится на одном глаголе, который вы уже знаете: <b>am</b>, <b>is</b>, <b>are</b>.</div></div>
+  </div>
+
+  <div class="tag wd">фразы</div>
+  <h2><span class="num">01</span>Фразы занятия</h2>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">What do you do?</div><div class="ru">кем ты работаешь</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">I am a coach.</div><div class="ru">я тренер</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">I am an engineer.</div><div class="ru">я инженер</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">How old are you?</div><div class="ru">сколько тебе лет</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">I am thirty.</div><div class="ru">мне тридцать</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">She is very funny.</div><div class="ru">она очень весёлая</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">He is a famous artist.</div><div class="ru">он известный художник</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">This is my friend Maria.</div><div class="ru">это моя подруга Мария</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>Профессии и маленькое слово перед ними</h2>
+
+  <div class="card">
+    <p>По-русски «я тренер» идёт без всего. По-английски перед профессией обязательно стоит <b>a</b> или <b>an</b>. Это не украшение: без него фраза звучит оборванной.</p>
+    <div class="wrong-right">
+      <div class="wr n">I am coach<small>так не говорят</small></div>
+      <div class="wr y">I am a coach<small>вот теперь нормально</small></div>
+    </div>
+    <h3>Когда a, а когда an</h3>
+    <p>Правило одно и оно про звук, а не про букву. Если профессия начинается с гласного звука, язык не успевает сказать <b>a</b> и берёт <b>an</b>, так просто удобнее произносить.</p>
+    <div class="conj">
+      <div class="p">a</div><div class="v">согласный звук</div><div class="r">a doctor, a teacher, a cook, a driver</div>
+      <div class="p">an</div><div class="v">гласный звук</div><div class="r">an engineer, an artist, an actor</div>
+    </div>
+    <p>Скажи вслух <b>a artist</b> и <b>an artist</b> - второе само ложится в рот, первое спотыкается. На этом правило и держится.</p>
+  </div>
+
+  <h3>Профессии</h3>
+  <div class="card">
+    <div class="voc" id="voc1"></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>a или an</h2>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Как спросить про работу</h2>
+
+  <div class="card">
+    <p>Вопрос звучит странно, если переводить его по словам: «что ты делаешь». Но это устойчивая фраза, и означает она именно «кем ты работаешь». Бери её целиком, не разбирая на части.</p>
+    <div class="form">What do you do?
+      <span class="ex">- I am a photographer. And you?<br>- I am a nurse.</span>
+    </div>
+    <p>Про третьего человека спрашивают так же просто, через знакомый вам глагол:</p>
+    <div class="conj">
+      <div class="p">What is his job?</div><div class="v">кем он работает</div><div class="r">He is a driver.</div>
+      <div class="p">What is her job?</div><div class="v">кем она работает</div><div class="r">She is a lawyer.</div>
+    </div>
+    <div class="note">Отвечать одним словом <b>doctor</b> можно, но звучит сухо. Полный ответ короткий и вежливый: <b>I am a doctor.</b></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">05</span>Собери вопрос и ответ</h2>
+  <div class="card build" id="ex2"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">06</span>Возраст: тот же глагол, что и всегда</h2>
+
+  <div class="card">
+    <p>Здесь английский расходится с русским сильнее всего. Мы говорим «мне тридцать», то есть возраст как будто принадлежит мне. Англичанин говорит <b>I am thirty</b> - дословно «я есть тридцать».</p>
+    <div class="wrong-right">
+      <div class="wr n">I have thirty<small>калька с русского, не говорят</small></div>
+      <div class="wr y">I am thirty<small>возраст идёт через to be</small></div>
+    </div>
+    <div class="conj">
+      <div class="p">How old are you?</div><div class="v">сколько тебе лет</div><div class="r">I am twenty-five.</div>
+      <div class="p">How old is he?</div><div class="v">сколько ему лет</div><div class="r">He is forty.</div>
+      <div class="p">How old is she?</div><div class="v">сколько ей лет</div><div class="r">She is thirty-two.</div>
+    </div>
+    <h3>Числа, которые для этого нужны</h3>
+    <div class="card" style="box-shadow:none; padding:0">
+      <div class="voc" id="voc2"></div>
+    </div>
+    <p>Составные числа собираются через дефис, и это почти как по-русски: <b>twenty-five</b>, <b>thirty-one</b>, <b>forty-seven</b>.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">07</span>Сколько лет</h2>
+  <div class="card" id="ex3"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">08</span>Какой человек</h2>
+
+  <div class="card">
+    <p>Чтобы человек стал живым, одной профессии мало. Нужно слово про то, какой он. Ставится оно тоже через <b>to be</b>, а перед ним можно добавить <b>very</b>.</p>
+    <div class="form">She is very funny.
+      <span class="ex">He is a serious doctor. &middot; My friend is very kind.</span>
+    </div>
+    <p>Обрати внимание: если слово стоит перед профессией, артикль не исчезает, а просто отъезжает левее: <b>a famous artist</b>, <b>a young doctor</b>.</p>
+  </div>
+
+  <h3>Слова про характер</h3>
+  <div class="card">
+    <div class="voc" id="voc3"></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>Собери описание</h2>
+  <div class="card build" id="ex4"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">10</span>Представляем третьего человека</h2>
+
+  <div class="card">
+    <p>Всё, что вы сказали о себе, можно сказать и о другом. Меняется только одно слово в начале, а глагол остаётся тем же.</p>
+    <div class="conj conj4">
+      <div class="p">I am</div><div class="v">&rarr;</div><div class="sh">He is / She is</div><div class="r">I am a cook. &rarr; She is a cook.</div>
+      <div class="p">I am from</div><div class="v">&rarr;</div><div class="sh">He is from</div><div class="r">I am from Italy. &rarr; He is from Italy.</div>
+      <div class="p">I am thirty</div><div class="v">&rarr;</div><div class="sh">She is thirty</div><div class="r">возраст точно так же</div>
+    </div>
+    <p>Представление человека идёт по одной и той же дорожке: <b>This is...</b>, потом имя, потом откуда, потом профессия, потом какой он.</p>
+    <div class="form">This is my friend Maria.
+      <span class="ex">She is from Italy. She is a cook. She is forty-two. She is very funny.</span>
+    </div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">11</span>Скажи вслух по-английски</h2>
+  <p class="lead">Сначала скажи сам, вслух, и только потом открывай ответ.</p>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag sp">игра</div>
+  <h2><span class="num">12</span>Ролевая игра: кто ты сегодня</h2>
+  <p class="lead">Один выбирает карточку и становится этим человеком. Второй представляет его остальным, как будто знакомит на вечеринке. Потом меняетесь.</p>
+
+  <div class="card">
+    <div class="voc" id="roles"></div>
+  </div>
+
+  <div class="card">
+    <h3>Как играем</h3>
+    <ol class="task">
+      <li>Выбери карточку и никому не показывай.</li>
+      <li>Партнёр задаёт тебе вопросы: <b>What is your name? Where are you from? What do you do? How old are you?</b></li>
+      <li>Ты отвечаешь от имени персонажа: <b>I am Maria. I am from Italy.</b></li>
+      <li>Партнёр представляет тебя: <b>This is Maria. She is from Italy. She is a cook. She is forty-two.</b></li>
+      <li>Меняетесь ролями и берёте новую карточку.</li>
+    </ol>
+  </div>
+
+  <div class="note">Можно не брать готовую карточку, а придумать персонажа самому: артиста, миллионера, повара из Неаполя. Чем смешнее, тем лучше запоминается.</div>
+
+  <div class="tag sp">домашка</div>
+  <h2><span class="num">13</span>Домашнее задание</h2>
+
+  <div class="hw">
+    <h3>что прислать</h3>
+    <p><b>Голосовым:</b> представь трёх человек: себя, своего партнёра и любого придуманного персонажа. Про каждого скажи, кто он, откуда, кем работает, сколько лет и какой он.</p>
+    <p><b>Текстом:</b> напиши пять профессий, которые встречаются в твоей жизни, каждую с <b>a</b> или <b>an</b>.</p>
+  </div>
+
+  <div class="foot">Кристина &middot; английский для поездок и живого общения</div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  /* ---------- спрятать перевод ---------- */
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  /* ---------- диалог ---------- */
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  /* ---------- словарь ---------- */
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+  /* ---------- выбор варианта ---------- */
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- сборка фразы ---------- */
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- раскрывашки ---------- */
+  function revealBlock(id, items, withSound){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = withSound
+        ? p.en + ' '
+        : p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+
+
+  /* ---------- словарь ---------- */
+  vocab("voc1", [["a doctor","врач"],["a teacher","учитель"],["a driver","водитель"],
+    ["a cook","повар"],["a waiter","официант"],["a nurse","медсестра"],
+    ["a manager","менеджер"],["a lawyer","юрист"],["a dentist","стоматолог"],
+    ["a journalist","журналист"],["a coach","тренер"],["a blogger","блогер"],
+    ["an engineer","инженер"],["an artist","художник"],["an actor","актёр"],
+    ["an architect","архитектор"]]);
+
+  vocab("voc2", [["twenty","двадцать"],["twenty-five","двадцать пять"],["thirty","тридцать"],
+    ["thirty-two","тридцать два"],["forty","сорок"],["fifty","пятьдесят"],
+    ["sixty","шестьдесят"],["seventy","семьдесят"]]);
+
+  vocab("voc3", [["funny","весёлый"],["kind","добрый"],["serious","серьёзный"],
+    ["famous","известный"],["young","молодой"],["old","пожилой"],
+    ["rich","богатый"],["busy","занятой"],["friendly","дружелюбный"],
+    ["shy","стеснительный"],["smart","умный"],["very","очень"]]);
+
+  vocab("roles", [
+    ["Maria","Италия &middot; a cook &middot; 42 &middot; funny"],
+    ["John","Англия &middot; a doctor &middot; 35 &middot; serious"],
+    ["Pablo","Испания &middot; an artist &middot; 28 &middot; famous"],
+    ["Anna","Турция &middot; a teacher &middot; 50 &middot; kind"],
+    ["Mike","Америка &middot; a driver &middot; 31 &middot; friendly"],
+    ["Lena","Россия &middot; a journalist &middot; 26 &middot; busy"],
+    ["Tom","Испания &middot; a waiter &middot; 19 &middot; shy"],
+    ["Olga","Италия &middot; an architect &middot; 44 &middot; smart"]]);
+
+  /* ========== 03. a или an ========== */
+  choiceBlock("ex1", [
+    {stem:'I am <u></u> doctor.', ru:'я врач', opts:["a","an"], ok:0, why:"Верно. Doctor начинается с согласного звука"},
+    {stem:'She is <u></u> artist.', ru:'она художник', opts:["a","an"], ok:1, why:"Верно. Artist начинается с гласного"},
+    {stem:'He is <u></u> engineer.', ru:'он инженер', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'You are <u></u> teacher.', ru:'ты учитель', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'My friend is <u></u> actor.', ru:'мой друг актёр', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'I am <u></u> blogger.', ru:'я блогер', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'She is <u></u> nurse.', ru:'она медсестра', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'He is <u></u> architect.', ru:'он архитектор', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'This is <u></u> famous artist.', ru:'это известный художник', opts:["a","an"], ok:0,
+     why:"Верно, и это ловушка: смотрим на слово famous, оно идёт первым"},
+    {stem:'He is <u></u> old doctor.', ru:'он пожилой врач', opts:["a","an"], ok:1,
+     why:"Верно. Теперь первым идёт old, а оно с гласного"}
+  ]);
+
+  /* ========== 05. собери вопрос и ответ ========== */
+  buildBlock("ex2", [
+    {words:["do","What","you","do"], ok:"What do you do", ru:"кем ты работаешь?"},
+    {words:["am","I","doctor","a"], ok:"I am a doctor", ru:"я врач"},
+    {words:["is","What","job","her"], ok:"What is her job", ru:"кем она работает?"},
+    {words:["is","He","engineer","an"], ok:"He is an engineer", ru:"он инженер"},
+    {words:["are","How","you","old"], ok:"How old are you", ru:"сколько тебе лет?"}
+  ]);
+
+  /* ========== 06. сколько лет ========== */
+  choiceBlock("ex3", [
+    {stem:'Мне тридцать.', opts:["I have thirty.","I am thirty."], ok:1, why:"Верно. Возраст идёт через to be"},
+    {stem:'Сколько тебе лет?', opts:["How old are you?","How many years you?"], ok:0, why:"Верно"},
+    {stem:'Ей сорок два.', opts:["She is forty-two.","She has forty-two."], ok:0, why:"Верно"},
+    {stem:'Сколько ему лет?', opts:["How old is he?","How old he is?"], ok:0, why:"Верно. В вопросе is идёт перед he"},
+    {stem:'Ему девятнадцать.', opts:["He is nineteen.","He nineteen."], ok:0, why:"Верно. Без is предложения нет"},
+    {stem:'Мне двадцать пять.', opts:["I am twenty five.","I am twenty-five."], ok:1, why:"Верно. Составное число пишется через дефис"}
+  ], true);
+
+  /* ========== 08. собери описание ========== */
+  buildBlock("ex4", [
+    {words:["is","She","funny","very"], ok:"She is very funny", ru:"она очень весёлая"},
+    {words:["a","He","doctor","is","serious"], ok:"He is a serious doctor", ru:"он серьёзный врач"},
+    {words:["is","This","friend","my","Maria"], ok:"This is my friend Maria", ru:"это моя подруга Мария"},
+    {words:["a","She","artist","is","famous"], ok:"She is a famous artist", ru:"она известная художница"},
+    {words:["is","He","Spain","from"], ok:"He is from Spain", ru:"он из Испании"}
+  ]);
+
+  /* ========== 10. скажи вслух ========== */
+  revealBlock("ex5", [
+    {ru:"Кем ты работаешь?", en:"What do you do?"},
+    {ru:"Я тренер. А ты?", en:"I am a coach. And you?"},
+    {ru:"Я блогер.", en:"I am a blogger."},
+    {ru:"Сколько тебе лет?", en:"How old are you?"},
+    {ru:"Мне тридцать один.", en:"I am thirty-one."},
+    {ru:"Это моя подруга Мария. Она из Италии.", en:"This is my friend Maria. She is from Italy."},
+    {ru:"Она повар. Ей сорок два.", en:"She is a cook. She is forty-two."},
+    {ru:"Он очень весёлый.", en:"He is very funny."},
+    {ru:"Он известный художник.", en:"He is a famous artist."},
+    {ru:"Кем она работает?", en:"What is her job?"},
+    {ru:"Мой друг инженер. Он очень умный.", en:"My friend is an engineer. He is very smart."},
+    {ru:"Ей двадцать шесть. Она журналистка.", en:"She is twenty-six. She is a journalist."}
+  ], false);
+
+})();
+</script>
+</body>
+</html>
