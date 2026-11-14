@@ -231,14 +231,8 @@
   .ru-task .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
 
   .player{margin:0}
-  #gapA .line .n{margin-right:8px}
   .player audio{width:100%; height:40px; display:block}
   .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
-  #scriptBox{display:none}
-  #scriptBox.open{display:block}
-  .dial{font-size:17px; line-height:1.7}
-  .dial p{margin:0 0 7px}
-  .dial .sp{color:var(--accent); font-weight:700}
 </style>
 </head>
 <body>
@@ -322,82 +316,36 @@
 <p class="lead">В одной из двух ошибка.</p>
 <div class="card" id="ex2"></div>
 
-<div class="tag wd">Слова</div>
-<h2><span class="num">04</span>Слова, которые нужны в тексте</h2>
-<p class="lead">Разбери их до чтения, тогда текст пойдёт без остановок.</p>
-<div class="card"><div class="voc" id="voc1"></div></div>
-
-<div class="tag sp">Чтение</div>
-<h2><span class="num">05</span>At the showroom</h2>
-<p class="lead">Читай вслух. Слова this и these выделены, следи, какое из них стоит и почему.</p>
-
-<div class="card story">
-  <p>My name is Nina. I am a buyer. I buy clothes and jewellery for a small shop.</p>
-  <p>Today I am in Istanbul. <b>This</b> is a showroom. <b>This</b> is my first day here.</p>
-  <p><b>This</b> is my table. <b>These</b> are my papers. <b>This</b> is a catalogue. It is new.</p>
-  <p class="say">"Good morning. Is <b>this</b> dress in stock?"</p>
-  <p class="say">"Yes, it is. It is black."</p>
-  <p class="say">"And <b>these</b> bags? Are they leather?"</p>
-  <p class="say">"<b>These</b> bags are leather. <b>This</b> bag is cotton."</p>
-  <p><b>This</b> dress is forty euros. <b>These</b> shoes are sixty euros. <b>These</b> prices are good for me.</p>
-  <p class="say">"Are <b>these</b> rings in stock?"</p>
-  <p class="say">"No, they are not. Sorry. But <b>these</b> earrings are in stock."</p>
-  <p class="say">"Good. They are silver. They are very nice."</p>
-  <p><b>This</b> is my order: two dresses, ten bags and twenty pairs of earrings.</p>
-  <p>Now my work here is finished. <b>This</b> is a good day.</p>
-</div>
-
-<div class="tag pr">Упражнение</div>
-<h2><span class="num">06</span>Правда или нет</h2>
-<p class="lead">True это правда, False это неправда. Если сомневаешься, возвращайся к тексту.</p>
-<div class="card" id="ex5"></div>
-
-<div class="tag sp">Говорим</div>
-<h2><span class="num">07</span>Вопросы к тексту</h2>
-<p class="lead">Отвечай вслух целым предложением, а не одним словом. Ответы все есть в тексте.</p>
-<div class="card">
-  <div class="ask"><span class="n2">01</span>What is Nina's job?</div>
-  <div class="ask"><span class="n2">02</span>Where is she today?</div>
-  <div class="ask"><span class="n2">03</span>Is this her first day in the showroom?</div>
-  <div class="ask"><span class="n2">04</span>Is the dress in stock?</div>
-  <div class="ask"><span class="n2">05</span>What colour is the dress?</div>
-  <div class="ask"><span class="n2">06</span>Are all the bags leather?</div>
-  <div class="ask"><span class="n2">07</span>How much are the shoes?</div>
-  <div class="ask"><span class="n2">08</span>Are the rings in stock?</div>
-  <div class="ask"><span class="n2">09</span>What is in her order?</div>
-  <div class="ask"><span class="n2">10</span>Is it a good day for her?</div>
-</div>
-
-
 <div class="tag pr">Слушаем</div>
-<h2><span class="num">08</span>Заказ в шоуруме, на слух</h2>
+<h2><span class="num">04</span>Заказ в шоуруме, на слух</h2>
 <p class="lead">26 секунд, два голоса, британская речь. Первый раз слушай целиком и не старайся
-понять каждое слово. Второй раз останавливай запись после каждой фразы. Текст разговора
-под кнопкой в конце раздела, открывай его только после заданий.</p>
+понять каждое слово. Дальше останавливай запись после каждой фразы и слушай столько раз,
+сколько нужно.</p>
 <div class="card">
   <div class="player"><audio controls preload="none" src="showroom-order.mp3"></audio>
     <div class="cap">Байер и продавец · 26 секунд</div></div>
 </div>
 <p class="lead">True это правда, False это неправда.</p>
 <div class="card" id="exA"></div>
-<p class="lead">Теперь слушай ещё раз и впиши пропущенное слово. Проверка по кнопке.</p>
-<div class="card" id="gapA"></div>
-<div class="card">
-  <button class="btn" type="button" id="scriptBtn">Показать текст разговора</button>
-  <div id="scriptBox" class="dial" style="margin-top:14px">
-    <p><span class="sp">Байер:</span> Is this shirt in stock?</p>
-    <p><span class="sp">Продавец:</span> No, it is not. I am sorry.</p>
-    <p><span class="sp">Байер:</span> And these jeans? Are they in stock?</p>
-    <p><span class="sp">Продавец:</span> Yes, they are. These jeans are blue and black.</p>
-    <p><span class="sp">Байер:</span> Very good. This is my order: ten dresses and twenty pairs of jeans.</p>
-    <p><span class="sp">Продавец:</span> Thank you!</p>
-  </div>
-</div>
-
 
 <div class="tag wd">Письменно</div>
-<h2><span class="num">09</span>Переведи на английский</h2>
-<p class="lead">В каждом пункте три предложения подряд: назвать вещь, сказать про неё, заменить на it или they. Пиши целиком, все три.</p>
+<h2><span class="num">05</span>Допиши предложения и пришли мне</h2>
+<p class="lead">Слушай запись ещё раз, по кусочкам. Выпиши эти шесть предложений целиком,
+с пропущенным словом на месте, и пришли мне текстом одним сообщением. Проверки на странице нет,
+это задание смотрю я.</p>
+<div class="card">
+  <div class="ru-task"><span class="n2">01</span>Is this shirt in ____?</div>
+  <div class="ru-task"><span class="n2">02</span>No, it is ____. I am sorry.</div>
+  <div class="ru-task"><span class="n2">03</span>Are ____ jeans in stock?</div>
+  <div class="ru-task"><span class="n2">04</span>____ jeans are blue and black.</div>
+  <div class="ru-task"><span class="n2">05</span>This is my ____: ten dresses and twenty pairs of jeans.</div>
+  <div class="ru-task"><span class="n2">06</span>Ten dresses and twenty ____ of jeans.</div>
+</div>
+
+<div class="tag sp">Голосом</div>
+<h2><span class="num">06</span>Переведи на английский вслух</h2>
+<p class="lead">В каждом пункте три предложения подряд: назвать вещь, сказать про неё, заменить на it или they.
+Проговори все восемь пунктов и пришли мне голосовым сообщением. В каждом пункте три предложения, не сокращай.</p>
 <div class="card">
   <div class="ru-task"><span class="n2">01</span>Это серьги. Эти серьги золотые. Они красивые.</div>
   <div class="ru-task"><span class="n2">02</span>Это сумка. Эта сумка чёрная. Она кожаная.</div>
@@ -410,20 +358,9 @@
 </div>
 
 
-<div class="tag sp">Говорим</div>
-<h2><span class="num">10</span>Теперь про твою работу</h2>
-<p class="lead">Говоришь сама, по-английски.</p>
-<div class="card">
-  <div class="ru-task"><span class="n2">01</span>Назови пять вещей, которые лежат у тебя на столе. Про каждую скажи, одна она или их несколько.</div>
-  <div class="ru-task"><span class="n2">02</span>Посмотри на свою последнюю закупку и скажи про шесть позиций, что это за вещь и какого она цвета.</div>
-  <div class="ru-task"><span class="n2">03</span>Спроси про четыре вещи, есть ли они в наличии: две в единственном числе, две во множественном.</div>
-  <div class="ru-task"><span class="n2">04</span>Ответь на эти же четыре вопроса за консультанта: два раза да, два раза нет.</div>
-  <div class="ru-task"><span class="n2">05</span>Расскажи про свой последний заказ так же, как Нина в тексте: что в нём было и сколько позиций.</div>
-</div>
-
 <div class="tag">Итог</div>
-<h2><span class="num">11</span>Фразы этого занятия</h2>
-<p class="lead">Всё, что встретилось в тексте, в одном списке.</p>
+<h2><span class="num">07</span>Фразы этого занятия</h2>
+<p class="lead">Всё, что сегодня встретилось, в одном списке.</p>
 <div class="card" id="phrasesCard">
   <div class="ph"><div class="n">01</div><div class="txt"><div class="en">This is a dress.</div><div class="ru">Это платье.</div></div></div>
   <div class="ph"><div class="n">02</div><div class="txt"><div class="en">These are bags.</div><div class="ru">Это сумки.</div></div></div>
@@ -440,12 +377,12 @@
 
 <div class="hw">
   <p><b>Что прислать мне</b></p>
-  <p><b>Текстом, одним сообщением</b> - перевод на английский: восемь пунктов, в каждом по три предложения.</p>
-  <p class="small">Упражнения с кнопками, текст, вопросы к нему и запись ты делаешь прямо здесь,
-  на странице, присылать их не нужно.</p>
+  <p><b>Текстом, одним сообщением</b> - шесть предложений из записи, целиком, со вставленным словом.</p>
+  <p><b>Голосовым сообщением</b> - перевод на английский: восемь пунктов, в каждом по три предложения.</p>
+  <p class="small">Упражнения с кнопками ты делаешь прямо здесь, на странице, присылать их не нужно.</p>
 </div>
 
-<div class="foot">This is · these are · at the showroom</div>
+<div class="foot">This is · these are · заказ в шоуруме</div>
 
 </div>
 
@@ -755,24 +692,8 @@
     {stem:'8', opts:["This dress is white.","This is dress is white."], ok:0,
      why:"Верно. is в предложении одно"}
   ], true);
-  vocab("voc1", [["a showroom","шоурум, выставочный зал"],["a catalogue","каталог"],
-    ["papers","бумаги, документы"],["a table","стол"],["a price / prices","цена / цены"],
-    ["a pair","пара"],["an order","заказ"],["in stock","есть в наличии"],
-    ["leather","кожа, кожаный"],["cotton","хлопок, хлопковый"],["silver","серебро, серебряный"],
-    ["first","первый"],["finished","закончена, готово"],["a shop","магазин"],
-    ["clothes","одежда"],["jewellery","украшения"]]);
 
   /* ========== 12. правда или нет ========== */
-  choiceBlock("ex5", [
-    {stem:'Nina is a buyer.', opts:["True","False"], ok:0, why:"Верно. I am a buyer"},
-    {stem:'This is her second day in the showroom.', opts:["True","False"], ok:1, why:"Верно. В тексте first day"},
-    {stem:'The dress is in stock.', opts:["True","False"], ok:0, why:"Верно. Yes, it is"},
-    {stem:'The dress is black.', opts:["True","False"], ok:0, why:"Верно"},
-    {stem:'All the bags are leather.', opts:["True","False"], ok:1, why:"Верно. This bag is cotton"},
-    {stem:'The shoes are forty euros.', opts:["True","False"], ok:1, why:"Верно. Туфли шестьдесят, сорок это платье"},
-    {stem:'The rings are in stock.', opts:["True","False"], ok:1, why:"Верно. No, they are not"},
-    {stem:'The earrings are silver.', opts:["True","False"], ok:0, why:"Верно. They are silver"}
-  ]);
 
   choiceBlock("exA", [
     {stem:'The shirt is in stock.', opts:["True","False"], ok:1, why:"Верно. No, it is not"},
@@ -781,23 +702,7 @@
     {stem:'The buyer wants ten dresses.', opts:["True","False"], ok:0, why:"Верно. ten dresses and twenty pairs of jeans"}
   ]);
 
-  gapBlock("gapA", [
-    {s:"Is this shirt in %?", ok:["stock"], ru:"В наличии ли эта рубашка"},
-    {s:"No, it is %. I am sorry.", ok:["not"], ru:"Нет, её нет"},
-    {s:"Are % jeans in stock?", ok:["these"], ru:"А эти джинсы"},
-    {s:"% jeans are blue and black.", ok:["these"], ru:"Эти джинсы синие и чёрные"},
-    {s:"This is my %: ten dresses and twenty pairs of jeans.", ok:["order"], ru:"Это мой заказ"},
-    {s:"Ten dresses and twenty % of jeans.", ok:["pairs"], ru:"Двадцать пар джинсов"}
-  ]);
 
-  var sb = document.getElementById("scriptBtn"), sx = document.getElementById("scriptBox");
-  if(sb && sx){
-    sb.addEventListener("click", function(){
-      var on = sx.classList.toggle("open");
-      sb.textContent = on ? "Спрятать текст разговора" : "Показать текст разговора";
-      sb.classList.toggle("on", on);
-    });
-  }
 
 })();
 </script>
