@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашняя работа к уроку 1. Nice to meet you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  .pool{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
+  .tok{border:1.5px solid var(--line); background:var(--tile); font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; color:var(--ink)}
+
+  .say{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; font-size:13px; font-weight:800; color:var(--mute); min-width:22px; padding-top:3px}
+  .say div{font-size:18px; font-weight:600}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .steps{margin:0; padding-left:7mm; font-size:17px}
+  .steps li{margin:0 0 10px; padding-left:4px}
+  .steps li::marker{color:var(--accent); font-weight:800}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+  }
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашняя работа к уроку 1</div>
+    <h1>Nice to meet you.<em>I am и you are, my и your</em></h1>
+    <p>Шесть блоков, минут двадцать пять. Задания 01, 02 и 04 делаете прямо здесь, с кнопками: нажимаете вариант и сразу видите, верно или нет. Задания 03 и 05 пишете и присылаете мне текстом. В конце одно голосовое.</p>
+  </div>
+
+  <div class="tag pr">Упражнение 1</div>
+  <h2><span class="num">01</span>I am или you are</h2>
+  <p class="lead">Под каждой фразой написано, что она значит по-русски. Смотрите, про кого фраза: про себя - I am, про собеседника - you are.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">Упражнение 2</div>
+  <h2><span class="num">02</span>my или your</h2>
+  <p class="lead">My - моё, your - ваше. Выбирайте по смыслу русской фразы.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag wr">Письменно</div>
+  <h2><span class="num">03</span>Соберите фразу из слов</h2>
+  <p class="lead">Слова даны в беспорядке. Соберите из них фразу, запишите её у себя и пришлите мне текстом в телеграм. Все слова идут в дело, добавлять ничего не нужно.</p>
+
+  <div class="card">
+    <div class="q">
+      <div class="stem">Меня зовут Эмма.</div>
+      <div class="pool"><span class="tok">name</span><span class="tok">My</span><span class="tok">Emma</span><span class="tok">is</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Я из России.</div>
+      <div class="pool"><span class="tok">from</span><span class="tok">I</span><span class="tok">Russia</span><span class="tok">am</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Как вас зовут?</div>
+      <div class="pool"><span class="tok">your</span><span class="tok">What</span><span class="tok">name</span><span class="tok">is</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Я живу в Санкт-Петербурге.</div>
+      <div class="pool"><span class="tok">in</span><span class="tok">I</span><span class="tok">St. Petersburg</span><span class="tok">live</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Вы из Англии?</div>
+      <div class="pool"><span class="tok">you</span><span class="tok">Are</span><span class="tok">England</span><span class="tok">from</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Я врач.</div>
+      <div class="pool"><span class="tok">a</span><span class="tok">I</span><span class="tok">doctor</span><span class="tok">am</span></div>
+    </div>
+    <div class="q">
+      <div class="stem">Вы мой учитель.</div>
+      <div class="pool"><span class="tok">my</span><span class="tok">You</span><span class="tok">teacher</span><span class="tok">are</span></div>
+    </div>
+  </div>
+
+  <div class="tag pr">Упражнение 4</div>
+  <h2><span class="num">04</span>a или an</h2>
+  <p class="lead">Перед профессией всегда стоит a. Если слово начинается с гласного звука - an.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag wr">Письменно</div>
+  <h2><span class="num">05</span>Переведите на английский</h2>
+  <p class="lead">Напишите эти фразы по-английски и пришлите мне текстом в телеграм.</p>
+
+  <div class="card" id="tr1"></div>
+
+  <div class="tag sp">Голосовое</div>
+  <h2><span class="num">06</span>Расскажите о себе</h2>
+  <p class="lead">Запишите голосовое на 20-30 секунд и пришлите мне в телеграм.</p>
+
+  <div class="card">
+    <p>Что должно прозвучать:</p>
+    <ol class="steps">
+      <li>поздоровались</li>
+      <li>сказали, как вас зовут</li>
+      <li>откуда вы</li>
+      <li>в каком городе живёте</li>
+      <li>кем работаете</li>
+      <li>попрощались и пожелали хорошего дня</li>
+    </ol>
+    <p>Фраза выпала из головы - загляните на страницу урока. Но весь текст с листа не читайте: смысл в том, чтобы вспомнить и сказать.</p>
+  </div>
+
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/meeting-lesson-1.html" target="_blank" rel="noopener">
+    <div class="t">Страница урока 1 &rarr;</div>
+    <div class="u">kristi95-cmd.github.io/english/meeting-lesson-1.html</div>
+  </a>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом в телеграм:</b> фразы из задания 03 и перевод из задания 05.</p>
+    <p><b>Голосовым в телеграм:</b> рассказ о себе из задания 06.</p>
+    <p class="small">Упражнения 01, 02 и 04 проверяются кнопками прямо здесь, присылать их не надо.</p>
+  </div>
+
+  <div class="foot">Домашняя работа к уроку 1 &middot; Nice to meet you</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function choiceBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt"; b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt " + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуйте другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var w = document.createElement("div"); w.className = "say";
+      var n = document.createElement("i"); n.textContent = (i+1) + ".";
+      var a = document.createElement("div"); a.textContent = t;
+      w.appendChild(n); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+  /* ---------- 01. I am или you are ---------- */
+  choiceBlock("ex1", [
+    { stem: '<u></u> from St. Petersburg.', ru: 'Я из Санкт-Петербурга.', opts:["I am","You are"], ok:0, why:"I am - про себя" },
+    { stem: '<u></u> a doctor.', ru: 'Вы врач.', opts:["I am","You are"], ok:1, why:"You are - про собеседника" },
+    { stem: '<u></u> your friend.', ru: 'Я ваш друг.', opts:["I am","You are"], ok:0, why:"Про себя - I am" },
+    { stem: '<u></u> from England.', ru: 'Вы из Англии.', opts:["I am","You are"], ok:1, why:"Про собеседника - you are" },
+    { stem: '<u></u> Emma.', ru: 'Я Эмма.', opts:["I am","You are"], ok:0, why:"I am Emma" },
+    { stem: '<u></u> a cook.', ru: 'Вы повар.', opts:["I am","You are"], ok:1, why:"You are a cook" },
+    { stem: '<u></u> an engineer.', ru: 'Я инженер.', opts:["I am","You are"], ok:0, why:"I am an engineer" },
+    { stem: '<u></u> my teacher.', ru: 'Вы мой учитель.', opts:["I am","You are"], ok:1, why:"You are my teacher" }
+  ]);
+
+  /* ---------- 02. my или your ---------- */
+  choiceBlock("ex2", [
+    { stem: 'What is <u></u> name?', ru: 'Как вас зовут?', opts:["my","your"], ok:1, why:"Спрашиваем про собеседника - your" },
+    { stem: '<u></u> name is Tom.', ru: 'Меня зовут Том.', opts:["My","Your"], ok:0, why:"Отвечаем про себя - my" },
+    { stem: 'You are <u></u> teacher.', ru: 'Вы мой учитель.', opts:["my","your"], ok:0, why:"Учитель мой - my teacher" },
+    { stem: 'I am <u></u> doctor.', ru: 'Я ваш врач.', opts:["my","your"], ok:1, why:"Врач ваш - your doctor" },
+    { stem: 'And what is <u></u> name?', ru: 'А как вас зовут?', opts:["my","your"], ok:1, why:"Снова спрашиваем - your" },
+    { stem: '<u></u> name is Anna.', ru: 'Меня зовут Анна.', opts:["My","Your"], ok:0, why:"My name is Anna" }
+  ]);
+
+  /* ---------- 04. a или an ---------- */
+  choiceBlock("ex4", [
+    { stem: 'I am <u></u> architect.', ru: 'Я архитектор.', opts:["a","an"], ok:1, why:"architect начинается с гласного звука" },
+    { stem: 'You are <u></u> doctor.', ru: 'Вы врач.', opts:["a","an"], ok:0, why:"doctor начинается с согласного" },
+    { stem: 'I am <u></u> actor.', ru: 'Я актёр.', opts:["a","an"], ok:1, why:"actor - гласный звук в начале" },
+    { stem: 'You are <u></u> teacher.', ru: 'Вы учитель.', opts:["a","an"], ok:0, why:"teacher - согласный" },
+    { stem: 'I am <u></u> engineer.', ru: 'Я инженер.', opts:["a","an"], ok:1, why:"engineer - гласный звук" },
+    { stem: 'You are <u></u> driver.', ru: 'Вы водитель.', opts:["a","an"], ok:0, why:"driver - согласный" }
+  ]);
+
+  /* ---------- 05. перевод ---------- */
+  listBlock("tr1", [
+    "Доброе утро! Хорошего дня!",
+    "Меня зовут Алина, приятно познакомиться.",
+    "Я из России, а вы?",
+    "Как дела?",
+    "Я работаю учителем, а кем работаете вы?",
+    "Пока, увидимся!"
+  ]);
+
+})();
+</script>
+</body>
+</html>
