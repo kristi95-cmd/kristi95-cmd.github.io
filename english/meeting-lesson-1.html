@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 1. I and you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{background:none; padding:0 0 2px; font-weight:600; color:var(--soft); font-size:16px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English from scratch &middot; урок 1</div>
+    <h1>I and you.<em>Я, ты и первое знакомство</em></h1>
+    <p>Самое начало. Сегодня учимся здороваться, называть себя, спрашивать имя и прощаться. Это те фразы, которые нужны в первую же минуту любого разговора.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>К концу занятия вы знакомитесь с человеком сами, от «привет» до «до свидания».</div></div>
+    <div class="goal"><span>&rarr;</span><div>Два слова-ключа: <b>I</b> это я, <b>you</b> это ты и вы сразу.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Главное правило: в английском предложении обязательно нужен глагол. Сегодня это <b>am</b> и <b>are</b>.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Этот лист мы разбираем вместе на занятии: читаем правило, тут же делаем упражнение к нему, говорим вслух. Дома вы по нему же повторяете, искать ничего не нужно.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>I и you: без них предложение не живёт</h2>
+
+  <div class="card">
+    <p>Любая английская фраза начинается с того, <b>о ком она</b>. По-русски можно ответить одним словом: «Анна», «из Санкт-Петербурга», «хорошо, спасибо», и всем всё понятно. По-английски так не говорят: сначала называют, кто это, и только потом всё остальное.</p>
+    <p>Сегодня нам нужны два таких слова. Они и есть самые частые слова в языке.</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">я</div><div class="r">говорю про себя</div>
+      <div class="p">you</div><div class="v">ты, вы</div><div class="r">говорю про того, с кем разговариваю</div>
+    </div>
+
+    <p><b>Как выбрать, какое поставить.</b> Вопрос всего один: <b>про кого эта фраза?</b> Про себя - значит <b>I</b>. Про собеседника, то есть про того человека, с которым вы сейчас говорите, - значит <b>you</b>. Больше ничего знать не нужно, третьего варианта сегодня не будет.</p>
+
+    <div class="conj conj4">
+      <div class="p">I am Anna.</div><div class="v">я Анна</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">You are Max.</div><div class="v">вы Макс</div><div class="sh">про собеседника</div><div class="r">you</div>
+      <div class="p">I am from Russia.</div><div class="v">я из России</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">Where are you from?</div><div class="v">откуда вы</div><div class="sh">спрашиваю собеседника</div><div class="r">you</div>
+      <div class="p">I am fine, thank you.</div><div class="v">у меня хорошо, спасибо</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">How are you?</div><div class="v">как дела</div><div class="sh">спрашиваю собеседника</div><div class="r">you</div>
+    </div>
+
+    <p>Обратите внимание на последние две строчки. По-русски мы говорим «как дела», вообще без слова «у тебя», а англичанин обязательно скажет <b>how are you</b>, то есть «как есть вы». Пропустить это слово нельзя.</p>
+
+    <div class="wrong-right">
+      <div class="wr n">Am Anna<small>не сказано, кто это</small></div>
+      <div class="wr y">I am Anna<small>вот теперь понятно</small></div>
+    </div>
+
+    <p><b>Про большую букву.</b> <b>I</b> пишется с заглавной всегда, даже в середине предложения: <b>Hello, I am Anna</b>. Это единственное такое слово в языке, привыкнуть легко.</p>
+    <p><b>Про «ты» и «вы».</b> Выбирать не нужно, выбора нет. Одно <b>you</b> для подруги, для начальника и для группы людей сразу. Для нас это странно, а для них нормально: вежливость передаётся не местоимением, а словами <b>please</b> и <b>sorry</b>.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">02</span>I или you</h2>
+  <p class="lead screen-only">Выбираем правильный вариант. Если не тот, просто нажмите другой.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">03</span>Глагол to be: am и are</h2>
+
+  <div class="card">
+    <p>По-русски между «я» и «Анна» ничего не нужно: <b>«я Анна»</b> звучит нормально. По-английски так нельзя. В предложении обязательно должен стоять глагол, иначе это просто два слова рядом.</p>
+    <div class="wrong-right">
+      <div class="wr n">I Anna<small>глагола нет, предложение не собралось</small></div>
+      <div class="wr y">I am Anna<small>теперь это фраза</small></div>
+    </div>
+    <p>Глагол называется <b>to be</b>. На русский он почти никогда не переводится, но стоять обязан. Примерно как наше «есть» в старых оборотах: «я есть Анна».</p>
+    <p>Главная особенность: он меняется в зависимости от того, о ком речь. Сегодня нам нужны две его формы.</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am</div><div class="r">I am Anna. I am from Russia.</div>
+      <div class="p">You</div><div class="v">are</div><div class="r">You are Max. You are from St. Petersburg.</div>
+    </div>
+    <p><b>Как говорят в жизни.</b> Полные формы произносят редко, обычно сокращают: <b>I'm</b> вместо <b>I am</b> и <b>you're</b> вместо <b>you are</b>. Пишется через апостроф, слышится слитно. Знать это нужно сразу, иначе в чужой речи вы их не узнаете.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">04</span>Вставь am или are</h2>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">05</span>My и your: чьё это</h2>
+
+  <div class="card">
+    <div class="conj">
+      <div class="p">my</div><div class="v">мой, моя, моё</div><div class="r">My name is Anna.</div>
+      <div class="p">your</div><div class="v">твой, ваш</div><div class="r">What is your name?</div>
+    </div>
+    <p><b>Тут английский устроен не как русский.</b> Мы говорим «меня зовут Анна», то есть про действие: кто-то меня как-то зовёт. Англичанин говорит <b>my name is Anna</b>, дословно «моё имя есть Анна». Никто никого не зовёт, просто имя принадлежит мне.</p>
+    <p>Поэтому и вопрос строится так же: <b>what is your name?</b> - дословно «какое есть твоё имя». Запоминать это удобнее целой фразой, а не по словам.</p>
+    <p>Сказать о себе можно двумя способами, оба правильные: <b>I am Anna</b> короче, <b>my name is Anna</b> чуть официальнее.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>My или your</h2>
+  <div class="card" id="ex3"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">07</span>Кем вы работаете: I am a doctor</h2>
+
+  <div class="card">
+    <p>Профессия говорится тем же глаголом, что и имя: <b>I am a doctor</b>. Разница с русским одна, но важная: перед названием профессии обязательно стоит маленькое слово <b>a</b>.</p>
+    <div class="wrong-right">
+      <div class="wr n">I am doctor<small>для них звучит оборванно</small></div>
+      <div class="wr y">I am a doctor<small>так правильно</small></div>
+    </div>
+    <p><b>Что такое это <em>a</em>.</b> Это не «один» в смысле счёта. <b>a</b> значит «один из многих, такой же, как другие»: врач вообще, а не какой-то конкретный. В русском такого слова нет совсем, поэтому его всё время забывают. С профессиями оно нужно всегда.</p>
+    <p><b>Когда вместо <em>a</em> ставится <em>an</em>.</b> Если слово начинается с гласного звука, говорить <b>a</b> неудобно, язык спотыкается. Тогда добавляется <b>n</b>: <b>an architect</b>, <b>an engineer</b>, <b>an actor</b>. Правило простое: смотрим на первый звук слова, а не на букву.</p>
+    <div class="conj">
+      <div class="p">a</div><div class="v">перед согласным звуком</div><div class="r">a doctor, a teacher, a driver, a cook</div>
+      <div class="p">an</div><div class="v">перед гласным звуком</div><div class="r">an architect, an engineer, an actor, an artist</div>
+    </div>
+    <p><b>Как спрашивают о профессии.</b> Вопрос звучит неожиданно: <b>What do you do?</b> - дословно «что вы делаете». Это и есть «кем вы работаете». Запоминать лучше целиком, как одну фразу, разбирать её по словам мы будем позже.</p>
+    <div class="conj">
+      <div class="p">What do you do?</div><div class="v">кем вы работаете</div><div class="r">I am a teacher. And you?</div>
+    </div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">08</span>Профессии: слова к заданию</h2>
+  <p class="lead">Эти слова нужны в следующем задании. Сначала читаем их вслух и разбираем, где <b>a</b>, а где <b>an</b>, и только потом делаем упражнение.</p>
+  <div class="card">
+    <div class="voc" id="voc3"></div>
+  </div>
+  <div class="note">Слово <b>an</b> стоит там, где название профессии начинается с гласного звука: <b>an architect</b>, <b>an engineer</b>, <b>an actor</b>. В остальных случаях <b>a</b>.</div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>a или an</h2>
+  <p class="lead screen-only">Смотрим на первый звук слова.</p>
+  <div class="card" id="ex7"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">10</span>Привет и пока</h2>
+
+  <div class="card">
+    <h3>Когда здороваешься</h3>
+    <div class="conj conj4">
+      <div class="p">Hello!</div><div class="v">привет</div><div class="sh">подходит всегда</div><div class="r">нейтрально, с кем угодно</div>
+      <div class="p">Hi!</div><div class="v">привет</div><div class="sh">попроще</div><div class="r">с друзьями и ровесниками</div>
+      <div class="p">Good morning</div><div class="v">доброе утро</div><div class="sh">до обеда</div><div class="r"></div>
+      <div class="p">Good afternoon</div><div class="v">добрый день</div><div class="sh">после обеда</div><div class="r"></div>
+      <div class="p">Good evening</div><div class="v">добрый вечер</div><div class="sh">вечером</div><div class="r"></div>
+    </div>
+
+    <h3>Когда прощаешься</h3>
+    <div class="conj conj4">
+      <div class="p">Goodbye!</div><div class="v">до свидания</div><div class="sh">нейтрально</div><div class="r"></div>
+      <div class="p">Bye!</div><div class="v">пока</div><div class="sh">попроще</div><div class="r"></div>
+      <div class="p">See you!</div><div class="v">увидимся</div><div class="sh">если ещё встретитесь</div><div class="r"></div>
+      <div class="p">Have a nice day!</div><div class="v">хорошего дня</div><div class="sh">вежливо и тепло</div><div class="r"></div>
+    </div>
+
+    <div class="note"><b>Про «How are you?».</b> Это не вопрос о вашем самочувствии и не приглашение рассказать, как идут дела. Это часть приветствия, вроде нашего «как сам?» на бегу. Отвечают коротко и возвращают вопрос: <b>I am fine, thank you. And you?</b> Подробный рассказ тут собеседника удивит.</p></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">11</span>Что сказать в этой ситуации</h2>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">12</span>Слова урока</h2>
+
+  <h3>Откуда я</h3>
+  <div class="card">
+    <div class="voc" id="voc1"></div>
+  </div>
+
+  <h3>Вежливые слова</h3>
+  <div class="card">
+    <div class="voc" id="voc2"></div>
+  </div>
+
+  <div class="note">Англичане вежливые, и это не формальность. <b>Please</b> и <b>sorry</b> добавляют почти в каждую просьбу, и без них фраза звучит как команда, даже если вы так не думали.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">13</span>Как знакомиться: порядок разговора</h2>
+
+  <div class="card">
+    <p>Знакомство почти всегда идёт по одной и той же дорожке. Если запомнить порядок, думать придётся только над словами, а не над тем, что сказать дальше.</p>
+    <div class="conj conj4">
+      <div class="p">1</div><div class="v">Hello!</div><div class="sh">поздоровалась</div><div class="r"></div>
+      <div class="p">2</div><div class="v">I am Anna.</div><div class="sh">назвала себя</div><div class="r"></div>
+      <div class="p">3</div><div class="v">What is your name?</div><div class="sh">спросила имя</div><div class="r"></div>
+      <div class="p">4</div><div class="v">Nice to meet you.</div><div class="sh">обязательная вежливость</div><div class="r"></div>
+      <div class="p">5</div><div class="v">Where are you from?</div><div class="sh">продолжила разговор</div><div class="r"></div>
+      <div class="p">6</div><div class="v">I am from Russia.</div><div class="sh">рассказала о себе</div><div class="r"></div>
+      <div class="p">7</div><div class="v">Goodbye! See you!</div><div class="sh">попрощалась</div><div class="r"></div>
+    </div>
+    <div class="note"><b>Главное слово для продолжения разговора - <em>And you?</em></b> Ответили на вопрос - верните его собеседнику. Так разговор не обрывается, даже если слов у вас пока мало.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">14</span>Собери фразу</h2>
+  <p class="lead screen-only">Нажимайте слова по порядку. Слово из строки можно вернуть назад.</p>
+  <div class="card build" id="ex5"></div>
+
+  <div class="tag sp">разговор</div>
+  <h2><span class="num">15</span>Диалог: первое знакомство</h2>
+  <p class="lead">Прочитайте вслух по ролям, потом спрячьте одну роль и говорите за неё сами.</p>
+
+  <div class="card">
+    <div class="dlg" id="dlg">
+      <div class="a"><span class="who">A</span><span class="ln">Hello!</span><span class="tr">привет</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Hi!</span><span class="tr">привет</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">My name is Anna. What is your name?</span><span class="tr">меня зовут Анна, а вас</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">My name is Tom. Nice to meet you!</span><span class="tr">меня зовут Том, приятно познакомиться</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Nice to meet you too. How are you?</span><span class="tr">и мне приятно, как дела</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am fine, thank you. And you?</span><span class="tr">хорошо, спасибо, а у вас</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am fine too. Where are you from?</span><span class="tr">у меня тоже хорошо, откуда вы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am from Spain. And you?</span><span class="tr">я из Испании, а вы</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am from Russia. I am from St. Petersburg.</span><span class="tr">я из России, из Санкт-Петербурга</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Nice! What do you do?</span><span class="tr">здорово, кем вы работаете</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am a doctor. And you?</span><span class="tr">я врач, а вы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am an architect. Goodbye, Anna. See you!</span><span class="tr">я архитектор, до свидания, Анна, увидимся</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Goodbye, Tom!</span><span class="tr">до свидания, Том</span></div>
+    </div>
+    <div class="bar">
+      <button class="btn" data-hide="a">Спрятать роль A</button>
+      <button class="btn" data-hide="b">Спрятать роль B</button>
+    </div>
+  </div>
+
+  <div class="tag wd">фразы</div>
+  <h2><span class="num">16</span>Фразы урока</h2>
+  <p class="lead">Всё, что мы сегодня разобрали, собрано здесь. Эти фразы и есть результат занятия: по ним видно, зачем были нужны am, are, my и your. Кнопка «спрятать перевод» пригодится дома, когда будете проверять себя.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">Hello!</div><div class="ru">здравствуй, привет</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">Hi!</div><div class="ru">привет, попроще</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">I am Anna.</div><div class="ru">я Анна</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">My name is Anna.</div><div class="ru">меня зовут Анна</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как вас зовут</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">Nice to meet you.</div><div class="ru">приятно познакомиться</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда вы</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">I am from Russia.</div><div class="ru">я из России</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">How are you?</div><div class="ru">как дела</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I am fine, thank you.</div><div class="ru">хорошо, спасибо</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">I am a doctor.</div><div class="ru">я врач</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">Goodbye!</div><div class="ru">до свидания</div></div></div>
+    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">See you!</div><div class="ru">увидимся</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">17</span>Скажи вслух по-английски</h2>
+  <p class="lead">Последнее задание, и самое важное: здесь всё, что было на занятии, собирается вместе. Сначала скажите сами, вслух, и только потом открывайте ответ.</p>
+  <div class="card" id="ex6"></div>
+
+  <h3>Теперь отдельные слова</h3>
+  <p class="lead">То же самое, но короче: смотрим на русское слово и называем английское.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag sp">домашка</div>
+  <h2><span class="num">18</span>Домашнее задание</h2>
+
+  <div class="hw">
+    <h3>одно задание</h3>
+    <p>Запишите голосовое на 20-30 секунд: поздоровайтесь, назовите себя, скажите откуда вы и попрощайтесь. Как будто знакомитесь с человеком в поездке.</p>
+    <p class="small">Не читайте с листа и не готовьте текст заранее. Сбились - начните фразу заново и продолжайте, так и надо.</p>
+  </div>
+
+  <div class="note">Задание каждый раз будет разное: иногда голосовое, иногда письменно, иногда слова или чтение вслух. Навыки разные, и качать их надо по очереди, а не все сразу.</div>
+
+  <div class="foot">Кристина &middot; английский для поездок и живого общения</div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  /* ---------- спрятать перевод ---------- */
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  /* ---------- диалог ---------- */
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  /* ---------- словарь ---------- */
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+  /* ---------- выбор варианта ---------- */
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- сборка фразы ---------- */
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- раскрывашки ---------- */
+  function revealBlock(id, items, withSound){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = withSound
+        ? p.en + ' '
+        : p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+
+  /* ========== 03. I или you ========== */
+  choiceBlock("ex1", [
+    {stem:'<u></u> am Anna.', ru:'я Анна', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I, и всегда с большой буквы"},
+    {stem:'<u></u> are from St. Petersburg.', ru:'вы из Санкт-Петербурга', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am from Russia.', ru:'я из России', opts:["I","you"], ok:0, why:"Верно"},
+    {stem:'<u></u> are Max.', ru:'вы Макс', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am fine, thank you.', ru:'у меня хорошо, спасибо', opts:["I","you"], ok:0, why:"Верно"},
+    {stem:'How are <u></u>?', ru:'как дела', opts:["I","you"], ok:1, why:"Верно. Спрашиваете у собеседника, значит you"},
+    {stem:'Where are <u></u> from?', ru:'откуда вы', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am a doctor.', ru:'я врач', opts:["I","you"], ok:0, why:"Верно"}
+  ]);
+
+  /* ========== 05. am или are ========== */
+  choiceBlock("ex2", [
+    {stem:'I <u></u> Anna.', ru:'я Анна', opts:["am","are"], ok:0, why:"Верно. am живёт только с I"},
+    {stem:'You <u></u> Max.', ru:'вы Макс', opts:["am","are"], ok:1, why:"Верно. С you всегда are"},
+    {stem:'I <u></u> from Russia.', ru:'я из России', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from St. Petersburg.', ru:'вы из Санкт-Петербурга', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'<u></u> you from Spain?', ru:'вы из Испании?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
+    {stem:'I <u></u> a doctor.', ru:'я врач', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> my friend.', ru:'вы мой друг', opts:["am","are"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 07. my или your ========== */
+  choiceBlock("ex3", [
+    {stem:'<u></u> name is Anna.', ru:'меня зовут Анна', opts:["My","Your"], ok:0, why:"Верно. Имя моё, значит my"},
+    {stem:'What is <u></u> name?', ru:'как вас зовут', opts:["my","your"], ok:1, why:"Верно. Спрашиваете чужое имя, значит your"},
+    {stem:'<u></u> name is Emma.', ru:'меня зовут Эмма', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Is <u></u> name Max?', ru:'вас зовут Макс?', opts:["my","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> friend is from St. Petersburg.', ru:'мой друг из Санкт-Петербурга', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Nice to meet you! What is <u></u> name?', ru:'приятно познакомиться, как вас зовут', opts:["my","your"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 09. что сказать ========== */
+  choiceBlock("ex4", [
+    {stem:'Девять утра, вы заходите в кофейню.', opts:["Good morning!","Good evening!"], ok:0, why:"Верно. Утро до обеда"},
+    {stem:'Семь вечера, вы заходите в ресторан.', opts:["Good morning!","Good evening!"], ok:1, why:"Верно"},
+    {stem:'Вас знакомят с новым человеком.', opts:["How are you?","Nice to meet you!"], ok:1, why:"Верно. Это первая фраза при знакомстве"},
+    {stem:'Вас спросили: How are you?', opts:["Yes, I am.","I am fine, thank you. And you?"], ok:1, why:"Верно. Коротко и сразу вопрос обратно"},
+    {stem:'Прощаетесь с подругой, завтра увидитесь.', opts:["See you!","Hi!"], ok:0, why:"Верно"},
+    {stem:'Уходите из магазина, продавец был милый.', opts:["Have a nice day!","Good morning!"], ok:0, why:"Верно. Тёплое прощание"},
+    {stem:'Вы не расслышали и надо вежливо попросить повторить.', opts:["Can you repeat, please?","Repeat!"], ok:0, why:"Верно. Это та самая фраза с пробного. Без please получается команда, а не просьба"}
+  ], true);
+
+  /* ========== a или an ========== */
+  choiceBlock("ex7", [
+    {stem:'I am <u></u> teacher.', ru:'я учитель', opts:["a","an"], ok:0, why:"Верно. teacher начинается с согласного звука"},
+    {stem:'She is <u></u> architect.', ru:'она архитектор', opts:["a","an"], ok:1, why:"Верно. architect начинается с гласного звука"},
+    {stem:'He is <u></u> driver.', ru:'он водитель', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'I am <u></u> engineer.', ru:'я инженер', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'My friend is <u></u> cook.', ru:'мой друг повар', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'Max is <u></u> actor.', ru:'Макс актёр', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'Anna is <u></u> nurse.', ru:'Анна медсестра', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'I am <u></u> student.', ru:'я студент', opts:["a","an"], ok:0, why:"Верно. student начинается со звука «с»"}
+  ]);
+
+  /* ========== 10. слова ========== */
+  vocab("voc1", [["Russia","Россия"],["St. Petersburg","Санкт-Петербург"],["Spain","Испания"],["Italy","Италия"],
+    ["Turkey","Турция"],["England","Англия"],["America","Америка"],["a city","город"]]);
+  vocab("voc3", [["a doctor","врач"],["a teacher","учитель"],["a driver","водитель"],
+    ["a cook","повар"],["a nurse","медсестра"],["a student","студент"],
+    ["an architect","архитектор"],["an engineer","инженер"],["an actor","актёр"],
+    ["a manager","менеджер"]]);
+  vocab("voc2", [["please","пожалуйста, в просьбе"],["thank you","спасибо"],
+    ["sorry","извини, прости"],["excuse me","извините, чтобы обратиться"],
+    ["yes","да"],["no","нет"]]);
+
+  /* ========== 12. собери фразу ========== */
+  buildBlock("ex5", [
+    {words:["am","I","Anna"], ok:"I am Anna", ru:"я Анна"},
+    {words:["name","My","is","Anna"], ok:"My name is Anna", ru:"меня зовут Анна"},
+    {words:["is","What","name","your"], ok:"What is your name", ru:"как вас зовут"},
+    {words:["are","Where","from","you"], ok:"Where are you from", ru:"откуда вы"},
+    {words:["from","I","Russia","am"], ok:"I am from Russia", ru:"я из России"},
+    {words:["to","Nice","you","meet"], ok:"Nice to meet you", ru:"приятно познакомиться"},
+    {words:["a","I","doctor","am"], ok:"I am a doctor", ru:"я врач"},
+    {words:["do","What","you","do"], ok:"What do you do", ru:"кем вы работаете"}
+  ]);
+
+  /* ========== 13. скажи вслух ========== */
+  revealBlock("ex6", [
+    {ru:"Привет! Меня зовут Анна.", en:"Hello! My name is Anna."},
+    {ru:"Приятно познакомиться.", en:"Nice to meet you."},
+    {ru:"Как вас зовут?", en:"What is your name?"},
+    {ru:"Откуда вы?", en:"Where are you from?"},
+    {ru:"Я из России. Я из Санкт-Петербурга.", en:"I am from Russia. I am from St. Petersburg."},
+    {ru:"Как дела?", en:"How are you?"},
+    {ru:"Хорошо, спасибо. А вы?", en:"I am fine, thank you. And you?"},
+    {ru:"Доброе утро! Хорошего дня!", en:"Good morning! Have a nice day!"},
+    {ru:"До свидания, увидимся!", en:"Goodbye, see you!"},
+    {ru:"Кем вы работаете?", en:"What do you do?"},
+    {ru:"Я врач. А вы?", en:"I am a doctor. And you?"},
+    {ru:"Извините, как вас зовут?", en:"Sorry, what is your name?"}
+  ], false);
+
+  /* ========== перевод отдельных слов ========== */
+  revealBlock("ex8", [
+    {ru:"Россия", en:"Russia"},
+    {ru:"Санкт-Петербург", en:"St. Petersburg"},
+    {ru:"город", en:"a city"},
+    {ru:"врач", en:"a doctor"},
+    {ru:"учитель", en:"a teacher"},
+    {ru:"водитель", en:"a driver"},
+    {ru:"повар", en:"a cook"},
+    {ru:"архитектор", en:"an architect"},
+    {ru:"инженер", en:"an engineer"},
+    {ru:"актёр", en:"an actor"},
+    {ru:"пожалуйста", en:"please"},
+    {ru:"спасибо", en:"thank you"},
+    {ru:"извините, чтобы обратиться", en:"excuse me"},
+    {ru:"да / нет", en:"yes / no"}
+  ], false);
+
+})();
+</script>
+</body>
+</html>
