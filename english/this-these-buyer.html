@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>This is a bag. These are bags</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{display:block; background:transparent; padding:2px 0 0; color:var(--soft); font-weight:600}
+    .ans{padding:0 0 6px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label,.vi,.conj div,.wr{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .vi.pic{align-items:center; gap:10px}
+  .vi .ico{flex:none; width:46px; height:46px; border-radius:10px; background:var(--tile);
+    overflow:hidden; display:block}
+  .vi .ico img{width:100%; height:100%; object-fit:cover; display:block}
+  .vi .sw{flex:none; width:26px; height:26px; border-radius:50%; border:1px solid var(--line)}
+  .vi .txt2{display:flex; flex-direction:column}
+  .vi .txt2 .t{margin-top:1px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- раскрытие скобок ---------- */
+  .gap .q{padding:11px 0}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  @media (max-width:420px){
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+
+  /* ---------- текст на чтение ---------- */
+  .story{font-size:18px; line-height:1.75}
+  .story p{margin:0 0 12px}
+  .story p:last-child{margin-bottom:0}
+  .story b{color:var(--accent); font-weight:800}
+  .story .say{color:var(--soft)}
+  .ask{padding:12px 0; border-bottom:1px solid var(--line); font-size:18px; font-weight:600}
+  .ask:last-child{border-bottom:none}
+  .ask .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
+  .ru-task{padding:12px 0; border-bottom:1px solid var(--line); font-size:17px}
+  .ru-task:last-child{border-bottom:none}
+  .ru-task .n2{font-size:12px; font-weight:800; color:var(--accent); margin-right:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <div class="kicker">Тренажёр и текст · уровень с нуля</div>
+  <h1>This is a bag<em>These are bags</em></h1>
+  <p>Одна вещь и несколько вещей: правило, семь блоков упражнений и текст про работу байера с вопросами.</p>
+</div>
+
+<div class="tag">Правило</div>
+<h2><span class="num">01</span>Одна вещь и несколько вещей</h2>
+<p class="lead">В русском «это» не меняется: это сумка, это сумки. В английском меняется, причём сразу в трёх местах.</p>
+
+<div class="card">
+  <div class="conj">
+    <div class="p">this</div><div class="v">is</div><div class="r">одна вещь, которая прямо тут</div>
+    <div class="p">these</div><div class="v">are</div><div class="r">несколько вещей, которые прямо тут</div>
+  </div>
+</div>
+
+<div class="form">
+  This <span class="plus">+</span> is <span class="plus">+</span> a <span class="plus">+</span> вещь
+  <span class="ex">This is a bag. Это сумка.</span>
+</div>
+<div class="form">
+  These <span class="plus">+</span> are <span class="plus">+</span> вещи с окончанием s
+  <span class="ex">These are bags. Это сумки.</span>
+</div>
+
+<div class="note">
+  <b>Что меняется вместе с this.</b> Во-первых, само слово: this становится these.
+  Во-вторых, глагол: is становится are. В-третьих, предмет: bag становится bags.
+  Три изменения всегда идут вместе, поодиночке не бывает.
+</div>
+
+<div class="note">
+  <b>Про a.</b> Маленькое a стоит только перед одной вещью: a bag, a dress, a ring.
+  Когда вещей много, a не нужно совсем: these are bags, а не these are a bags.
+</div>
+
+<h3>Так нельзя и так правильно</h3>
+<div class="wrong-right">
+  <div class="wr n">This are bags.<small>this никогда не ходит с are</small></div>
+  <div class="wr y">These are bags.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">These is a dress.<small>these никогда не ходит с is</small></div>
+  <div class="wr y">This is a dress.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">These are bag.<small>забыли окончание s у предмета</small></div>
+  <div class="wr y">These are bags.<small></small></div>
+</div>
+<div class="wrong-right">
+  <div class="wr n">These are a prices.<small>a с множественным числом не ставится</small></div>
+  <div class="wr y">These are prices.<small></small></div>
+</div>
+
+<div class="tag pr">Упражнение 1</div>
+<h2><span class="num">02</span>this или these</h2>
+<p class="lead">Смотри на конец предложения: по глаголу и по окончанию вещи видно, одна она или их несколько.</p>
+<div class="card" id="ex1"></div>
+
+<div class="tag">Правило</div>
+<h2><span class="num">03</span>Откуда берётся окончание s</h2>
+<p class="lead">Чтобы сказать these are, нужно уметь делать из одной вещи много. Правил всего четыре.</p>
+
+<div class="card">
+  <div class="conj conj4">
+    <div class="p">обычно</div><div class="v">+ s</div><div class="sh">bag</div><div class="r">bags, сумки</div>
+    <div class="p">после s, x, ch, sh</div><div class="v">+ es</div><div class="sh">dress</div><div class="r">dresses, платья</div>
+    <div class="p">согласная и y</div><div class="v">y на ies</div><div class="sh">delivery</div><div class="r">deliveries, доставки</div>
+    <div class="p">гласная и y</div><div class="v">+ s</div><div class="sh">day</div><div class="r">days, дни</div>
+  </div>
+</div>
+
+<div class="note">
+  <b>Исключения, которые встретятся сразу.</b> scarf становится scarves, шарфы.
+  А ещё есть вещи, которые в английском всегда во множественном числе, даже когда вещь одна:
+  jeans, trousers, shoes, earrings, glasses. С ними всегда these are, даже про одну пару.
+</div>
+
+<div class="tag pr">Упражнение 2</div>
+<h2><span class="num">04</span>Сделай из одной вещи много</h2>
+<p class="lead">Впиши слово во множественном числе. Проверка срабатывает, когда уходишь из поля или нажимаешь Enter.</p>
+<div class="card gap" id="g1"></div>
+
+<div class="tag pr">Упражнение 3</div>
+<h2><span class="num">05</span>Переделай предложение</h2>
+<p class="lead">Было про одну вещь, стало про несколько. Меняется всё предложение целиком.</p>
+<div class="card gap" id="g2"></div>
+
+<div class="tag">Правило</div>
+<h2><span class="num">06</span>Как спросить</h2>
+<p class="lead">Вопрос делается одним движением: глагол переезжает в начало, больше ничего не трогаем.</p>
+
+<div class="form">
+  This is in stock. <span class="plus">&rarr;</span> Is this in stock?
+  <span class="ex">Это есть в наличии?</span>
+</div>
+<div class="form">
+  These are in stock. <span class="plus">&rarr;</span> Are these in stock?
+  <span class="ex">Они есть в наличии?</span>
+</div>
+
+<div class="card">
+  <div class="conj">
+    <div class="p">Is this ... ?</div><div class="v">Yes, it is.</div><div class="r">No, it is not.</div>
+    <div class="p">Are these ... ?</div><div class="v">Yes, they are.</div><div class="r">No, they are not.</div>
+  </div>
+</div>
+
+<div class="note">
+  В ответе про одну вещь появляется <b>it</b>, а про несколько <b>they</b>. Слова this и these
+  в ответ не возвращаются: по-английски так не говорят.
+</div>
+
+<div class="tag pr">Упражнение 4</div>
+<h2><span class="num">07</span>Is this или Are these</h2>
+<p class="lead">Ориентируйся на слово после пропуска.</p>
+<div class="card" id="ex2"></div>
+
+<div class="tag pr">Упражнение 5</div>
+<h2><span class="num">08</span>Выбери правильную строчку</h2>
+<p class="lead">В одной из двух ошибка.</p>
+<div class="card" id="ex3"></div>
+
+<div class="tag pr">Упражнение 6</div>
+<h2><span class="num">09</span>Собери фразу</h2>
+<p class="lead">Нажимай на слова, они переезжают наверх. Нажми ещё раз, чтобы вернуть слово обратно.</p>
+<div class="card" id="ex4"></div>
+
+<div class="tag wd">Слова</div>
+<h2><span class="num">10</span>Слова, которые нужны в тексте</h2>
+<p class="lead">Разбери их до чтения, тогда текст пойдёт без остановок.</p>
+<div class="card"><div class="voc" id="voc1"></div></div>
+
+<div class="tag sp">Чтение</div>
+<h2><span class="num">11</span>At the showroom</h2>
+<p class="lead">Читай вслух. Слова this и these выделены, следи, какое из них стоит и почему.</p>
+
+<div class="card story">
+  <p>My name is Nina. I am a buyer. I buy clothes and jewellery for a small shop.</p>
+  <p>Today I am in Istanbul. <b>This</b> is a showroom. <b>This</b> is my first day here.</p>
+  <p><b>This</b> is my table. <b>These</b> are my papers. <b>This</b> is a catalogue. It is new.</p>
+  <p class="say">"Good morning. Is <b>this</b> dress in stock?"</p>
+  <p class="say">"Yes, it is. It is black."</p>
+  <p class="say">"And <b>these</b> bags? Are they leather?"</p>
+  <p class="say">"<b>These</b> bags are leather. <b>This</b> bag is cotton."</p>
+  <p><b>This</b> dress is forty euros. <b>These</b> shoes are sixty euros. <b>These</b> prices are good for me.</p>
+  <p class="say">"Are <b>these</b> rings in stock?"</p>
+  <p class="say">"No, they are not. Sorry. But <b>these</b> earrings are in stock."</p>
+  <p class="say">"Good. They are silver. They are very nice."</p>
+  <p><b>This</b> is my order: two dresses, ten bags and twenty pairs of earrings.</p>
+  <p>Now my work here is finished. <b>This</b> is a good day.</p>
+</div>
+
+<div class="tag pr">Упражнение 7</div>
+<h2><span class="num">12</span>Правда или нет</h2>
+<p class="lead">True это правда, False это неправда. Если сомневаешься, возвращайся к тексту.</p>
+<div class="card" id="ex5"></div>
+
+<div class="tag sp">Говорим</div>
+<h2><span class="num">13</span>Вопросы к тексту</h2>
+<p class="lead">Отвечай вслух целым предложением, а не одним словом. Ответы все есть в тексте.</p>
+<div class="card">
+  <div class="ask"><span class="n2">01</span>What is Nina's job?</div>
+  <div class="ask"><span class="n2">02</span>Where is she today?</div>
+  <div class="ask"><span class="n2">03</span>Is this her first day in the showroom?</div>
+  <div class="ask"><span class="n2">04</span>Is the dress in stock?</div>
+  <div class="ask"><span class="n2">05</span>What colour is the dress?</div>
+  <div class="ask"><span class="n2">06</span>Are all the bags leather?</div>
+  <div class="ask"><span class="n2">07</span>How much are the shoes?</div>
+  <div class="ask"><span class="n2">08</span>Are the rings in stock?</div>
+  <div class="ask"><span class="n2">09</span>What is in her order?</div>
+  <div class="ask"><span class="n2">10</span>Is it a good day for her?</div>
+</div>
+
+<div class="tag sp">Говорим</div>
+<h2><span class="num">14</span>Теперь про твою работу</h2>
+<p class="lead">Говоришь сама, по-английски.</p>
+<div class="card">
+  <div class="ru-task"><span class="n2">01</span>Назови пять вещей, которые лежат у тебя на столе. Про каждую скажи, одна она или их несколько.</div>
+  <div class="ru-task"><span class="n2">02</span>Посмотри на свою последнюю закупку и скажи про шесть позиций, что это за вещь и какого она цвета.</div>
+  <div class="ru-task"><span class="n2">03</span>Спроси про четыре вещи, есть ли они в наличии: две в единственном числе, две во множественном.</div>
+  <div class="ru-task"><span class="n2">04</span>Ответь на эти же четыре вопроса за консультанта: два раза да, два раза нет.</div>
+  <div class="ru-task"><span class="n2">05</span>Расскажи про свой последний заказ так же, как Нина в тексте: что в нём было и сколько позиций.</div>
+</div>
+
+<div class="tag">Итог</div>
+<h2><span class="num">15</span>Фразы этого занятия</h2>
+<p class="lead">Всё, что сегодня разобрали, в одном списке.</p>
+<div class="card" id="phrasesCard">
+  <div class="ph"><div class="n">01</div><div class="txt"><div class="en">This is a dress.</div><div class="ru">Это платье.</div></div></div>
+  <div class="ph"><div class="n">02</div><div class="txt"><div class="en">These are bags.</div><div class="ru">Это сумки.</div></div></div>
+  <div class="ph"><div class="n">03</div><div class="txt"><div class="en">Is this in stock?</div><div class="ru">Это есть в наличии?</div></div></div>
+  <div class="ph"><div class="n">04</div><div class="txt"><div class="en">Are these in stock?</div><div class="ru">Они есть в наличии?</div></div></div>
+  <div class="ph"><div class="n">05</div><div class="txt"><div class="en">Yes, it is. No, it is not.</div><div class="ru">Да. Нет. Про одну вещь.</div></div></div>
+  <div class="ph"><div class="n">06</div><div class="txt"><div class="en">Yes, they are. No, they are not.</div><div class="ru">Да. Нет. Про несколько вещей.</div></div></div>
+  <div class="ph"><div class="n">07</div><div class="txt"><div class="en">Are these bags leather?</div><div class="ru">Эти сумки кожаные?</div></div></div>
+  <div class="ph"><div class="n">08</div><div class="txt"><div class="en">This is my order.</div><div class="ru">Это мой заказ.</div></div></div>
+  <div class="ph"><div class="n">09</div><div class="txt"><div class="en">These prices are good.</div><div class="ru">Эти цены хорошие.</div></div></div>
+  <div class="ph"><div class="n">10</div><div class="txt"><div class="en">Sorry, can you repeat, please?</div><div class="ru">Извините, можете повторить?</div></div></div>
+  <div class="bar"><button class="btn" id="hideRu" type="button">Спрятать перевод</button></div>
+</div>
+
+<div class="foot">This is a bag · These are bags</div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+  function vocabPic(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi pic";
+      d.innerHTML = '<span class="ico">' + p[2] + '</span>' +
+        '<span class="txt2"><span class="w">' + p[0] + '</span>' +
+        '<span class="t">' + p[1] + '</span></span>';
+      host.appendChild(d);
+    });
+  }
+
+  function vocabSw(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi pic";
+      var left = p[2].indexOf("data:") === 0
+        ? '<span class="ico"><img src="' + p[2] + '" alt=""></span>'
+        : '<span class="sw" style="background:' + p[2] + '"></span>';
+      d.innerHTML = left + '<span class="txt2"><span class="w">' + p[0] + '</span>' +
+        '<span class="t">' + p[1] + '</span></span>';
+      host.appendChild(d);
+    });
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q build";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  function revealBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+    function norm(s){
+    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
+  }
+  function expand(a){
+    var out = [];
+    a.forEach(function(v){
+      out.push(v);
+      var m = norm(v);
+      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
+                   ["aren't","are not"],["i'm","i am"],["he's","he is"],["she's","she is"],
+                   ["it's","it is"],["we're","we are"],["they're","they are"],["you're","you are"]];
+      pairs.forEach(function(p){
+        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
+        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
+      });
+    });
+    return out.map(norm);
+  }
+
+  function makeGap(item, idx, showNum){
+    var q = document.createElement("div"); q.className = "q";
+    var line = document.createElement("div"); line.className = "line";
+    if(showNum){
+      var n = document.createElement("span"); n.className = "n";
+      n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
+      line.appendChild(n);
+    }
+    if(item.pre){
+      var pre = document.createElement("span"); pre.className = "hint";
+      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
+      pre.textContent = "(" + item.pre + ")";
+      line.appendChild(pre);
+    }
+    var parts = item.s.split("%");
+    var answers = item.ok.slice();
+    var hints = (item.v || "").split("|");
+    var inputs = [];
+    parts.forEach(function(txt, i){
+      line.appendChild(document.createTextNode(txt));
+      if(i < parts.length - 1){
+        var inp = document.createElement("input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        if((answers[i] || "").length > 12) inp.className = "wide";
+        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
+        function check(){
+          var v = norm(inp.value);
+          if(!v){ inp.classList.remove("y","n"); return; }
+          var right = ok.indexOf(v) >= 0;
+          inp.classList.toggle("y", right);
+          inp.classList.toggle("n", !right);
+        }
+        inp.addEventListener("blur", check);
+        inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+        inp.dataset.ans = answers[i];
+        line.appendChild(inp);
+        inputs.push(inp);
+        if(hints[i]){
+          var h = document.createElement("span"); h.className = "hint";
+          h.textContent = " (" + hints[i] + ")";
+          line.appendChild(h);
+        }
+      }
+    });
+    q.appendChild(line);
+    if(item.ru){
+      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
+      q.appendChild(ru);
+    }
+    q._inputs = inputs;
+    return q;
+  }
+
+  function gapBlock(id, items, opts){
+    var host = document.getElementById(id);
+    if(!host) return;
+    opts = opts || {};
+    var all = [];
+    if(opts.intro){
+      var p = document.createElement("p");
+      p.style.cssText = "margin:0 0 6px;color:var(--soft);font-size:15px";
+      p.textContent = opts.intro;
+      host.appendChild(p);
+    }
+    items.forEach(function(it, i){
+      var q = makeGap(it, i, !opts.text);
+      if(opts.text){ q.style.cssText = "padding:0;border:none;display:inline"; }
+      host.appendChild(q);
+      all = all.concat(q._inputs);
+    });
+    var bar = document.createElement("div"); bar.className = "score";
+    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
+    btn.textContent = "Показать ответы";
+    var cnt = document.createElement("span"); cnt.className = "cnt";
+    var shown = false;
+    btn.addEventListener("click", function(){
+      shown = !shown;
+      all.forEach(function(inp){
+        if(shown){
+          if(!inp.value) { inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
+          inp.classList.remove("n"); inp.classList.add("y");
+        } else if(inp.dataset.filled === "1"){
+          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
+        }
+      });
+      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
+      btn.classList.toggle("on", shown);
+    });
+    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
+    chk.textContent = "Проверить блок";
+    chk.addEventListener("click", function(){
+      var right = 0, filled = 0;
+      all.forEach(function(inp){
+        inp.dispatchEvent(new Event("blur"));
+        if(inp.value) filled++;
+        if(inp.classList.contains("y")) right++;
+      });
+      cnt.textContent = right + " из " + all.length + " верно" + (filled < all.length ? ", пустых " + (all.length - filled) : "");
+    });
+    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
+    host.appendChild(bar);
+  }
+
+  
+  /* ========== 02. this или these ========== */
+  choiceBlock("ex1", [
+    {stem:'<b>___</b> is a bag.', ru:'Это сумка.', opts:["this","these"], ok:0, why:"Верно. is и bag без s, значит вещь одна"},
+    {stem:'<b>___</b> are earrings.', ru:'Это серьги.', opts:["this","these"], ok:1, why:"Верно. earrings всегда во множественном числе"},
+    {stem:'<b>___</b> is a dress.', ru:'Это платье.', opts:["this","these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> are shoes.', ru:'Это туфли.', opts:["this","these"], ok:1, why:"Верно. shoes всегда во множественном числе"},
+    {stem:'<b>___</b> is my order.', ru:'Это мой заказ.', opts:["this","these"], ok:0, why:"Верно. Заказ один"},
+    {stem:'<b>___</b> are our prices.', ru:'Это наши цены.', opts:["this","these"], ok:1, why:"Верно. prices с окончанием s"},
+    {stem:'<b>___</b> is a price.', ru:'Это цена.', opts:["this","these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> are jeans.', ru:'Это джинсы.', opts:["this","these"], ok:1, why:"Верно. jeans всегда во множественном числе"},
+    {stem:'<b>___</b> is a scarf.', ru:'Это шарф.', opts:["this","these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> are rings.', ru:'Это кольца.', opts:["this","these"], ok:1, why:"Верно"},
+    {stem:'<b>___</b> is a box.', ru:'Это коробка.', opts:["this","these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> are boxes.', ru:'Это коробки.', opts:["this","these"], ok:1, why:"Верно. boxes, коробок несколько"}
+  ]);
+
+  /* ========== 04. множественное число ========== */
+  gapBlock("g1", [
+    {s:"a bag → %", ok:["bags"], ru:"сумка, сумки"},
+    {s:"a ring → %", ok:["rings"], ru:"кольцо, кольца"},
+    {s:"a dress → %", ok:["dresses"], ru:"платье, платья"},
+    {s:"a box → %", ok:["boxes"], ru:"коробка, коробки"},
+    {s:"a watch → %", ok:["watches"], ru:"часы наручные, несколько штук"},
+    {s:"a price → %", ok:["prices"], ru:"цена, цены"},
+    {s:"a size → %", ok:["sizes"], ru:"размер, размеры"},
+    {s:"a delivery → %", ok:["deliveries"], ru:"доставка, доставки"},
+    {s:"a company → %", ok:["companies"], ru:"компания, компании"},
+    {s:"a day → %", ok:["days"], ru:"день, дни"},
+    {s:"a necklace → %", ok:["necklaces"], ru:"колье, колье во множественном"},
+    {s:"a scarf → %", ok:["scarves"], ru:"шарф, шарфы, это исключение"}
+  ]);
+
+  /* ========== 05. переделай предложение ========== */
+  gapBlock("g2", [
+    {s:"This is a bag. % % %.", ok:["These","are","bags"], ru:"Это сумка. Это сумки."},
+    {s:"This is a dress. % % %.", ok:["These","are","dresses"], ru:"Это платье. Это платья."},
+    {s:"This is a ring. % % %.", ok:["These","are","rings"], ru:"Это кольцо. Это кольца."},
+    {s:"This is a box. % % %.", ok:["These","are","boxes"], ru:"Это коробка. Это коробки."},
+    {s:"This is a price. % % %.", ok:["These","are","prices"], ru:"Это цена. Это цены."},
+    {s:"This is a company. % % %.", ok:["These","are","companies"], ru:"Это компания. Это компании."},
+    {s:"This bag is black. % % % black.", ok:["These","bags","are"], ru:"Эта сумка чёрная. Эти сумки чёрные."},
+    {s:"This dress is new. % % % new.", ok:["These","dresses","are"], ru:"Это платье новое. Эти платья новые."}
+  ]);
+
+  /* ========== 07. Is this или Are these ========== */
+  choiceBlock("ex2", [
+    {stem:'<b>___</b> dress in stock?', ru:'Это платье есть в наличии?', opts:["Is this","Are these"], ok:0, why:"Верно. dress одно"},
+    {stem:'<b>___</b> bags leather?', ru:'Эти сумки кожаные?', opts:["Is this","Are these"], ok:1, why:"Верно. bags с окончанием s"},
+    {stem:'<b>___</b> rings silver?', ru:'Эти кольца серебряные?', opts:["Is this","Are these"], ok:1, why:"Верно"},
+    {stem:'<b>___</b> scarf silk?', ru:'Этот шарф шёлковый?', opts:["Is this","Are these"], ok:0, why:"Верно. scarf один"},
+    {stem:'<b>___</b> shoes new?', ru:'Эти туфли новые?', opts:["Is this","Are these"], ok:1, why:"Верно. shoes всегда во множественном числе"},
+    {stem:'<b>___</b> price good?', ru:'Эта цена хорошая?', opts:["Is this","Are these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> earrings in stock?', ru:'Эти серьги есть в наличии?', opts:["Is this","Are these"], ok:1, why:"Верно"},
+    {stem:'<b>___</b> box big?', ru:'Эта коробка большая?', opts:["Is this","Are these"], ok:0, why:"Верно"},
+    {stem:'<b>___</b> jeans blue?', ru:'Эти джинсы синие?', opts:["Is this","Are these"], ok:1, why:"Верно. jeans всегда во множественном числе"},
+    {stem:'<b>___</b> coat black?', ru:'Это пальто чёрное?', opts:["Is this","Are these"], ok:0, why:"Верно"}
+  ]);
+
+  /* ========== 08. выбери правильную строчку ========== */
+  choiceBlock("ex3", [
+    {stem:'1', opts:["This are my bags.","These are my bags."], ok:1, why:"Верно. this с are не ходит"},
+    {stem:'2', opts:["This is a dress.","These is a dress."], ok:0, why:"Верно. these с is не ходит"},
+    {stem:'3', opts:["These are shoe.","These are shoes."], ok:1, why:"Верно. у предмета нужно окончание s"},
+    {stem:'4', opts:["These are earrings.","This is a earrings."], ok:0, why:"Верно. earrings всегда во множественном числе"},
+    {stem:'5', opts:["Is these in stock?","Are these in stock?"], ok:1, why:"Верно. these идёт с are"},
+    {stem:'6', opts:["These jeans are blue.","This jeans are blue."], ok:0, why:"Верно. jeans всегда во множественном числе"},
+    {stem:'7', opts:["These are a prices.","These are prices."], ok:1, why:"Верно. a с множественным числом не ставится"},
+    {stem:'8', opts:["Is this bag leather?","Are this bag leather?"], ok:0, why:"Верно. bag одна, значит is"}
+  ], true);
+
+  /* ========== 09. собери фразу ========== */
+  buildBlock("ex4", [
+    {ru:"Это сумки.", words:["are","These","bags"], ok:"These are bags"},
+    {ru:"Это платье.", words:["a","This","dress","is"], ok:"This is a dress"},
+    {ru:"Эти туфли кожаные?", words:["these","Are","leather","shoes"], ok:"Are these shoes leather"},
+    {ru:"Это кольцо есть в наличии?", words:["this","Is","in","ring","stock"], ok:"Is this ring in stock"},
+    {ru:"Это мой заказ.", words:["my","This","order","is"], ok:"This is my order"},
+    {ru:"Эти серьги серебряные.", words:["earrings","These","silver","are"], ok:"These earrings are silver"}
+  ]);
+
+  /* ========== 10. слова к тексту ========== */
+  vocab("voc1", [["a showroom","шоурум, выставочный зал"],["a catalogue","каталог"],
+    ["papers","бумаги, документы"],["a table","стол"],["a price / prices","цена / цены"],
+    ["a pair","пара"],["an order","заказ"],["in stock","есть в наличии"],
+    ["leather","кожа, кожаный"],["cotton","хлопок, хлопковый"],["silver","серебро, серебряный"],
+    ["first","первый"],["finished","закончена, готово"],["a shop","магазин"],
+    ["clothes","одежда"],["jewellery","украшения"]]);
+
+  /* ========== 12. правда или нет ========== */
+  choiceBlock("ex5", [
+    {stem:'Nina is a buyer.', opts:["True","False"], ok:0, why:"Верно. I am a buyer"},
+    {stem:'This is her second day in the showroom.', opts:["True","False"], ok:1, why:"Верно. В тексте first day"},
+    {stem:'The dress is in stock.', opts:["True","False"], ok:0, why:"Верно. Yes, it is"},
+    {stem:'The dress is black.', opts:["True","False"], ok:0, why:"Верно"},
+    {stem:'All the bags are leather.', opts:["True","False"], ok:1, why:"Верно. This bag is cotton"},
+    {stem:'The shoes are forty euros.', opts:["True","False"], ok:1, why:"Верно. Туфли шестьдесят, сорок это платье"},
+    {stem:'The rings are in stock.', opts:["True","False"], ok:1, why:"Верно. No, they are not"},
+    {stem:'The earrings are silver.', opts:["True","False"], ok:0, why:"Верно. They are silver"}
+  ]);
+
+})();
+</script>
+</body>
+</html>
