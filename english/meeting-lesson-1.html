@@ -101,6 +101,10 @@
   .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
   .ans.show{display:block}
   .pair{margin:10px 0}
+  .say{display:flex; gap:10px; align-items:baseline; font-size:17px; font-weight:600;
+    padding:10px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; color:var(--mute); font-weight:700; font-size:13px; min-width:20px}
   .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
 
   /* диалог */
@@ -248,13 +252,8 @@
     <p><b>Про «ты» и «вы».</b> Выбирать не нужно, выбора нет. Одно <b>you</b> для подруги, для начальника и для группы людей сразу. Для нас это странно, а для них нормально: вежливость передаётся не местоимением, а словами <b>please</b> и <b>sorry</b>.</p>
   </div>
 
-  <div class="tag pr">практика</div>
-  <h2><span class="num">02</span>I или you</h2>
-  <p class="lead screen-only">Выбираем правильный вариант. Если не тот, просто нажмите другой.</p>
-  <div class="card" id="ex1"></div>
-
   <div class="tag">правило</div>
-  <h2><span class="num">03</span>Глагол to be: am и are</h2>
+  <h2><span class="num">02</span>Глагол to be: am и are</h2>
 
   <div class="card">
     <p>По-русски между «я» и «Анна» ничего не нужно: <b>«я Анна»</b> звучит нормально. По-английски так нельзя. В предложении обязательно должен стоять глагол, иначе это просто два слова рядом.</p>
@@ -270,6 +269,11 @@
     </div>
     <p><b>Как говорят в жизни.</b> Полные формы произносят редко, обычно сокращают: <b>I'm</b> вместо <b>I am</b> и <b>you're</b> вместо <b>you are</b>. Пишется через апостроф, слышится слитно. Знать это нужно сразу, иначе в чужой речи вы их не узнаете.</p>
   </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>I или you</h2>
+  <p class="lead screen-only">Смотрим, про кого фраза, и заодно на глагол: <b>am</b> бывает только с <b>I</b>, <b>are</b> только с <b>you</b>. Если вариант не тот, просто нажмите другой.</p>
+  <div class="card" id="ex1"></div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">04</span>Вставь am или are</h2>
@@ -442,11 +446,11 @@
 
   <div class="tag pr">практика</div>
   <h2><span class="num">17</span>Скажи вслух по-английски</h2>
-  <p class="lead">Последнее задание, и самое важное: здесь всё, что было на занятии, собирается вместе. Сначала скажите сами, вслух, и только потом открывайте ответ.</p>
+  <p class="lead">Последнее задание, и самое важное: здесь всё, что было на занятии, собирается вместе. Читаем русскую фразу и говорим её по-английски вслух, по памяти.</p>
   <div class="card" id="ex6"></div>
 
   <h3>Теперь отдельные слова</h3>
-  <p class="lead">То же самое, но короче: смотрим на русское слово и называем английское.</p>
+  <p class="lead">То же самое, но короче: смотрим на русское слово и называем английское по памяти.</p>
   <div class="card" id="ex8"></div>
 
   <div class="tag sp">домашка</div>
@@ -581,6 +585,18 @@
   }
 
 
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var w = document.createElement("div"); w.className = "say";
+      var n = document.createElement("i"); n.textContent = (i+1) + ".";
+      var a = document.createElement("div"); a.textContent = t;
+      w.appendChild(n); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
   /* ========== 03. I или you ========== */
   choiceBlock("ex1", [
     {stem:'<u></u> am Anna.', ru:'я Анна', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I, и всегда с большой буквы"},
@@ -595,14 +611,14 @@
 
   /* ========== 05. am или are ========== */
   choiceBlock("ex2", [
-    {stem:'I <u></u> Anna.', ru:'я Анна', opts:["am","are"], ok:0, why:"Верно. am живёт только с I"},
-    {stem:'You <u></u> Max.', ru:'вы Макс', opts:["am","are"], ok:1, why:"Верно. С you всегда are"},
-    {stem:'I <u></u> from Russia.', ru:'я из России', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'You <u></u> from St. Petersburg.', ru:'вы из Санкт-Петербурга', opts:["am","are"], ok:1, why:"Верно"},
-    {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'<u></u> you from Spain?', ru:'вы из Испании?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
-    {stem:'I <u></u> a doctor.', ru:'я врач', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'You <u></u> my friend.', ru:'вы мой друг', opts:["am","are"], ok:1, why:"Верно"}
+    {stem:'I <u></u> Emma.', ru:'я Эмма', opts:["am","are"], ok:0, why:"Верно. am живёт только с I"},
+    {stem:'You <u></u> a teacher.', ru:'вы учитель', opts:["am","are"], ok:1, why:"Верно. С you всегда are"},
+    {stem:'I <u></u> from England.', ru:'я из Англии', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'<u></u> you Tom?', ru:'вы Том?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
+    {stem:'I <u></u> your friend.', ru:'я ваш друг', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from America.', ru:'вы из Америки', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> an architect.', ru:'я архитектор', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> a cook.', ru:'вы повар', opts:["am","are"], ok:1, why:"Верно"}
   ]);
 
   /* ========== 07. my или your ========== */
@@ -662,38 +678,28 @@
   ]);
 
   /* ========== 13. скажи вслух ========== */
-  revealBlock("ex6", [
-    {ru:"Привет! Меня зовут Анна.", en:"Hello! My name is Anna."},
-    {ru:"Приятно познакомиться.", en:"Nice to meet you."},
-    {ru:"Как вас зовут?", en:"What is your name?"},
-    {ru:"Откуда вы?", en:"Where are you from?"},
-    {ru:"Я из России. Я из Санкт-Петербурга.", en:"I am from Russia. I am from St. Petersburg."},
-    {ru:"Как дела?", en:"How are you?"},
-    {ru:"Хорошо, спасибо. А вы?", en:"I am fine, thank you. And you?"},
-    {ru:"Доброе утро! Хорошего дня!", en:"Good morning! Have a nice day!"},
-    {ru:"До свидания, увидимся!", en:"Goodbye, see you!"},
-    {ru:"Кем вы работаете?", en:"What do you do?"},
-    {ru:"Я врач. А вы?", en:"I am a doctor. And you?"},
-    {ru:"Извините, как вас зовут?", en:"Sorry, what is your name?"}
-  ], false);
+  listBlock("ex6", [
+    "Привет! Меня зовут Анна.",
+    "Приятно познакомиться.",
+    "Как вас зовут?",
+    "Откуда вы?",
+    "Я из России. Я из Санкт-Петербурга.",
+    "Как дела?",
+    "Хорошо, спасибо. А вы?",
+    "Доброе утро! Хорошего дня!",
+    "До свидания, увидимся!",
+    "Кем вы работаете?",
+    "Я врач. А вы?",
+    "Извините, как вас зовут?"
+  ]);
 
   /* ========== перевод отдельных слов ========== */
-  revealBlock("ex8", [
-    {ru:"Россия", en:"Russia"},
-    {ru:"Санкт-Петербург", en:"St. Petersburg"},
-    {ru:"город", en:"a city"},
-    {ru:"врач", en:"a doctor"},
-    {ru:"учитель", en:"a teacher"},
-    {ru:"водитель", en:"a driver"},
-    {ru:"повар", en:"a cook"},
-    {ru:"архитектор", en:"an architect"},
-    {ru:"инженер", en:"an engineer"},
-    {ru:"актёр", en:"an actor"},
-    {ru:"пожалуйста", en:"please"},
-    {ru:"спасибо", en:"thank you"},
-    {ru:"извините, чтобы обратиться", en:"excuse me"},
-    {ru:"да / нет", en:"yes / no"}
-  ], false);
+  listBlock("ex8", [
+    "Россия", "Санкт-Петербург", "город",
+    "врач", "учитель", "водитель", "повар",
+    "архитектор", "инженер", "актёр",
+    "пожалуйста", "спасибо", "извините, чтобы обратиться", "да / нет"
+  ]);
 
 })();
 </script>
