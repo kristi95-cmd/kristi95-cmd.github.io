@@ -196,16 +196,21 @@
   .tag + h2{margin-top:6px}
   .tag + h2 + .lead{margin-top:2px}
 
-  .rules{width:100%; border-collapse:collapse; font-size:15px; line-height:1.4}
-  .rules th{text-align:left; font-size:11px; letter-spacing:.07em; text-transform:uppercase;
-    color:var(--mute); font-weight:800; padding:6px 8px 8px; border-bottom:2px solid var(--line)}
-  .rules td{padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top}
-  .rules tr:last-child td{border-bottom:none}
+  .rules{width:100%; border-collapse:collapse; font-size:15px; background:#fff;
+    border:1px solid var(--line); line-height:1.45}
+  .rules thead th{background:var(--deep); color:#fff; text-align:left; font-weight:700;
+    font-size:14px; padding:13px 12px; border-right:1px solid rgba(255,255,255,.25)}
+  .rules thead th:last-child{border-right:none}
+  .rules td{padding:14px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line);
+    vertical-align:middle; color:var(--ink)}
+  .rules td:last-child{border-right:none}
+  .rules td.ex{font-style:italic; color:var(--deep)}
+  .rules td.a{color:var(--accent); font-weight:800; white-space:nowrap; font-style:normal}
+  .rules td.no{color:var(--mute); font-weight:800; white-space:nowrap; font-style:normal}
   .rules .grp td{background:var(--tile); color:var(--deep); font-weight:800; font-size:12px;
-    letter-spacing:.06em; text-transform:uppercase; padding:8px}
-  .rules td.a{color:var(--accent); font-weight:800; white-space:nowrap}
-  .rules td.no{color:var(--mute); font-weight:800; white-space:nowrap}
-  @media (max-width:420px){ .rules{font-size:14px} .rules td{padding:9px 5px} }
+    letter-spacing:.07em; text-transform:uppercase; padding:9px 12px; font-style:normal}
+  .rules tr.head2 td{font-weight:800; color:var(--deep); background:var(--tile-2); font-style:normal}
+  @media (max-width:420px){ .rules{font-size:14px} .rules td{padding:11px 7px} .rules thead th{padding:11px 7px; font-size:13px} }
   .player{margin:0}
   .q .line .n{margin-right:8px}
   .conj.art .p{font-weight:700}
@@ -281,14 +286,14 @@
       <thead><tr><th>Когда</th><th>Пример</th><th>Артикль</th></tr></thead>
       <tbody>
         <tr class="grp"><td colspan="3">Артикль ставим</td></tr>
-        <tr><td>Одна вещь, которую можно посчитать</td><td><b>a bag</b>, <b>a skirt</b>, <b>an order</b></td><td class="a">a / an</td></tr>
-        <tr><td>Профессия человека</td><td>She is <b>a buyer</b>.<br>He is <b>an owner</b>.</td><td class="a">a / an</td></tr>
-        <tr><td>Цена и количество «за штуку», «в неделю»</td><td>ten dollars <b>a piece</b><br>twice <b>a week</b></td><td class="a">a / an</td></tr>
+        <tr><td>Одна вещь, которую можно посчитать</td><td class="ex">a bag, a skirt, an order</td><td class="a">a / an</td></tr>
+        <tr><td>Профессия человека</td><td class="ex">She is a buyer.<br>He is an owner.</td><td class="a">a / an</td></tr>
+        <tr><td>Цена и количество «за штуку», «в неделю»</td><td class="ex">ten dollars a piece<br>twice a week</td><td class="a">a / an</td></tr>
         <tr class="grp"><td colspan="3">Артикль не ставим</td></tr>
-        <tr><td>Много вещей, множественное число</td><td><b>bags</b>, <b>skirts</b>, <b>orders</b></td><td class="no">нет</td></tr>
-        <tr><td>То, что не считают: материал, вещество</td><td><b>leather</b>, <b>silk</b>, <b>wool</b>, <b>jewellery</b></td><td class="no">нет</td></tr>
-        <tr><td>Перед вещью уже стоит число</td><td><b>ten bags</b>, <b>two skirts</b></td><td class="no">нет</td></tr>
-        <tr><td>Перед вещью уже стоит this, these, my</td><td><b>this bag</b>, <b>my order</b></td><td class="no">нет</td></tr>
+        <tr><td>Много вещей, множественное число</td><td class="ex">bags, skirts, orders</td><td class="no">нет</td></tr>
+        <tr><td>То, что не считают: материал, вещество</td><td class="ex">leather, silk, wool, jewellery</td><td class="no">нет</td></tr>
+        <tr><td>Перед вещью уже стоит число</td><td class="ex">ten bags, two skirts</td><td class="no">нет</td></tr>
+        <tr><td>Перед вещью уже стоит this, these, my</td><td class="ex">this bag, my order</td><td class="no">нет</td></tr>
       </tbody>
     </table>
     </div>
@@ -422,13 +427,16 @@
   <p class="lead">Теперь видно всю разницу целиком. Меняется не одно слово, а четыре места в предложении.</p>
 
   <div class="card">
-    <div class="conj">
-      <div class="p">&nbsp;</div><div class="v">одна вещь</div><div class="r">много вещей</div>
-      <div class="p">слово</div><div class="v">bag</div><div class="r">bags, появилось окончание</div>
-      <div class="p">артикль</div><div class="v">a bag</div><div class="r">bags, артикль пропал</div>
-      <div class="p">это</div><div class="v">this</div><div class="r">these</div>
-      <div class="p">глагол</div><div class="v">is</div><div class="r">are</div>
-      <div class="p">замена</div><div class="v">it</div><div class="r">they</div>
+    <table class="rules">
+      <thead><tr><th>Что меняется</th><th>Одна вещь</th><th>Много вещей</th></tr></thead>
+      <tbody>
+        <tr><td>Само слово</td><td class="ex">bag</td><td class="ex">bags</td></tr>
+        <tr><td>Артикль</td><td class="ex">a bag</td><td class="ex">bags, артикля нет</td></tr>
+        <tr><td>Это</td><td class="ex">this</td><td class="ex">these</td></tr>
+        <tr><td>Глагол</td><td class="ex">is</td><td class="ex">are</td></tr>
+        <tr><td>Чем заменяем</td><td class="ex">it</td><td class="ex">they</td></tr>
+      </tbody>
+    </table>
     </div>
     <div class="wrong-right">
       <div class="wr n">This is a bags<small>смешались одна и много</small></div>
