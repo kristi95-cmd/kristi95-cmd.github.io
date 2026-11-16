@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка к занятию 2. Роберт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  ol.task{margin:0; padding-left:7mm; font-size:18px}
+  ol.task li{margin:0 0 12px; padding-left:4px}
+  ol.task li::marker{color:var(--accent); font-weight:800}
+  .dlg.ru-only div{font-size:17px}
+  .dlg .who{min-width:28px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- список предложений ---------- */
+  .sent{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line)}
+  .sent:last-child{border-bottom:none}
+  .sent .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:5px}
+  .sent .t{flex:1; font-size:18px; font-weight:600}
+  .sent .t em{font-style:normal; color:var(--accent); font-weight:800}
+  .skel{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:19px; font-weight:800}
+  .skel span{display:block; padding:5px 0; color:var(--deep)}
+  .skel span i{font-style:normal; color:var(--mute); font-weight:700; letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="top">
+  <div class="kicker">Домашка · занятие 2</div>
+  <h1>To be<em>и всё, что мы уже знаем</em></h1>
+  <p>Три задания. Первое голосовым, второе и третье письменно, текстом в телеграм.</p>
+</div>
+
+<h2><span class="num">01</span>Голосовое: пять своих предложений</h2>
+<p class="lead">Придумай пять предложений про себя и про людей вокруг и скажи их голосовым. Из тех слов, которые у нас уже были: профессии, страны, города, числа.</p>
+
+<div class="card">
+  <p style="margin:0 0 10px">Собирай по этим схемам, в любом порядке:</p>
+  <div class="skel">
+    <span>I am <i>&nbsp;.........</i></span>
+    <span>He is <i>&nbsp;.........</i></span>
+    <span>She is <i>&nbsp;.........</i></span>
+    <span>We are <i>&nbsp;.........</i></span>
+    <span>It is <i>&nbsp;.........</i></span>
+  </div>
+  <div class="note">Пять предложений - пять разных схем. Не пиши их заранее на бумажке, скажи сразу голосом.</div>
+</div>
+
+<h2><span class="num">02</span>Письменно: переделай в отрицание</h2>
+<p class="lead">Поставь <b>not</b> и сократи так, как говорят в жизни: <b>isn't</b>, <b>aren't</b>, <b>I'm not</b>. Пришли списком текстом.</p>
+
+<div class="card">
+  <div class="sent"><div class="n">1</div><div class="t">I am a coach.</div></div>
+  <div class="sent"><div class="n">2</div><div class="t">She is a blogger.</div></div>
+  <div class="sent"><div class="n">3</div><div class="t">He is a doctor.</div></div>
+  <div class="sent"><div class="n">4</div><div class="t">We are from Russia.</div></div>
+  <div class="sent"><div class="n">5</div><div class="t">They are from Spain.</div></div>
+  <div class="sent"><div class="n">6</div><div class="t">You are a teacher.</div></div>
+  <div class="sent"><div class="n">7</div><div class="t">My friend is a driver.</div></div>
+  <div class="sent"><div class="n">8</div><div class="t">Her name is Katya.</div></div>
+  <div class="sent"><div class="n">9</div><div class="t">Maria is a cook.</div></div>
+  <div class="sent"><div class="n">10</div><div class="t">Anna is an artist.</div></div>
+  <div class="sent"><div class="n">11</div><div class="t">Tom is from France.</div></div>
+  <div class="sent"><div class="n">12</div><div class="t">I am thirty.</div></div>
+  <div class="sent"><div class="n">13</div><div class="t">It is my hotel.</div></div>
+  <div class="sent"><div class="n">14</div><div class="t">John and Mike are from England.</div></div>
+  <div class="sent"><div class="n">15</div><div class="t">His name is Pablo.</div></div>
+</div>
+
+<h2><span class="num">03</span>Письменно: переведи на английский</h2>
+<p class="lead">Пятнадцать фраз вразнобой. Пиши полными предложениями и пришли текстом.</p>
+
+<div class="note"><b>their</b> - их. Это слово новое, остальное всё уже было. Забыл профессию, страну или город - открой материал парного занятия, разделы 01 и 07.</div>
+
+<div class="card">
+  <div class="sent"><div class="n">1</div><div class="t">Я тренер.</div></div>
+  <div class="sent"><div class="n">2</div><div class="t">Её зовут Ольга, она архитектор.</div></div>
+  <div class="sent"><div class="n">3</div><div class="t">Мы из Италии.</div></div>
+  <div class="sent"><div class="n">4</div><div class="t">Он инженер.</div></div>
+  <div class="sent"><div class="n">5</div><div class="t">Моя подруга стоматолог.</div></div>
+  <div class="sent"><div class="n">6</div><div class="t">Они из Германии.</div></div>
+  <div class="sent"><div class="n">7</div><div class="t">Его зовут Джон, он юрист.</div></div>
+  <div class="sent"><div class="n">8</div><div class="t">Мне сорок.</div></div>
+  <div class="sent"><div class="n">9</div><div class="t">Твой друг официант.</div></div>
+  <div class="sent"><div class="n">10</div><div class="t">Это их отель.</div></div>
+  <div class="sent"><div class="n">11</div><div class="t">Том художник, он из Парижа.</div></div>
+  <div class="sent"><div class="n">12</div><div class="t">Я не повар, я водитель.</div></div>
+  <div class="sent"><div class="n">13</div><div class="t">Моя девушка блогер.</div></div>
+  <div class="sent"><div class="n">14</div><div class="t">Лена из Москвы, ей двадцать.</div></div>
+  <div class="sent"><div class="n">15</div><div class="t">Она менеджер, она из Англии.</div></div>
+</div>
+
+<div class="hw">
+  <h3>Что прислать</h3>
+  <p><b>Голосовым</b> - задание 1, пять предложений.</p>
+  <p><b>Текстом</b> - задания 2 и 3, списком с номерами.</p>
+  <p class="small">Не знаешь, как сказать, - напиши, как получается. По ошибкам я пойму, что разобрать на занятии.</p>
+</div>
+
+<div class="foot">Роберт · занятие 2</div>
+
+</div>
+</body>
+</html>
