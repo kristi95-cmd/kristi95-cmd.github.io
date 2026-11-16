@@ -196,6 +196,16 @@
   .tag + h2{margin-top:6px}
   .tag + h2 + .lead{margin-top:2px}
 
+  .rules{width:100%; border-collapse:collapse; font-size:15px; line-height:1.4}
+  .rules th{text-align:left; font-size:11px; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--mute); font-weight:800; padding:6px 8px 8px; border-bottom:2px solid var(--line)}
+  .rules td{padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top}
+  .rules tr:last-child td{border-bottom:none}
+  .rules .grp td{background:var(--tile); color:var(--deep); font-weight:800; font-size:12px;
+    letter-spacing:.06em; text-transform:uppercase; padding:8px}
+  .rules td.a{color:var(--accent); font-weight:800; white-space:nowrap}
+  .rules td.no{color:var(--mute); font-weight:800; white-space:nowrap}
+  @media (max-width:420px){ .rules{font-size:14px} .rules td{padding:9px 5px} }
   .player{margin:0}
   .q .line .n{margin-right:8px}
   .conj.art .p{font-weight:700}
@@ -267,15 +277,20 @@
 
   <h3>Таблица: когда артикль нужен, а когда нет</h3>
   <div class="card">
-    <p>Собрано по British Council, их разделы про артикли для уровня A1 и справочник по неопределённому артиклю.</p>
-    <div class="conj art">
-      <div class="p">Одна вещь, которую можно посчитать</div><div class="v">a / an</div><div class="r">a bag, a skirt, an order</div>
-      <div class="p">Много вещей, множественное число</div><div class="v">ничего</div><div class="r">bags, skirts, orders</div>
-      <div class="p">То, что не считают: материал, вещество</div><div class="v">ничего</div><div class="r">leather, silk, wool, jewellery</div>
-      <div class="p">Перед вещью уже стоит число</div><div class="v">ничего</div><div class="r">ten bags, two skirts</div>
-      <div class="p">Перед вещью уже стоит this, these, my</div><div class="v">ничего</div><div class="r">this bag, my order</div>
-      <div class="p">Профессия человека</div><div class="v">a / an</div><div class="r">She is a buyer. He is an owner.</div>
-      <div class="p">Цена и количество «за штуку», «в неделю»</div><div class="v">a / an</div><div class="r">ten dollars a piece, twice a week</div>
+    <table class="rules">
+      <thead><tr><th>Когда</th><th>Пример</th><th>Артикль</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="3">Артикль ставим</td></tr>
+        <tr><td>Одна вещь, которую можно посчитать</td><td><b>a bag</b>, <b>a skirt</b>, <b>an order</b></td><td class="a">a / an</td></tr>
+        <tr><td>Профессия человека</td><td>She is <b>a buyer</b>.<br>He is <b>an owner</b>.</td><td class="a">a / an</td></tr>
+        <tr><td>Цена и количество «за штуку», «в неделю»</td><td>ten dollars <b>a piece</b><br>twice <b>a week</b></td><td class="a">a / an</td></tr>
+        <tr class="grp"><td colspan="3">Артикль не ставим</td></tr>
+        <tr><td>Много вещей, множественное число</td><td><b>bags</b>, <b>skirts</b>, <b>orders</b></td><td class="no">нет</td></tr>
+        <tr><td>То, что не считают: материал, вещество</td><td><b>leather</b>, <b>silk</b>, <b>wool</b>, <b>jewellery</b></td><td class="no">нет</td></tr>
+        <tr><td>Перед вещью уже стоит число</td><td><b>ten bags</b>, <b>two skirts</b></td><td class="no">нет</td></tr>
+        <tr><td>Перед вещью уже стоит this, these, my</td><td><b>this bag</b>, <b>my order</b></td><td class="no">нет</td></tr>
+      </tbody>
+    </table>
     </div>
     <p>Последняя строчка тебе пригодится в переписке: <b>ten dollars a piece</b> это «десять долларов за штуку».</p>
   </div>
@@ -295,13 +310,13 @@
 
   <h3>Какие звуки считаются гласными</h3>
   <div class="card">
-    <p>Пять звуков, с которых начинаются слова: как в <b>apple</b>, как в <b>egg</b>, как в <b>item</b>, как в <b>order</b>, как в <b>umbrella</b>. Если слово начинается с такого звука, перед ним <b>an</b>.</p>
+    <p>Пять звуков, с которых начинаются слова: как в <b>apple</b>, <b>egg</b>, <b>item</b>, <b>order</b>, <b>umbrella</b>. Если слово начинается с такого звука, перед ним <b>an</b>.</p>
     <div class="conj">
-      <div class="p">a</div><div class="v">эпл, яблоко</div><div class="r">an apple, an address</div>
-      <div class="p">e</div><div class="v">эг, яйцо</div><div class="r">an email, an envelope</div>
-      <div class="p">i</div><div class="v">айтем, позиция в заказе</div><div class="r">an item, an invoice</div>
-      <div class="p">o</div><div class="v">оудэ, заказ</div><div class="r">an order, an office</div>
-      <div class="p">u</div><div class="v">амбрела, зонт</div><div class="r">an umbrella, an update</div>
+      <div class="p">a</div><div class="v">apple</div><div class="r">an apple, an address</div>
+      <div class="p">e</div><div class="v">egg</div><div class="r">an email, an envelope</div>
+      <div class="p">i</div><div class="v">item</div><div class="r">an item, an invoice</div>
+      <div class="p">o</div><div class="v">order</div><div class="r">an order, an office</div>
+      <div class="p">u</div><div class="v">umbrella</div><div class="r">an umbrella, an update</div>
     </div>
   </div>
 
