@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чтение: как понять, как звучит слово</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .pair .rev{display:block !important; background:none; padding:0 0 2px; font-weight:800; color:var(--ink)}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+<style>
+  /* числа */
+  .nums{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:2px 0}
+  .ni{display:flex; gap:10px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line)}
+  .ni .d{font-weight:800; color:var(--accent); min-width:28px; font-size:17px}
+  .ni .w{font-weight:700; font-size:17px}
+  @media (max-width:520px){ .nums{grid-template-columns:1fr} }
+</style>
+<style>
+  /* алфавит */
+  .alph{display:grid; grid-template-columns:repeat(4,1fr); gap:0 14px; margin:2px 0}
+  .al{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .al .b{font-weight:800; color:var(--accent); min-width:26px; font-size:17px}
+  .al .n{font-weight:700; font-size:16px}
+  @media (max-width:640px){ .alph{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:420px){ .alph{grid-template-columns:repeat(2,1fr)} }
+  /* картинка-шпаргалка */
+  .pic{margin:14px 0}
+  .pic img{display:block; width:100%; height:auto; border-radius:14px;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.07)}
+  .pic .cap{color:var(--mute); font-size:13px; margin-top:8px}
+  /* шаги */
+  .steps{counter-reset:st; list-style:none; padding:0; margin:6px 0 0}
+  .steps li{counter-increment:st; position:relative; padding:9px 0 9px 36px; font-size:16px;
+    border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li:before{content:counter(st); position:absolute; left:0; top:9px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+  .lnk{display:block; background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0;
+    text-decoration:none; color:var(--deep); font-weight:700; word-break:break-word}
+  .lnk span{display:block; color:var(--soft); font-weight:500; font-size:14px; margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English &middot; чтение</div>
+    <h1>Как читается английский.<em>Чтобы смотреть на слово и понимать, как оно звучит</em></h1>
+    <p>Английское письмо выглядит нелогичным только снаружи. Внутри есть система: как читать букву, подсказывают соседние буквы. Эта страница собрана так, чтобы её можно было открывать по частям и возвращаться к ней весь курс.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Гласные: почему <b>this</b> это «зис», а <b>nice</b> это «найс».</div></div>
+    <div class="goal"><span>&rarr;</span><div>Согласные и буквосочетания: <b>ch</b>, <b>sh</b>, <b>th</b>, <b>ea</b>, <b>oo</b>, <b>ow</b> и остальные.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Немые буквы, окончания слов и что делать с незнакомым словом.</div></div>
+  </div>
+
+  <div class="note"><b>Как этим пользоваться.</b> Не надо читать всё подряд за один раз. Берите по одному разделу, сразу решайте упражнение под ним и возвращайтесь через день. Правило чтения работает примерно в двух словах из трёх, и этого достаточно, чтобы перестать спрашивать про каждое новое слово.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>Имена букв</h2>
+  <p class="lead">Сначала то, на чём держится половина правил: у каждой буквы есть имя. Его вы произносите, когда называете букву отдельно, и к этому имени мы будем возвращаться дальше.</p>
+
+  <div class="card">
+    <div class="alph">
+      <div class="al"><span class="b">A</span><span class="n">эй</span></div>
+      <div class="al"><span class="b">B</span><span class="n">би</span></div>
+      <div class="al"><span class="b">C</span><span class="n">си</span></div>
+      <div class="al"><span class="b">D</span><span class="n">ди</span></div>
+      <div class="al"><span class="b">E</span><span class="n">и</span></div>
+      <div class="al"><span class="b">F</span><span class="n">эф</span></div>
+      <div class="al"><span class="b">G</span><span class="n">джи</span></div>
+      <div class="al"><span class="b">H</span><span class="n">эйч</span></div>
+      <div class="al"><span class="b">I</span><span class="n">ай</span></div>
+      <div class="al"><span class="b">J</span><span class="n">джей</span></div>
+      <div class="al"><span class="b">K</span><span class="n">кей</span></div>
+      <div class="al"><span class="b">L</span><span class="n">эл</span></div>
+      <div class="al"><span class="b">M</span><span class="n">эм</span></div>
+      <div class="al"><span class="b">N</span><span class="n">эн</span></div>
+      <div class="al"><span class="b">O</span><span class="n">оу</span></div>
+      <div class="al"><span class="b">P</span><span class="n">пи</span></div>
+      <div class="al"><span class="b">Q</span><span class="n">кью</span></div>
+      <div class="al"><span class="b">R</span><span class="n">а</span></div>
+      <div class="al"><span class="b">S</span><span class="n">эс</span></div>
+      <div class="al"><span class="b">T</span><span class="n">ти</span></div>
+      <div class="al"><span class="b">U</span><span class="n">ю</span></div>
+      <div class="al"><span class="b">V</span><span class="n">ви</span></div>
+      <div class="al"><span class="b">W</span><span class="n">дабл-ю</span></div>
+      <div class="al"><span class="b">X</span><span class="n">экс</span></div>
+      <div class="al"><span class="b">Y</span><span class="n">уай</span></div>
+      <div class="al"><span class="b">Z</span><span class="n">зед</span></div>
+    </div>
+    <div class="note">Гласных букв всего пять: <b>a</b>, <b>e</b>, <b>i</b>, <b>o</b>, <b>u</b>. Шестая, <b>y</b>, работает то гласной, то согласной. Все правила ниже про них. Про <b>z</b>: «зед» это британский вариант, американцы говорят «зи».</div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>Гласные: четыре случая</h2>
+  <p class="lead">Одна и та же буква читается по-разному, и это не произвол. Как её читать, подсказывает то, <b>что стоит после неё</b>.</p>
+
+  <div class="card">
+    <h3>Случай 1. Закрытый слог: после гласной согласная</h3>
+    <p>Слог кончается на согласную, и гласная читается <b>коротко и резко</b>.</p>
+    <div class="conj conj4">
+      <div class="p">a</div><div class="v">э</div><div class="sh">Max, bag, happy, cat</div><div class="r">рот шире, чем в русском «э»</div>
+      <div class="p">e</div><div class="v">э</div><div class="sh">pen, ten, yes, red</div><div class="r">обычное «э»</div>
+      <div class="p">i</div><div class="v">и</div><div class="sh">this, is, big, sister</div><div class="r">очень коротко</div>
+      <div class="p">o</div><div class="v">о</div><div class="sh">hot, not, coffee, box</div><div class="r">коротко</div>
+      <div class="p">u</div><div class="v">а</div><div class="sh">bus, but, husband, cup</div><div class="r">не «у», а «а»</div>
+    </div>
+
+    <h3>Случай 2. Открытый слог: слог кончается на саму гласную</h3>
+    <p>Так бывает в коротких словах вроде <b>he</b>, <b>no</b>, <b>my</b> и там, где в конце стоит <b>немая e</b>. Тогда гласная <b>называет своё имя</b>: то самое, из раздела 01.</p>
+    <div class="conj conj4">
+      <div class="p">a</div><div class="v">эй</div><div class="sh">name, Kate, late, place</div><div class="r">как буква A</div>
+      <div class="p">e</div><div class="v">и</div><div class="sh">he, she, we, these</div><div class="r">как буква E</div>
+      <div class="p">i</div><div class="v">ай</div><div class="sh">nice, time, five, like</div><div class="r">как буква I</div>
+      <div class="p">o</div><div class="v">оу</div><div class="sh">no, go, home, phone</div><div class="r">как буква O</div>
+      <div class="p">u</div><div class="v">ю</div><div class="sh">student, music, use</div><div class="r">как буква U</div>
+    </div>
+
+    <h3>Немая e на конце</h3>
+    <p>Буква <b>e</b> в конце слова сама не читается. Её работа другая: она заставляет гласную перед ней назвать своё имя. Одна буква меняет слово целиком.</p>
+    <div class="conj conj4">
+      <div class="p">hat</div><div class="v">&rarr;</div><div class="sh">hate</div><div class="r">хэт - хэйт</div>
+      <div class="p">kit</div><div class="v">&rarr;</div><div class="sh">kite</div><div class="r">кит - кайт</div>
+      <div class="p">not</div><div class="v">&rarr;</div><div class="sh">note</div><div class="r">нот - ноут</div>
+      <div class="p">cut</div><div class="v">&rarr;</div><div class="sh">cute</div><div class="r">кат - кьют</div>
+      <div class="p">Tim</div><div class="v">&rarr;</div><div class="sh">time</div><div class="r">тим - тайм</div>
+    </div>
+
+    <h3>Случай 3. Гласная плюс r</h3>
+    <p>Если после гласной стоит <b>r</b>, звук становится <b>длинным</b>, а сама <b>r</b> в британском варианте не произносится.</p>
+    <div class="conj conj4">
+      <div class="p">ar</div><div class="v">а-а</div><div class="sh">car, park, bar, star</div><div class="r">долгое «а»</div>
+      <div class="p">er, ir, ur</div><div class="v">ё-ё</div><div class="sh">her, first, turn, girl</div><div class="r">звук между «ё» и «э», губы не вытягиваем</div>
+      <div class="p">or</div><div class="v">о-о</div><div class="sh">for, sport, more, short</div><div class="r">долгое «о»</div>
+    </div>
+
+    <h3>Случай 4. Гласная плюс r плюс e</h3>
+    <p>Самый редкий, но его стоит знать: после гласной идёт <b>r</b>, а за ней снова гласная. Звук получается с лёгким призвуком «э» на конце.</p>
+    <div class="conj conj4">
+      <div class="p">are</div><div class="v">эа</div><div class="sh">care, share, parents</div><div class="r">не «кэр», а мягче</div>
+      <div class="p">ere, ear</div><div class="v">иэ</div><div class="sh">here, near, year</div><div class="r">«хиэ», «ниэ»</div>
+      <div class="p">ire</div><div class="v">айэ</div><div class="sh">fire, tired</div><div class="r">«файэ», «тайэд»</div>
+      <div class="p">ore</div><div class="v">о-о</div><div class="sh">more, store, before</div><div class="r">то же долгое «о»</div>
+      <div class="p">ure</div><div class="v">юэ</div><div class="sh">sure, pure</div><div class="r">«шуэ», «пьюэ»</div>
+    </div>
+
+    <h3>Буква y на конце</h3>
+    <p>В коротком слове из одного слога <b>y</b> читается «ай»: <b>my, why, by, fly, try</b>. В длинном слове на конце она превращается в «и»: <b>happy, sorry, busy, city, family</b>.</p>
+
+    <div class="note"><b>Честно про исключения.</b> Правило работает примерно в двух словах из трёх, и это уже огромная экономия сил. Но есть слова, которые его нарушают, и их просто запоминают: <b>have</b>, <b>give</b>, <b>live</b>, <b>come</b>, <b>some</b>, <b>one</b>, <b>love</b>, <b>friend</b>, <b>done</b>. Немая e в них есть, а гласная всё равно короткая.</div>
+  </div>
+
+  <h3>Пары, на которых это слышно</h3>
+  <p class="lead">Прочитайте пары вслух, одну за другой. Разница между левым и правым словом и есть всё правило.</p>
+  <div class="card">
+    <div class="voc" id="pairs"></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>Как прочитать гласную</h2>
+  <p class="lead screen-only">Посмотрите, что стоит после гласной, и выберите звук.</p>
+  <div class="card" id="exV"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Согласные: что звучит не по-русски</h2>
+  <p class="lead">Большинство согласных читаются примерно как у нас. Разобраться надо с шестью звуками и с двумя привычками, которые мы приносим из русского.</p>
+
+  <div class="card">
+    <h3>Шесть звуков, которых в русском нет</h3>
+    <div class="conj conj4">
+      <div class="p">th</div><div class="v">с</div><div class="sh">think, three, thank you</div><div class="r">язык между зубами, голос не включаем</div>
+      <div class="p">th</div><div class="v">з</div><div class="sh">this, that, they, mother</div><div class="r">то же самое, но с голосом</div>
+      <div class="p">w</div><div class="v">у</div><div class="sh">we, what, why, where</div><div class="r">губы трубочкой, не «в»</div>
+      <div class="p">r</div><div class="v">р</div><div class="sh">Russia, really, friend</div><div class="r">язык не дрожит и нёба не касается</div>
+      <div class="p">h</div><div class="v">х</div><div class="sh">hello, hot, happy, he</div><div class="r">лёгкий выдох, почти шёпот</div>
+      <div class="p">ng</div><div class="v">н</div><div class="sh">morning, English, going</div><div class="r">в нос, без «г» на конце</div>
+    </div>
+    <p><b>Про th отдельно.</b> Это одна пара букв и два разных звука: в <b>think</b> глухой, как «с», в <b>this</b> звонкий, как «з». Язык в обоих случаях выходит между зубами. Не «зис» и не «дис». Скажите три раза подряд: <b>this, this is, this is my friend</b>.</p>
+
+    <h3>Две привычки из русского, которые мешают</h3>
+    <p><b>Не оглушайте конец слова.</b> По-русски «клуб» мы произносим как «клуп», и никто не замечает. В английском от этого меняется слово целиком.</p>
+    <div class="conj conj4">
+      <div class="p">bed</div><div class="v">bet</div><div class="sh">кровать</div><div class="r">а не «ставка»</div>
+      <div class="p">bad</div><div class="v">bat</div><div class="sh">плохой</div><div class="r">а не «летучая мышь»</div>
+      <div class="p">dog</div><div class="v">dock</div><div class="sh">собака</div><div class="r">а не «причал»</div>
+      <div class="p">his</div><div class="v">hiss</div><div class="sh">его</div><div class="r">а не «шипеть»</div>
+    </div>
+    <p><b>Не смягчайте согласную перед i и e.</b> По-русски «ти» звучит мягко, почти «тьи». По-английски согласная остаётся твёрдой: <b>tea, see, need, big, sister</b>. Звучит непривычно сухо, и это правильно.</p>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">05</span>Буквы, которые читаются не так, как пишутся</h2>
+  <p class="lead">Дальше идут пары букв, которые дают один звук, и три буквы, которые меняют звук в зависимости от соседа.</p>
+
+  <div class="card">
+    <h3>Две буквы, один звук</h3>
+    <div class="conj conj4">
+      <div class="p">ch</div><div class="v">ч</div><div class="sh">coach, teacher, chair</div><div class="r"></div>
+      <div class="p">sh</div><div class="v">ш</div><div class="sh">she, shop, fish</div><div class="r"></div>
+      <div class="p">ph</div><div class="v">ф</div><div class="sh">photographer, phone</div><div class="r">две буквы, один звук</div>
+      <div class="p">ck</div><div class="v">к</div><div class="sh">black, kick, snack</div><div class="r"></div>
+      <div class="p">wh</div><div class="v">у</div><div class="sh">what, where, why, white</div><div class="r">h не читается</div>
+      <div class="p">kn</div><div class="v">н</div><div class="sh">know, knife, knee</div><div class="r">k молчит</div>
+      <div class="p">wr</div><div class="v">р</div><div class="sh">write, wrong</div><div class="r">w молчит</div>
+      <div class="p">qu</div><div class="v">кв</div><div class="sh">question, quick, quiet</div><div class="r">после q всегда идёт u</div>
+    </div>
+
+    <h3>Три буквы с двойным поведением</h3>
+    <p>Эти читаются по-разному, и зависит это от того, какая буква идёт следом. Правило простое: перед <b>e</b>, <b>i</b>, <b>y</b> звук становится мягче.</p>
+    <div class="conj conj4">
+      <div class="p">c</div><div class="v">с</div><div class="sh">перед e, i, y</div><div class="r">nice, city, cinema</div>
+      <div class="p">c</div><div class="v">к</div><div class="sh">в остальных случаях</div><div class="r">coach, cold, cup</div>
+      <div class="p">g</div><div class="v">дж</div><div class="sh">чаще всего перед e, i, y</div><div class="r">page, manager, gym</div>
+      <div class="p">g</div><div class="v">г</div><div class="sh">в остальных случаях</div><div class="r">good, big, go</div>
+      <div class="p">s</div><div class="v">з</div><div class="sh">между гласными и в конце</div><div class="r">busy, his, is, please</div>
+      <div class="p">s</div><div class="v">с</div><div class="sh">в начале слова</div><div class="r">sister, student, say</div>
+    </div>
+    <div class="note"><b>И снова про исключения.</b> <b>give</b>, <b>get</b>, <b>girl</b> читаются с твёрдым «г», хотя после <b>g</b> стоит e или i. Таких слов немного, и они самые частые, так что запомнятся сами.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>Как читается согласная</h2>
+  <p class="lead screen-only">Смотрите на букву и на то, что стоит рядом с ней.</p>
+  <div class="card" id="exC"></div>
+
+  <div class="tag">шпаргалка</div>
+  <h2><span class="num">07</span>Таблица буквосочетаний</h2>
+  <p class="lead">Вся картина одним экраном. Можно сохранить к себе в телефон и подглядывать, пока не запомнится. Ниже мы разберём эту таблицу по частям, с примерами и упражнениями.</p>
+
+  <div class="pic">
+    <img src="letter-combinations.jpg" alt="Таблица основных буквосочетаний английского языка: гласные и согласные">
+    <div class="cap">В квадратных скобках стоит значок звука, рядом с ним русская запись. Значки запоминать не нужно, смотрите на русскую подсказку и на примеры.</div>
+  </div>
+
+  <div class="note"><b>Две строчки в таблице записаны очень коротко.</b> <b>wh</b> подписано как «в», но это не русское «в»: губы трубочкой, получается ближе к «у» - <b>what</b>, <b>where</b>. И <b>ew</b> не всегда «ю»: после <b>r</b> и <b>l</b> это просто «у» - <b>crew</b>, <b>flew</b>. Ниже оба случая разобраны подробнее.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">08</span>Гласные буквосочетания</h2>
+  <p class="lead">Две гласные рядом почти всегда дают один звук. Главное правило простое: первая буква называет своё имя, вторая молчит. Работает не везде, но с него удобно начинать.</p>
+
+  <div class="card">
+    <h3>Дают «эй»</h3>
+    <div class="conj conj4">
+      <div class="p">ai</div><div class="v">эй</div><div class="sh">rain, pain, wait, train</div><div class="r">в середине слова</div>
+      <div class="p">ay</div><div class="v">эй</div><div class="sh">day, play, say, may</div><div class="r">в конце слова</div>
+      <div class="p">ey</div><div class="v">эй</div><div class="sh">grey, they, hey</div><div class="r">в коротком слове</div>
+    </div>
+    <div class="note"><b>Пара ai и ay</b> это один и тот же звук, просто в середине слова пишут <b>ai</b>, а в конце <b>ay</b>. В длинном слове <b>ey</b> на конце превращается в «и»: <b>money</b>, <b>honey</b>, <b>key</b>.</div>
+
+    <h3>Дают «и»</h3>
+    <div class="conj conj4">
+      <div class="p">ee</div><div class="v">и</div><div class="sh">tree, see, week, green</div><div class="r">всегда долгое «и»</div>
+      <div class="p">ea</div><div class="v">и</div><div class="sh">meat, tea, read, please</div><div class="r">самый частый вариант</div>
+      <div class="p">ie</div><div class="v">и</div><div class="sh">field, piece, believe</div><div class="r">в середине слова</div>
+    </div>
+
+    <h3>Те же буквы, но другой звук</h3>
+    <p>Эти три сочетания читаются двумя способами, и это надо знать заранее, чтобы не удивляться.</p>
+    <div class="conj conj4">
+      <div class="p">ea</div><div class="v">э</div><div class="sh">head, bread, ready, breakfast</div><div class="r">короткое «э», слов немного</div>
+      <div class="p">ea</div><div class="v">эй</div><div class="sh">break, great, steak</div><div class="r">всего несколько слов</div>
+      <div class="p">ie</div><div class="v">ай</div><div class="sh">pie, lie, die, tie</div><div class="r">в конце короткого слова</div>
+      <div class="p">ow</div><div class="v">оу</div><div class="sh">snow, know, window, yellow</div><div class="r"></div>
+      <div class="p">ow</div><div class="v">ау</div><div class="sh">now, how, town, brown</div><div class="r">оба варианта одинаково частые</div>
+    </div>
+
+    <h3>Остальные</h3>
+    <div class="conj conj4">
+      <div class="p">oa</div><div class="v">оу</div><div class="sh">boat, soap, coat, road</div><div class="r"></div>
+      <div class="p">oe</div><div class="v">оу</div><div class="sh">toe, goes</div><div class="r">слов мало</div>
+      <div class="p">oi, oy</div><div class="v">ой</div><div class="sh">toy, boy, coin, voice</div><div class="r">oy чаще в конце слова</div>
+      <div class="p">ou</div><div class="v">ау</div><div class="sh">house, mouse, about, out</div><div class="r"></div>
+      <div class="p">oo</div><div class="v">у</div><div class="sh">book, cook, good, look</div><div class="r">короткое, обычно перед k</div>
+      <div class="p">oo</div><div class="v">у-у</div><div class="sh">food, school, moon, soon</div><div class="r">долгое</div>
+      <div class="p">eu, ew</div><div class="v">ю</div><div class="sh">Europe, new, few, knew</div><div class="r"></div>
+      <div class="p">ew</div><div class="v">у</div><div class="sh">crew, flew, blew</div><div class="r">после r и l</div>
+      <div class="p">aw, au</div><div class="v">о</div><div class="sh">saw, paw, autumn, because</div><div class="r">долгое «о»</div>
+    </div>
+    <div class="note"><b>Где ou ведёт себя иначе.</b> В <b>you</b> и <b>soup</b> это «у», а в <b>young</b>, <b>country</b>, <b>cousin</b> короткое «а». Это те самые слова из третьего десятка, которые запоминаются сами, потому что встречаются каждый день.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>Две гласные рядом</h2>
+  <p class="lead screen-only">Выберите, как звучит выделенная пара букв.</p>
+  <div class="card" id="exVC"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">10</span>Согласные буквосочетания</h2>
+  <p class="lead">Часть из них уже была в разделе 05, здесь они собраны вместе и с теми случаями, когда сочетание читается не так, как обычно.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">ch</div><div class="v">ч</div><div class="sh">cherry, teach, chair</div><div class="r">обычный вариант</div>
+      <div class="p">ch</div><div class="v">ш</div><div class="sh">machine, chef, Michelle</div><div class="r">в словах, пришедших из французского</div>
+      <div class="p">ch</div><div class="v">к</div><div class="sh">school, chemistry, Christmas</div><div class="r">в словах из греческого</div>
+      <div class="p">tch</div><div class="v">ч</div><div class="sh">watch, match, kitchen</div><div class="r">t не читается</div>
+      <div class="p">sh</div><div class="v">ш</div><div class="sh">wash, shark, shop</div><div class="r"></div>
+      <div class="p">th</div><div class="v">з</div><div class="sh">the, mother, this, they</div><div class="r">с голосом</div>
+      <div class="p">th</div><div class="v">с</div><div class="sh">bathroom, three, think</div><div class="r">без голоса</div>
+      <div class="p">ph</div><div class="v">ф</div><div class="sh">photo, telephone, graph</div><div class="r"></div>
+      <div class="p">ck</div><div class="v">к</div><div class="sh">black, snack, kick</div><div class="r"></div>
+      <div class="p">ng</div><div class="v">н</div><div class="sh">king, reading, long</div><div class="r">носовое, без «г»</div>
+      <div class="p">kn</div><div class="v">н</div><div class="sh">knee, knife, know</div><div class="r">k молчит</div>
+      <div class="p">wr</div><div class="v">р</div><div class="sh">write, wrong, wrist</div><div class="r">w молчит</div>
+      <div class="p">wh</div><div class="v">у</div><div class="sh">wheel, what, where, when</div><div class="r">губы трубочкой</div>
+      <div class="p">wh</div><div class="v">х</div><div class="sh">who, whose, whole</div><div class="r">перед o наоборот: молчит w</div>
+      <div class="p">gh</div><div class="v">молчит</div><div class="sh">light, night, high, through</div><div class="r">не читается совсем</div>
+      <div class="p">gh</div><div class="v">ф</div><div class="sh">laugh, enough, cough</div><div class="r">после au и ou</div>
+    </div>
+    <div class="note"><b>Как запомнить три варианта ch.</b> «Ч» это обычное английское слово. «Ш» и «к» встречаются в словах, которые английский взял у других языков, и таких слов немного: <b>machine</b>, <b>chef</b>, <b>school</b>, <b>chemistry</b>, <b>character</b>, <b>stomach</b>. Проще выучить этот короткий список, чем правило.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">11</span>Две согласные рядом</h2>
+  <p class="lead screen-only">Здесь важно не само сочетание, а слово, в котором оно стоит.</p>
+  <div class="card" id="exCC"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">12</span>Буквы, которые пишут, но не читают</h2>
+  <p class="lead">Их называют немыми. Они остались от старого произношения: когда-то читались, потом язык изменился, а написание осталось.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">k</div><div class="v">перед n</div><div class="sh">know, knife, knee, knock</div><div class="r">«ноу», «найф»</div>
+      <div class="p">w</div><div class="v">перед r</div><div class="sh">write, wrong, wrist</div><div class="r">«райт», «ронг»</div>
+      <div class="p">w</div><div class="v">в середине</div><div class="sh">answer, two, sword</div><div class="r">«а-анса», «ту»</div>
+      <div class="p">b</div><div class="v">после m</div><div class="sh">climb, comb, thumb, lamb</div><div class="r">«клайм», «коум»</div>
+      <div class="p">l</div><div class="v">перед k, f, m</div><div class="sh">talk, walk, half, calm</div><div class="r">«то-ок», «уо-ок»</div>
+      <div class="p">t</div><div class="v">в середине</div><div class="sh">listen, castle, often, whistle</div><div class="r">«лисн», «ка-асл»</div>
+      <div class="p">h</div><div class="v">в начале</div><div class="sh">hour, honest, honour</div><div class="r">«ауэ», «онист»</div>
+      <div class="p">gh</div><div class="v">после гласной</div><div class="sh">light, night, right, though</div><div class="r">«лайт», «найт»</div>
+      <div class="p">e</div><div class="v">в конце</div><div class="sh">name, nice, home, large</div><div class="r">открывает слог, сама молчит</div>
+    </div>
+    <div class="note"><b>Отдельно про clothes и months.</b> В живой речи их произносят почти как <b>close</b> и <b>mons</b>: три согласных подряд не выговариваются, и носители сами упрощают. Так что это не ваша ошибка, а норма.</div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">13</span>Окончания длинных слов</h2>
+  <p class="lead">Длинное слово пугает ровно до того момента, пока не узнаёшь его хвост. Этих хвостов немного, и они повторяются в сотнях слов.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">-tion</div><div class="v">шн</div><div class="sh">station, information, education</div><div class="r">«стэйшн», «инфомэйшн»</div>
+      <div class="p">-sion</div><div class="v">жн</div><div class="sh">decision, television, vision</div><div class="r">после гласной мягче</div>
+      <div class="p">-ssion</div><div class="v">шн</div><div class="sh">discussion, passion, mission</div><div class="r">после согласной</div>
+      <div class="p">-ture</div><div class="v">чэ</div><div class="sh">picture, future, nature</div><div class="r">«пикчэ», «фьючэ»</div>
+      <div class="p">-ous</div><div class="v">эс</div><div class="sh">famous, nervous, delicious</div><div class="r">«фэймэс», не «оус»</div>
+      <div class="p">-age</div><div class="v">идж</div><div class="sh">message, village, manage</div><div class="r">«мэсидж»</div>
+      <div class="p">-ate</div><div class="v">эйт</div><div class="sh">chocolate, private, create</div><div class="r">у глаголов «эйт», у слов-признаков «эт»</div>
+      <div class="p">-le</div><div class="v">л</div><div class="sh">table, little, people, apple</div><div class="r">«тэйбл», «литл»</div>
+      <div class="p">-ful</div><div class="v">фул</div><div class="sh">beautiful, useful, careful</div><div class="r">без ударения, коротко</div>
+      <div class="p">-ly</div><div class="v">ли</div><div class="sh">really, usually, friendly</div><div class="r"></div>
+    </div>
+    <div class="note"><b>Главное про длинные слова.</b> В английском ударение почти всегда ближе к началу, а хвост проглатывается. <b>Interesting</b> это «интрэстинг», а не «интэрэстинг». <b>Comfortable</b> это «камфтэбл». Если тянуть каждый слог одинаково, слово звучит по-русски.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">14</span>Немые буквы и окончания</h2>
+  <p class="lead screen-only">Выберите, как звучит выделенная часть слова.</p>
+  <div class="card" id="exEnd"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">15</span>Слова, которые живут не по правилам</h2>
+  <p class="lead">Их придётся запомнить, но есть хорошая новость: это самые частые слова языка, поэтому они запоминаются сами, за пару недель.</p>
+
+  <div class="card">
+    <div class="voc" id="hard"></div>
+  </div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">16</span>Прочитайте сами, потом проверьте</h2>
+  <p class="lead screen-only">Сначала скажите слово вслух, и только потом нажимайте. Так упражнение и работает: если сразу открывать ответ, вы просто читаете чужую запись.</p>
+  <div class="card" id="say"></div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">17</span>Что делать с незнакомым словом</h2>
+  <p class="lead">Четыре шага, по которым можно пройти с любым словом, которое встретилось впервые.</p>
+
+  <div class="card">
+    <ol class="steps">
+      <li>Посмотрите на хвост: есть ли знакомое окончание из раздела 13 и нет ли немой буквы из раздела 12.</li>
+      <li>Найдите пары гласных: <b>ea</b>, <b>oo</b>, <b>ai</b>, <b>ow</b> и остальные из раздела 08. Две гласные рядом дают один звук.</li>
+      <li>Для одиночной гласной посмотрите, что стоит после неё: согласная, пустота, <b>r</b> или немая <b>e</b>. Это раздел 02.</li>
+      <li>Прочитайте вслух с ударением ближе к началу слова. Если получилось похоже на знакомое слово, скорее всего вы прочитали верно.</li>
+    </ol>
+    <div class="note">Если слово всё равно не поддаётся, его можно послушать. В словаре Кембриджа у каждого слова есть кнопка с динамиком, британский и американский вариант. Это надёжнее, чем угадывать.</div>
+    <a class="lnk" href="https://dictionary.cambridge.org/dictionary/english/" target="_blank" rel="noopener">dictionary.cambridge.org
+      <span>вбиваете слово, нажимаете динамик рядом с UK и слушаете</span></a>
+  </div>
+
+</div>
+
+<script>
+function vocab(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var d = document.createElement("div"); d.className = "vi";
+    d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+    host.appendChild(d);
+  });
+}
+
+function choiceBlock(id, items, tall){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var q = document.createElement("div"); q.className = "q";
+    var stem = document.createElement("div"); stem.className = "stem";
+    stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+    q.appendChild(stem);
+    var opts = document.createElement("div"); opts.className = "opts";
+    var fb = document.createElement("div"); fb.className = "fb";
+    it.opts.forEach(function(o, idx){
+      var b = document.createElement("button");
+      b.className = "opt" + (tall ? " tall" : "");
+      b.type = "button"; b.textContent = o;
+      b.addEventListener("click", function(){
+        var right = idx === it.ok;
+        b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+        fb.className = "fb show " + (right ? "y" : "n");
+        fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуйте другой вариант");
+        if(right){
+          var all = opts.querySelectorAll(".opt");
+          for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+        }
+      });
+      opts.appendChild(b);
+    });
+    q.appendChild(opts); q.appendChild(fb);
+    host.appendChild(q);
+  });
+}
+
+function revealBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var w = document.createElement("div"); w.className = "pair";
+    var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+    b.textContent = p.ru;
+    var a = document.createElement("div"); a.className = "ans";
+    a.innerHTML = p.en;
+    b.addEventListener("click", function(){ a.classList.toggle("show"); });
+    w.appendChild(b); w.appendChild(a);
+    host.appendChild(w);
+  });
+}
+
+/* ========== пары на гласные ========== */
+vocab("pairs", [["this - nice","и - ай"],["is - five","и - ай"],
+  ["Tim - time","и - ай"],["Max - name","э - эй"],
+  ["hat - hate","э - эй"],["pen - he","э - и"],
+  ["not - no","о - оу"],["not - note","о - оу"],
+  ["us - use","а - ю"],["cut - cute","а - ю"],
+  ["car - care","а-а - эа"],["for - fire","о-о - айэ"]]);
+
+/* ========== 03. гласные ========== */
+choiceBlock("exV", [
+  {stem:'n<b>a</b>me', ru:'имя', opts:["э","эй"], ok:1,
+   why:"Верно. В конце немая e, значит a называет своё имя"},
+  {stem:'th<b>i</b>s', ru:'это', opts:["и","ай"], ok:0,
+   why:"Верно. После i идёт s, слог закрытый"},
+  {stem:'n<b>i</b>ce', ru:'приятный', opts:["и","ай"], ok:1,
+   why:"Верно. Немая e на конце открывает слог"},
+  {stem:'M<b>a</b>x', ru:'Макс', opts:["э","эй"], ok:0,
+   why:"Верно. После a идёт x, слог закрытый"},
+  {stem:'h<b>e</b>', ru:'он', opts:["э","и"], ok:1,
+   why:"Верно. Слово кончается на саму гласную, слог открытый"},
+  {stem:'p<b>e</b>n', ru:'ручка', opts:["э","и"], ok:0,
+   why:"Верно. После e идёт n, слог закрытый"},
+  {stem:'h<b>o</b>me', ru:'дом', opts:["о","оу"], ok:1,
+   why:"Верно. Немая e на конце"},
+  {stem:'h<b>o</b>t', ru:'горячий', opts:["о","оу"], ok:0,
+   why:"Верно. Слог закрытый"},
+  {stem:'st<b>u</b>dent', ru:'студент', opts:["а","ю"], ok:1,
+   why:"Верно. Слог открытый, u называет своё имя"},
+  {stem:'b<b>u</b>s', ru:'автобус', opts:["а","ю"], ok:0,
+   why:"Верно. Закрытый слог, и это «а», а не «у»"},
+  {stem:'c<b>ar</b>', ru:'машина', opts:["э","а-а"], ok:1,
+   why:"Верно. Гласная плюс r даёт долгий звук, саму r не произносим"},
+  {stem:'h<b>er</b>', ru:'её', opts:["ё-ё","э"], ok:0,
+   why:"Верно. er, ir, ur звучат одинаково: между «ё» и «э»"},
+  {stem:'h<b>ere</b>', ru:'здесь', opts:["иэ","э"], ok:0,
+   why:"Верно. После гласной идёт r, а за ней ещё одна гласная"},
+  {stem:'m<b>y</b>', ru:'мой', opts:["и","ай"], ok:1,
+   why:"Верно. y на конце короткого слова читается «ай»"},
+  {stem:'happ<b>y</b>', ru:'счастливый', opts:["и","ай"], ok:0,
+   why:"Верно. В длинном слове y на конце это «и»"},
+  {stem:'h<b>a</b>ve', ru:'иметь', opts:["э","эй"], ok:0,
+   why:"Верно, и это исключение: немая e есть, а гласная всё равно короткая"}
+]);
+
+/* ========== 06. согласные ========== */
+choiceBlock("exC", [
+  {stem:'<b>ph</b> в слове photographer', opts:["ф","п"], ok:0, why:"Верно. ph это всегда «ф»"},
+  {stem:'<b>ch</b> в слове teacher', opts:["ч","к"], ok:0, why:"Верно"},
+  {stem:'<b>c</b> в слове nice', opts:["с","к"], ok:0, why:"Верно. Перед e читается «с»"},
+  {stem:'<b>c</b> в слове coach', opts:["с","к"], ok:1, why:"Верно. Перед o читается «к»"},
+  {stem:'<b>g</b> в слове big', opts:["г","дж"], ok:0, why:"Верно"},
+  {stem:'<b>g</b> в слове manager', opts:["г","дж"], ok:1, why:"Верно. Перед e чаще «дж»"},
+  {stem:'<b>s</b> в слове busy', opts:["с","з"], ok:1, why:"Верно. Между гласными «з»"},
+  {stem:'<b>s</b> в слове sister', opts:["с","з"], ok:0, why:"Верно. В начале слова «с»"},
+  {stem:'<b>k</b> в слове know', opts:["читается","молчит"], ok:1, why:"Верно. В kn буква k не читается"},
+  {stem:'<b>w</b> в слове write', opts:["читается","молчит"], ok:1, why:"Верно. В wr буква w не читается"},
+  {stem:'<b>w</b> в слове what', opts:["в","у"], ok:1, why:"Верно. Губы трубочкой, не «в»"},
+  {stem:'<b>qu</b> в слове question', opts:["кв","к"], ok:0, why:"Верно. qu это «кв»"},
+  {stem:'<b>ng</b> в слове morning', opts:["нг","н в нос"], ok:1, why:"Верно. «г» на конце не произносим"},
+  {stem:'<b>th</b> в слове think', opts:["глухой, как «с»","звонкий, как «з»"], ok:0, why:"Верно. Язык между зубами, без голоса"},
+  {stem:'<b>th</b> в слове this', opts:["глухой, как «с»","звонкий, как «з»"], ok:1, why:"Верно. Тот же язык между зубами, но с голосом"},
+  {stem:'<b>d</b> на конце слова bed', opts:["как «т»","как «д»"], ok:1, why:"Верно. Оглушите и получится bet, то есть «ставка»"},
+  {stem:'<b>r</b> на конце слова teacher', opts:["читается","почти не слышно"], ok:1, why:"Верно. В британском варианте r на конце не произносят"}
+], true);
+
+/* ========== 09. гласные буквосочетания ========== */
+choiceBlock("exVC", [
+  {stem:'r<b>ai</b>n', ru:'дождь', opts:["эй","ай"], ok:0, why:"Верно. ai это «эй»"},
+  {stem:'d<b>ay</b>', ru:'день', opts:["эй","ай"], ok:0, why:"Верно. ay на конце слова тоже «эй»"},
+  {stem:'m<b>ea</b>t', ru:'мясо', opts:["и","э"], ok:0, why:"Верно. Это самый частый вариант ea"},
+  {stem:'h<b>ea</b>d', ru:'голова', opts:["и","э"], ok:1, why:"Верно. Короткое «э»: head, bread, ready"},
+  {stem:'tr<b>ee</b>', ru:'дерево', opts:["и","эй"], ok:0, why:"Верно. ee это всегда долгое «и»"},
+  {stem:'th<b>ey</b>', ru:'они', opts:["эй","и"], ok:0, why:"Верно"},
+  {stem:'n<b>ew</b>', ru:'новый', opts:["ю","у"], ok:0, why:"Верно. ew это «ю»"},
+  {stem:'cr<b>ew</b>', ru:'экипаж', opts:["ю","у"], ok:1, why:"Верно. После r и l получается просто «у»"},
+  {stem:'f<b>ie</b>ld', ru:'поле', opts:["и","ай"], ok:0, why:"Верно. В середине слова ie это «и»"},
+  {stem:'p<b>ie</b>', ru:'пирог', opts:["и","ай"], ok:1, why:"Верно. В конце короткого слова ie это «ай»"},
+  {stem:'b<b>oa</b>t', ru:'лодка', opts:["оу","о"], ok:0, why:"Верно. oa это «оу»"},
+  {stem:'t<b>oy</b>', ru:'игрушка', opts:["ой","оу"], ok:0, why:"Верно. oi и oy это «ой»"},
+  {stem:'b<b>oo</b>k', ru:'книга', opts:["короткое у","долгое у-у"], ok:0, why:"Верно. Перед k обычно короткое"},
+  {stem:'sch<b>oo</b>l', ru:'школа', opts:["короткое у","долгое у-у"], ok:1, why:"Верно. Как в food и moon"},
+  {stem:'h<b>ou</b>se', ru:'дом', opts:["ау","оу"], ok:0, why:"Верно. ou это «ау»"},
+  {stem:'sn<b>ow</b>', ru:'снег', opts:["оу","ау"], ok:0, why:"Верно. Как в know и window"},
+  {stem:'n<b>ow</b>', ru:'сейчас', opts:["оу","ау"], ok:1, why:"Верно. Как в how и town. У ow два равноправных варианта"},
+  {stem:'s<b>aw</b>', ru:'видел', opts:["о","эй"], ok:0, why:"Верно. aw и au дают долгое «о»"}
+]);
+
+/* ========== 11. согласные буквосочетания ========== */
+choiceBlock("exCC", [
+  {stem:'<b>ch</b> в слове cherry', opts:["ч","ш","к"], ok:0, why:"Верно. Обычный вариант"},
+  {stem:'<b>ch</b> в слове machine', opts:["ч","ш","к"], ok:1, why:"Верно. Слово пришло из французского"},
+  {stem:'<b>ch</b> в слове school', opts:["ч","ш","к"], ok:2, why:"Верно. Как в chemistry и Christmas"},
+  {stem:'<b>tch</b> в слове watch', opts:["ч","тч"], ok:0, why:"Верно. t не читается"},
+  {stem:'<b>gh</b> в слове light', opts:["читается","молчит"], ok:1, why:"Верно. Как в night, high, through"},
+  {stem:'<b>gh</b> в слове laugh', opts:["ф","молчит"], ok:0, why:"Верно. После au и ou получается «ф»"},
+  {stem:'<b>ng</b> в слове king', opts:["нг","н в нос"], ok:1, why:"Верно"},
+  {stem:'<b>wh</b> в слове what', opts:["у","х"], ok:0, why:"Верно. Губы трубочкой"},
+  {stem:'<b>wh</b> в слове who', opts:["у","х"], ok:1, why:"Верно. Перед o наоборот: w молчит, слышно «х»"},
+  {stem:'<b>th</b> в слове mother', opts:["з","с"], ok:0, why:"Верно. Звонкий, с голосом"},
+  {stem:'<b>th</b> в слове bathroom', opts:["з","с"], ok:1, why:"Верно. Глухой, без голоса"},
+  {stem:'<b>ph</b> в слове telephone', opts:["ф","п"], ok:0, why:"Верно"}
+], true);
+
+/* ========== 14. немые буквы и окончания ========== */
+choiceBlock("exEnd", [
+  {stem:'<b>k</b> в слове knife', opts:["читается","молчит"], ok:1, why:"Верно. «найф»"},
+  {stem:'<b>b</b> в слове climb', opts:["читается","молчит"], ok:1, why:"Верно. После m буква b молчит: «клайм»"},
+  {stem:'<b>l</b> в слове talk', opts:["читается","молчит"], ok:1, why:"Верно. «то-ок», как в walk"},
+  {stem:'<b>t</b> в слове listen', opts:["читается","молчит"], ok:1, why:"Верно. «лисн»"},
+  {stem:'<b>h</b> в слове hour', opts:["читается","молчит"], ok:1, why:"Верно. «ауэ», как в honest"},
+  {stem:'<b>w</b> в слове answer', opts:["читается","молчит"], ok:1, why:"Верно. «а-анса»"},
+  {stem:'<b>-tion</b> в слове station', opts:["шн","тион"], ok:0, why:"Верно. «стэйшн»"},
+  {stem:'<b>-sion</b> в слове decision', opts:["жн","шн"], ok:0, why:"Верно. После гласной мягче: «дисижн»"},
+  {stem:'<b>-ture</b> в слове picture', opts:["чэ","тюр"], ok:0, why:"Верно. «пикчэ»"},
+  {stem:'<b>-ous</b> в слове famous', opts:["эс","оус"], ok:0, why:"Верно. «фэймэс»"},
+  {stem:'<b>-age</b> в слове message', opts:["идж","эйдж"], ok:0, why:"Верно. «мэсидж»"},
+  {stem:'<b>-le</b> в слове table', opts:["л","ле"], ok:0, why:"Верно. «тэйбл»"}
+]);
+
+/* ========== 15. слова не по правилам ========== */
+vocab("hard", [["have","хэв, а не «хэйв»"],["give","гив"],["live","лив"],
+  ["come","кам"],["some","сам"],["love","лав"],["one","уан"],["done","дан"],
+  ["friend","фрэнд"],["said","сэд"],["says","сэз"],["because","бикоз"],
+  ["busy","бизи"],["business","бизнэс"],["women","уимин"],["does","даз"],
+  ["who","ху"],["eye","ай"],["sure","шуэ"],["many","мэни"]]);
+
+/* ========== 16. прочитайте вслух ========== */
+revealBlock("say", [
+  {ru:"name", en:"нэйм &middot; имя"},
+  {ru:"this", en:"зис &middot; это"},
+  {ru:"car", en:"ка-а &middot; машина"},
+  {ru:"here", en:"хиэ &middot; здесь"},
+  {ru:"teacher", en:"тичэ &middot; учитель"},
+  {ru:"know", en:"ноу &middot; знать"},
+  {ru:"light", en:"лайт &middot; свет"},
+  {ru:"question", en:"куэсчн &middot; вопрос"},
+  {ru:"beautiful", en:"бьютифул &middot; красивый"},
+  {ru:"picture", en:"пикчэ &middot; картинка"},
+  {ru:"friend", en:"фрэнд &middot; друг"},
+  {ru:"busy", en:"бизи &middot; занятой"},
+  {ru:"house", en:"хаус &middot; дом"},
+  {ru:"snow", en:"сноу &middot; снег"},
+  {ru:"watch", en:"уоч &middot; часы, смотреть"},
+  {ru:"Europe", en:"юэрэп &middot; Европа"},
+  {ru:"machine", en:"мэшин &middot; машина, механизм"},
+  {ru:"clothes", en:"клоуз &middot; одежда"},
+  {ru:"answer", en:"а-анса &middot; ответ"},
+  {ru:"bread", en:"брэд &middot; хлеб"}
+]);
+</script>
+
+</body>
+</html>
