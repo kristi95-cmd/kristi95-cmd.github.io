@@ -223,36 +223,32 @@
   <p class="lead">am живёт только с I. С you всегда are.</p>
   <div class="card" id="ex2"></div>
 
-  <h2><span class="num">03</span>Вопрос: am или are в начале</h2>
-  <p class="lead">В вопросе глагол встаёт вперёд: You are from Spain - Are you from Spain?</p>
-  <div class="card" id="ex3"></div>
-
-  <h2><span class="num">04</span>my или your</h2>
+  <h2><span class="num">03</span>my или your</h2>
   <p class="lead">Моё - my, твоё - your. Оба стоят перед словом: my name, your friend.</p>
   <div class="card" id="ex4"></div>
 
-  <h2><span class="num">05</span>Всё вместе</h2>
+  <h2><span class="num">04</span>Всё вместе</h2>
   <p class="lead">Тут вперемешку, смотри на перевод справа.</p>
   <div class="card" id="ex5"></div>
 
 
-  <h2><span class="num">06</span>Какое это число</h2>
+  <h2><span class="num">05</span>Какое это число</h2>
   <p class="lead">Тут важно не спутать похожие: 13 и 30, 14 и 40. И не забыть дефис в составных.</p>
   <div class="card" id="exN"></div>
 
-  <h2><span class="num">07</span>Сколько мне лет</h2>
+  <h2><span class="num">06</span>Сколько мне лет</h2>
   <p class="lead">Возраст по-английски собирается через am: I am thirty. Вариант с have в английском не работает.</p>
   <div class="card" id="exA"></div>
 
-  <h2><span class="num">08</span>Какая фраза правильная</h2>
+  <h2><span class="num">07</span>Какая фраза правильная</h2>
   <p class="lead">В каждой паре одна фраза собрана верно, вторая с типичной ошибкой.</p>
   <div class="card" id="ex6"></div>
 
-  <h2><span class="num">09</span>Собери фразу</h2>
+  <h2><span class="num">08</span>Собери фразу</h2>
   <p class="lead">Нажимай слова в нужном порядке. Нажмёшь слово в строке - вернётся обратно.</p>
   <div class="card" id="ex7"></div>
 
-  <h2><span class="num">10</span>Скажи вслух по-английски</h2>
+  <h2><span class="num">09</span>Скажи вслух по-английски</h2>
   <p class="lead">Сначала скажи сама, вслух, и только потом открывай ответ. Это главное упражнение
   на странице: оно ближе всего к живому разговору.</p>
   <div class="card" id="ex8"></div>
@@ -390,7 +386,6 @@
   choiceBlock("ex1", [
     {stem:'<u></u> am from Moscow.', ru:'я из Москвы', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I"},
     {stem:'<u></u> are my friend.', ru:'ты мой друг', opts:["I","you"], ok:1, why:"Верно"},
-    {stem:'Are <u></u> from Italy?', ru:'ты из Италии?', opts:["I","you"], ok:1, why:"Верно"},
     {stem:'<u></u> am fine, thank you.', ru:'у меня хорошо, спасибо', opts:["I","you"], ok:0, why:"Верно"},
     {stem:'How are <u></u>?', ru:'как дела', opts:["I","you"], ok:1, why:"Верно. Спрашиваешь у собеседника"},
     {stem:'<u></u> am Katya.', ru:'я Катя', opts:["I","you"], ok:0, why:"Верно"},
@@ -416,22 +411,11 @@
     {stem:'You <u></u> from Moscow.', ru:'ты из Москвы', opts:["am","are"], ok:1, why:"Верно"}
   ]);
 
-  /* ========== 03. вопрос ========== */
-  choiceBlock("ex3", [
-    {stem:'<u></u> you from Spain?', ru:'ты из Испании?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
-    {stem:'<u></u> I your friend?', ru:'я твой друг?', opts:["Am","Are"], ok:0, why:"Верно. Про себя am, даже в вопросе"},
-    {stem:'<u></u> you Katya?', ru:'ты Катя?', opts:["Am","Are"], ok:1, why:"Верно"},
-    {stem:'Where <u></u> you from?', ru:'откуда ты', opts:["am","are"], ok:1, why:"Верно"},
-    {stem:'How <u></u> you?', ru:'как дела', opts:["am","are"], ok:1, why:"Верно"},
-    {stem:'<u></u> you from Italy?', ru:'ты из Италии?', opts:["Am","Are"], ok:1, why:"Верно"}
-  ]);
-
   /* ========== 04. my или your ========== */
   choiceBlock("ex4", [
     {stem:'<u></u> name is Katya.', ru:'меня зовут Катя', opts:["My","Your"], ok:0, why:"Верно. Имя моё, значит my"},
     {stem:'What is <u></u> name?', ru:'как тебя зовут', opts:["my","your"], ok:1, why:"Верно. Спрашиваешь чужое имя"},
     {stem:'<u></u> friend is from Spain.', ru:'мой друг из Испании', opts:["My","Your"], ok:0, why:"Верно"},
-    {stem:'Is <u></u> name Anna?', ru:'тебя зовут Анна?', opts:["my","your"], ok:1, why:"Верно"},
     {stem:'<u></u> city is Moscow.', ru:'мой город Москва', opts:["My","Your"], ok:0, why:"Верно"},
     {stem:'Nice to meet you! What is <u></u> name?', ru:'приятно познакомиться, как тебя зовут', opts:["my","your"], ok:1, why:"Верно"},
     {stem:'<u></u> name is Anna.', ru:'меня зовут Анна', opts:["My","Your"], ok:0, why:"Верно"},
@@ -446,7 +430,6 @@
     {stem:'What is <u></u> name?', ru:'как тебя зовут', opts:["you","your","my"], ok:1, why:"Верно. Перед словом name нужен your"},
     {stem:'You <u></u> my friend.', ru:'ты мой друг', opts:["am","are"], ok:1, why:"Верно"},
     {stem:'<u></u> name is Katya.', ru:'меня зовут Катя', opts:["I","My","Me"], ok:1, why:"Верно. Не I name и не me name, а my name"},
-    {stem:'Are <u></u> from Spain?', ru:'ты из Испании?', opts:["I","you","your"], ok:1, why:"Верно"},
     {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
     {stem:'<u></u> friend is from Italy.', ru:'мой друг из Италии', opts:["I","My","Me"], ok:1, why:"Верно"},
     {stem:'How are <u></u>?', ru:'как дела', opts:["I","you","your"], ok:1, why:"Верно"},
@@ -464,7 +447,6 @@
     {stem:'Откуда ты?', opts:["Where are you from?","Where you are from?"], ok:0, why:"Верно. В вопросе are встаёт перед you"},
     {stem:'Как тебя зовут?', opts:["What is your name?","What is you name?"], ok:0, why:"Верно. Перед name нужен your"},
     {stem:'У меня всё хорошо, спасибо.', opts:["I am fine, thank you.","I fine, thank you."], ok:0, why:"Верно. Без am предложение разваливается, в английском глагол нужен всегда"},
-    {stem:'Ты из Испании?', opts:["Are you from Spain?","You are from Spain?"], ok:0, why:"Верно. Чтобы получился вопрос, are идёт первым"},
     {stem:'Приятно познакомиться.', opts:["Nice to meet you.","Nice to meet your."], ok:0, why:"Верно. your только перед словом: your name, your friend"}
   ], true);
 
@@ -473,7 +455,6 @@
     {words:["am","I","from","Moscow"], ok:"I am from Moscow", ru:"я из Москвы"},
     {words:["is","What","name","your"], ok:"What is your name", ru:"как тебя зовут"},
     {words:["friend","My","is","from","Italy"], ok:"My friend is from Italy", ru:"мой друг из Италии"},
-    {words:["you","Are","Spain","from"], ok:"Are you from Spain", ru:"ты из Испании?"},
     {words:["are","How","you"], ok:"How are you", ru:"как дела"},
     {words:["name","My","Anna","is"], ok:"My name is Anna", ru:"меня зовут Анна"},
     {words:["from","Where","are","you"], ok:"Where are you from", ru:"откуда ты"},
@@ -488,7 +469,6 @@
     {ru:"Меня зовут Анна.", en:"My name is Anna."},
     {ru:"Откуда ты?", en:"Where are you from?"},
     {ru:"Я из России.", en:"I am from Russia."},
-    {ru:"Ты из Италии?", en:"Are you from Italy?"},
     {ru:"Как дела?", en:"How are you?"},
     {ru:"Хорошо, спасибо. А ты?", en:"I am fine, thank you. And you?"},
     {ru:"Приятно познакомиться!", en:"Nice to meet you!"},
@@ -521,7 +501,6 @@
     {stem:'Мне сорок восемь лет.', opts:["I am forty-eight years.","I am forty-eight years old."], ok:1, why:"Верно. Либо просто I am forty-eight, либо полностью с old"},
     {stem:'Сколько тебе лет?', opts:["How old are you?","How many old are you?"], ok:0, why:"Верно"},
     {stem:'Мне шестнадцать.', opts:["Me is sixteen.","I am sixteen."], ok:1, why:"Верно. Про себя всегда I am"},
-    {stem:'Тебе двадцать один?', opts:["Are you twenty-one?","You are twenty-one?"], ok:0, why:"Верно. В вопросе are идёт первым"},
     {stem:'Мне тридцать три.', opts:["I am thirty three.","I am thirty-three."], ok:1, why:"Верно. В составных числах дефис обязателен"},
     {stem:'Мне девятнадцать лет.', opts:["I am nineteen years old.","I am ninety years old."], ok:0, why:"Верно. nineteen это 19"}
   ], true);
