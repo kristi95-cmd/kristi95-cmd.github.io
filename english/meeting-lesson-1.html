@@ -101,6 +101,10 @@
   .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
   .ans.show{display:block}
   .pair{margin:10px 0}
+  .say{display:flex; gap:10px; align-items:baseline; font-size:17px; font-weight:600;
+    padding:10px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; color:var(--mute); font-weight:700; font-size:13px; min-width:20px}
   .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
 
   /* диалог */
@@ -133,7 +137,8 @@
   }
   @media print{
     body{background:#fff}
-    .bar,.rev,.screen-only{display:none !important}
+    .bar,.screen-only{display:none !important}
+    .rev{background:none; padding:0 0 2px; font-weight:600; color:var(--soft); font-size:16px}
     .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
     .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
     .wrap{max-width:none; padding:0}
@@ -178,14 +183,6 @@
   .wr.y{background:var(--ok-bg); color:var(--ok)}
   .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
 
-  /* ---------- числа ---------- */
-  .numgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:4px 0}
-  .ni{display:flex; gap:10px; align-items:baseline; padding:7px 0; border-bottom:1px solid var(--line)}
-  .ni b{min-width:28px; color:var(--accent); font-weight:800; font-size:15px}
-  .ni span{font-weight:700; font-size:16px}
-  .ni i{font-style:normal; color:var(--mute); font-size:13px; margin-left:auto}
-  @media (max-width:520px){ .numgrid{grid-template-columns:repeat(2,1fr)} }
-
   /* ---------- словарь ---------- */
   .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
   .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
@@ -215,51 +212,67 @@
   </div>
 
   <div class="card goals">
-    <div class="goal"><span>&rarr;</span><div>К концу занятия ты знакомишься с человеком сама, от «привет» до «до свидания».</div></div>
-    <div class="goal"><span>&rarr;</span><div>Два слова-ключа: <b>I</b> это я, <b>you</b> это ты.</div></div>
+    <div class="goal"><span>&rarr;</span><div>К концу занятия вы знакомитесь с человеком сами, от «привет» до «до свидания».</div></div>
+    <div class="goal"><span>&rarr;</span><div>Два слова-ключа: <b>I</b> это я, <b>you</b> это ты и вы сразу.</div></div>
     <div class="goal"><span>&rarr;</span><div>Главное правило: в английском предложении обязательно нужен глагол. Сегодня это <b>am</b> и <b>are</b>.</div></div>
   </div>
 
-  <div class="note"><b>Как мы с этим работаем.</b> Этот лист мы разбираем вместе на занятии: читаем правило, тут же делаем упражнение к нему, говорим вслух. Дома ты по нему же повторяешь, искать ничего не нужно.</div>
+  <div class="note"><b>Как мы с этим работаем.</b> Этот лист мы разбираем вместе на занятии: читаем правило, тут же делаем упражнение к нему, говорим вслух. Дома вы по нему же повторяете, искать ничего не нужно.</div>
 
   <div class="tag">правило</div>
   <h2><span class="num">01</span>I и you: без них предложение не живёт</h2>
 
   <div class="card">
-    <p>По-русски мы спокойно говорим <b>«Катя»</b> в ответ на вопрос об имени, и этого достаточно. По-английски в предложении почти всегда должно быть названо, о ком идёт речь.</p>
+    <p>Любая английская фраза начинается с того, <b>о ком она</b>. По-русски можно ответить одним словом: «Анна», «из Санкт-Петербурга», «хорошо, спасибо», и всем всё понятно. По-английски так не говорят: сначала называют, кто это, и только потом всё остальное.</p>
+    <p>Сегодня нам нужны два таких слова. Они и есть самые частые слова в языке.</p>
     <div class="conj">
-      <div class="p">I</div><div class="v">я</div><div class="r">всегда с большой буквы, в любом месте фразы</div>
-      <div class="p">you</div><div class="v">ты, вы</div><div class="r">одно слово и на «ты», и на «вы»</div>
+      <div class="p">I</div><div class="v">я</div><div class="r">говорю про себя</div>
+      <div class="p">you</div><div class="v">ты, вы</div><div class="r">говорю про того, с кем разговариваю</div>
     </div>
-    <p><b>Про большую букву.</b> <b>I</b> пишется с заглавной всегда, даже в середине предложения: <b>Hello, I am Katya</b>. Это единственное такое слово в языке, привыкнуть легко.</p>
-    <p><b>Про «ты» и «вы».</b> Выбирать не нужно, выбора нет. Одно <b>you</b> для подруги, для начальника и для группы людей сразу. Для нас это странно, а для них нормально: вежливость передаётся не местоимением, а словами <b>please</b> и <b>sorry</b>.</p>
+
+    <p><b>Как выбрать, какое поставить.</b> Вопрос всего один: <b>про кого эта фраза?</b> Про себя - значит <b>I</b>. Про собеседника, то есть про того человека, с которым вы сейчас говорите, - значит <b>you</b>. Больше ничего знать не нужно, третьего варианта сегодня не будет.</p>
+
+    <div class="conj conj4">
+      <div class="p">I am Anna.</div><div class="v">я Анна</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">You are Max.</div><div class="v">вы Макс</div><div class="sh">про собеседника</div><div class="r">you</div>
+      <div class="p">I am from Russia.</div><div class="v">я из России</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">Where are you from?</div><div class="v">откуда вы</div><div class="sh">спрашиваю собеседника</div><div class="r">you</div>
+      <div class="p">I am fine, thank you.</div><div class="v">у меня хорошо, спасибо</div><div class="sh">про себя</div><div class="r">I</div>
+      <div class="p">How are you?</div><div class="v">как дела</div><div class="sh">спрашиваю собеседника</div><div class="r">you</div>
+    </div>
+
+    <p>Обратите внимание на последние две строчки. По-русски мы говорим «как дела», вообще без слова «у тебя», а англичанин обязательно скажет <b>how are you</b>, то есть «как есть вы». Пропустить это слово нельзя.</p>
+
     <div class="wrong-right">
-      <div class="wr n">Am Katya<small>не сказано, кто это</small></div>
-      <div class="wr y">I am Katya<small>вот теперь понятно</small></div>
+      <div class="wr n">Am Anna<small>не сказано, кто это</small></div>
+      <div class="wr y">I am Anna<small>вот теперь понятно</small></div>
     </div>
+
+    <p><b>Про большую букву.</b> <b>I</b> пишется с заглавной всегда, даже в середине предложения: <b>Hello, I am Anna</b>. Это единственное такое слово в языке, привыкнуть легко.</p>
+    <p><b>Про «ты» и «вы».</b> Выбирать не нужно, выбора нет. Одно <b>you</b> для подруги, для начальника и для группы людей сразу. Для нас это странно, а для них нормально: вежливость передаётся не местоимением, а словами <b>please</b> и <b>sorry</b>.</p>
   </div>
 
   <div class="tag">правило</div>
   <h2><span class="num">02</span>Глагол to be: am и are</h2>
 
   <div class="card">
-    <p>По-русски между «я» и «Катя» ничего не нужно: <b>«я Катя»</b> звучит нормально. По-английски так нельзя. В предложении обязательно должен стоять глагол, иначе это просто два слова рядом.</p>
+    <p>По-русски между «я» и «Анна» ничего не нужно: <b>«я Анна»</b> звучит нормально. По-английски так нельзя. В предложении обязательно должен стоять глагол, иначе это просто два слова рядом.</p>
     <div class="wrong-right">
-      <div class="wr n">I Katya<small>глагола нет, предложение не собралось</small></div>
-      <div class="wr y">I am Katya<small>теперь это фраза</small></div>
+      <div class="wr n">I Anna<small>глагола нет, предложение не собралось</small></div>
+      <div class="wr y">I am Anna<small>теперь это фраза</small></div>
     </div>
-    <p>Глагол называется <b>to be</b>. На русский он почти никогда не переводится, но стоять обязан. Примерно как наше «есть» в старых оборотах: «я есть Катя».</p>
+    <p>Глагол называется <b>to be</b>. На русский он почти никогда не переводится, но стоять обязан. Примерно как наше «есть» в старых оборотах: «я есть Анна».</p>
     <p>Главная особенность: он меняется в зависимости от того, о ком речь. Сегодня нам нужны две его формы.</p>
     <div class="conj">
-      <div class="p">I</div><div class="v">am</div><div class="r">I am Katya. I am from Russia.</div>
-      <div class="p">You</div><div class="v">are</div><div class="r">You are Robert. You are from Moscow.</div>
+      <div class="p">I</div><div class="v">am</div><div class="r">I am Anna. I am from Russia.</div>
+      <div class="p">You</div><div class="v">are</div><div class="r">You are Max. You are from St. Petersburg.</div>
     </div>
-    <p><b>Как говорят в жизни.</b> Полные формы произносят редко, обычно сокращают: <b>I'm</b> вместо <b>I am</b> и <b>you're</b> вместо <b>you are</b>. Пишется через апостроф, слышится слитно. Знать это нужно сразу, иначе в чужой речи ты их не узнаешь.</p>
+    <p><b>Как говорят в жизни.</b> Полные формы произносят редко, обычно сокращают: <b>I'm</b> вместо <b>I am</b> и <b>you're</b> вместо <b>you are</b>. Пишется через апостроф, слышится слитно. Знать это нужно сразу, иначе в чужой речи вы их не узнаете.</p>
   </div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">03</span>I или you</h2>
-  <p class="lead screen-only">Выбираем правильный вариант. Если не тот, просто нажми другой.</p>
+  <p class="lead screen-only">Смотрим, про кого фраза, и заодно на глагол: <b>am</b> бывает только с <b>I</b>, <b>are</b> только с <b>you</b>. Если вариант не тот, просто нажмите другой.</p>
   <div class="card" id="ex1"></div>
 
   <div class="tag pr">практика</div>
@@ -271,12 +284,12 @@
 
   <div class="card">
     <div class="conj">
-      <div class="p">my</div><div class="v">мой, моя, моё</div><div class="r">My name is Katya.</div>
+      <div class="p">my</div><div class="v">мой, моя, моё</div><div class="r">My name is Anna.</div>
       <div class="p">your</div><div class="v">твой, ваш</div><div class="r">What is your name?</div>
     </div>
-    <p><b>Тут английский устроен не как русский.</b> Мы говорим «меня зовут Катя», то есть про действие: кто-то меня как-то зовёт. Англичанин говорит <b>my name is Katya</b>, дословно «моё имя есть Катя». Никто никого не зовёт, просто имя принадлежит мне.</p>
+    <p><b>Тут английский устроен не как русский.</b> Мы говорим «меня зовут Анна», то есть про действие: кто-то меня как-то зовёт. Англичанин говорит <b>my name is Anna</b>, дословно «моё имя есть Анна». Никто никого не зовёт, просто имя принадлежит мне.</p>
     <p>Поэтому и вопрос строится так же: <b>what is your name?</b> - дословно «какое есть твоё имя». Запоминать это удобнее целой фразой, а не по словам.</p>
-    <p>Сказать о себе можно двумя способами, оба правильные: <b>I am Katya</b> короче, <b>my name is Katya</b> чуть официальнее.</p>
+    <p>Сказать о себе можно двумя способами, оба правильные: <b>I am Anna</b> короче, <b>my name is Anna</b> чуть официальнее.</p>
   </div>
 
   <div class="tag pr">практика</div>
@@ -284,7 +297,41 @@
   <div class="card" id="ex3"></div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">07</span>Привет и пока</h2>
+  <h2><span class="num">07</span>Кем вы работаете: I am a doctor</h2>
+
+  <div class="card">
+    <p>Профессия говорится тем же глаголом, что и имя: <b>I am a doctor</b>. Разница с русским одна, но важная: перед названием профессии обязательно стоит маленькое слово <b>a</b>.</p>
+    <div class="wrong-right">
+      <div class="wr n">I am doctor<small>для них звучит оборванно</small></div>
+      <div class="wr y">I am a doctor<small>так правильно</small></div>
+    </div>
+    <p><b>Что такое это <em>a</em>.</b> Это не «один» в смысле счёта. <b>a</b> значит «один из многих, такой же, как другие»: врач вообще, а не какой-то конкретный. В русском такого слова нет совсем, поэтому его всё время забывают. С профессиями оно нужно всегда.</p>
+    <p><b>Когда вместо <em>a</em> ставится <em>an</em>.</b> Если слово начинается с гласного звука, говорить <b>a</b> неудобно, язык спотыкается. Тогда добавляется <b>n</b>: <b>an architect</b>, <b>an engineer</b>, <b>an actor</b>. Правило простое: смотрим на первый звук слова, а не на букву.</p>
+    <div class="conj">
+      <div class="p">a</div><div class="v">перед согласным звуком</div><div class="r">a doctor, a teacher, a driver, a cook</div>
+      <div class="p">an</div><div class="v">перед гласным звуком</div><div class="r">an architect, an engineer, an actor, an artist</div>
+    </div>
+    <p><b>Как спрашивают о профессии.</b> Вопрос звучит неожиданно: <b>What do you do?</b> - дословно «что вы делаете». Это и есть «кем вы работаете». Запоминать лучше целиком, как одну фразу, разбирать её по словам мы будем позже.</p>
+    <div class="conj">
+      <div class="p">What do you do?</div><div class="v">кем вы работаете</div><div class="r">I am a teacher. And you?</div>
+    </div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">08</span>Профессии: слова к заданию</h2>
+  <p class="lead">Эти слова нужны в следующем задании. Сначала читаем их вслух и разбираем, где <b>a</b>, а где <b>an</b>, и только потом делаем упражнение.</p>
+  <div class="card">
+    <div class="voc" id="voc3"></div>
+  </div>
+  <div class="note">Слово <b>an</b> стоит там, где название профессии начинается с гласного звука: <b>an architect</b>, <b>an engineer</b>, <b>an actor</b>. В остальных случаях <b>a</b>.</div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>a или an</h2>
+  <p class="lead screen-only">Смотрим на первый звук слова.</p>
+  <div class="card" id="ex7"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">10</span>Привет и пока</h2>
 
   <div class="card">
     <h3>Когда здороваешься</h3>
@@ -304,15 +351,15 @@
       <div class="p">Have a nice day!</div><div class="v">хорошего дня</div><div class="sh">вежливо и тепло</div><div class="r"></div>
     </div>
 
-    <div class="note"><b>Про «How are you?».</b> Это не вопрос о твоём самочувствии и не приглашение рассказать, как идут дела. Это часть приветствия, вроде нашего «как сам?» на бегу. Отвечают коротко и возвращают вопрос: <b>I am fine, thank you. And you?</b> Подробный рассказ тут собеседника удивит.</p></div>
+    <div class="note"><b>Про «How are you?».</b> Это не вопрос о вашем самочувствии и не приглашение рассказать, как идут дела. Это часть приветствия, вроде нашего «как сам?» на бегу. Отвечают коротко и возвращают вопрос: <b>I am fine, thank you. And you?</b> Подробный рассказ тут собеседника удивит.</p></div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">08</span>Что сказать в этой ситуации</h2>
+  <h2><span class="num">11</span>Что сказать в этой ситуации</h2>
   <div class="card" id="ex4"></div>
 
   <div class="tag wd">слова</div>
-  <h2><span class="num">09</span>Слова урока</h2>
+  <h2><span class="num">12</span>Слова урока</h2>
 
   <h3>Откуда я</h3>
   <div class="card">
@@ -324,155 +371,48 @@
     <div class="voc" id="voc2"></div>
   </div>
 
-  <div class="note">Англичане вежливые, и это не формальность. <b>Please</b> и <b>sorry</b> добавляют почти в каждую просьбу, и без них фраза звучит как команда, даже если ты так не думала.</div>
+  <div class="note">Англичане вежливые, и это не формальность. <b>Please</b> и <b>sorry</b> добавляют почти в каждую просьбу, и без них фраза звучит как команда, даже если вы так не думали.</div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">10</span>Как знакомиться: порядок разговора</h2>
+  <h2><span class="num">13</span>Как знакомиться: порядок разговора</h2>
 
   <div class="card">
     <p>Знакомство почти всегда идёт по одной и той же дорожке. Если запомнить порядок, думать придётся только над словами, а не над тем, что сказать дальше.</p>
     <div class="conj conj4">
       <div class="p">1</div><div class="v">Hello!</div><div class="sh">поздоровалась</div><div class="r"></div>
-      <div class="p">2</div><div class="v">I am Katya.</div><div class="sh">назвала себя</div><div class="r"></div>
+      <div class="p">2</div><div class="v">I am Anna.</div><div class="sh">назвала себя</div><div class="r"></div>
       <div class="p">3</div><div class="v">What is your name?</div><div class="sh">спросила имя</div><div class="r"></div>
       <div class="p">4</div><div class="v">Nice to meet you.</div><div class="sh">обязательная вежливость</div><div class="r"></div>
       <div class="p">5</div><div class="v">Where are you from?</div><div class="sh">продолжила разговор</div><div class="r"></div>
       <div class="p">6</div><div class="v">I am from Russia.</div><div class="sh">рассказала о себе</div><div class="r"></div>
       <div class="p">7</div><div class="v">Goodbye! See you!</div><div class="sh">попрощалась</div><div class="r"></div>
     </div>
-    <div class="note"><b>Главное слово для продолжения разговора - <em>And you?</em></b> Ответил на вопрос - верни его собеседнику. Так разговор не обрывается, даже если слов у тебя пока мало.</div>
+    <div class="note"><b>Главное слово для продолжения разговора - <em>And you?</em></b> Ответили на вопрос - верните его собеседнику. Так разговор не обрывается, даже если слов у вас пока мало.</div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">11</span>Собери фразу</h2>
-  <p class="lead screen-only">Нажимай слова по порядку. Слово из строки можно вернуть назад.</p>
+  <h2><span class="num">14</span>Собери фразу</h2>
+  <p class="lead screen-only">Нажимайте слова по порядку. Слово из строки можно вернуть назад.</p>
   <div class="card build" id="ex5"></div>
 
-  <div class="tag pr">практика</div>
-  <h2><span class="num">12</span>Скажи вслух по-английски</h2>
-  <p class="lead">Сначала скажи сама, вслух, и только потом открывай ответ.</p>
-  <div class="card" id="ex6"></div>
-
-  <div class="tag">правило</div>
-  <h2><span class="num">13</span>Числа от 1 до 20</h2>
-
-  <div class="card">
-    <p>Числа придётся выучить списком, но список короткий и устроен логично, так что это быстрее, чем кажется.</p>
-    <p><b>От 1 до 12</b> слова ни на что не похожи, их просто запоминаем.</p>
-    <p><b>С 13 начинается система:</b> берём знакомое число и прибавляем к нему <b>-teen</b>. four плюс teen - fourteen, six плюс teen - sixteen. Само слово teen значит «подросток», отсюда и teenager: человек, которому от тринадцати до девятнадцати.</p>
-    <p>Три числа при этом слегка меняются, их проверяем отдельно: three - <b>thirteen</b>, five - <b>fifteen</b>, eight - <b>eighteen</b> (одна t, а не две).</p>
-    <div class="numgrid">
-      <div class="ni"><b>1</b><span>one</span></div>
-      <div class="ni"><b>2</b><span>two</span></div>
-      <div class="ni"><b>3</b><span>three</span></div>
-      <div class="ni"><b>4</b><span>four</span></div>
-      <div class="ni"><b>5</b><span>five</span></div>
-      <div class="ni"><b>6</b><span>six</span></div>
-      <div class="ni"><b>7</b><span>seven</span></div>
-      <div class="ni"><b>8</b><span>eight</span></div>
-      <div class="ni"><b>9</b><span>nine</span></div>
-      <div class="ni"><b>10</b><span>ten</span></div>
-      <div class="ni"><b>11</b><span>eleven</span></div>
-      <div class="ni"><b>12</b><span>twelve</span></div>
-      <div class="ni"><b>13</b><span>thirteen</span></div>
-      <div class="ni"><b>14</b><span>fourteen</span></div>
-      <div class="ni"><b>15</b><span>fifteen</span></div>
-      <div class="ni"><b>16</b><span>sixteen</span></div>
-      <div class="ni"><b>17</b><span>seventeen</span></div>
-      <div class="ni"><b>18</b><span>eighteen</span></div>
-      <div class="ni"><b>19</b><span>nineteen</span></div>
-      <div class="ni"><b>20</b><span>twenty</span></div>
-    </div>
-  </div>
-
-  <div class="tag">правило</div>
-  <h2><span class="num">14</span>Десятки и числа до 50</h2>
-
-  <div class="card">
-    <p>Десятки собираются тем же способом, только окончание другое: <b>-ty</b> вместо -teen.</p>
-    <div class="numgrid">
-      <div class="ni"><b>20</b><span>twenty</span></div>
-      <div class="ni"><b>30</b><span>thirty</span></div>
-      <div class="ni"><b>40</b><span>forty</span></div>
-      <div class="ni"><b>50</b><span>fifty</span></div>
-    </div>
-    <p><b>Что здесь важно.</b> Слово <b>forty</b> пишется без u, хотя four - с u. Логики нет, это просто запоминают. И так же, как в teen, меняются three и five: thirty и fifty.</p>
-    <p><b>Составные числа пишутся через дефис</b>, а порядок слов тот же, что в русском: сначала десяток, потом единица.</p>
-    <div class="numgrid">
-      <div class="ni"><b>21</b><span>twenty-one</span></div>
-      <div class="ni"><b>25</b><span>twenty-five</span></div>
-      <div class="ni"><b>33</b><span>thirty-three</span></div>
-      <div class="ni"><b>38</b><span>thirty-eight</span></div>
-      <div class="ni"><b>42</b><span>forty-two</span></div>
-      <div class="ni"><b>47</b><span>forty-seven</span></div>
-    </div>
-    <div class="note"><b>Главная ловушка английских чисел.</b> На письме thirteen и thirty не спутать, а на слух они похожи, и путают их все, включая людей с хорошим английским. Разница в ударении: thir<b>TEEN</b> тянется к концу слова, <b>THIR</b>ty падает на начало. Так же fif<b>TEEN</b> и <b>FIF</b>ty, four<b>TEEN</b> и <b>FOR</b>ty. Если не расслышала цену или возраст, нормально переспросить: <b>Sorry, thirteen or thirty?</b></div>
-  </div>
-
-  <div class="tag pr">практика</div>
-  <h2><span class="num">15</span>Какое это число</h2>
-  <p class="lead screen-only">Смотрим на цифру и выбираем слово. Тут важно именно не спутать похожие.</p>
-  <div class="card" id="exNum"></div>
-
-  <div class="tag">правило</div>
-  <h2><span class="num">16</span>Сколько мне лет</h2>
-
-  <div class="card">
-    <p>Это первое место, где английский расходится с русским сильно, поэтому разберём медленно.</p>
-    <p>По-русски мы говорим «<b>мне</b> тридцать лет»: получается, что возраст как будто приходит ко мне со стороны. По-английски человек своим возрастом <b>является</b>, и предложение собирается через уже знакомый нам глагол: <b>I am thirty</b>, дословно «я есть тридцать».</p>
-    <p>Отсюда и схема, по которой строится фраза:</p>
-    <div class="conj">
-      <div class="p">I am</div><div class="v">30</div><div class="r">I am thirty. - мне тридцать</div>
-      <div class="p">I am</div><div class="v">30 years old</div><div class="r">I am thirty years old. - мне тридцать лет</div>
-    </div>
-    <p>Оба варианта правильные. Короткий <b>I am thirty</b> звучит в живой речи чаще, полный <b>I am thirty years old</b> дословно значит «я тридцать лет старый» и годится везде.</p>
-    <p><b>Вопрос</b> строится от слова old, то есть «старый»: <b>How old are you?</b> - дословно «насколько старый ты». По-русски так спросить было бы странно, а по-английски это обычный нейтральный вопрос, никакой грубости в нём нет.</p>
-    <p>Ответить можно целой фразой или одним числом, как и в русском: <b>I am thirty.</b> или просто <b>Thirty.</b></p>
-    <div class="wrong-right">
-      <div class="wr n">I have thirty years<small>так говорят во французском и испанском, в английском это ошибка</small></div>
-      <div class="wr y">I am thirty<small>возрастом человек является</small></div>
-    </div>
-    <div class="wrong-right">
-      <div class="wr n">I am thirty year old<small>лет несколько, значит нужно множественное</small></div>
-      <div class="wr y">I am thirty years old<small>years с s</small></div>
-    </div>
-    <div class="wrong-right">
-      <div class="wr n">How many years are you?<small>дословный перевод с русского, так не спрашивают</small></div>
-      <div class="wr y">How old are you?<small>единственный рабочий вариант</small></div>
-    </div>
-    <div class="note">Про чужой возраст - <b>How old is your friend?</b> - нужна третья форма глагола, is. Её возьмём на следующем занятии, сегодня говорим только про себя и про собеседника.</div>
-  </div>
-
-  <div class="tag pr">практика</div>
-  <h2><span class="num">17</span>Возраст: выбери, собери, скажи</h2>
-
-  <div class="card" id="exAge1"></div>
-
-  <h3>Собери фразу из слов</h3>
-  <div class="card build" id="exAge2"></div>
-
-  <h3>Скажи вслух, потом открой ответ</h3>
-  <div class="card" id="exAge3"></div>
-
   <div class="tag sp">разговор</div>
-  <h2><span class="num">18</span>Диалог: первое знакомство</h2>
-  <p class="lead">Прочитай вслух по ролям, потом спрячь одну роль и говори за неё сама.</p>
+  <h2><span class="num">15</span>Диалог: первое знакомство</h2>
+  <p class="lead">Прочитайте вслух по ролям, потом спрячьте одну роль и говорите за неё сами.</p>
 
   <div class="card">
     <div class="dlg" id="dlg">
       <div class="a"><span class="who">A</span><span class="ln">Hello!</span><span class="tr">привет</span></div>
       <div class="b"><span class="who">B</span><span class="ln">Hi!</span><span class="tr">привет</span></div>
-      <div class="a"><span class="who">A</span><span class="ln">My name is Katya. What is your name?</span><span class="tr">меня зовут Катя, а тебя</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">My name is Anna. What is your name?</span><span class="tr">меня зовут Анна, а вас</span></div>
       <div class="b"><span class="who">B</span><span class="ln">My name is Tom. Nice to meet you!</span><span class="tr">меня зовут Том, приятно познакомиться</span></div>
       <div class="a"><span class="who">A</span><span class="ln">Nice to meet you too. How are you?</span><span class="tr">и мне приятно, как дела</span></div>
-      <div class="b"><span class="who">B</span><span class="ln">I am fine, thank you. And you?</span><span class="tr">хорошо, спасибо, а у тебя</span></div>
-      <div class="a"><span class="who">A</span><span class="ln">I am fine too. Where are you from?</span><span class="tr">у меня тоже хорошо, откуда ты</span></div>
-      <div class="b"><span class="who">B</span><span class="ln">I am from Spain. And you?</span><span class="tr">я из Испании, а ты</span></div>
-      <div class="a"><span class="who">A</span><span class="ln">I am from Russia. I am from Moscow.</span><span class="tr">я из России, из Москвы</span></div>
-      <div class="b"><span class="who">B</span><span class="ln">Nice! How old are you?</span><span class="tr">здорово, сколько тебе лет</span></div>
-      <div class="a"><span class="who">A</span><span class="ln">I am twenty-five. And you?</span><span class="tr">мне двадцать пять, а тебе</span></div>
-      <div class="b"><span class="who">B</span><span class="ln">I am thirty years old.</span><span class="tr">мне тридцать лет</span></div>
-      <div class="b"><span class="who">B</span><span class="ln">Cool! Goodbye, Katya. See you!</span><span class="tr">классно, до свидания, Катя, увидимся</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am fine, thank you. And you?</span><span class="tr">хорошо, спасибо, а у вас</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am fine too. Where are you from?</span><span class="tr">у меня тоже хорошо, откуда вы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am from Spain. And you?</span><span class="tr">я из Испании, а вы</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am from Russia. I am from St. Petersburg.</span><span class="tr">я из России, из Санкт-Петербурга</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Nice! What do you do?</span><span class="tr">здорово, кем вы работаете</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am a doctor. And you?</span><span class="tr">я врач, а вы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am an architect. Goodbye, Anna. See you!</span><span class="tr">я архитектор, до свидания, Анна, увидимся</span></div>
       <div class="a"><span class="who">A</span><span class="ln">Goodbye, Tom!</span><span class="tr">до свидания, Том</span></div>
     </div>
     <div class="bar">
@@ -481,46 +421,48 @@
     </div>
   </div>
 
-  <div class="tag sp">домашка</div>
-  <h2><span class="num">19</span>Домашнее задание</h2>
-
-  <div class="hw">
-    <h3>первое задание, голосовое</h3>
-    <p>Запиши голосовое на 20-30 секунд: поздоровайся, назови себя, скажи откуда ты, сколько тебе лет, и попрощайся. Как будто знакомишься с человеком в поездке.</p>
-    <p class="small">Не читай с листа и не готовь текст заранее. Сбилась - начни фразу заново и продолжай, так и надо.</p>
-  </div>
-
-  <div class="hw">
-    <h3>второе задание, письменно</h3>
-    <p>Пришли текстом числа словами: 6, 13, 19, 30, 41, 50 и число своих лет. Потом три фразы про возраст: две про себя, одна вопросом к собеседнику. Про третьего человека пока не пишем, там нужна форма is, её возьмём на следующем занятии.</p>
-    <p class="small">Дефис в составных числах не теряй: сорок один это forty-one.</p>
-  </div>
-
-  <div class="note">Задание каждый раз будет разное: иногда голосовое, иногда письменно, иногда слова или чтение вслух. Навыки разные, и качать их надо по очереди, а не все сразу.</div>
-
-  <div class="tag">итог</div>
-  <h2><span class="num">20</span>Фразы урока</h2>
-  <p class="lead">Всё, что мы сегодня разобрали, одним списком. Кнопка «спрятать перевод» пригодится дома, когда будешь проверять себя.</p>
+  <div class="tag wd">фразы</div>
+  <h2><span class="num">16</span>Фразы урока</h2>
+  <p class="lead">Всё, что мы сегодня разобрали, собрано здесь. Эти фразы и есть результат занятия: по ним видно, зачем были нужны am, are, my и your. Кнопка «спрятать перевод» пригодится дома, когда будете проверять себя.</p>
 
   <div class="card" id="phrasesCard">
     <div class="ph"><div class="n">01</div><div class="txt"><div class="en">Hello!</div><div class="ru">здравствуй, привет</div></div></div>
     <div class="ph"><div class="n">02</div><div class="txt"><div class="en">Hi!</div><div class="ru">привет, попроще</div></div></div>
-    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">I am Katya.</div><div class="ru">я Катя</div></div></div>
-    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">My name is Katya.</div><div class="ru">меня зовут Катя</div></div></div>
-    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как тебя зовут</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">I am Anna.</div><div class="ru">я Анна</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">My name is Anna.</div><div class="ru">меня зовут Анна</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как вас зовут</div></div></div>
     <div class="ph"><div class="n">06</div><div class="txt"><div class="en">Nice to meet you.</div><div class="ru">приятно познакомиться</div></div></div>
-    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда ты</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда вы</div></div></div>
     <div class="ph"><div class="n">08</div><div class="txt"><div class="en">I am from Russia.</div><div class="ru">я из России</div></div></div>
     <div class="ph"><div class="n">09</div><div class="txt"><div class="en">How are you?</div><div class="ru">как дела</div></div></div>
     <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I am fine, thank you.</div><div class="ru">хорошо, спасибо</div></div></div>
-    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">How old are you?</div><div class="ru">сколько тебе лет</div></div></div>
-    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">I am twenty-five years old.</div><div class="ru">мне двадцать пять лет</div></div></div>
-    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">Goodbye!</div><div class="ru">до свидания</div></div></div>
-    <div class="ph"><div class="n">14</div><div class="txt"><div class="en">See you!</div><div class="ru">увидимся</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">I am a doctor.</div><div class="ru">я врач</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">Goodbye!</div><div class="ru">до свидания</div></div></div>
+    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">See you!</div><div class="ru">увидимся</div></div></div>
     <div class="bar">
       <button class="btn" id="hideRu">Спрятать перевод</button>
     </div>
   </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">17</span>Скажи вслух по-английски</h2>
+  <p class="lead">Последнее задание, и самое важное: здесь всё, что было на занятии, собирается вместе. Читаем русскую фразу и говорим её по-английски вслух, по памяти.</p>
+  <div class="card" id="ex6"></div>
+
+  <h3>Теперь отдельные слова</h3>
+  <p class="lead">То же самое, но короче: смотрим на русское слово и называем английское по памяти.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag sp">домашка</div>
+  <h2><span class="num">18</span>Домашнее задание</h2>
+
+  <div class="hw">
+    <h3>одно задание</h3>
+    <p>Запишите голосовое на 20-30 секунд: поздоровайтесь, назовите себя, скажите откуда вы и попрощайтесь. Как будто знакомитесь с человеком в поездке.</p>
+    <p class="small">Не читайте с листа и не готовьте текст заранее. Сбились - начните фразу заново и продолжайте, так и надо.</p>
+  </div>
+
+  <div class="note">Задание каждый раз будет разное: иногда голосовое, иногда письменно, иногда слова или чтение вслух. Навыки разные, и качать их надо по очереди, а не все сразу.</div>
 
   <div class="foot">Кристина &middot; английский для поездок и живого общения</div>
 </div>
@@ -643,121 +585,121 @@
   }
 
 
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var w = document.createElement("div"); w.className = "say";
+      var n = document.createElement("i"); n.textContent = (i+1) + ".";
+      var a = document.createElement("div"); a.textContent = t;
+      w.appendChild(n); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
   /* ========== 03. I или you ========== */
   choiceBlock("ex1", [
-    {stem:'<u></u> am Katya.', ru:'я Катя', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I, и всегда с большой буквы"},
-    {stem:'<u></u> are from Moscow.', ru:'ты из Москвы', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am Anna.', ru:'я Анна', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I, и всегда с большой буквы"},
+    {stem:'<u></u> are from St. Petersburg.', ru:'вы из Санкт-Петербурга', opts:["I","you"], ok:1, why:"Верно"},
     {stem:'<u></u> am from Russia.', ru:'я из России', opts:["I","you"], ok:0, why:"Верно"},
-    {stem:'<u></u> are Robert.', ru:'ты Роберт', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> are Max.', ru:'вы Макс', opts:["I","you"], ok:1, why:"Верно"},
     {stem:'<u></u> am fine, thank you.', ru:'у меня хорошо, спасибо', opts:["I","you"], ok:0, why:"Верно"},
-    {stem:'How are <u></u>?', ru:'как дела', opts:["I","you"], ok:1, why:"Верно. Спрашиваешь у собеседника, значит you"},
-    {stem:'Where are <u></u> from?', ru:'откуда ты', opts:["I","you"], ok:1, why:"Верно"},
-    {stem:'<u></u> am a blogger.', ru:'я блогер', opts:["I","you"], ok:0, why:"Верно"}
+    {stem:'How are <u></u>?', ru:'как дела', opts:["I","you"], ok:1, why:"Верно. Спрашиваете у собеседника, значит you"},
+    {stem:'Where are <u></u> from?', ru:'откуда вы', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am a doctor.', ru:'я врач', opts:["I","you"], ok:0, why:"Верно"}
   ]);
 
   /* ========== 05. am или are ========== */
   choiceBlock("ex2", [
-    {stem:'I <u></u> Katya.', ru:'я Катя', opts:["am","are"], ok:0, why:"Верно. am живёт только с I"},
-    {stem:'You <u></u> Robert.', ru:'ты Роберт', opts:["am","are"], ok:1, why:"Верно. С you всегда are"},
-    {stem:'I <u></u> from Russia.', ru:'я из России', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'You <u></u> from Moscow.', ru:'ты из Москвы', opts:["am","are"], ok:1, why:"Верно"},
-    {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'I <u></u> a blogger.', ru:'я блогер', opts:["am","are"], ok:0, why:"Верно"},
-    {stem:'You <u></u> my friend.', ru:'ты мой друг', opts:["am","are"], ok:1, why:"Верно"}
+    {stem:'I <u></u> Emma.', ru:'я Эмма', opts:["am","are"], ok:0, why:"Верно. am живёт только с I"},
+    {stem:'You <u></u> a teacher.', ru:'вы учитель', opts:["am","are"], ok:1, why:"Верно. С you всегда are"},
+    {stem:'I <u></u> from England.', ru:'я из Англии', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'<u></u> you Tom?', ru:'вы Том?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
+    {stem:'I <u></u> your friend.', ru:'я ваш друг', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from America.', ru:'вы из Америки', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> an architect.', ru:'я архитектор', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> a cook.', ru:'вы повар', opts:["am","are"], ok:1, why:"Верно"}
   ]);
 
   /* ========== 07. my или your ========== */
   choiceBlock("ex3", [
-    {stem:'<u></u> name is Katya.', ru:'меня зовут Катя', opts:["My","Your"], ok:0, why:"Верно. Имя моё, значит my"},
-    {stem:'What is <u></u> name?', ru:'как тебя зовут', opts:["my","your"], ok:1, why:"Верно. Спрашиваешь чужое имя, значит your"},
-    {stem:'<u></u> name is Anna.', ru:'меня зовут Анна', opts:["My","Your"], ok:0, why:"Верно"},
-    {stem:'<u></u> friend is from Moscow.', ru:'мой друг из Москвы', opts:["My","Your"], ok:0, why:"Верно"},
-    {stem:'Nice to meet you! What is <u></u> name?', ru:'приятно познакомиться, как тебя зовут', opts:["my","your"], ok:1, why:"Верно"}
+    {stem:'<u></u> name is Anna.', ru:'меня зовут Анна', opts:["My","Your"], ok:0, why:"Верно. Имя моё, значит my"},
+    {stem:'What is <u></u> name?', ru:'как вас зовут', opts:["my","your"], ok:1, why:"Верно. Спрашиваете чужое имя, значит your"},
+    {stem:'<u></u> name is Emma.', ru:'меня зовут Эмма', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Is <u></u> name Max?', ru:'вас зовут Макс?', opts:["my","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> friend is from St. Petersburg.', ru:'мой друг из Санкт-Петербурга', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Nice to meet you! What is <u></u> name?', ru:'приятно познакомиться, как вас зовут', opts:["my","your"], ok:1, why:"Верно"}
   ]);
 
   /* ========== 09. что сказать ========== */
   choiceBlock("ex4", [
-    {stem:'Девять утра, ты заходишь в кофейню.', opts:["Good morning!","Good evening!"], ok:0, why:"Верно. Утро до обеда"},
+    {stem:'Девять утра, вы заходите в кофейню.', opts:["Good morning!","Good evening!"], ok:0, why:"Верно. Утро до обеда"},
     {stem:'Семь вечера, вы заходите в ресторан.', opts:["Good morning!","Good evening!"], ok:1, why:"Верно"},
-    {stem:'Тебя знакомят с новым человеком.', opts:["How are you?","Nice to meet you!"], ok:1, why:"Верно. Это первая фраза при знакомстве"},
-    {stem:'Тебя спросили: How are you?', opts:["Hello!","I am fine, thank you. And you?"], ok:1, why:"Верно. Коротко и сразу вопрос обратно"},
-    {stem:'Прощаешься с подругой, завтра увидитесь.', opts:["See you!","Hi!"], ok:0, why:"Верно"},
-    {stem:'Уходишь из магазина, продавец был милый.', opts:["Have a nice day!","Good morning!"], ok:0, why:"Верно. Тёплое прощание"},
-    {stem:'Ты не расслышала и надо вежливо попросить повторить.', opts:["Can you repeat, please?","Repeat!"], ok:0, why:"Верно. Это та самая фраза с пробного. Без please получается команда, а не просьба"}
+    {stem:'Вас знакомят с новым человеком.', opts:["How are you?","Nice to meet you!"], ok:1, why:"Верно. Это первая фраза при знакомстве"},
+    {stem:'Вас спросили: How are you?', opts:["Yes, I am.","I am fine, thank you. And you?"], ok:1, why:"Верно. Коротко и сразу вопрос обратно"},
+    {stem:'Прощаетесь с подругой, завтра увидитесь.', opts:["See you!","Hi!"], ok:0, why:"Верно"},
+    {stem:'Уходите из магазина, продавец был милый.', opts:["Have a nice day!","Good morning!"], ok:0, why:"Верно. Тёплое прощание"},
+    {stem:'Вы не расслышали и надо вежливо попросить повторить.', opts:["Can you repeat, please?","Repeat!"], ok:0, why:"Верно. Это та самая фраза с пробного. Без please получается команда, а не просьба"}
   ], true);
 
+  /* ========== a или an ========== */
+  choiceBlock("ex7", [
+    {stem:'I am <u></u> teacher.', ru:'я учитель', opts:["a","an"], ok:0, why:"Верно. teacher начинается с согласного звука"},
+    {stem:'She is <u></u> architect.', ru:'она архитектор', opts:["a","an"], ok:1, why:"Верно. architect начинается с гласного звука"},
+    {stem:'He is <u></u> driver.', ru:'он водитель', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'I am <u></u> engineer.', ru:'я инженер', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'My friend is <u></u> cook.', ru:'мой друг повар', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'Max is <u></u> actor.', ru:'Макс актёр', opts:["a","an"], ok:1, why:"Верно"},
+    {stem:'Anna is <u></u> nurse.', ru:'Анна медсестра', opts:["a","an"], ok:0, why:"Верно"},
+    {stem:'I am <u></u> student.', ru:'я студент', opts:["a","an"], ok:0, why:"Верно. student начинается со звука «с»"}
+  ]);
+
   /* ========== 10. слова ========== */
-  vocab("voc1", [["Russia","Россия"],["Moscow","Москва"],["Spain","Испания"],["Italy","Италия"],
+  vocab("voc1", [["Russia","Россия"],["St. Petersburg","Санкт-Петербург"],["Spain","Испания"],["Italy","Италия"],
     ["Turkey","Турция"],["England","Англия"],["America","Америка"],["a city","город"]]);
+  vocab("voc3", [["a doctor","врач"],["a teacher","учитель"],["a driver","водитель"],
+    ["a cook","повар"],["a nurse","медсестра"],["a student","студент"],
+    ["an architect","архитектор"],["an engineer","инженер"],["an actor","актёр"],
+    ["a manager","менеджер"]]);
   vocab("voc2", [["please","пожалуйста, в просьбе"],["thank you","спасибо"],
     ["sorry","извини, прости"],["excuse me","извините, чтобы обратиться"],
     ["yes","да"],["no","нет"]]);
 
   /* ========== 12. собери фразу ========== */
   buildBlock("ex5", [
-    {words:["am","I","Katya"], ok:"I am Katya", ru:"я Катя"},
-    {words:["name","My","is","Katya"], ok:"My name is Katya", ru:"меня зовут Катя"},
-    {words:["is","What","name","your"], ok:"What is your name", ru:"как тебя зовут"},
-    {words:["are","Where","from","you"], ok:"Where are you from", ru:"откуда ты"},
+    {words:["am","I","Anna"], ok:"I am Anna", ru:"я Анна"},
+    {words:["name","My","is","Anna"], ok:"My name is Anna", ru:"меня зовут Анна"},
+    {words:["is","What","name","your"], ok:"What is your name", ru:"как вас зовут"},
+    {words:["are","Where","from","you"], ok:"Where are you from", ru:"откуда вы"},
     {words:["from","I","Russia","am"], ok:"I am from Russia", ru:"я из России"},
-    {words:["to","Nice","you","meet"], ok:"Nice to meet you", ru:"приятно познакомиться"}
+    {words:["to","Nice","you","meet"], ok:"Nice to meet you", ru:"приятно познакомиться"},
+    {words:["a","I","doctor","am"], ok:"I am a doctor", ru:"я врач"},
+    {words:["do","What","you","do"], ok:"What do you do", ru:"кем вы работаете"}
   ]);
 
   /* ========== 13. скажи вслух ========== */
-  revealBlock("ex6", [
-    {ru:"Привет! Меня зовут Катя.", en:"Hello! My name is Katya."},
-    {ru:"Приятно познакомиться.", en:"Nice to meet you."},
-    {ru:"Как тебя зовут?", en:"What is your name?"},
-    {ru:"Откуда ты?", en:"Where are you from?"},
-    {ru:"Я из России. Я из Москвы.", en:"I am from Russia. I am from Moscow."},
-    {ru:"Как дела?", en:"How are you?"},
-    {ru:"Хорошо, спасибо. А ты?", en:"I am fine, thank you. And you?"},
-    {ru:"Доброе утро! Хорошего дня!", en:"Good morning! Have a nice day!"},
-    {ru:"До свидания, увидимся!", en:"Goodbye, see you!"},
-    {ru:"Извини, как тебя зовут?", en:"Sorry, what is your name?"}
-  ], false);
-
-  /* ========== 08. какое это число ========== */
-  choiceBlock("exNum", [
-    {stem:'13', opts:["thirteen","thirty"], ok:0, why:"Верно. Ударение в конец: thirTEEN"},
-    {stem:'30', opts:["thirteen","thirty"], ok:1, why:"Верно. THIRty, ударение в начало"},
-    {stem:'40', opts:["forty","fourteen"], ok:0, why:"Верно, и помним: forty без u"},
-    {stem:'15', opts:["fifty","fifteen"], ok:1, why:"Верно"},
-    {stem:'50', opts:["fifty","fifteen"], ok:0, why:"Верно"},
-    {stem:'14', opts:["forty","fourteen"], ok:1, why:"Верно. Тут u на месте: four плюс teen"},
-    {stem:'12', opts:["twelve","twenty"], ok:0, why:"Верно"},
-    {stem:'20', opts:["twelve","twenty"], ok:1, why:"Верно"},
-    {stem:'18', opts:["eighteen","eighty"], ok:0, why:"Верно. Одна t: eighteen"},
-    {stem:'35', opts:["twenty-five","thirty-five"], ok:1, why:"Верно. Сначала десяток, потом единица, через дефис"},
-    {stem:'47', opts:["forty-seven","seventy-four"], ok:0, why:"Верно. Порядок как в русском: сорок семь"}
+  listBlock("ex6", [
+    "Привет! Меня зовут Анна.",
+    "Приятно познакомиться.",
+    "Как вас зовут?",
+    "Откуда вы?",
+    "Я из России. Я из Санкт-Петербурга.",
+    "Как дела?",
+    "Хорошо, спасибо. А вы?",
+    "Доброе утро! Хорошего дня!",
+    "До свидания, увидимся!",
+    "Кем вы работаете?",
+    "Я врач. А вы?",
+    "Извините, как вас зовут?"
   ]);
 
-  /* ========== 10. возраст ========== */
-  choiceBlock("exAge1", [
-    {stem:'Мне двадцать пять.', opts:["I have twenty-five years.","I am twenty-five."], ok:1, why:"Верно. Возрастом человек является, а не владеет"},
-    {stem:'Сколько тебе лет?', opts:["How many years are you?","How old are you?"], ok:1, why:"Верно. Вопрос строится от слова old"},
-    {stem:'Мне тридцать лет.', opts:["I am thirty years old.","I am thirty year old."], ok:0, why:"Верно. Лет несколько, значит years"},
-    {stem:'Мне сорок.', opts:["I am fourty.","I am forty."], ok:1, why:"Верно. forty пишется без u"},
-    {stem:'Мне девятнадцать лет.', opts:["I am nineteen years old.","I am ninety years old."], ok:0, why:"Верно. nineteen это 19, ninety это 90"},
-    {stem:'Мне тринадцать.', opts:["I am thirty.","I am thirteen."], ok:1, why:"Верно"}
-  ], true);
-
-  buildBlock("exAge2", [
-    {words:["am","I","thirty","old","years"], ok:"I am thirty years old", ru:"мне тридцать лет"},
-    {words:["old","How","you","are"], ok:"How old are you", ru:"сколько тебе лет"},
-    {words:["twenty-one","I","am"], ok:"I am twenty-one", ru:"мне двадцать один"},
-    {words:["years","I","forty-two","am","old"], ok:"I am forty-two years old", ru:"мне сорок два года"}
+  /* ========== перевод отдельных слов ========== */
+  listBlock("ex8", [
+    "Россия", "Санкт-Петербург", "город",
+    "врач", "учитель", "водитель", "повар",
+    "архитектор", "инженер", "актёр",
+    "пожалуйста", "спасибо", "извините, чтобы обратиться", "да / нет"
   ]);
-
-  revealBlock("exAge3", [
-    {ru:"Мне двадцать восемь.", en:"I am twenty-eight."},
-    {ru:"Сколько тебе лет?", en:"How old are you?"},
-    {ru:"Мне тридцать пять лет.", en:"I am thirty-five years old."},
-    {ru:"Мне семнадцать.", en:"I am seventeen."},
-    {ru:"Мне пятьдесят лет.", en:"I am fifty years old."},
-    {ru:"Мне двенадцать, а тебе?", en:"I am twelve. And you?"}
-  ], false);
-
 
 })();
 </script>
