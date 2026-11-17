@@ -178,6 +178,14 @@
   .wr.y{background:var(--ok-bg); color:var(--ok)}
   .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
 
+  /* ---------- числа ---------- */
+  .numgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:4px 0}
+  .ni{display:flex; gap:10px; align-items:baseline; padding:7px 0; border-bottom:1px solid var(--line)}
+  .ni b{min-width:28px; color:var(--accent); font-weight:800; font-size:15px}
+  .ni span{font-weight:700; font-size:16px}
+  .ni i{font-style:normal; color:var(--mute); font-size:13px; margin-left:auto}
+  @media (max-width:520px){ .numgrid{grid-template-columns:repeat(2,1fr)} }
+
   /* ---------- словарь ---------- */
   .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
   .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
@@ -216,7 +224,7 @@
 
   <div class="tag wd">фразы</div>
   <h2><span class="num">01</span>Фразы урока</h2>
-  <p class="lead">Эти двенадцать фраз мы сегодня произносим вслух много раз. Кнопка «спрятать перевод» пригодится дома, когда будешь проверять себя.</p>
+  <p class="lead">Эти четырнадцать фраз мы сегодня произносим вслух много раз. Кнопка «спрятать перевод» пригодится дома, когда будешь проверять себя.</p>
 
   <div class="card" id="phrasesCard">
     <div class="ph"><div class="n">01</div><div class="txt"><div class="en">Hello!</div><div class="ru">здравствуй, привет</div></div></div>
@@ -229,8 +237,10 @@
     <div class="ph"><div class="n">08</div><div class="txt"><div class="en">I am from Russia.</div><div class="ru">я из России</div></div></div>
     <div class="ph"><div class="n">09</div><div class="txt"><div class="en">How are you?</div><div class="ru">как дела</div></div></div>
     <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I am fine, thank you.</div><div class="ru">хорошо, спасибо</div></div></div>
-    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">Goodbye!</div><div class="ru">до свидания</div></div></div>
-    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">See you!</div><div class="ru">увидимся</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">How old are you?</div><div class="ru">сколько тебе лет</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">I am twenty-five years old.</div><div class="ru">мне двадцать пять лет</div></div></div>
+    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">Goodbye!</div><div class="ru">до свидания</div></div></div>
+    <div class="ph"><div class="n">14</div><div class="txt"><div class="en">See you!</div><div class="ru">увидимся</div></div></div>
     <div class="bar">
       <button class="btn" id="hideRu">Спрятать перевод</button>
     </div>
@@ -281,7 +291,108 @@
   <div class="card" id="ex2"></div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">06</span>My и your: чьё это</h2>
+  <h2><span class="num">06</span>Числа от 1 до 20</h2>
+
+  <div class="card">
+    <p>Числа придётся выучить списком, но список короткий и устроен логично, так что это быстрее, чем кажется.</p>
+    <p><b>От 1 до 12</b> слова ни на что не похожи, их просто запоминаем.</p>
+    <p><b>С 13 начинается система:</b> берём знакомое число и прибавляем к нему <b>-teen</b>. four плюс teen - fourteen, six плюс teen - sixteen. Само слово teen значит «подросток», отсюда и teenager: человек, которому от тринадцати до девятнадцати.</p>
+    <p>Три числа при этом слегка меняются, их проверяем отдельно: three - <b>thirteen</b>, five - <b>fifteen</b>, eight - <b>eighteen</b> (одна t, а не две).</p>
+    <div class="numgrid">
+      <div class="ni"><b>1</b><span>one</span></div>
+      <div class="ni"><b>2</b><span>two</span></div>
+      <div class="ni"><b>3</b><span>three</span></div>
+      <div class="ni"><b>4</b><span>four</span></div>
+      <div class="ni"><b>5</b><span>five</span></div>
+      <div class="ni"><b>6</b><span>six</span></div>
+      <div class="ni"><b>7</b><span>seven</span></div>
+      <div class="ni"><b>8</b><span>eight</span></div>
+      <div class="ni"><b>9</b><span>nine</span></div>
+      <div class="ni"><b>10</b><span>ten</span></div>
+      <div class="ni"><b>11</b><span>eleven</span></div>
+      <div class="ni"><b>12</b><span>twelve</span></div>
+      <div class="ni"><b>13</b><span>thirteen</span></div>
+      <div class="ni"><b>14</b><span>fourteen</span></div>
+      <div class="ni"><b>15</b><span>fifteen</span></div>
+      <div class="ni"><b>16</b><span>sixteen</span></div>
+      <div class="ni"><b>17</b><span>seventeen</span></div>
+      <div class="ni"><b>18</b><span>eighteen</span></div>
+      <div class="ni"><b>19</b><span>nineteen</span></div>
+      <div class="ni"><b>20</b><span>twenty</span></div>
+    </div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">07</span>Десятки и числа до 50</h2>
+
+  <div class="card">
+    <p>Десятки собираются тем же способом, только окончание другое: <b>-ty</b> вместо -teen.</p>
+    <div class="numgrid">
+      <div class="ni"><b>20</b><span>twenty</span></div>
+      <div class="ni"><b>30</b><span>thirty</span></div>
+      <div class="ni"><b>40</b><span>forty</span></div>
+      <div class="ni"><b>50</b><span>fifty</span></div>
+    </div>
+    <p><b>Что здесь важно.</b> Слово <b>forty</b> пишется без u, хотя four - с u. Логики нет, это просто запоминают. И так же, как в teen, меняются three и five: thirty и fifty.</p>
+    <p><b>Составные числа пишутся через дефис</b>, а порядок слов тот же, что в русском: сначала десяток, потом единица.</p>
+    <div class="numgrid">
+      <div class="ni"><b>21</b><span>twenty-one</span></div>
+      <div class="ni"><b>25</b><span>twenty-five</span></div>
+      <div class="ni"><b>33</b><span>thirty-three</span></div>
+      <div class="ni"><b>38</b><span>thirty-eight</span></div>
+      <div class="ni"><b>42</b><span>forty-two</span></div>
+      <div class="ni"><b>47</b><span>forty-seven</span></div>
+    </div>
+    <div class="note"><b>Главная ловушка английских чисел.</b> На письме thirteen и thirty не спутать, а на слух они похожи, и путают их все, включая людей с хорошим английским. Разница в ударении: thir<b>TEEN</b> тянется к концу слова, <b>THIR</b>ty падает на начало. Так же fif<b>TEEN</b> и <b>FIF</b>ty, four<b>TEEN</b> и <b>FOR</b>ty. Если не расслышала цену или возраст, нормально переспросить: <b>Sorry, thirteen or thirty?</b></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">08</span>Какое это число</h2>
+  <p class="lead screen-only">Смотрим на цифру и выбираем слово. Тут важно именно не спутать похожие.</p>
+  <div class="card" id="exNum"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">09</span>Сколько мне лет</h2>
+
+  <div class="card">
+    <p>Это первое место, где английский расходится с русским сильно, поэтому разберём медленно.</p>
+    <p>По-русски мы говорим «<b>мне</b> тридцать лет»: получается, что возраст как будто приходит ко мне со стороны. По-английски человек своим возрастом <b>является</b>, и предложение собирается через уже знакомый нам глагол: <b>I am thirty</b>, дословно «я есть тридцать».</p>
+    <p>Отсюда и схема, по которой строится фраза:</p>
+    <div class="conj">
+      <div class="p">I am</div><div class="v">30</div><div class="r">I am thirty. - мне тридцать</div>
+      <div class="p">I am</div><div class="v">30 years old</div><div class="r">I am thirty years old. - мне тридцать лет</div>
+    </div>
+    <p>Оба варианта правильные. Короткий <b>I am thirty</b> звучит в живой речи чаще, полный <b>I am thirty years old</b> дословно значит «я тридцать лет старый» и годится везде.</p>
+    <p><b>Вопрос</b> строится от слова old, то есть «старый»: <b>How old are you?</b> - дословно «насколько старый ты». По-русски так спросить было бы странно, а по-английски это обычный нейтральный вопрос, никакой грубости в нём нет.</p>
+    <p>Ответить можно целой фразой или одним числом, как и в русском: <b>I am thirty.</b> или просто <b>Thirty.</b></p>
+    <div class="wrong-right">
+      <div class="wr n">I have thirty years<small>так говорят во французском и испанском, в английском это ошибка</small></div>
+      <div class="wr y">I am thirty<small>возрастом человек является</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">I am thirty year old<small>лет несколько, значит нужно множественное</small></div>
+      <div class="wr y">I am thirty years old<small>years с s</small></div>
+    </div>
+    <div class="wrong-right">
+      <div class="wr n">How many years are you?<small>дословный перевод с русского, так не спрашивают</small></div>
+      <div class="wr y">How old are you?<small>единственный рабочий вариант</small></div>
+    </div>
+    <div class="note">Про чужой возраст - <b>How old is your friend?</b> - нужна третья форма глагола, is. Её возьмём на следующем занятии, сегодня говорим только про себя и про собеседника.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">10</span>Возраст: выбери, собери, скажи</h2>
+
+  <div class="card" id="exAge1"></div>
+
+  <h3>Собери фразу из слов</h3>
+  <div class="card build" id="exAge2"></div>
+
+  <h3>Скажи вслух, потом открой ответ</h3>
+  <div class="card" id="exAge3"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">11</span>My и your: чьё это</h2>
 
   <div class="card">
     <div class="conj">
@@ -294,11 +405,11 @@
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">07</span>My или your</h2>
+  <h2><span class="num">12</span>My или your</h2>
   <div class="card" id="ex3"></div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">08</span>Привет и пока</h2>
+  <h2><span class="num">13</span>Привет и пока</h2>
 
   <div class="card">
     <h3>Когда здороваешься</h3>
@@ -322,11 +433,11 @@
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">09</span>Что сказать в этой ситуации</h2>
+  <h2><span class="num">14</span>Что сказать в этой ситуации</h2>
   <div class="card" id="ex4"></div>
 
   <div class="tag wd">слова</div>
-  <h2><span class="num">10</span>Слова урока</h2>
+  <h2><span class="num">15</span>Слова урока</h2>
 
   <h3>Откуда я</h3>
   <div class="card">
@@ -341,7 +452,7 @@
   <div class="note">Англичане вежливые, и это не формальность. <b>Please</b> и <b>sorry</b> добавляют почти в каждую просьбу, и без них фраза звучит как команда, даже если ты так не думала.</div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">11</span>Как знакомиться: порядок разговора</h2>
+  <h2><span class="num">16</span>Как знакомиться: порядок разговора</h2>
 
   <div class="card">
     <p>Знакомство почти всегда идёт по одной и той же дорожке. Если запомнить порядок, думать придётся только над словами, а не над тем, что сказать дальше.</p>
@@ -358,17 +469,17 @@
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">12</span>Собери фразу</h2>
+  <h2><span class="num">17</span>Собери фразу</h2>
   <p class="lead screen-only">Нажимай слова по порядку. Слово из строки можно вернуть назад.</p>
   <div class="card build" id="ex5"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">13</span>Скажи вслух по-английски</h2>
+  <h2><span class="num">18</span>Скажи вслух по-английски</h2>
   <p class="lead">Сначала скажи сама, вслух, и только потом открывай ответ.</p>
   <div class="card" id="ex6"></div>
 
   <div class="tag sp">разговор</div>
-  <h2><span class="num">14</span>Диалог: первое знакомство</h2>
+  <h2><span class="num">19</span>Диалог: первое знакомство</h2>
   <p class="lead">Прочитай вслух по ролям, потом спрячь одну роль и говори за неё сама.</p>
 
   <div class="card">
@@ -382,6 +493,9 @@
       <div class="a"><span class="who">A</span><span class="ln">I am fine too. Where are you from?</span><span class="tr">у меня тоже хорошо, откуда ты</span></div>
       <div class="b"><span class="who">B</span><span class="ln">I am from Spain. And you?</span><span class="tr">я из Испании, а ты</span></div>
       <div class="a"><span class="who">A</span><span class="ln">I am from Russia. I am from Moscow.</span><span class="tr">я из России, из Москвы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Nice! How old are you?</span><span class="tr">здорово, сколько тебе лет</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am twenty-five. And you?</span><span class="tr">мне двадцать пять, а тебе</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am thirty years old.</span><span class="tr">мне тридцать лет</span></div>
       <div class="b"><span class="who">B</span><span class="ln">Cool! Goodbye, Katya. See you!</span><span class="tr">классно, до свидания, Катя, увидимся</span></div>
       <div class="a"><span class="who">A</span><span class="ln">Goodbye, Tom!</span><span class="tr">до свидания, Том</span></div>
     </div>
@@ -392,12 +506,18 @@
   </div>
 
   <div class="tag sp">домашка</div>
-  <h2><span class="num">15</span>Домашнее задание</h2>
+  <h2><span class="num">20</span>Домашнее задание</h2>
 
   <div class="hw">
-    <h3>одно задание</h3>
-    <p>Запиши голосовое на 20-30 секунд: поздоровайся, назови себя, скажи откуда ты и попрощайся. Как будто знакомишься с человеком в поездке.</p>
+    <h3>первое задание, голосовое</h3>
+    <p>Запиши голосовое на 20-30 секунд: поздоровайся, назови себя, скажи откуда ты, сколько тебе лет, и попрощайся. Как будто знакомишься с человеком в поездке.</p>
     <p class="small">Не читай с листа и не готовь текст заранее. Сбилась - начни фразу заново и продолжай, так и надо.</p>
+  </div>
+
+  <div class="hw">
+    <h3>второе задание, письменно</h3>
+    <p>Пришли текстом числа словами: 6, 13, 19, 30, 41, 50 и число своих лет. Потом три фразы про возраст: две про себя, одна вопросом к собеседнику. Про третьего человека пока не пишем, там нужна форма is, её возьмём на следующем занятии.</p>
+    <p class="small">Дефис в составных числах не теряй: сорок один это forty-one.</p>
   </div>
 
   <div class="note">Задание каждый раз будет разное: иногда голосовое, иногда письменно, иногда слова или чтение вслух. Навыки разные, и качать их надо по очереди, а не все сразу.</div>
@@ -598,6 +718,51 @@
     {ru:"До свидания, увидимся!", en:"Goodbye, see you!"},
     {ru:"Извини, как тебя зовут?", en:"Sorry, what is your name?"}
   ], false);
+
+  /* ========== 08. какое это число ========== */
+  choiceBlock("exNum", [
+    {stem:'13', opts:["thirteen","thirty"], ok:0, why:"Верно. Ударение в конец: thirTEEN"},
+    {stem:'30', opts:["thirteen","thirty"], ok:1, why:"Верно. THIRty, ударение в начало"},
+    {stem:'40', opts:["forty","fourteen"], ok:0, why:"Верно, и помним: forty без u"},
+    {stem:'15', opts:["fifty","fifteen"], ok:1, why:"Верно"},
+    {stem:'50', opts:["fifty","fifteen"], ok:0, why:"Верно"},
+    {stem:'14', opts:["forty","fourteen"], ok:1, why:"Верно. Тут u на месте: four плюс teen"},
+    {stem:'12', opts:["twelve","twenty"], ok:0, why:"Верно"},
+    {stem:'20', opts:["twelve","twenty"], ok:1, why:"Верно"},
+    {stem:'18', opts:["eighteen","eighty"], ok:0, why:"Верно. Одна t: eighteen"},
+    {stem:'35', opts:["twenty-five","thirty-five"], ok:1, why:"Верно. Сначала десяток, потом единица, через дефис"},
+    {stem:'47', opts:["forty-seven","seventy-four"], ok:0, why:"Верно. Порядок как в русском: сорок семь"}
+  ]);
+
+  /* ========== 10. возраст ========== */
+  choiceBlock("exAge1", [
+    {stem:'Мне двадцать пять.', opts:["I have twenty-five years.","I am twenty-five."], ok:1, why:"Верно. Возрастом человек является, а не владеет"},
+    {stem:'Сколько тебе лет?', opts:["How many years are you?","How old are you?"], ok:1, why:"Верно. Вопрос строится от слова old"},
+    {stem:'Мне тридцать лет.', opts:["I am thirty years old.","I am thirty year old."], ok:0, why:"Верно. Лет несколько, значит years"},
+    {stem:'Мне сорок.', opts:["I am fourty.","I am forty."], ok:1, why:"Верно. forty пишется без u"},
+    {stem:'Мне девятнадцать лет.', opts:["I am nineteen years old.","I am ninety years old."], ok:0, why:"Верно. nineteen это 19, ninety это 90"},
+    {stem:'Тебе пятьдесят?', opts:["Are you fifty?","You are fifty?"], ok:0, why:"Верно. В вопросе are встаёт вперёд"},
+    {stem:'Мне тринадцать.', opts:["I am thirty.","I am thirteen."], ok:1, why:"Верно"}
+  ], true);
+
+  buildBlock("exAge2", [
+    {words:["am","I","thirty","old","years"], ok:"I am thirty years old", ru:"мне тридцать лет"},
+    {words:["old","How","you","are"], ok:"How old are you", ru:"сколько тебе лет"},
+    {words:["twenty-one","I","am"], ok:"I am twenty-one", ru:"мне двадцать один"},
+    {words:["you","Are","fifteen"], ok:"Are you fifteen", ru:"тебе пятнадцать?"},
+    {words:["years","I","forty-two","am","old"], ok:"I am forty-two years old", ru:"мне сорок два года"}
+  ]);
+
+  revealBlock("exAge3", [
+    {ru:"Мне двадцать восемь.", en:"I am twenty-eight."},
+    {ru:"Сколько тебе лет?", en:"How old are you?"},
+    {ru:"Мне тридцать пять лет.", en:"I am thirty-five years old."},
+    {ru:"Мне семнадцать.", en:"I am seventeen."},
+    {ru:"Тебе сорок?", en:"Are you forty?"},
+    {ru:"Мне пятьдесят лет.", en:"I am fifty years old."},
+    {ru:"Мне двенадцать, а тебе?", en:"I am twelve. And you?"}
+  ], false);
+
 
 })();
 </script>

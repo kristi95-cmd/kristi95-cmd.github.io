@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тренажёр. I, you, my, your</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Тренажёр к уроку 1</div>
+    <h1>I, you, my, your<em>числа, возраст и глагол to be</em></h1>
+    <p>Отработка после первого занятия. Нажимаешь вариант, страница сразу говорит, верно или нет.
+    Ничего никуда не отправляется и не сохраняется: закроешь вкладку - ответы пропадут, это нормально.</p>
+  </div>
+
+  <div class="note">
+    <b>Напоминание перед стартом.</b><br>
+    <span style="display:inline-block;margin-top:6px">I <b>am</b> - я. You <b>are</b> - ты.
+    <b>My</b> - мой, моя. <b>Your</b> - твой, твоя.</span><br>
+    <span style="display:inline-block;margin-top:6px;color:#8a7580">I am Katya. You are my friend.
+    My name is Katya. What is your name?</span>
+  </div>
+
+  <h2><span class="num">01</span>I или you</h2>
+  <p class="lead">Про себя - I, про собеседника - you. I всегда с большой буквы, в любом месте фразы.</p>
+  <div class="card" id="ex1"></div>
+
+  <h2><span class="num">02</span>am или are</h2>
+  <p class="lead">am живёт только с I. С you всегда are.</p>
+  <div class="card" id="ex2"></div>
+
+  <h2><span class="num">03</span>Вопрос: am или are в начале</h2>
+  <p class="lead">В вопросе глагол встаёт вперёд: You are from Spain - Are you from Spain?</p>
+  <div class="card" id="ex3"></div>
+
+  <h2><span class="num">04</span>my или your</h2>
+  <p class="lead">Моё - my, твоё - your. Оба стоят перед словом: my name, your friend.</p>
+  <div class="card" id="ex4"></div>
+
+  <h2><span class="num">05</span>Всё вместе</h2>
+  <p class="lead">Тут вперемешку, смотри на перевод справа.</p>
+  <div class="card" id="ex5"></div>
+
+
+  <h2><span class="num">06</span>Какое это число</h2>
+  <p class="lead">Тут важно не спутать похожие: 13 и 30, 14 и 40. И не забыть дефис в составных.</p>
+  <div class="card" id="exN"></div>
+
+  <h2><span class="num">07</span>Сколько мне лет</h2>
+  <p class="lead">Возраст по-английски собирается через am: I am thirty. Вариант с have в английском не работает.</p>
+  <div class="card" id="exA"></div>
+
+  <h2><span class="num">08</span>Какая фраза правильная</h2>
+  <p class="lead">В каждой паре одна фраза собрана верно, вторая с типичной ошибкой.</p>
+  <div class="card" id="ex6"></div>
+
+  <h2><span class="num">09</span>Собери фразу</h2>
+  <p class="lead">Нажимай слова в нужном порядке. Нажмёшь слово в строке - вернётся обратно.</p>
+  <div class="card" id="ex7"></div>
+
+  <h2><span class="num">10</span>Скажи вслух по-английски</h2>
+  <p class="lead">Сначала скажи сама, вслух, и только потом открывай ответ. Это главное упражнение
+  на странице: оно ближе всего к живому разговору.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="note" style="margin-top:28px">
+    <b>Если хочется ещё.</b> Пройди страницу второй раз через день и третий раз через неделю.
+    На второй заход закрывай русский перевод рукой и смотри только на английское предложение.
+  </div>
+
+</div>
+
+<script>
+
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  /* ---------- спрятать перевод ---------- */
+  var card = document.getElementById("phrasesCard");
+  if(!card) card = document.createElement("div");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  /* ---------- диалог ---------- */
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  /* ---------- словарь ---------- */
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+  /* ---------- выбор варианта ---------- */
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- сборка фразы ---------- */
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  /* ---------- раскрывашки ---------- */
+  function revealBlock(id, items, withSound){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = withSound
+        ? p.en + ' '
+        : p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+
+  
+  /* ========== 01. I или you ========== */
+  choiceBlock("ex1", [
+    {stem:'<u></u> am from Moscow.', ru:'я из Москвы', opts:["I","you"], ok:0, why:"Верно. Про себя всегда I"},
+    {stem:'<u></u> are my friend.', ru:'ты мой друг', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'Are <u></u> from Italy?', ru:'ты из Италии?', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am fine, thank you.', ru:'у меня хорошо, спасибо', opts:["I","you"], ok:0, why:"Верно"},
+    {stem:'How are <u></u>?', ru:'как дела', opts:["I","you"], ok:1, why:"Верно. Спрашиваешь у собеседника"},
+    {stem:'<u></u> am Katya.', ru:'я Катя', opts:["I","you"], ok:0, why:"Верно"},
+    {stem:'Where are <u></u> from?', ru:'откуда ты', opts:["I","you"], ok:1, why:"Верно"},
+    {stem:'<u></u> am from England.', ru:'я из Англии', opts:["I","you"], ok:0, why:"Верно"},
+    {stem:'Nice to meet <u></u>.', ru:'приятно познакомиться', opts:["I","you"], ok:1, why:"Верно. Тут you значит тебя, а не ты. Фраза запоминается целиком"},
+    {stem:'<u></u> are from Turkey.', ru:'ты из Турции', opts:["I","you"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 02. am или are ========== */
+  choiceBlock("ex2", [
+    {stem:'I <u></u> Katya.', ru:'я Катя', opts:["am","are"], ok:0, why:"Верно. am только с I"},
+    {stem:'You <u></u> my friend.', ru:'ты мой друг', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> from Russia.', ru:'я из России', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from Spain.', ru:'ты из Испании', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from America.', ru:'ты из Америки', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> from England.', ru:'я из Англии', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> Anna.', ru:'ты Анна', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> your friend.', ru:'я твой друг', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> fine.', ru:'у тебя всё хорошо', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'I <u></u> from Italy.', ru:'я из Италии', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'You <u></u> from Moscow.', ru:'ты из Москвы', opts:["am","are"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 03. вопрос ========== */
+  choiceBlock("ex3", [
+    {stem:'<u></u> you from Spain?', ru:'ты из Испании?', opts:["Am","Are"], ok:1, why:"Верно. Речь о собеседнике, значит are"},
+    {stem:'<u></u> I your friend?', ru:'я твой друг?', opts:["Am","Are"], ok:0, why:"Верно. Про себя am, даже в вопросе"},
+    {stem:'<u></u> you Katya?', ru:'ты Катя?', opts:["Am","Are"], ok:1, why:"Верно"},
+    {stem:'Where <u></u> you from?', ru:'откуда ты', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'How <u></u> you?', ru:'как дела', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'<u></u> you from Italy?', ru:'ты из Италии?', opts:["Am","Are"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 04. my или your ========== */
+  choiceBlock("ex4", [
+    {stem:'<u></u> name is Katya.', ru:'меня зовут Катя', opts:["My","Your"], ok:0, why:"Верно. Имя моё, значит my"},
+    {stem:'What is <u></u> name?', ru:'как тебя зовут', opts:["my","your"], ok:1, why:"Верно. Спрашиваешь чужое имя"},
+    {stem:'<u></u> friend is from Spain.', ru:'мой друг из Испании', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Is <u></u> name Anna?', ru:'тебя зовут Анна?', opts:["my","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> city is Moscow.', ru:'мой город Москва', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Nice to meet you! What is <u></u> name?', ru:'приятно познакомиться, как тебя зовут', opts:["my","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> name is Anna.', ru:'меня зовут Анна', opts:["My","Your"], ok:0, why:"Верно"},
+    {stem:'Thank you, <u></u> friend!', ru:'спасибо, мой друг', opts:["my","your"], ok:0, why:"Верно"},
+    {stem:'Sorry, what is <u></u> name?', ru:'извини, как тебя зовут', opts:["my","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> friend is from Turkey.', ru:'твой друг из Турции', opts:["My","Your"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 05. всё вместе ========== */
+  choiceBlock("ex5", [
+    {stem:'<u></u> am from Russia.', ru:'я из России', opts:["I","You","My"], ok:0, why:"Верно"},
+    {stem:'What is <u></u> name?', ru:'как тебя зовут', opts:["you","your","my"], ok:1, why:"Верно. Перед словом name нужен your"},
+    {stem:'You <u></u> my friend.', ru:'ты мой друг', opts:["am","are"], ok:1, why:"Верно"},
+    {stem:'<u></u> name is Katya.', ru:'меня зовут Катя', opts:["I","My","Me"], ok:1, why:"Верно. Не I name и не me name, а my name"},
+    {stem:'Are <u></u> from Spain?', ru:'ты из Испании?', opts:["I","you","your"], ok:1, why:"Верно"},
+    {stem:'I <u></u> fine, thank you.', ru:'у меня хорошо, спасибо', opts:["am","are"], ok:0, why:"Верно"},
+    {stem:'<u></u> friend is from Italy.', ru:'мой друг из Италии', opts:["I","My","Me"], ok:1, why:"Верно"},
+    {stem:'How are <u></u>?', ru:'как дела', opts:["I","you","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> are from Moscow.', ru:'ты из Москвы', opts:["I","You","Your"], ok:1, why:"Верно"},
+    {stem:'Nice to meet <u></u>.', ru:'приятно познакомиться', opts:["I","you","your"], ok:1, why:"Верно"},
+    {stem:'<u></u> am your friend.', ru:'я твой друг', opts:["I","My","You"], ok:0, why:"Верно"},
+    {stem:'Is <u></u> name Anna?', ru:'тебя зовут Анна?', opts:["you","your","my"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 06. какая фраза правильная ========== */
+  choiceBlock("ex6", [
+    {stem:'Я Катя.', opts:["I am Katya.","I is Katya."], ok:0, why:"Верно. С I всегда am, is тут не живёт"},
+    {stem:'Ты мой друг.', opts:["You are my friend.","You is my friend."], ok:0, why:"Верно. С you всегда are"},
+    {stem:'Меня зовут Анна.', opts:["My name is Anna.","Me name is Anna."], ok:0, why:"Верно. Перед словом идёт my, а не me"},
+    {stem:'Откуда ты?', opts:["Where are you from?","Where you are from?"], ok:0, why:"Верно. В вопросе are встаёт перед you"},
+    {stem:'Как тебя зовут?', opts:["What is your name?","What is you name?"], ok:0, why:"Верно. Перед name нужен your"},
+    {stem:'У меня всё хорошо, спасибо.', opts:["I am fine, thank you.","I fine, thank you."], ok:0, why:"Верно. Без am предложение разваливается, в английском глагол нужен всегда"},
+    {stem:'Ты из Испании?', opts:["Are you from Spain?","You are from Spain?"], ok:0, why:"Верно. Чтобы получился вопрос, are идёт первым"},
+    {stem:'Приятно познакомиться.', opts:["Nice to meet you.","Nice to meet your."], ok:0, why:"Верно. your только перед словом: your name, your friend"}
+  ], true);
+
+  /* ========== 07. собери фразу ========== */
+  buildBlock("ex7", [
+    {words:["am","I","from","Moscow"], ok:"I am from Moscow", ru:"я из Москвы"},
+    {words:["is","What","name","your"], ok:"What is your name", ru:"как тебя зовут"},
+    {words:["friend","My","is","from","Italy"], ok:"My friend is from Italy", ru:"мой друг из Италии"},
+    {words:["you","Are","Spain","from"], ok:"Are you from Spain", ru:"ты из Испании?"},
+    {words:["are","How","you"], ok:"How are you", ru:"как дела"},
+    {words:["name","My","Anna","is"], ok:"My name is Anna", ru:"меня зовут Анна"},
+    {words:["from","Where","are","you"], ok:"Where are you from", ru:"откуда ты"},
+    {words:["my","You","friend","are"], ok:"You are my friend", ru:"ты мой друг"}
+  ]);
+
+  /* ========== 08. скажи вслух ========== */
+  revealBlock("ex8", [
+    {ru:"Я Катя. Я из Москвы.", en:"I am Katya. I am from Moscow."},
+    {ru:"Ты мой друг.", en:"You are my friend."},
+    {ru:"Как тебя зовут?", en:"What is your name?"},
+    {ru:"Меня зовут Анна.", en:"My name is Anna."},
+    {ru:"Откуда ты?", en:"Where are you from?"},
+    {ru:"Я из России.", en:"I am from Russia."},
+    {ru:"Ты из Италии?", en:"Are you from Italy?"},
+    {ru:"Как дела?", en:"How are you?"},
+    {ru:"Хорошо, спасибо. А ты?", en:"I am fine, thank you. And you?"},
+    {ru:"Приятно познакомиться!", en:"Nice to meet you!"},
+    {ru:"Извини, как тебя зовут?", en:"Sorry, what is your name?"},
+    {ru:"Мой друг из Англии.", en:"My friend is from England."},
+    {ru:"Сколько тебе лет?", en:"How old are you?"},
+    {ru:"Мне двадцать девять.", en:"I am twenty-nine."},
+    {ru:"Мне сорок четыре года.", en:"I am forty-four years old."},
+    {ru:"Привет! Меня зовут Катя, мне восемнадцать.", en:"Hello! My name is Katya. I am eighteen."}
+  ], false);
+
+  /* ========== 06. числа ========== */
+  choiceBlock("exN", [
+    {stem:'11', opts:["eleven","seven"], ok:0, why:"Верно"},
+    {stem:'16', opts:["six","sixteen"], ok:1, why:"Верно. six плюс teen"},
+    {stem:'19', opts:["nineteen","nine"], ok:0, why:"Верно"},
+    {stem:'21', opts:["twelve-one","twenty-one"], ok:1, why:"Верно. Десяток, дефис, единица"},
+    {stem:'24', opts:["twenty-four","forty-two"], ok:0, why:"Верно. forty-two это 42, порядок как в русском"},
+    {stem:'31', opts:["thirteen-one","thirty-one"], ok:1, why:"Верно"},
+    {stem:'33', opts:["thirty-three","three-thirty"], ok:0, why:"Верно"},
+    {stem:'44', opts:["fourty-four","forty-four"], ok:1, why:"Верно. forty без u, four с u"},
+    {stem:'48', opts:["forty-eight","fourteen-eight"], ok:0, why:"Верно"},
+    {stem:'17', opts:["seven","seventeen"], ok:1, why:"Верно"},
+    {stem:'29', opts:["nine-twenty","twenty-nine"], ok:1, why:"Верно"}
+  ]);
+
+  /* ========== 07. возраст ========== */
+  choiceBlock("exA", [
+    {stem:'Мне двадцать.', opts:["I am twenty.","I have twenty."], ok:0, why:"Верно. Возрастом человек является"},
+    {stem:'Мне сорок восемь лет.', opts:["I am forty-eight years.","I am forty-eight years old."], ok:1, why:"Верно. Либо просто I am forty-eight, либо полностью с old"},
+    {stem:'Сколько тебе лет?', opts:["How old are you?","How many old are you?"], ok:0, why:"Верно"},
+    {stem:'Мне шестнадцать.', opts:["Me is sixteen.","I am sixteen."], ok:1, why:"Верно. Про себя всегда I am"},
+    {stem:'Тебе двадцать один?', opts:["Are you twenty-one?","You are twenty-one?"], ok:0, why:"Верно. В вопросе are идёт первым"},
+    {stem:'Мне тридцать три.', opts:["I am thirty three.","I am thirty-three."], ok:1, why:"Верно. В составных числах дефис обязателен"},
+    {stem:'Мне девятнадцать лет.', opts:["I am nineteen years old.","I am ninety years old."], ok:0, why:"Верно. nineteen это 19"}
+  ], true);
+
+})();
+
+</script>
+</body>
+</html>
