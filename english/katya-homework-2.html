@@ -245,7 +245,7 @@
   <div class="card">
     <p>Выбери трёх человек: кого хочешь, маму, сестру, мужа, подругу, соседку. Про каждого скажи три-четыре предложения:</p>
     <div class="skel">
-      <span>кто это <i>&nbsp;This is my...</i></span>
+      <span>кто это <i>&nbsp;My sister...</i></span>
       <span>как зовут <i>&nbsp;Her name is...</i></span>
       <span>кем работает <i>&nbsp;She is...</i></span>
       <span>откуда <i>&nbsp;She is from...</i></span>
@@ -288,14 +288,14 @@
 
   <div class="card">
     <div class="chain"><div class="n">1</div>
-      <div class="l">Это моя сестра.</div>
+      <div class="l">Моя сестра учитель.</div>
       <div class="l">Её зовут Лена.</div>
-      <div class="l">Она учитель.</div>
+      <div class="l">Она не дома.</div>
     </div>
     <div class="chain"><div class="n">2</div>
-      <div class="l">Это мой брат.</div>
+      <div class="l">Мой брат тренер.</div>
       <div class="l">Его зовут Макс.</div>
-      <div class="l">Он не дома, он на работе.</div>
+      <div class="l">Он на работе.</div>
     </div>
     <div class="chain"><div class="n">3</div>
       <div class="l">Мы из Москвы.</div>
@@ -303,29 +303,16 @@
       <div class="l">Наши друзья здесь.</div>
     </div>
     <div class="chain"><div class="n">4</div>
-      <div class="l">Это мои соседи.</div>
+      <div class="l">Мои соседи из Италии.</div>
       <div class="l">Их сын врач.</div>
       <div class="l">Их дочь не блогер.</div>
     </div>
   </div>
 
-  <div class="tag wd">письменно</div>
-  <h2><span class="num">07</span>Переведи на русский</h2>
-  <p class="lead">Шесть предложений. Напиши перевод текстом.</p>
-
-  <div class="card">
-    <div class="scr"><div class="n">1</div><div class="t">My boss is from Italy.</div></div>
-    <div class="scr"><div class="n">2</div><div class="t">His daughter isn't at home.</div></div>
-    <div class="scr"><div class="n">3</div><div class="t">They are my neighbours.</div></div>
-    <div class="scr"><div class="n">4</div><div class="t">Our friends are here together.</div></div>
-    <div class="scr"><div class="n">5</div><div class="t">She isn't a cook. She is a nurse.</div></div>
-    <div class="scr"><div class="n">6</div><div class="t">I'm not forty. I am thirty.</div></div>
-  </div>
-
   <div class="hw">
     <h3>Что прислать</h3>
     <p><b>Голосовым</b> - задание 1.</p>
-    <p><b>Текстом</b> - задания 5, 6 и 7.</p>
+    <p><b>Текстом</b> - задания 5 и 6.</p>
     <p class="small">Задания 2, 3 и 4 проверяются кнопками прямо здесь. Присылать их не надо.</p>
   </div>
 
@@ -440,14 +427,14 @@ function revealBlock(id, items, withSound){
 
 /* 02. he / she / it */
 choiceBlock("ex1", [
-  {stem:'This is Robert. <u></u> is a coach.', ru:'это Роберт', opts:["He","She","It"], ok:0, why:"Верно. Robert мужчина."},
-  {stem:'This is Moscow. <u></u> is in Russia.', ru:'это Москва', opts:["He","She","It"], ok:2, why:"Верно. Город не человек, значит it."},
-  {stem:'This is my sister. <u></u> is a teacher.', ru:'это моя сестра', opts:["He","She","It"], ok:1, why:"Верно. Сестра женщина."},
-  {stem:'This is my brother. <u></u> is at work.', ru:'это мой брат', opts:["He","She","It"], ok:0, why:"Верно. Брат мужчина."},
-  {stem:'This is Rome. <u></u> is in Italy.', ru:'это Рим', opts:["He","She","It"], ok:2, why:"Верно. Город это it."},
-  {stem:'This is Maria. <u></u> is a cook.', ru:'это Мария', opts:["He","She","It"], ok:1, why:"Верно. Maria женщина."},
-  {stem:'This is my dad. <u></u> is forty.', ru:'это мой папа', opts:["He","She","It"], ok:0, why:"Верно. Папа мужчина."},
-  {stem:'This is Berlin. <u></u> is in Germany.', ru:'это Берлин', opts:["He","She","It"], ok:2, why:"Верно. Берлин это it, хотя по-русски «он»."}
+  {stem:'Robert is a coach. <u></u> is from Russia.', ru:'Роберт тренер', opts:["He","She","It"], ok:0, why:"Верно. Robert мужчина."},
+  {stem:'Moscow is in Russia. <u></u> is my city.', ru:'Москва в России', opts:["He","She","It"], ok:2, why:"Верно. Город не человек, значит it."},
+  {stem:'My sister is a teacher. <u></u> is twenty.', ru:'моя сестра учитель', opts:["He","She","It"], ok:1, why:"Верно. Сестра женщина."},
+  {stem:'My brother is at work. <u></u> is a doctor.', ru:'мой брат на работе', opts:["He","She","It"], ok:0, why:"Верно. Брат мужчина."},
+  {stem:'Rome is in Italy. <u></u> isn\'t in Spain.', ru:'Рим в Италии', opts:["He","She","It"], ok:2, why:"Верно. Город это it."},
+  {stem:'Maria is a cook. <u></u> is from Spain.', ru:'Мария повар', opts:["He","She","It"], ok:1, why:"Верно. Maria женщина."},
+  {stem:'My dad is forty. <u></u> is a driver.', ru:'моему папе сорок', opts:["He","She","It"], ok:0, why:"Верно. Папа мужчина."},
+  {stem:'Berlin is in Germany. <u></u> isn\'t in France.', ru:'Берлин в Германии', opts:["He","She","It"], ok:2, why:"Верно. Берлин это it, хотя по-русски «он»."}
 ]);
 
 /* 03. am / is / are */
@@ -466,15 +453,15 @@ choiceBlock("ex2", [
 
 /* 04. притяжательные */
 choiceBlock("ex3", [
-  {stem:'This is Robert. <u></u> name is Robert.', ru:'его зовут Роберт', opts:["His","Her","Their"], ok:0, why:"Верно. Хозяин мужчина."},
-  {stem:'This is Lena. <u></u> name is Lena.', ru:'её зовут Лена', opts:["His","Her","Our"], ok:1, why:"Верно. Хозяйка женщина."},
+  {stem:'Robert is my friend. <u></u> name is Robert.', ru:'его зовут Роберт', opts:["His","Her","Their"], ok:0, why:"Верно. Хозяин мужчина."},
+  {stem:'Lena is my sister. <u></u> name is Lena.', ru:'её зовут Лена', opts:["His","Her","Our"], ok:1, why:"Верно. Хозяйка женщина."},
   {stem:'I am Anna. <u></u> mum is a cook.', ru:'моя мама', opts:["My","Your","Her"], ok:0, why:"Верно. I даёт my."},
   {stem:'We are from Moscow. <u></u> city is Moscow.', ru:'наш город', opts:["Our","Their","Your"], ok:0, why:"Верно. We даёт our."},
   {stem:'They are my neighbours. <u></u> son is a doctor.', ru:'их сын', opts:["Our","Their","His"], ok:1, why:"Верно. They даёт their."},
   {stem:'You are Robert. <u></u> sister is a teacher.', ru:'твоя сестра', opts:["My","Your","His"], ok:1, why:"Верно. You даёт your."},
-  {stem:'This is my brother. <u></u> daughter is here.', ru:'его дочь', opts:["His","Her","Their"], ok:0, why:"Верно. Хозяин брат, мужчина, значит his. По-русски «его дочь», но смотрим на хозяина, а не на дочь."},
-  {stem:'This is Maria. <u></u> husband is an engineer.', ru:'её муж', opts:["His","Her","Our"], ok:1, why:"Верно. Хозяйка Мария, женщина, значит her."},
-  {stem:'This is my boss. <u></u> name is Oleg.', ru:'его зовут Олег', opts:["His","Her","Its"], ok:0, why:"Верно. Олег мужчина."},
+  {stem:'Max is my brother. <u></u> daughter is here.', ru:'его дочь', opts:["His","Her","Their"], ok:0, why:"Верно. Хозяин брат, мужчина, значит his. По-русски «его дочь», но смотрим на хозяина, а не на дочь."},
+  {stem:'Maria is my neighbour. <u></u> husband is an engineer.', ru:'её муж', opts:["His","Her","Our"], ok:1, why:"Верно. Хозяйка Мария, женщина, значит her."},
+  {stem:'My boss is from Italy. <u></u> name is Oleg.', ru:'его зовут Олег', opts:["His","Her","Its"], ok:0, why:"Верно. Олег мужчина."},
   {stem:'We are together. <u></u> friends are here.', ru:'наши друзья', opts:["Our","Their","Your"], ok:0, why:"Верно. We даёт our."}
 ]);
 
