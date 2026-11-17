@@ -264,8 +264,13 @@
   <p class="lead">Смотри только на то, кто стоит в начале.</p>
   <div class="card" id="ex2"></div>
 
+  <div class="tag pr">кнопки</div>
+  <h2><span class="num">04</span>С чего начинается вопрос</h2>
+  <p class="lead">В вопросе глагол уходит вперёд. Выбери, какой именно.</p>
+  <div class="card" id="ex3"></div>
+
   <div class="tag wd">письменно</div>
-  <h2><span class="num">04</span>Собери фразу из слов</h2>
+  <h2><span class="num">05</span>Собери фразу из слов</h2>
   <p class="lead">Слова стоят не по порядку. Составь предложение и напиши его целиком.</p>
 
   <div class="card">
@@ -278,7 +283,7 @@
   </div>
 
   <div class="tag wd">письменно</div>
-  <h2><span class="num">05</span>Переведи на английский</h2>
+  <h2><span class="num">06</span>Переведи на английский</h2>
   <p class="lead">Четыре маленьких рассказа по три предложения. Пиши подряд, как рассказ.</p>
 
   <div class="card">
@@ -304,11 +309,28 @@
     </div>
   </div>
 
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">07</span>Задай вопрос</h2>
+  <p class="lead">Сначала переделай предложения в вопросы, потом переведи три вопроса сама. Пиши целиком.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">She is a teacher.<span class="ru">она учитель</span></div></div>
+    <div class="scr"><div class="n">2</div><div class="t">They are at home.<span class="ru">они дома</span></div></div>
+    <div class="scr"><div class="n">3</div><div class="t">You are from Italy.<span class="ru">ты из Италии</span></div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Your brother is a coach.<span class="ru">твой брат тренер</span></div></div>
+    <div class="scr"><div class="n">5</div><div class="t">We are together.<span class="ru">мы вместе</span></div></div>
+
+    <h3>А эти вопросы переведи на английский</h3>
+    <div class="scr"><div class="n">6</div><div class="t">Где твоя сестра?</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Сколько лет твоему брату?</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Как тебя зовут?</div></div>
+  </div>
+
   <div class="hw">
     <h3>Что прислать</h3>
     <p><b>Голосовым</b> - задание 1.</p>
-    <p><b>Текстом</b> - задания 4 и 5.</p>
-    <p class="small">Задания 2 и 3 проверяются кнопками прямо здесь. Присылать их не надо.</p>
+    <p><b>Текстом</b> - задания 5, 6 и 7.</p>
+    <p class="small">Задания 2, 3 и 4 проверяются кнопками прямо здесь. Присылать их не надо.</p>
   </div>
 
   <div class="foot">English from scratch &middot; домашка к уроку 2</div>
@@ -446,6 +468,18 @@ choiceBlock("ex2", [
   {stem:'My daughter <u></u> here.', ru:'моя дочь здесь', opts:["am","is","are"], ok:1, why:"Верно. Дочь одна, значит is."}
 ]);
 
+
+/* 04. вопрос: am / is / are */
+choiceBlock("ex3", [
+  {stem:'<u></u> she a teacher?', ru:'она учитель?', opts:["Am","Is","Are"], ok:1, why:"Верно. She это is, и в вопросе is уходит вперёд."},
+  {stem:'<u></u> you from Moscow?', ru:'ты из Москвы?', opts:["Am","Is","Are"], ok:2, why:"Верно. С you всегда are."},
+  {stem:'<u></u> your brother at home?', ru:'твой брат дома?', opts:["Am","Is","Are"], ok:1, why:"Верно. Брат один, значит is."},
+  {stem:'<u></u> they at work?', ru:'они на работе?', opts:["Am","Is","Are"], ok:2, why:"Верно. They идёт с are."},
+  {stem:'<u></u> I your neighbour?', ru:'я твоя соседка?', opts:["Am","Is","Are"], ok:0, why:"Верно. am живёт только с I, и в вопросе тоже."},
+  {stem:'<u></u> your mum a doctor?', ru:'твоя мама врач?', opts:["Am","Is","Are"], ok:1, why:"Верно, мама одна, значит is."},
+  {stem:'<u></u> we together?', ru:'мы вместе?', opts:["Am","Is","Are"], ok:2, why:"Верно. We идёт с are."},
+  {stem:'<u></u> it Moscow?', ru:'это Москва?', opts:["Am","Is","Are"], ok:1, why:"Верно, it это is."}
+]);
 
 </script>
 </body>
