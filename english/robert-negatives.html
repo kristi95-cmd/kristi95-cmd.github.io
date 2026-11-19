@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тренажёр: короткая форма отрицания</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+    .opt.tall{font-size:14px; padding:9px 10px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- слова вразброс ---------- */
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+  .scr .t i{font-style:normal; color:var(--line); font-weight:700; margin:0 4px}
+  .scr .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  /* ---------- цепочки ---------- */
+  .chain{padding:14px 0; border-bottom:1px solid var(--line)}
+  .chain:last-child{border-bottom:none}
+  .chain .n{font-size:12px; font-weight:800; color:var(--mute); margin-bottom:6px}
+  .chain div.l{font-size:18px; font-weight:600; padding:3px 0}
+  .skel{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:19px; font-weight:800}
+  .skel span{display:block; padding:5px 0; color:var(--deep)}
+  .skel span i{font-style:normal; color:var(--mute); font-weight:700; letter-spacing:.06em}
+
+  /* ---------- тренажёр ---------- */
+  .screen{display:none}
+  .screen.on{display:block}
+
+  .hud{display:flex; gap:10px; align-items:center; justify-content:space-between;
+    background:var(--paper); border-radius:14px; padding:12px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .hud .rnd{font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--mute)}
+  .hud .sc{font-size:20px; font-weight:800; color:var(--deep)}
+  .hud .sc b{color:var(--accent)}
+  .hud .streak{font-size:13px; font-weight:800; color:var(--ok); min-height:18px}
+
+  .pbar{height:6px; background:var(--tile-2); border-radius:999px; overflow:hidden; margin:0 0 18px}
+  .pbar i{display:block; height:100%; width:0; background:var(--accent); transition:width .25s ease}
+
+  .task{font-size:15px; color:var(--soft); margin:0 0 10px}
+  .task b{color:var(--ink)}
+
+  /* склейка слов */
+  .line{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:6px 0 14px}
+  .w{border:2px solid var(--line); background:#fff; font-family:inherit; font-size:20px;
+    font-weight:800; padding:11px 15px; border-radius:12px; cursor:pointer; color:var(--ink);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease}
+  .w.pick{border-color:var(--accent); background:var(--tile); transform:translateY(-3px)}
+  .w.dead{opacity:.45; cursor:default}
+  .w.shake{animation:shake .3s}
+  @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+  .found{margin:10px 0 0}
+  .found div{font-size:19px; font-weight:800; color:var(--ok); background:var(--ok-bg);
+    border-radius:10px; padding:10px 14px; margin-bottom:8px}
+  .found div small{display:block; font-size:13px; font-weight:700; color:var(--soft); margin-top:3px}
+  .slots{font-size:13px; font-weight:800; color:var(--mute); letter-spacing:.06em; text-transform:uppercase}
+
+  /* карточка бывает / не бывает */
+  .big{background:var(--paper); border-radius:16px; padding:28px 18px; text-align:center; margin:12px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .big .form-w{font-size:38px; font-weight:800; letter-spacing:-.02em; line-height:1.15}
+  .big .hint{font-size:14px; color:var(--mute); margin-top:8px; min-height:20px}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .bg-btn{border:2px solid var(--line); background:#fff; font-family:inherit; font-size:17px;
+    font-weight:800; padding:16px 10px; border-radius:14px; cursor:pointer; color:var(--ink)}
+  .bg-btn.y{color:var(--ok)} .bg-btn.n{color:var(--no)}
+  .bg-btn:disabled{opacity:.5}
+
+  .verdict{font-size:15px; font-weight:800; min-height:46px; padding:10px 14px; border-radius:12px; margin:4px 0 0; display:none}
+  .verdict.show{display:block}
+  .verdict.y{background:var(--ok-bg); color:var(--ok)}
+  .verdict.n{background:var(--no-bg); color:var(--no)}
+
+  /* выбор из трёх */
+  .ru-big{font-size:22px; font-weight:800; margin:4px 0 4px}
+  .full{font-size:16px; color:var(--soft); margin:0 0 14px}
+  .full b{color:var(--deep)}
+  .pick3{display:flex; flex-direction:column; gap:9px}
+  .pick3 button{border:2px solid var(--line); background:#fff; font-family:inherit; font-size:18px;
+    font-weight:700; padding:13px 15px; border-radius:12px; cursor:pointer; color:var(--ink); text-align:left}
+  .pick3 button.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .pick3 button.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+
+  .go{border:none; background:var(--accent); color:#fff; font-family:inherit; font-size:17px;
+    font-weight:800; padding:15px 22px; border-radius:999px; cursor:pointer; margin-top:16px; width:100%}
+  .go.ghost{background:#fff; color:var(--deep); border:2px solid var(--line)}
+  .go:disabled{opacity:.35; cursor:default}
+
+  /* финал */
+  .final{background:var(--deep); color:#fff; border-radius:16px; padding:26px 20px; text-align:center}
+  .final .num{font-size:52px; font-weight:800; line-height:1; letter-spacing:-.03em}
+  .final .of{color:#f0cada; font-size:15px; margin-top:6px}
+  .final .say{font-size:18px; font-weight:800; color:#ffd1e2; margin-top:14px}
+  .best{font-size:14px; color:var(--mute); text-align:center; margin:10px 0 0}
+
+  .sheet{background:var(--paper); border-radius:14px; padding:6px 16px 10px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .sheet .row{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; padding:10px 0;
+    border-bottom:1px solid var(--line); font-size:16px; font-weight:700; align-items:center}
+  .sheet .row:last-child{border-bottom:none}
+  .sheet .row.h{font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--mute); padding-bottom:6px}
+  .sheet .row .f{color:var(--soft); font-weight:600}
+  .sheet .row b{color:var(--accent)}
+  .sheet .row .x{color:var(--no); font-weight:800}
+
+  @media (max-width:420px){
+    .w{font-size:18px; padding:10px 12px}
+    .big .form-w{font-size:32px}
+    .sheet .row{font-size:15px; gap:6px}
+    .pick3 button{font-size:17px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Тренажёр &middot; отрицание</div>
+    <h1>Короткая форма<em>три раунда</em></h1>
+    <p>Одно правило, тридцать девять попаданий. Можно играть сколько угодно раз.</p>
+  </div>
+
+  <!-- ЭКРАН 0: правило -->
+  <div class="screen on" id="s0">
+    <h2><span class="num">00</span>Сначала правило, одна минута</h2>
+    <p class="lead">Полная форма всегда верна. Но в жизни её сокращают, и сократить можно двумя способами.</p>
+
+    <div class="card">
+      <div class="form">He is not a coach.<span class="ex">полная форма, так всё правильно</span></div>
+      <div class="sheet">
+        <div class="row"><span>склеить глагол с not</span><b>He isn't</b><span class="f">a coach</span></div>
+        <div class="row"><span>склеить человека с глаголом</span><b>He's not</b><span class="f">a coach</span></div>
+      </div>
+      <p>Оба варианта одинаково правильные и означают одно и то же. Выбираешь любой, какой быстрее выговорится.</p>
+
+      <h3>Одно исключение, и оно про тебя</h3>
+      <div class="wrong-right">
+        <div class="wr n">I amn't<small>такого слова нет вообще</small></div>
+        <div class="wr y">I'm not<small>единственный короткий вариант с I</small></div>
+      </div>
+      <p>С <b>I am</b> склеивается только первая пара: <b>I'm</b>. Глагол <b>am</b> с <b>not</b> не слипается никогда.</p>
+    </div>
+
+    <button class="go" id="start">Поехали, раунд 1</button>
+  </div>
+
+  <!-- HUD -->
+  <div class="screen" id="hud">
+    <div class="hud">
+      <div>
+        <div class="rnd" id="rndName">раунд 1</div>
+        <div class="sc"><b id="score">0</b> из 39</div>
+      </div>
+      <div class="streak" id="streak"></div>
+    </div>
+    <div class="pbar"><i id="bar"></i></div>
+  </div>
+
+  <!-- РАУНД 1 -->
+  <div class="screen" id="s1">
+    <h2><span class="num">01</span>Склей слова</h2>
+    <p class="task" id="t1"></p>
+    <div class="card">
+      <div class="line" id="line1"></div>
+      <div class="slots" id="slots1"></div>
+      <div class="found" id="found1"></div>
+      <div class="verdict" id="v1"></div>
+    </div>
+    <button class="go" id="next1" disabled>Дальше</button>
+  </div>
+
+  <!-- РАУНД 2 -->
+  <div class="screen" id="s2">
+    <h2><span class="num">02</span>Бывает или нет</h2>
+    <p class="task">Форма на карточке. Решай быстро: <b>так говорят</b> или <b>такого нет</b>.</p>
+    <div class="big">
+      <div class="form-w" id="form2"></div>
+      <div class="hint" id="hint2"></div>
+    </div>
+    <div class="two">
+      <button class="bg-btn y" id="yes2">Так говорят</button>
+      <button class="bg-btn n" id="no2">Такого нет</button>
+    </div>
+    <div class="verdict" id="v2"></div>
+    <button class="go" id="next2" disabled>Дальше</button>
+  </div>
+
+  <!-- РАУНД 3 -->
+  <div class="screen" id="s3">
+    <h2><span class="num">03</span>Скажи короче</h2>
+    <p class="task">Полная форма перед тобой. Выбери, как это звучит в живой речи.</p>
+    <div class="card">
+      <div class="ru-big" id="ru3"></div>
+      <p class="full">полная форма: <b id="full3"></b></p>
+      <div class="pick3" id="opts3"></div>
+      <div class="verdict" id="v3"></div>
+    </div>
+    <button class="go" id="next3" disabled>Дальше</button>
+  </div>
+
+  <!-- ФИНАЛ -->
+  <div class="screen" id="s4">
+    <div class="final">
+      <div class="num" id="fscore">0</div>
+      <div class="of">попаданий из 39</div>
+      <div class="say" id="fsay"></div>
+    </div>
+    <div class="best" id="best"></div>
+
+    <h2><span class="num">04</span>Всё, что мы сейчас прогнали</h2>
+    <p class="lead">Эта таблица тут не для зубрёжки. Загляни, если в игре что-то удивило.</p>
+
+    <div class="sheet">
+      <div class="row h"><span>полная</span><span>глагол с not</span><span>человек с глаголом</span></div>
+      <div class="row"><span class="f">I am not</span><span class="x">amn't нет</span><b>I'm not</b></div>
+      <div class="row"><span class="f">you are not</span><b>you aren't</b><b>you're not</b></div>
+      <div class="row"><span class="f">he is not</span><b>he isn't</b><b>he's not</b></div>
+      <div class="row"><span class="f">she is not</span><b>she isn't</b><b>she's not</b></div>
+      <div class="row"><span class="f">it is not</span><b>it isn't</b><b>it's not</b></div>
+      <div class="row"><span class="f">we are not</span><b>we aren't</b><b>we're not</b></div>
+      <div class="row"><span class="f">they are not</span><b>they aren't</b><b>they're not</b></div>
+      <div class="row"><span class="f">my friend is not</span><b>my friend isn't</b><span class="f">в речи ещё friend's not</span></div>
+    </div>
+
+    <div class="note">Если в игре ты чаще промахивался на одной строке, скажи мне на занятии какой. Это быстрее разбирается вслух, чем набивается кнопками.</div>
+
+    <button class="go" id="again">Пройти заново</button>
+    <button class="go ghost" id="toTop">Перечитать правило</button>
+  </div>
+
+  <div class="foot">Роберт &middot; тренажёр к занятию 3</div>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+var TOTAL = 39;
+var score = 0, streak = 0;
+
+function el(id){ return document.getElementById(id); }
+function show(ids){
+  ["s0","s1","s2","s3","s4","hud"].forEach(function(id){
+    el(id).classList.toggle("on", ids.indexOf(id) >= 0);
+  });
+  window.scrollTo(0,0);
+}
+function addScore(n){
+  score += n; streak += n;
+  el("score").textContent = score;
+  el("bar").style.width = Math.round(score / TOTAL * 100) + "%";
+  el("streak").textContent = streak >= 3 ? ("серия " + streak) : "";
+}
+function miss(){ streak = 0; el("streak").textContent = ""; }
+function verdict(node, okFlag, text){
+  node.className = "verdict show " + (okFlag ? "y" : "n");
+  node.textContent = text;
+}
+
+/* ===================== РАУНД 1. СКЛЕЙ СЛОВА ===================== */
+var R1 = [
+  {words:["He","is","not","a coach"], ru:"он не тренер",
+   pairs:[{i:0,sent:"He's not a coach"},{i:1,sent:"He isn't a coach"}]},
+  {words:["I","am","not","a doctor"], ru:"я не врач",
+   pairs:[{i:0,sent:"I'm not a doctor"}],
+   bad:[{i:1,msg:"amn't не существует. С I склеивается только первая пара: I'm not"}]},
+  {words:["We","are","not","from Spain"], ru:"мы не из Испании",
+   pairs:[{i:0,sent:"We're not from Spain"},{i:1,sent:"We aren't from Spain"}]},
+  {words:["You","are","not","a teacher"], ru:"ты не учитель",
+   pairs:[{i:0,sent:"You're not a teacher"},{i:1,sent:"You aren't a teacher"}]},
+  {words:["It","is","not","expensive"], ru:"это не дорого",
+   pairs:[{i:0,sent:"It's not expensive"},{i:1,sent:"It isn't expensive"}]},
+  {words:["They","are","not","at home"], ru:"их нет дома",
+   pairs:[{i:0,sent:"They're not at home"},{i:1,sent:"They aren't at home"}]},
+  {words:["She","is","not","a blogger"], ru:"она не блогер",
+   pairs:[{i:0,sent:"She's not a blogger"},{i:1,sent:"She isn't a blogger"}]},
+  {words:["My friend","is","not","a cook"], ru:"мой друг не повар",
+   pairs:[{i:1,sent:"My friend isn't a cook"},
+          {i:0,sent:"My friend's not a cook", note:"так говорят вслух, но на письме надёжнее My friend isn't"}]}
+];
+var i1 = 0, picked = null, got = [];
+
+function draw1(){
+  var it = R1[i1];
+  picked = null; got = [];
+  el("t1").innerHTML = "Нажми два слова, которые можно слепить в одно. <b>" + it.ru + "</b>";
+  el("v1").className = "verdict";
+  el("found1").innerHTML = "";
+  el("next1").disabled = true;
+  el("next1").textContent = i1 === R1.length - 1 ? "Дальше, раунд 2" : "Дальше";
+  slots1();
+  var line = el("line1");
+  line.innerHTML = "";
+  it.words.forEach(function(w, k){
+    var b = document.createElement("button");
+    b.className = "w"; b.type = "button"; b.textContent = w;
+    b.addEventListener("click", function(){ tap1(k, b); });
+    line.appendChild(b);
+  });
+}
+function slots1(){
+  var n = R1[i1].pairs.length;
+  el("slots1").textContent = "найдено " + got.length + " из " + n;
+}
+function tap1(k, b){
+  var line = el("line1"), all = line.querySelectorAll(".w");
+  if(picked === null){
+    picked = k; b.classList.add("pick"); return;
+  }
+  if(picked === k){ picked = null; b.classList.remove("pick"); return; }
+  var a = Math.min(picked, k), diff = Math.abs(picked - k);
+  for(var m=0;m<all.length;m++) all[m].classList.remove("pick");
+  picked = null;
+  var it = R1[i1];
+  if(diff !== 1){
+    b.classList.add("shake");
+    setTimeout(function(){ b.classList.remove("shake"); }, 320);
+    verdict(el("v1"), false, "Слипаются только соседние слова, через одно нельзя");
+    miss(); return;
+  }
+  if(got.indexOf(a) >= 0){
+    verdict(el("v1"), true, "Этот способ ты уже нашёл. Попробуй второй");
+    return;
+  }
+  var hit = null;
+  it.pairs.forEach(function(p){ if(p.i === a) hit = p; });
+  if(hit){
+    got.push(a); addScore(1); slots1();
+    var d = document.createElement("div");
+    d.innerHTML = hit.sent + "." + (hit.note ? '<small>' + hit.note + '</small>' : "");
+    el("found1").appendChild(d);
+    if(got.length === it.pairs.length){
+      verdict(el("v1"), true, it.pairs.length === 1
+        ? "Всё, с I других вариантов нет"
+        : "Оба способа найдены. Они равны, говори какой удобнее");
+      el("next1").disabled = false;
+    } else {
+      verdict(el("v1"), true, "Есть. Теперь найди второй способ");
+    }
+    return;
+  }
+  var badMsg = null;
+  (it.bad || []).forEach(function(p){ if(p.i === a) badMsg = p.msg; });
+  verdict(el("v1"), false, badMsg || "Эти два слова не слипаются. Склеивается глагол с not или человек с глаголом");
+  miss();
+}
+
+/* ===================== РАУНД 2. БЫВАЕТ ИЛИ НЕТ ===================== */
+var R2 = [
+  {f:"isn't", ok:true, why:"is и not слиплись. Самая частая форма"},
+  {f:"amn't", ok:false, why:"Такого слова нет. С I только I'm not"},
+  {f:"I'm not", ok:true, why:"Единственный короткий вариант с I"},
+  {f:"he'sn't", ok:false, why:"Склейка одна за раз: либо he's not, либо he isn't"},
+  {f:"aren't", ok:true, why:"are и not слиплись"},
+  {f:"we're not", ok:true, why:"Склеили we и are, not остался отдельно"},
+  {f:"I amn't", ok:false, why:"Та же ловушка. Правильно I'm not"},
+  {f:"it isn't", ok:true, why:"it идёт с is, значит isn't"},
+  {f:"we'ren't", ok:false, why:"Двух склеек сразу не бывает: we aren't или we're not"},
+  {f:"is not", ok:true, why:"Полная форма. Длинно, но всегда правильно"},
+  {f:"you aren't", ok:true, why:"С you всегда are, значит aren't"},
+  {f:"she's not", ok:true, why:"Склеили she и is"},
+  {f:"am not", ok:true, why:"Полная форма с I. Правильно: I am not a coach"},
+  {f:"they'ren't", ok:false, why:"Либо they aren't, либо they're not. Вместе нельзя"}
+];
+var i2 = 0;
+
+function draw2(){
+  el("form2").textContent = R2[i2].f;
+  el("hint2").textContent = (i2 + 1) + " из " + R2.length;
+  el("v2").className = "verdict";
+  el("yes2").disabled = false; el("no2").disabled = false;
+  el("next2").disabled = true;
+  el("next2").textContent = i2 === R2.length - 1 ? "Дальше, раунд 3" : "Дальше";
+}
+function answer2(said){
+  var it = R2[i2];
+  el("yes2").disabled = true; el("no2").disabled = true;
+  el("next2").disabled = false;
+  if(said === it.ok){ addScore(1); verdict(el("v2"), true, "В точку. " + it.why); }
+  else { miss(); verdict(el("v2"), false, (it.ok ? "Так говорят. " : "Такого нет. ") + it.why); }
+}
+
+/* ===================== РАУНД 3. СКАЖИ КОРОЧЕ ===================== */
+var R3 = [
+  {ru:"я не тренер", full:"I am not a coach",
+   opts:["I amn't a coach","I'm not a coach","I not a coach"], ok:1,
+   why:"С I склеивается только I am, получается I'm not"},
+  {ru:"ты не учитель", full:"You are not a teacher",
+   opts:["You aren't a teacher","You isn't a teacher","You not a teacher"], ok:0,
+   why:"С you всегда are, значит aren't"},
+  {ru:"он не врач", full:"He is not a doctor",
+   opts:["He amn't a doctor","He aren't a doctor","He isn't a doctor"], ok:2,
+   why:"He идёт с is, значит isn't. Или he's not"},
+  {ru:"она не блогер", full:"She is not a blogger",
+   opts:["She's not a blogger","She're not a blogger","She not a blogger"], ok:0,
+   why:"Склеили she и is. Второй верный вариант: she isn't"},
+  {ru:"это не дорого", full:"It is not expensive",
+   opts:["It aren't expensive","It isn't expensive","It not expensive"], ok:1,
+   why:"it идёт с is, значит isn't"},
+  {ru:"мы не из Испании", full:"We are not from Spain",
+   opts:["We isn't from Spain","We'ren't from Spain","We aren't from Spain"], ok:2,
+   why:"we идёт с are, значит aren't. Или we're not"},
+  {ru:"их нет дома", full:"They are not at home",
+   opts:["They're not at home","They'ren't at home","They isn't at home"], ok:0,
+   why:"Склеили they и are. Второй верный вариант: they aren't"},
+  {ru:"её зовут не Катя", full:"Her name is not Katya",
+   opts:["Her name aren't Katya","Her name not Katya","Her name isn't Katya"], ok:2,
+   why:"Имя одно, значит is, и в коротком виде isn't"},
+  {ru:"я не из Москвы", full:"I am not from Moscow",
+   opts:["I'm not from Moscow","I amn't from Moscow","I aren't from Moscow"], ok:0,
+   why:"Снова I: только I'm not"},
+  {ru:"мой друг не повар", full:"My friend is not a cook",
+   opts:["My friend aren't a cook","My friend isn't a cook","My friend not a cook"], ok:1,
+   why:"Друг один, значит is, в коротком виде isn't"}
+];
+var i3 = 0;
+
+function draw3(){
+  var it = R3[i3];
+  el("ru3").textContent = it.ru;
+  el("full3").textContent = it.full;
+  el("v3").className = "verdict";
+  el("next3").disabled = true;
+  el("next3").textContent = i3 === R3.length - 1 ? "Показать результат" : "Дальше";
+  var host = el("opts3"); host.innerHTML = "";
+  it.opts.forEach(function(o, k){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = o;
+    b.addEventListener("click", function(){
+      var all = host.querySelectorAll("button");
+      for(var m=0;m<all.length;m++) all[m].disabled = true;
+      el("next3").disabled = false;
+      if(k === it.ok){ b.className = "right"; addScore(1); verdict(el("v3"), true, "Верно. " + it.why); }
+      else {
+        b.className = "wrong"; all[it.ok].className = "right"; miss();
+        verdict(el("v3"), false, "Не то. " + it.why);
+      }
+    });
+    host.appendChild(b);
+  });
+}
+
+/* ===================== ФИНАЛ ===================== */
+function finish(){
+  el("fscore").textContent = score;
+  var say = "Рано. Перечитай правило и пройди ещё раз";
+  if(score >= 36) say = "Чисто. Короткая форма у тебя в руках";
+  else if(score >= 28) say = "Хорошо. Осталось добить пару строк";
+  else if(score >= 18) say = "Нормально для первого раза. Прогони ещё";
+  el("fsay").textContent = say;
+  var best = 0;
+  try{
+    best = parseInt(localStorage.getItem("rb_neg_best") || "0", 10) || 0;
+    if(score > best){ localStorage.setItem("rb_neg_best", String(score)); best = score; }
+  }catch(e){ best = 0; }
+  el("best").textContent = best ? ("лучший результат: " + best + " из " + TOTAL) : "";
+  show(["s4"]);
+}
+
+/* ===================== ЗАПУСК ===================== */
+function reset(){
+  score = 0; streak = 0; i1 = 0; i2 = 0; i3 = 0;
+  el("score").textContent = "0"; el("bar").style.width = "0"; el("streak").textContent = "";
+}
+el("start").addEventListener("click", function(){
+  reset(); el("rndName").textContent = "раунд 1, склей слова";
+  draw1(); show(["hud","s1"]);
+});
+el("next1").addEventListener("click", function(){
+  i1++;
+  if(i1 < R1.length){ draw1(); window.scrollTo(0,0); }
+  else { el("rndName").textContent = "раунд 2, бывает или нет"; draw2(); show(["hud","s2"]); }
+});
+el("yes2").addEventListener("click", function(){ answer2(true); });
+el("no2").addEventListener("click", function(){ answer2(false); });
+el("next2").addEventListener("click", function(){
+  i2++;
+  if(i2 < R2.length){ draw2(); window.scrollTo(0,0); }
+  else { el("rndName").textContent = "раунд 3, скажи короче"; draw3(); show(["hud","s3"]); }
+});
+el("next3").addEventListener("click", function(){
+  i3++;
+  if(i3 < R3.length){ draw3(); window.scrollTo(0,0); }
+  else finish();
+});
+el("again").addEventListener("click", function(){
+  reset(); el("rndName").textContent = "раунд 1, склей слова";
+  draw1(); show(["hud","s1"]);
+});
+el("toTop").addEventListener("click", function(){ show(["s0"]); });
+})();
+</script>
+</body>
+</html>
