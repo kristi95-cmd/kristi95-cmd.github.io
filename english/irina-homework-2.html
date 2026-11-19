@@ -103,32 +103,37 @@
   <div class="top">
     <div class="kicker">Домашняя работа к уроку 2</div>
     <h1>He, she, it.<em>Он, она, оно и какой человек</em></h1>
-    <p>Пять блоков, минут двадцать пять. Первые три делаете прямо здесь, кнопками: нажимаете вариант и сразу видите, верно или нет. Четвёртое пишете и присылаете мне текстом. Последнее голосовое, оно сегодня главное.</p>
+    <p>Шесть блоков, минут тридцать. Первые четыре делаете прямо здесь, кнопками: нажимаете вариант и сразу видите, верно или нет. Четвёртое пишете и присылаете мне текстом. Последнее голосовое, оно сегодня главное.</p>
   </div>
 
   <div class="tag pr">Упражнение 1</div>
-  <h2><span class="num">01</span>he, she или it</h2>
+  <h2><span class="num">01</span>a или an перед профессией</h2>
+  <p class="lead">an ставим, когда слово начинается с гласной: a, e, i, o, u. В остальных случаях a.</p>
+  <div class="card" id="ex0"></div>
+
+  <div class="tag pr">Упражнение 2</div>
+  <h2><span class="num">02</span>he, she или it</h2>
   <p class="lead">Смотрите на первое предложение: о ком или о чём речь. Про мужчину he, про женщину she, про любую вещь it.</p>
   <div class="card" id="ex1"></div>
 
-  <div class="tag pr">Упражнение 2</div>
-  <h2><span class="num">02</span>am, is или are</h2>
+  <div class="tag pr">Упражнение 3</div>
+  <h2><span class="num">03</span>am, is или are</h2>
   <p class="lead">am только с I, are с you, у всех остальных is.</p>
   <div class="card" id="ex2"></div>
 
-  <div class="tag pr">Упражнение 3</div>
-  <h2><span class="num">03</span>Выберите слово по смыслу</h2>
+  <div class="tag pr">Упражнение 4</div>
+  <h2><span class="num">04</span>Выберите слово по смыслу</h2>
   <p class="lead">Под каждой русской фразой три английских слова. Нужное одно.</p>
   <div class="card" id="ex4"></div>
 
   <div class="tag wr">Письменно</div>
-  <h2><span class="num">04</span>Переведите на английский</h2>
+  <h2><span class="num">05</span>Переведите на английский</h2>
   <p class="lead">Напишите эти фразы по-английски и пришлите мне текстом в телеграм. Фразы идут вперемешку: что-то с прошлого занятия, что-то с этого.</p>
 
   <div class="card" id="tr1"></div>
 
   <div class="tag sp">Голосовое</div>
-  <h2><span class="num">05</span>Расскажите про трёх человек</h2>
+  <h2><span class="num">06</span>Расскажите про трёх человек</h2>
   <p class="lead">Выберите трёх человек, которых хорошо знаете. Про каждого запишите рассказ на 20-30 секунд. Можно одним голосовым подряд, можно тремя отдельными.</p>
 
   <div class="card">
@@ -143,9 +148,9 @@
     <p>Слово вылетело из головы - загляните на страницу урока. Но весь текст с листа не читайте: смысл в том, чтобы вспомнить и сказать.</p>
   </div>
 
-  <a class="lnk" href="https://kristi95-cmd.github.io/english/meeting-lesson-2.html" target="_blank" rel="noopener">
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/irina-lesson-2.html" target="_blank" rel="noopener">
     <div class="t">Страница урока 2 &rarr;</div>
-    <div class="u">kristi95-cmd.github.io/english/meeting-lesson-2.html</div>
+    <div class="u">kristi95-cmd.github.io/english/irina-lesson-2.html</div>
   </a>
 
   <div class="hw">
@@ -205,7 +210,21 @@
     });
   }
 
-  /* ---------- 01. he, she или it ---------- */
+  /* ---------- 01. a или an ---------- */
+  choiceBlock("ex0", [
+    { stem:'I am <u></u> teacher.', ru:'Я учитель.', opts:["a","an"], ok:0, why:"teacher начинается с согласной" },
+    { stem:'She is <u></u> engineer.', ru:'Она инженер.', opts:["a","an"], ok:1, why:"engineer с гласной, значит an" },
+    { stem:'He is <u></u> driver.', ru:'Он водитель.', opts:["a","an"], ok:0, why:"Верно" },
+    { stem:'You are <u></u> architect.', ru:'Вы архитектор.', opts:["a","an"], ok:1, why:"architect с гласной, значит an" },
+    { stem:'My sister is <u></u> nurse.', ru:'Моя сестра медсестра.', opts:["a","an"], ok:0, why:"Верно" },
+    { stem:'He is <u></u> actor.', ru:'Он актёр.', opts:["a","an"], ok:1, why:"actor с гласной, значит an" },
+    { stem:'I am <u></u> student.', ru:'Я студент.', opts:["a","an"], ok:0, why:"Верно" },
+    { stem:'My brother is <u></u> cook.', ru:'Мой брат повар.', opts:["a","an"], ok:0, why:"Верно" },
+    { stem:'She is <u></u> manager.', ru:'Она менеджер.', opts:["a","an"], ok:0, why:"Верно" },
+    { stem:'My friend is <u></u> doctor.', ru:'Моя подруга врач.', opts:["a","an"], ok:0, why:"Верно" }
+  ]);
+
+  /* ---------- 02. he, she или it ---------- */
   choiceBlock("ex1", [
     { stem:'Max is my brother. <u></u> is a cook.', ru:'Макс мой брат. Он повар.', opts:["he","she","it"], ok:0, why:"Про мужчину he" },
     { stem:'Emma is my friend. <u></u> is a nurse.', ru:'Эмма моя подруга. Она медсестра.', opts:["he","she","it"], ok:1, why:"Про женщину she" },
