@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка к занятию 3. Роберт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+    .opt.tall{font-size:14px; padding:9px 10px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  /* ---------- слова вразброс ---------- */
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+  .scr .t i{font-style:normal; color:var(--line); font-weight:700; margin:0 4px}
+  .scr .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  /* ---------- цепочки ---------- */
+  .chain{padding:14px 0; border-bottom:1px solid var(--line)}
+  .chain:last-child{border-bottom:none}
+  .chain .n{font-size:12px; font-weight:800; color:var(--mute); margin-bottom:6px}
+  .chain div.l{font-size:18px; font-weight:600; padding:3px 0}
+  .skel{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:19px; font-weight:800}
+  .skel span{display:block; padding:5px 0; color:var(--deep)}
+  .skel span i{font-style:normal; color:var(--mute); font-weight:700; letter-spacing:.06em}
+</style>
+
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашка &middot; занятие 3</div>
+    <h1>Вопросы<em>и короткие ответы</em></h1>
+    <p>Шесть заданий. Первое голосовым, три с кнопками прямо здесь, два письменно текстом в телеграм.</p>
+  </div>
+
+  <div class="tag sp">голосовое</div>
+  <h2><span class="num">01</span>Семь вопросов новому человеку</h2>
+  <p class="lead">Одно голосовое, 40-50 секунд. Только вопросы, подряд.</p>
+
+  <div class="card">
+    <p>Представь: в поездке к тебе подсел человек, вы познакомились. Теперь спрашиваешь ты. Семь вопросов, и четыре из них обязательно такие, где ответ только «да» или «нет».</p>
+    <div class="skel">
+      <span>Are you <i>&nbsp;.........</i>?</span>
+      <span>Is your <i>&nbsp;.........</i>?</span>
+      <span>What is <i>&nbsp;.........</i>?</span>
+      <span>Where are <i>&nbsp;.........</i>?</span>
+      <span>Who is <i>&nbsp;.........</i>?</span>
+    </div>
+    <div class="note">Не пиши вопросы заранее на бумаге и не читай с листа. Сбился - начни вопрос снова и продолжай, это нормально.</div>
+  </div>
+
+  <div class="tag pr">кнопки</div>
+  <h2><span class="num">02</span>С чего начинается вопрос</h2>
+  <p class="lead">Глагол уходит вперёд. Смотри на того, о ком речь, и выбирай форму.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">кнопки</div>
+  <h2><span class="num">03</span>Короткий ответ</h2>
+  <p class="lead">Сверху написано, как дела на самом деле. Выбери ответ, который звучит по-человечески.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag pr">кнопки</div>
+  <h2><span class="num">04</span>Какое слово в начале</h2>
+  <p class="lead">Если нужен не «да или нет», а конкретный ответ, впереди встаёт одно слово.</p>
+  <div class="card" id="ex3"></div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">05</span>Переделай в вопрос</h2>
+  <p class="lead">Ничего не добавляй и не убирай, только поменяй местами. Пиши целиком, с вопросительным знаком.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">You are from Russia.<span class="ru">ты из России</span></div></div>
+    <div class="scr"><div class="n">2</div><div class="t">She is a blogger.<span class="ru">она блогер</span></div></div>
+    <div class="scr"><div class="n">3</div><div class="t">They are your friends.<span class="ru">они твои друзья</span></div></div>
+    <div class="scr"><div class="n">4</div><div class="t">It is expensive.<span class="ru">это дорого</span></div></div>
+    <div class="scr"><div class="n">5</div><div class="t">He is a coach.<span class="ru">он тренер</span></div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Your girlfriend is in Moscow.<span class="ru">твоя девушка в Москве</span></div></div>
+    <div class="scr"><div class="n">7</div><div class="t">We are at home.<span class="ru">мы дома</span></div></div>
+    <div class="scr"><div class="n">8</div><div class="t">His name is Max.<span class="ru">его зовут Макс</span></div></div>
+    <div class="scr"><div class="n">9</div><div class="t">I am your friend.<span class="ru">я твой друг</span></div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Her name is Katya.<span class="ru">её зовут Катя</span></div></div>
+  </div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">06</span>Ответь коротко и задай сам</h2>
+  <p class="lead">Сначала короткие ответы, потом пять вопросов на перевод. Всё пиши целиком.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Are you a coach?<span class="ru">да</span></div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Is your girlfriend a blogger?<span class="ru">да</span></div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Are you from Spain?<span class="ru">нет</span></div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Is it your hotel?<span class="ru">нет</span></div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Are they from Italy?<span class="ru">да</span></div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Is he your brother?<span class="ru">нет</span></div></div>
+
+    <h3>А эти вопросы напиши по-английски</h3>
+    <div class="scr"><div class="n">7</div><div class="t">Как тебя зовут?</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Откуда ты?</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Кто это?</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Как её зовут?</div></div>
+    <div class="scr"><div class="n">11</div><div class="t">Ты из Москвы?</div></div>
+  </div>
+
+  <div class="note">Вопросов вроде «где ты живёшь» и «кем ты работаешь» тут нет специально: там другое слово в начале, мы его ещё не брали. <b>Where do you live?</b> и <b>What do you do?</b> пока помни целой фразой, разбирать не надо.</div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Голосовым</b> - задание 1, семь вопросов.</p>
+    <p><b>Текстом</b> - задания 5 и 6, списком с номерами.</p>
+    <p class="small">Задания 2, 3 и 4 проверяются кнопками прямо здесь. Присылать их не надо.</p>
+  </div>
+
+  <div class="foot">Роберт &middot; домашка к занятию 3</div>
+
+</div>
+
+<script>
+function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+/* 02. с чего начинается вопрос */
+choiceBlock("ex1", [
+  {stem:'<u></u> you from Russia?', ru:'ты из России?', opts:["Am","Is","Are"], ok:2, why:"Верно. С you всегда are."},
+  {stem:'<u></u> she a blogger?', ru:'она блогер?', opts:["Am","Is","Are"], ok:1, why:"Верно. She это is, и в вопросе is встаёт вперёд."},
+  {stem:'<u></u> I your coach?', ru:'я твой тренер?', opts:["Am","Is","Are"], ok:0, why:"Верно. am живёт только с I, и в вопросе тоже."},
+  {stem:'<u></u> your girlfriend at home?', ru:'твоя девушка дома?', opts:["Am","Is","Are"], ok:1, why:"Верно. Девушка одна, значит is."},
+  {stem:'<u></u> they your friends?', ru:'они твои друзья?', opts:["Am","Is","Are"], ok:2, why:"Верно. They идёт с are."},
+  {stem:'<u></u> it expensive?', ru:'это дорого?', opts:["Am","Is","Are"], ok:1, why:"Верно, it это is."},
+  {stem:'<u></u> we in Moscow?', ru:'мы в Москве?', opts:["Am","Is","Are"], ok:2, why:"Верно. We идёт с are."},
+  {stem:'<u></u> his name Max?', ru:'его зовут Макс?', opts:["Am","Is","Are"], ok:1, why:"Верно. Имя одно, значит is."},
+  {stem:'<u></u> your friend from Italy?', ru:'твой друг из Италии?', opts:["Am","Is","Are"], ok:1, why:"Верно. Друг один, значит is."}
+]);
+
+/* 03. короткий ответ */
+choiceBlock("ex2", [
+  {stem:'Ты тренер. <b>Are you a coach?</b>', opts:["Yes, I'm.","Yes, I am."], ok:1,
+   why:"Верно. В коротком ответе I am не сокращают"},
+  {stem:'Катя блогер. <b>Is she a blogger?</b>', opts:["Yes, she is.","Yes, she's."], ok:0,
+   why:"Верно"},
+  {stem:'Ты из России, не из Испании. <b>Are you from Spain?</b>', opts:["No, I amn't.","No, I'm not."], ok:1,
+   why:"Верно. amn't не существует, с I только I'm not"},
+  {stem:'Они из Италии. <b>Are they from Germany?</b>', opts:["No, they isn't.","No, they aren't."], ok:1,
+   why:"Верно. They идёт с are, значит aren't"},
+  {stem:'Отель и правда твой. <b>Is it your hotel?</b>', opts:["Yes, it is.","Yes, it's."], ok:0,
+   why:"Верно"},
+  {stem:'Макс тренер, не врач. <b>Is he a doctor?</b>', opts:["No, he isn't.","No, he not."], ok:0,
+   why:"Верно"},
+  {stem:'Вы с Катей из Москвы. <b>Are you from Moscow?</b>', opts:["Yes, we are.","Yes, I are."], ok:0,
+   why:"Верно. Спросили про вас двоих, значит отвечаешь we are"},
+  {stem:'Твоя девушка блогер, не тренер. <b>Is your girlfriend a coach?</b>', opts:["No, she isn't.","No, she aren't."], ok:0,
+   why:"Верно. She идёт с is, значит isn't"}
+], true);
+
+/* 04. вопросительное слово */
+choiceBlock("ex3", [
+  {stem:'<u></u> is your name?', ru:'как тебя зовут', opts:["What","Where","Who","How"], ok:0, why:"Верно. По-английски спрашивают «какое твоё имя»."},
+  {stem:'<u></u> are you from?', ru:'откуда ты', opts:["What","Where","Who","How"], ok:1, why:"Верно. Where это про место."},
+  {stem:'<u></u> is this?', ru:'кто это', opts:["What","Where","Who","How"], ok:2, why:"Верно. Who спрашивает про человека."},
+  {stem:'<u></u> are you?', ru:'как ты', opts:["What","Where","Who","How"], ok:3, why:"Верно. Самый частый вопрос в разговоре."},
+  {stem:'<u></u> is her name?', ru:'как её зовут', opts:["What","Where","Who","How"], ok:0, why:"Верно. Снова «какое имя», только её."},
+  {stem:'<u></u> is your girlfriend?', ru:'где твоя девушка', opts:["What","Where","Who","How"], ok:1, why:"Верно. Спрашиваешь про место, значит Where."},
+  {stem:'<u></u> old are you?', ru:'сколько тебе лет', opts:["What","Where","Who","How"], ok:3, why:"Верно. По-английски спрашивают «насколько ты старый», how old."},
+  {stem:'<u></u> is he?', ru:'кто он', opts:["What","Where","Who","How"], ok:2, why:"Верно. Про человека всегда Who."}
+]);
+</script>
+</body>
+</html>
