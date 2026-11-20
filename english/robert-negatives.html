@@ -331,7 +331,7 @@
   <div class="top">
     <div class="kicker">Тренажёр &middot; отрицание</div>
     <h1>Короткая форма<em>три раунда</em></h1>
-    <p>Одно правило, тридцать девять попаданий. Можно играть сколько угодно раз.</p>
+    <p>Одно правило, тридцать одно попадание. Можно играть сколько угодно раз.</p>
   </div>
 
   <!-- ЭКРАН 0: правило -->
@@ -363,7 +363,7 @@
     <div class="hud">
       <div>
         <div class="rnd" id="rndName">раунд 1</div>
-        <div class="sc"><b id="score">0</b> из 39</div>
+        <div class="sc"><b id="score">0</b> из 31</div>
       </div>
       <div class="streak" id="streak"></div>
     </div>
@@ -416,7 +416,7 @@
   <div class="screen" id="s4">
     <div class="final">
       <div class="num" id="fscore">0</div>
-      <div class="of">попаданий из 39</div>
+      <div class="of">попаданий из 31</div>
       <div class="say" id="fsay"></div>
     </div>
     <div class="best" id="best"></div>
@@ -449,7 +449,7 @@
 <script>
 (function(){
 "use strict";
-var TOTAL = 39;
+var TOTAL = 31;
 var score = 0, streak = 0;
 
 function el(id){ return document.getElementById(id); }
@@ -481,16 +481,7 @@ var R1 = [
   {words:["We","are","not","from Spain"], ru:"мы не из Испании",
    pairs:[{i:0,sent:"We're not from Spain"},{i:1,sent:"We aren't from Spain"}]},
   {words:["You","are","not","a teacher"], ru:"ты не учитель",
-   pairs:[{i:0,sent:"You're not a teacher"},{i:1,sent:"You aren't a teacher"}]},
-  {words:["It","is","not","expensive"], ru:"это не дорого",
-   pairs:[{i:0,sent:"It's not expensive"},{i:1,sent:"It isn't expensive"}]},
-  {words:["They","are","not","at home"], ru:"их нет дома",
-   pairs:[{i:0,sent:"They're not at home"},{i:1,sent:"They aren't at home"}]},
-  {words:["She","is","not","a blogger"], ru:"она не блогер",
-   pairs:[{i:0,sent:"She's not a blogger"},{i:1,sent:"She isn't a blogger"}]},
-  {words:["My friend","is","not","a cook"], ru:"мой друг не повар",
-   pairs:[{i:1,sent:"My friend isn't a cook"},
-          {i:0,sent:"My friend's not a cook", note:"так говорят вслух, но на письме надёжнее My friend isn't"}]}
+   pairs:[{i:0,sent:"You're not a teacher"},{i:1,sent:"You aren't a teacher"}]}
 ];
 var i1 = 0, picked = null, got = [];
 
@@ -658,9 +649,9 @@ function draw3(){
 function finish(){
   el("fscore").textContent = score;
   var say = "Рано. Перечитай правило и пройди ещё раз";
-  if(score >= 36) say = "Чисто. Короткая форма у тебя в руках";
-  else if(score >= 28) say = "Хорошо. Осталось добить пару строк";
-  else if(score >= 18) say = "Нормально для первого раза. Прогони ещё";
+  if(score >= 29) say = "Чисто. Короткая форма у тебя в руках";
+  else if(score >= 22) say = "Хорошо. Осталось добить пару строк";
+  else if(score >= 14) say = "Нормально для первого раза. Прогони ещё";
   el("fsay").textContent = say;
   var best = 0;
   try{
