@@ -466,7 +466,7 @@
 
   <div class="tag pr">практика</div>
   <h2><span class="num">13</span>Вопросы по тексту</h2>
-  <p class="lead">Отвечайте целой фразой, не одним словом: не «Nina», а «Her name is Nina». Если забыли слово, подсматривайте в текст, это не страшно.</p>
+  <p class="lead">Отвечайте вслух целой фразой, не одним словом: не «Nina», а «Her name is Nina». Если забыли слово, подсматривайте в текст, это не страшно.</p>
 
   <div class="card" id="qs"></div>
 
@@ -562,28 +562,20 @@ function qsBlock(id, items){
   items.forEach(function(it, i){
     var d = document.createElement("div"); d.className = "qq";
     d.innerHTML = '<div class="en">' + (i+1) + '. ' + it[0] + '</div>' +
-      '<div class="ru">' + it[1] + '</div>' +
-      '<button class="rev" type="button">Показать ответ</button>' +
-      '<div class="ans">' + it[2] + '</div>';
-    var btn = d.querySelector(".rev");
-    var ans = d.querySelector(".ans");
-    btn.addEventListener("click", function(){
-      var on = ans.classList.toggle("show");
-      btn.textContent = on ? "Спрятать ответ" : "Показать ответ";
-    });
+      '<div class="ru">' + it[1] + '</div>';
     host.appendChild(d);
   });
 }
 
 qsBlock("qs", [
-  ["What is her name?", "как её зовут", "Her name is Nina."],
-  ["How old is she?", "сколько ей лет", "She is thirty-five."],
-  ["Where is she from?", "откуда она", "She is from Russia. Her city is Saint Petersburg."],
-  ["Where is her work?", "где она работает", "Her work is in a hospital."],
-  ["Her husband is Mike. Who is he?", "кто он по профессии", "He is a cook."],
-  ["How old is her daughter?", "сколько лет дочери", "She is thirteen."],
-  ["How old is her son?", "сколько лет сыну", "He is nine."],
-  ["Her mother is seventy. Who is she?", "кто она по профессии", "She is a teacher."]
+  ["What is her name?", "как её зовут"],
+  ["How old is she?", "сколько ей лет"],
+  ["Where is she from?", "откуда она"],
+  ["Where is her work?", "где она работает"],
+  ["Her husband is Mike. Who is he?", "кто он по профессии"],
+  ["How old is her daughter?", "сколько лет дочери"],
+  ["How old is her son?", "сколько лет сыну"],
+  ["Her mother is seventy. Who is she?", "кто она по профессии"]
 ]);
 
 onClick("hideRu", function(){
