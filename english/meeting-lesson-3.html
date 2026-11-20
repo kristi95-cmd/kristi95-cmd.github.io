@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 3. Повторяем и учимся читать</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+<style>
+  /* числа */
+  .nums{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:2px 0}
+  .ni{display:flex; gap:10px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line)}
+  .ni .d{font-weight:800; color:var(--accent); min-width:28px; font-size:17px}
+  .ni .w{font-weight:700; font-size:17px}
+  @media (max-width:520px){ .nums{grid-template-columns:1fr} }
+</style>
+</head>
+<style>
+  .say{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  @media (max-width:520px){ .say{grid-template-columns:1fr} }
+  .steps{counter-reset:st; list-style:none; padding:0; margin:6px 0 0}
+  .steps li{counter-increment:st; position:relative; padding:9px 0 9px 36px; font-size:16px;
+    border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li:before{content:counter(st); position:absolute; left:0; top:9px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+  .lnk{display:block; background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0;
+    text-decoration:none; color:var(--deep); font-weight:700; word-break:break-word}
+  .lnk span{display:block; color:var(--soft); font-weight:500; font-size:14px; margin-top:4px}
+  .tag.rd{background:#eef0fa; color:#3a4a8a}
+  .read p{font-size:19px; line-height:1.7; margin:0 0 14px; position:relative; padding-left:30px}
+  .read p:last-child{margin-bottom:0}
+  .read .pn{position:absolute; left:0; top:4px; width:22px; height:22px; border-radius:50%;
+    background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+  .read .nw{border-bottom:2px dotted var(--accent)}
+  .qq{padding:14px 0; border-bottom:1px solid var(--line)}
+  .qq:last-child{border-bottom:none}
+  .qq .en{font-size:18px; font-weight:700}
+  .qq .ru{color:var(--mute); font-size:14px; margin:2px 0 8px}
+  @media print{ .read p{font-size:17px; line-height:1.6} .qq{break-inside:avoid} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English from scratch &middot; урок 3</div>
+    <h1>Повторяем и учимся читать.<em>Новой грамматики сегодня нет</em></h1>
+    <p>Сегодня мы ничего нового не берём. Первую половину занятия повторяем то, что уже умеем, вторую разбираемся, почему <b>this</b> читается «зис», а <b>nice</b> «найс». Это самое нужное из большого справочника по чтению, который я вам присылала.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Повторяем: <b>am</b>, <b>is</b>, <b>are</b>, числа, возраст, профессии, слова про человека.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Учимся смотреть на слово и понимать, как читается гласная.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Разбираем <b>th</b>, <b>sh</b>, <b>ch</b>, <b>ph</b> и читаем целый текст про человека.</div></div>
+  </div>
+
+  <div class="note"><b>Чем эта страница отличается от справочника.</b> В справочнике правила чтения собраны целиком, его можно открывать весь курс. Здесь только то, что берём сегодня, и всё на словах, которые вы уже знаете. Так что читать вы будете не чужие слова, а свои.</div>
+
+  <div class="tag">разогрев</div>
+  <h2><span class="num">01</span>Расскажите про себя</h2>
+  <p class="lead">Отвечайте вслух, перевод подсматривать не надо. Если фраза не идёт, посмотрите на неё и скажите ещё раз.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как вас зовут</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда вы</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">How old are you?</div><div class="ru">сколько вам лет</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">How are you?</div><div class="ru">как дела</div></div></div>
+  </div>
+
+  <div class="note"><b>Ответы начинаются одинаково.</b> <b>My name is...</b>, <b>I am from...</b>, <b>I am...</b>, <b>I am fine, thank you.</b> Проговорите все четыре подряд, не останавливаясь.</div>
+
+  <div class="tag">разогрев</div>
+  <h2><span class="num">02</span>Быстрый круг</h2>
+  <p class="lead">Три коротких подхода, по минуте на каждый.</p>
+
+  <div class="card">
+    <h3>1. Какая форма глагола</h3>
+    <p>Закройте правую колонку рукой и назовите форму сами.</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am</div><div class="r">я</div>
+      <div class="p">you</div><div class="v">are</div><div class="r">вы, ты</div>
+      <div class="p">he</div><div class="v">is</div><div class="r">он</div>
+      <div class="p">she</div><div class="v">is</div><div class="r">она</div>
+      <div class="p">it</div><div class="v">is</div><div class="r">оно, вещь, город, животное</div>
+    </div>
+
+    <h3>2. Числа вслух</h3>
+    <p>Прочитайте по очереди: <b>7, 13, 30, 15, 50, 19, 90, 29, 42</b>. Потом отдельно пары, в них легко перепутать.</p>
+    <div class="conj conj4">
+      <div class="p">13</div><div class="v">thirteen</div><div class="sh">30</div><div class="r">thirty</div>
+      <div class="p">15</div><div class="v">fifteen</div><div class="sh">50</div><div class="r">fifty</div>
+      <div class="p">19</div><div class="v">nineteen</div><div class="sh">90</div><div class="r">ninety</div>
+    </div>
+
+    <h3>3. Расскажите про одного человека</h3>
+    <p>Любого, про кого вам легко говорить. Пять фраз подряд, без пауз.</p>
+    <ol class="steps">
+      <li>как его зовут: <b>His name is...</b> или <b>Her name is...</b></li>
+      <li>откуда он: <b>He is from...</b></li>
+      <li>кем работает: <b>She is a teacher.</b></li>
+      <li>сколько лет: <b>He is forty.</b></li>
+      <li>какой он: <b>She is kind and funny.</b></li>
+    </ol>
+  </div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">03</span>Гласная коротко: после неё согласная</h2>
+  <p class="lead">Первое и главное правило. Если за гласной стоит согласная, гласная звучит коротко и резко.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">a</div><div class="v">э</div><div class="sh">bag, happy, Max</div><div class="r">рот шире, чем в русском «э»</div>
+      <div class="p">e</div><div class="v">э</div><div class="sh">ten, yes, pen</div><div class="r">обычное «э»</div>
+      <div class="p">i</div><div class="v">и</div><div class="sh">this, is, big, sister</div><div class="r">очень коротко</div>
+      <div class="p">o</div><div class="v">о</div><div class="sh">not, hot, doctor</div><div class="r">коротко</div>
+      <div class="p">u</div><div class="v">а</div><div class="sh">bus, but, husband</div><div class="r">не «у», а «а»</div>
+    </div>
+  </div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">04</span>Гласная называет своё имя</h2>
+  <p class="lead">Второе правило. Так бывает в коротких словах вроде <b>he</b> и <b>my</b> и там, где в конце стоит буква <b>e</b>, которая сама не читается.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">a</div><div class="v">эй</div><div class="sh">name, Kate, late</div><div class="r">как буква A в алфавите</div>
+      <div class="p">e</div><div class="v">и</div><div class="sh">he, she, we</div><div class="r">как буква E</div>
+      <div class="p">i</div><div class="v">ай</div><div class="sh">nice, five, nine, time</div><div class="r">как буква I</div>
+      <div class="p">o</div><div class="v">оу</div><div class="sh">no, go, home</div><div class="r">как буква O</div>
+      <div class="p">u</div><div class="v">ю</div><div class="sh">student, music</div><div class="r">как буква U</div>
+    </div>
+
+    <h3>Буква e в конце не читается</h3>
+    <p>Её работа другая: она заставляет гласную перед ней назвать своё имя. Одна буква меняет слово целиком.</p>
+    <div class="conj conj4">
+      <div class="p">Tim</div><div class="v">&rarr;</div><div class="sh">time</div><div class="r">тим - тайм</div>
+      <div class="p">not</div><div class="v">&rarr;</div><div class="sh">note</div><div class="r">нот - ноут</div>
+      <div class="p">hat</div><div class="v">&rarr;</div><div class="sh">hate</div><div class="r">хэт - хэйт</div>
+    </div>
+
+    <div class="note"><b>Слова, которые это правило нарушают.</b> Их мало, но они частые, так что запомним сразу: <b>have</b>, <b>give</b>, <b>live</b>, <b>come</b>, <b>some</b>, <b>one</b>, <b>love</b>, <b>friend</b>. Буква <b>e</b> в конце есть, а гласная всё равно короткая.</div>
+  </div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">05</span>Пары, на которых разница слышна</h2>
+  <p class="lead">Прочитайте вслух, одну пару за другой. Разница между левым и правым словом и есть всё правило.</p>
+  <div class="card">
+    <div class="voc" id="pairs"></div>
+  </div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">06</span>Две буквы th</h2>
+  <p class="lead">Самое частое место, где слышно, что человек говорит по-русски. Звук один, но непривычный: кончик языка выходит между зубами.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">th</div><div class="v">з</div><div class="sh">this, that, they, the</div><div class="r">с голосом</div>
+      <div class="p">th</div><div class="v">с</div><div class="sh">think, three, thirteen, thirty</div><div class="r">без голоса, одно дыхание</div>
+    </div>
+    <p>Не «зис» и не «дис». Язык между зубами, лёгкий выдох. Положение языка одно и то же, разница только в голосе: приложите пальцы к горлу, на «з» оно дрожит, на «с» нет.</p>
+
+    <h3>Как понять, какой звук в слове</h3>
+    <p><b>«З» звучит в маленьких словах-указателях.</b> Их немного, и это те слова, которыми мы на что-то показываем. Выучить их списком проще, чем правилом:</p>
+    <div class="conj"><div class="p">the</div><div class="v">з</div><div class="r">определённый артикль, его разберём позже</div>
+      <div class="p">this, that</div><div class="v">з</div><div class="r">этот, тот</div>
+      <div class="p">these, those</div><div class="v">з</div><div class="r">эти, те</div>
+      <div class="p">they, them</div><div class="v">з</div><div class="r">они, им</div>
+      <div class="p">there, then</div><div class="v">з</div><div class="r">там, тогда</div>
+    </div>
+    <p><b>«З» звучит и в середине слова, между двумя гласными:</b> <b>mother</b>, <b>brother</b>, <b>father</b>, <b>weather</b>, <b>together</b>. Обратите внимание: с двух сторон от <b>th</b> стоят гласные.</p>
+    <p><b>«С» во всех остальных словах.</b> Это слова со своим смыслом, и <b>th</b> в них стоит в начале или в конце: <b>think</b>, <b>thank you</b>, <b>three</b>, <b>thirteen</b>, <b>thirty</b>, <b>bath</b>, <b>month</b>, <b>south</b>.</p>
+    <p>Скажите подряд три раза: <b>this, that, they</b>. Потом так же: <b>three, thirteen, thirty</b>. Разницу слышно сразу.</p>
+    <div class="note"><b>Почему это важно именно вам.</b> <b>Th</b> стоит в словах, которые вы говорите каждое занятие: <b>this</b>, <b>thirteen</b>, <b>thirty</b>, <b>thank you</b>. Поставим звук один раз и дальше он будет сам.</div>
+  </div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">07</span>Ещё три пары букв</h2>
+  <p class="lead">Две буквы, а звук один. Запомнить их легче всего на словах, которые вы уже знаете.</p>
+
+  <div class="card">
+    <div class="conj conj4">
+      <div class="p">sh</div><div class="v">ш</div><div class="sh">she, short, shy</div><div class="r"></div>
+      <div class="p">ch</div><div class="v">ч</div><div class="sh">teacher, chair</div><div class="r"></div>
+      <div class="p">ph</div><div class="v">ф</div><div class="sh">phone, photographer</div><div class="r">две буквы, один звук</div>
+    </div>
+  </div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">08</span>Читаем слова</h2>
+  <p class="lead">Все слова вы знаете. Читайте по строчке, не торопясь, и сами говорите, какое правило в слове работает.</p>
+  <div class="card">
+    <div class="voc" id="words"></div>
+  </div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">09</span>Читаем фразы</h2>
+  <p class="lead">То же самое, но целыми фразами. Читайте вслух и сразу говорите, что фраза значит.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">My name is Alina.</div><div class="ru">меня зовут Алина</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">I am from Saint Petersburg.</div><div class="ru">я из Санкт-Петербурга</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">My city is big and it is beautiful.</div><div class="ru">мой город большой и он красивый</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">She is my sister. She is a teacher.</div><div class="ru">она моя сестра, она учитель</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">He is thirty-five. He is kind and funny.</div><div class="ru">ему тридцать пять, он добрый и весёлый</div></div></div>
+    <div class="ph"><div class="n">6</div><div class="txt"><div class="en">My friend is a driver. He is nice.</div><div class="ru">мой друг водитель, он приятный</div></div></div>
+    <div class="ph"><div class="n">7</div><div class="txt"><div class="en">Nice to meet you.</div><div class="ru">приятно познакомиться</div></div></div>
+    <div class="ph"><div class="n">8</div><div class="txt"><div class="en">How old is she? She is nineteen.</div><div class="ru">сколько ей лет, ей девятнадцать</div></div></div>
+  </div>
+
+  <div class="note"><b>Если захочется разобраться глубже.</b> На большой странице про чтение лежат остальные правила: буквосочетания, немые буквы и окончания длинных слов. Сегодня они нам не нужны, но она никуда не денется.</div>
+
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/reading.html" target="_blank" rel="noopener">Справочник: как читается английский
+    <span>та же страница, что в PDF, только открывается в телефоне</span></a>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">10</span>Текст: читаем про человека</h2>
+  <p class="lead">Самое главное на сегодня. Читаем вслух по абзацу, не торопясь. Слова, подчёркнутые точками, новые, их разберём и выпишем. Всё остальное в тексте вы уже знаете.</p>
+
+  <div class="note"><b>Два новых слова, без них текста не будет.</b> Про себя мы говорим <b>my</b> (мой), к собеседнику <b>your</b> (ваш). А про третьего человека так: <b>his</b> это «его», <b>her</b> это «её».</div>
+
+  <div class="card">
+    <div class="conj">
+      <div class="p">my</div><div class="v">мой</div><div class="r">My name is Alina.</div>
+      <div class="p">your</div><div class="v">ваш</div><div class="r">What is your name?</div>
+      <div class="p">his</div><div class="v">его</div><div class="r">His name is Max. He is a doctor.</div>
+      <div class="p">her</div><div class="v">её</div><div class="r">Her name is Masha. She is a student.</div>
+    </div>
+  </div>
+
+  <div class="card read">
+    <p><span class="pn">1</span>Hello! My name is Nina. I am thirty-five. I am from Russia. My city is Saint Petersburg. It is big and beautiful.</p>
+    <p><span class="pn">2</span>I am a nurse. My <span class="nw">work</span> is <span class="nw">in</span> a <span class="nw">hospital</span>. My day is busy and I am tired, <span class="nw">but</span> my work is good. My boss is a doctor. <span class="nw">His</span> name is Max. He is fifty. He is smart and friendly.</p>
+    <p><span class="pn">3</span>This is my family. My <span class="nw">husband</span> is a cook in a <span class="nw">restaurant</span>. His name is Mike. He is thirty-nine. He is tall and funny.</p>
+    <p><span class="pn">4</span>My <span class="nw">daughter</span> is thirteen. <span class="nw">Her</span> name is Masha. She is a student. She is short and shy, but she is smart. My <span class="nw">son</span> is nine. His name is Tim. He is small and happy.</p>
+    <p><span class="pn">5</span>My <span class="nw">mother</span> is a teacher. She is seventy. She is kind. My brother is thirty. He is a driver.</p>
+    <p><span class="pn">6</span>This is my <span class="nw">photo</span>. Nice to meet you!</p>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">11</span>Новые слова из текста</h2>
+  <p class="lead">Двенадцать слов. Выпишите их в тетрадь столбиком: английское слово, рядом перевод. К следующему занятию они должны узнаваться с листа.</p>
+  <div class="card">
+    <div class="voc" id="new"></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">12</span>True or false</h2>
+  <p class="lead">Правда или неправда. Читайте утверждение, смотрите в текст и выбирайте. <b>True</b> это правда, <b>false</b> неправда.</p>
+
+  <div class="card" id="tf"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">13</span>Вопросы по тексту</h2>
+  <p class="lead">Отвечайте целой фразой, не одним словом: не «Nina», а «Her name is Nina». Если забыли слово, подсматривайте в текст, это не страшно.</p>
+
+  <div class="card" id="qs"></div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">14</span>Фразы занятия</h2>
+  <p class="lead">Всё, что сегодня говорили, одним списком.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="bar screen-only"><button class="btn" id="hideRu" type="button">Спрятать перевод</button></div>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как вас зовут</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">My name is Alina.</div><div class="ru">меня зовут Алина</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда вы</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">I am from Russia.</div><div class="ru">я из России</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">How old are you?</div><div class="ru">сколько вам лет</div></div></div>
+    <div class="ph"><div class="n">6</div><div class="txt"><div class="en">I am twenty-nine.</div><div class="ru">мне двадцать девять</div></div></div>
+    <div class="ph"><div class="n">7</div><div class="txt"><div class="en">He is a driver. She is a teacher.</div><div class="ru">он водитель, она учитель</div></div></div>
+    <div class="ph"><div class="n">8</div><div class="txt"><div class="en">She is kind and funny.</div><div class="ru">она добрая и весёлая</div></div></div>
+    <div class="ph"><div class="n">9</div><div class="txt"><div class="en">My city is big and beautiful.</div><div class="ru">мой город большой и красивый</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">Nice to meet you.</div><div class="ru">приятно познакомиться</div></div></div>
+  </div>
+
+</div>
+
+<script>
+function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+function vocab(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var d = document.createElement("div"); d.className = "vi";
+    d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+    host.appendChild(d);
+  });
+}
+
+vocab("pairs", [["this - nice","и - ай"],["is - five","и - ай"],
+  ["Tim - time","и - ай"],["Max - name","э - эй"],
+  ["hat - hate","э - эй"],["pen - he","э - и"],
+  ["not - no","о - оу"],["not - note","о - оу"],
+  ["us - use","а - ю"],["bus - student","а - ю"]]);
+
+vocab("words", [["name","имя"],["this","это"],["nice","приятный"],["five","пять"],
+  ["nine","девять"],["he","он"],["she","она"],["it","оно"],
+  ["big","большой"],["small","маленький"],["tall","высокий"],["short","невысокий"],
+  ["teacher","учитель"],["doctor","врач"],["driver","водитель"],["nurse","медсестра"],
+  ["student","студент"],["sister","сестра"],["friend","друг"],["city","город"],
+  ["happy","счастливый"],["busy","занятой"],["funny","весёлый"],["kind","добрый"],
+  ["thirteen","тринадцать"],["thirty","тридцать"],["nineteen","девятнадцать"],["ninety","девяносто"]]);
+
+vocab("new", [["work","работа"],["in","в"],["a hospital","больница"],["a restaurant","ресторан"],
+  ["a husband","муж"],["a daughter","дочь"],["a son","сын"],["a mother","мама"],
+  ["but","но"],["a photo","фото"],["his","его"],["her","её"]]);
+
+function tfBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it, i){
+    var q = document.createElement("div"); q.className = "q";
+    q.innerHTML = '<div class="stem">' + (i+1) + '. ' + it[0] + '</div>' +
+      '<div class="opts"><button class="opt" type="button">true</button>' +
+      '<button class="opt" type="button">false</button></div>' +
+      '<div class="fb"></div>';
+    var btns = q.querySelectorAll(".opt");
+    var fb = q.querySelector(".fb");
+    for(var k = 0; k < btns.length; k++){
+      (function(btn, picked){
+        btn.addEventListener("click", function(){
+          var right = (picked === it[1]);
+          btn.className = "opt " + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? "Верно" : it[2];
+        });
+      })(btns[k], k === 0);
+    }
+    host.appendChild(q);
+  });
+}
+
+tfBlock("tf", [
+  ["Nina is from Italy.", false, "Неверно: I am from Russia"],
+  ["Nina is a nurse.", true, "Неверно: I am a nurse"],
+  ["Her city is small.", false, "Неверно: my city is big and beautiful"],
+  ["Her husband is a cook.", true, "Неверно: my husband is a cook in a restaurant"],
+  ["Her daughter is nine.", false, "Неверно: дочери тринадцать, девять сыну"],
+  ["Her mother is a teacher.", true, "Неверно: my mother is a teacher"],
+  ["Her brother is a doctor.", false, "Неверно: брат водитель, врач это её начальник"]
+]);
+
+function qsBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it, i){
+    var d = document.createElement("div"); d.className = "qq";
+    d.innerHTML = '<div class="en">' + (i+1) + '. ' + it[0] + '</div>' +
+      '<div class="ru">' + it[1] + '</div>' +
+      '<button class="rev" type="button">Показать ответ</button>' +
+      '<div class="ans">' + it[2] + '</div>';
+    var btn = d.querySelector(".rev");
+    var ans = d.querySelector(".ans");
+    btn.addEventListener("click", function(){
+      var on = ans.classList.toggle("show");
+      btn.textContent = on ? "Спрятать ответ" : "Показать ответ";
+    });
+    host.appendChild(d);
+  });
+}
+
+qsBlock("qs", [
+  ["What is her name?", "как её зовут", "Her name is Nina."],
+  ["How old is she?", "сколько ей лет", "She is thirty-five."],
+  ["Where is she from?", "откуда она", "She is from Russia. Her city is Saint Petersburg."],
+  ["Where is her work?", "где она работает", "Her work is in a hospital."],
+  ["Her husband is Mike. Who is he?", "кто он по профессии", "He is a cook."],
+  ["How old is her daughter?", "сколько лет дочери", "She is thirteen."],
+  ["How old is her son?", "сколько лет сыну", "He is nine."],
+  ["Her mother is seventy. Who is she?", "кто она по профессии", "She is a teacher."]
+]);
+
+onClick("hideRu", function(){
+  var card = document.getElementById("phrasesCard");
+  var on = card.classList.toggle("hidden-ru");
+  this.classList.toggle("on", on);
+  this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+});
+</script>
+
+</body>
+</html>
