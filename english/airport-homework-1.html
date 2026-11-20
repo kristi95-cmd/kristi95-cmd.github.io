@@ -261,11 +261,11 @@
     <div class="ru-task"><span class="n2">01</span>Я часто езжу в Индию и беру с собой много чемоданов.</div>
     <div class="ru-task"><span class="n2">02</span>Мы с мужем любим завтракать в аэропорту.</div>
     <div class="ru-task"><span class="n2">03</span>Мы не берём с собой нашу белую собаку.</div>
-    <div class="ru-task"><span class="n2">04</span>Моя сестра не любит летать, поэтому она никогда не путешествует со мной.</div>
+    <div class="ru-task"><span class="n2">04</span>Моя сестра не любит летать, поэтому <i>(that's why)</i> она никогда не путешествует со мной.</div>
     <div class="ru-task"><span class="n2">05</span>Во сколько начинается посадка и во сколько вылетает мой рейс?</div>
     <div class="ru-task"><span class="n2">06</span>Я всегда собираю чемодан за день до вылета.</div>
     <div class="ru-task"><span class="n2">07</span>Ты сдаёшь багаж или берёшь только ручную кладь?</div>
-    <div class="ru-task"><span class="n2">08</span>Очередь на паспортный контроль обычно длинная, но она двигается быстро.</div>
+    <div class="ru-task"><span class="n2">08</span>Очередь на паспортный контроль обычно длинная.</div>
     <div class="ru-task"><span class="n2">09</span>Мои друзья не завтракают дома, они обедают в самолёте.</div>
     <div class="ru-task"><span class="n2">10</span>Сколько чемоданов твой муж обычно берёт с собой?</div>
   </div>
@@ -277,7 +277,7 @@
   <p class="lead">Минута и одна секунда. Британские голоса, темп почти обычный. Послушай два-три раза: первый просто так, дальше с остановками.</p>
 
   <div class="card">
-    <div class="player"><audio controls preload="none" src="checkin-desk.mp3"></audio>
+    <div class="player"><audio controls preload="none" src="checkin-desk.mp3?v=2"></audio>
       <div class="cap">На регистрации &middot; 1:01</div></div>
   </div>
 
@@ -290,14 +290,14 @@
 
   <div class="tag sp">голосовым</div>
   <h2><span class="num">04</span>Пять вопросов</h2>
-  <p class="lead">Прочитай вопросы и ответь мне на каждый. Можно одним голосовым, можно пятью, как удобнее. Отвечай целым предложением, не одним словом.</p>
+  <p class="lead">Вопросы по записи, не про тебя. Прочитай их и ответь мне на каждый. Можно одним голосовым, можно пятью, как удобнее. Отвечай целым предложением, не одним словом.</p>
 
   <div class="card">
-    <div class="ask"><span class="n2">01</span>How many bags do you usually take when you travel?</div>
-    <div class="ask"><span class="n2">02</span>What time do you arrive at the airport before a flight?</div>
-    <div class="ask"><span class="n2">03</span>Do you have breakfast at home or at the airport?</div>
-    <div class="ask"><span class="n2">04</span>Who do you usually travel with?</div>
-    <div class="ask"><span class="n2">05</span>What do you say when you don't understand the person at the check-in desk?</div>
+    <div class="ask"><span class="n2">01</span>Where does the passenger fly?</div>
+    <div class="ask"><span class="n2">02</span>How many suitcases does she have, and how many does her husband have?</div>
+    <div class="ask"><span class="n2">03</span>Who does she travel with?</div>
+    <div class="ask"><span class="n2">04</span>What time does boarding start, and what time does the flight leave?</div>
+    <div class="ask"><span class="n2">05</span>What does the passenger say when she doesn't understand the gate number?</div>
   </div>
 
   <div class="tag">текст</div>
@@ -313,7 +313,7 @@
       <p><span class="sp">Passenger:</span> Yes, I have two suitcases. My husband has one.</p>
       <p><span class="sp">Agent:</span> Do you travel together?</p>
       <p><span class="sp">Passenger:</span> Yes, we do. We always travel together.</p>
-      <p><span class="sp">Agent:</span> Your suitcase is twenty-four kilos. It is a little heavy, but it is fine.</p>
+      <p><span class="sp">Agent:</span> Your suitcase is twenty-four kilos. It is heavy, but it is fine.</p>
       <p><span class="sp">Passenger:</span> Thank you. What time does boarding start?</p>
       <p><span class="sp">Agent:</span> Boarding starts at half past eight, at gate twelve. Your flight leaves at ten past nine.</p>
       <p><span class="sp">Passenger:</span> Sorry, can you repeat the gate, please?</p>
@@ -608,7 +608,7 @@
     {stem:'The flight leaves at nine o\'clock.', opts:["True","False"], ok:1, why:"Верно. Рейс в ten past nine"},
     {stem:'Boarding starts at half past eight.', opts:["True","False"], ok:0, why:"Верно. Boarding starts at half past eight"},
     {stem:'The gate is number twenty.', opts:["True","False"], ok:1, why:"Верно. Gate twelve"},
-    {stem:'Her suitcase is too heavy, so she pays extra.', opts:["True","False"], ok:1, why:"Верно. It is a little heavy, but it is fine"},
+    {stem:'Her suitcase is twenty-four kilos.', opts:["True","False"], ok:0, why:"Верно. Your suitcase is twenty-four kilos"},
     {stem:'The queue for security is on the left.', opts:["True","False"], ok:0, why:"Верно. The queue for security is on the left"}
   ]);
 
