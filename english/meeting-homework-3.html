@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашняя работа к уроку 3. Слушаем английский</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  .pool{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
+  .tok{border:1.5px solid var(--line); background:var(--tile); font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; color:var(--ink)}
+
+  .say{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; font-size:13px; font-weight:800; color:var(--mute); min-width:22px; padding-top:3px}
+  .say div{font-size:18px; font-weight:600}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .steps{margin:0; padding-left:7mm; font-size:17px}
+  .steps li{margin:0 0 10px; padding-left:4px}
+  .steps li::marker{color:var(--accent); font-weight:800}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+  }
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+  .aq{padding:16px 0; border-bottom:1px solid var(--line)}
+  .aq:last-child{border-bottom:none}
+  .aq .w{font-size:20px; font-weight:800}
+  .aq .w span{font-size:14px; font-weight:600; color:var(--mute); margin-left:8px}
+  .aq .player{margin:8px 0 10px}
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашняя работа к уроку 3</div>
+    <h1>Слушаем английский.<em>Звуки, текст на слух и ваш рассказ</em></h1>
+    <p>Четыре блока, минут двадцать пять. Первые три делаете прямо здесь, кнопками: нажали вариант и сразу видно, верно или нет. Последнее голосовое, его присылаете мне в телеграм.</p>
+  </div>
+
+  <div class="note"><b>Слушайте в наушниках.</b> Разница между правильным звуком и ошибкой бывает совсем маленькая, через динамик телефона её можно не услышать. И не торопитесь: каждую запись можно включать сколько угодно раз.</div>
+
+  <div class="tag pr">на слух</div>
+  <h2><span class="num">01</span>Какое произношение верное</h2>
+  <p class="lead">В каждой записи слово звучит два раза: сначала вариант <b>one</b>, потом вариант <b>two</b>. Один правильный, второй с типичной ошибкой. Слово написано рядом, так что смотрите на буквы и вспоминайте правила с урока.</p>
+
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">на слух</div>
+  <h2><span class="num">02</span>Текст про человека</h2>
+  <p class="lead">Почти минута. Мужчина рассказывает про себя и свою семью. Текста перед глазами нет, и это нормально: с первого раза всё понимать не нужно. Послушайте три раза: первый просто так, второй с остановками, третий целиком.</p>
+
+  <div class="card">
+    <div class="player"><audio controls preload="none" src="alina3-text.mp3"></audio>
+      <div class="cap">Tom про себя и свою семью &middot; 0:57</div></div>
+  </div>
+
+  <div class="note"><b>Что ловить.</b> Как его зовут, сколько ему лет, откуда он, кем он работает и где, кто есть в его семье и сколько им лет. Текст построен на тех же словах, что и на занятии, нового там почти нет.</div>
+
+  <div class="tag pr">на слух</div>
+  <h2><span class="num">03</span>True or false</h2>
+  <p class="lead">Правда или неправда. Если сомневаетесь, включите запись ещё раз и слушайте только это место.</p>
+
+  <div class="card" id="tf1"></div>
+
+  <div class="tag sp">Голосовое</div>
+  <h2><span class="num">04</span>Ответьте на вопросы голосом</h2>
+  <p class="lead">Отвечайте целой фразой, не одним словом: не «Tom», а «His name is Tom». Запишите одно голосовое подряд и пришлите мне в телеграм.</p>
+
+  <div class="card">
+    <ol class="qlist">
+      <li>What is his name?<span>как его зовут</span></li>
+      <li>How old is he?<span>сколько ему лет</span></li>
+      <li>Where is he from?<span>откуда он</span></li>
+      <li>Where is his work?<span>где он работает</span></li>
+      <li>Who is Mike?<span>кто такой Майк</span></li>
+      <li>How old is his son?<span>сколько лет его сыну</span></li>
+      <li>His mother is a doctor. Where is her work?<span>где работает его мама</span></li>
+    </ol>
+  </div>
+
+  <div class="note"><b>Если что-то не расслышали.</b> Не страшно, скажите то, что поняли. На занятии послушаем это место вместе и разберём, какое слово спряталось.</div>
+
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/meeting-lesson-3.html" target="_blank" rel="noopener">
+    <div class="t">Страница урока 3 &rarr;</div>
+    <div class="u">kristi95-cmd.github.io/english/meeting-lesson-3.html</div>
+  </a>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Голосовым в телеграм:</b> ответы на семь вопросов из задания 04.</p>
+    <p class="small">Задания 01 и 03 проверяются кнопками прямо здесь, присылать их не надо.</p>
+  </div>
+
+  <div class="foot">English from scratch &middot; домашняя работа к уроку 3</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function audioBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "aq";
+      q.innerHTML = '<div class="w">' + it.w + '<span>' + it.ru + '</span></div>' +
+        '<div class="player"><audio controls preload="none" src="' + it.file + '"></audio></div>' +
+        '<div class="opts"><button class="opt" type="button">вариант one</button>' +
+        '<button class="opt" type="button">вариант two</button></div>' +
+        '<div class="fb"></div>';
+      var btns = q.querySelectorAll(".opt");
+      var fb = q.querySelector(".fb");
+      for(var k = 0; k < btns.length; k++){
+        (function(btn, idx){
+          btn.addEventListener("click", function(){
+            var right = idx === it.ok;
+            btn.className = "opt " + (right ? "right" : "wrong");
+            fb.className = "fb show " + (right ? "y" : "n");
+            fb.textContent = right ? it.why : it.no;
+            if(right){
+              for(var m = 0; m < btns.length; m++) if(btns[m] !== btn) btns[m].disabled = true;
+            }
+          });
+        })(btns[k], k);
+      }
+      host.appendChild(q);
+    });
+  }
+
+  audioBlock("ex1", [
+    {w:"this", ru:"это", file:"alina3-w01.mp3", ok:0,
+      why:"Верно, первый. Язык между зубами, получается звук между з и в.",
+      no:"Нет, правильный первый. Во втором чистое русское «з», а в th язык выходит между зубами."},
+    {w:"three", ru:"три", file:"alina3-w02.mp3", ok:1,
+      why:"Верно, второй. Здесь th глухое, язык тоже между зубами.",
+      no:"Нет, правильный второй. В первом просто «сри», язык спрятан, а должен быть между зубами."},
+    {w:"thirty", ru:"тридцать", file:"alina3-w03.mp3", ok:0,
+      why:"Верно, первый. Снова глухое th, как в three.",
+      no:"Нет, правильный первый. Во втором «тёрти» через т, а th это не т."},
+    {w:"work", ru:"работа", file:"alina3-w04.mp3", ok:1,
+      why:"Верно, второй. W это губы трубочкой, получается «уорк».",
+      no:"Нет, правильный второй. В первом русское «в», а английское w губами, без зубов."},
+    {w:"city", ru:"город", file:"alina3-w05.mp3", ok:0,
+      why:"Верно, первый. Перед i буква c читается как с.",
+      no:"Нет, правильный первый. Во втором «кити»: c стала к, а перед i она всегда с."},
+    {w:"but", ru:"но", file:"alina3-w06.mp3", ok:1,
+      why:"Верно, второй. Закрытый слог: u короткое, между а и э.",
+      no:"Нет, правильный второй. В первом «бут» через у, а в закрытом слоге u так не звучит."},
+    {w:"mother", ru:"мама", file:"alina3-w07.mp3", ok:1,
+      why:"Верно, второй. Th между двумя гласными звонкое, язык между зубами.",
+      no:"Нет, правильный второй. В первом чистое «з», а нужен звук с языком между зубами."},
+    {w:"hospital", ru:"больница", file:"alina3-w08.mp3", ok:0,
+      why:"Верно, первый. H это лёгкий выдох, почти без голоса.",
+      no:"Нет, правильный первый. Во втором русское «г», а английское h только выдох."},
+    {w:"daughter", ru:"дочь", file:"alina3-w09.mp3", ok:1,
+      why:"Верно, второй. Gh здесь молчит, получается «доота».",
+      no:"Нет, правильный второй. В первом прочитали gh, а эти буквы в слове не звучат."},
+    {w:"nice", ru:"приятный", file:"alina3-w10.mp3", ok:0,
+      why:"Верно, первый. На конце немая e, поэтому i называет своё имя: ай.",
+      no:"Нет, правильный первый. Во втором «нис», а немая e на конце делает i звуком ай."}
+  ]);
+
+  function tfBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it, i){
+      var q = document.createElement("div"); q.className = "q";
+      q.innerHTML = '<div class="stem">' + (i+1) + '. ' + it[0] + '</div>' +
+        '<div class="opts"><button class="opt" type="button">true</button>' +
+        '<button class="opt" type="button">false</button></div>' +
+        '<div class="fb"></div>';
+      var btns = q.querySelectorAll(".opt");
+      var fb = q.querySelector(".fb");
+      for(var k = 0; k < btns.length; k++){
+        (function(btn, picked){
+          btn.addEventListener("click", function(){
+            var right = (picked === it[1]);
+            btn.className = "opt " + (right ? "right" : "wrong");
+            fb.className = "fb show " + (right ? "y" : "n");
+            fb.textContent = right ? "Верно" : it[2];
+          });
+        })(btns[k], k === 0);
+      }
+      host.appendChild(q);
+    });
+  }
+
+  tfBlock("tf1", [
+    ["Tom is from Spain.", false, "Послушайте начало ещё раз: он называет другую страну."],
+    ["Tom is a cook.", true, "Послушайте второй кусок: он говорит, кем работает."],
+    ["His city is big.", false, "В начале он говорит про город два слова, одно из них про размер."],
+    ["His mother is a doctor.", true, "Про маму он говорит в середине записи."],
+    ["His sister is a nurse.", false, "Про сестру сказано другое слово, не про больницу."],
+    ["His son is nine.", false, "Девять лет не сыну. Послушайте про детей ещё раз."],
+    ["His boss is sixty.", true, "Про начальника он называет имя и возраст."]
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
