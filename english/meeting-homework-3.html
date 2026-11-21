@@ -104,6 +104,12 @@
   .aq .w{font-size:20px; font-weight:800}
   .aq .w span{font-size:14px; font-weight:600; color:var(--mute); margin-left:8px}
   .aq .player{margin:8px 0 10px}
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
   .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
   .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
     font-weight:700; border-bottom:1px solid var(--line)}
@@ -119,7 +125,7 @@
   <div class="top">
     <div class="kicker">Домашняя работа к уроку 3</div>
     <h1>Слушаем английский.<em>Звуки, текст на слух и ваш рассказ</em></h1>
-    <p>Четыре блока, минут двадцать пять. Первые три делаете прямо здесь, кнопками: нажали вариант и сразу видно, верно или нет. Последнее голосовое, его присылаете мне в телеграм.</p>
+    <p>Четыре блока, минут тридцать. Первое делаете прямо здесь, кнопками: нажали вариант и сразу видно, верно или нет. Третье пишете текстом, четвёртое голосовым, и то и другое присылаете мне в телеграм.</p>
   </div>
 
   <div class="note"><b>Слушайте в наушниках.</b> Разница между правильным звуком и ошибкой бывает совсем маленькая, через динамик телефона её можно не услышать. И не торопитесь: каждую запись можно включать сколько угодно раз.</div>
@@ -141,11 +147,28 @@
 
   <div class="note"><b>Что ловить.</b> Как его зовут, сколько ему лет, откуда он, кем он работает и где, кто есть в его семье и сколько им лет. Текст построен на тех же словах, что и на занятии, нового там почти нет.</div>
 
-  <div class="tag pr">на слух</div>
+  <div class="tag wr">письменно</div>
   <h2><span class="num">03</span>True or false</h2>
-  <p class="lead">Правда или неправда. Если сомневаетесь, включите запись ещё раз и слушайте только это место.</p>
+  <p class="lead">Правда или неправда. <b>True</b> это правда, <b>false</b> неправда. Запись можно включать сколько угодно раз, а если сомневаетесь, слушайте только то место.</p>
 
-  <div class="card" id="tf1"></div>
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <p>Если <b>true</b>, пишете просто true. Если <b>false</b>, этого мало: нужно <b>написать, как на самом деле</b>. Вот так:</p>
+    <div class="form">His name is Mike.<span class="ex">false. His name is Tom.</span></div>
+    <div class="form">Tom is forty-two.<span class="ex">true.</span></div>
+    <p>То есть на каждое false получается слово <b>false</b> и одно предложение, где сказано, как на самом деле.</p>
+    <div class="note">В записи Том говорит про себя: «<b>I am</b> from Italy», «<b>my</b> work». А в заданиях написано про него: «Tom is...», «his work». Поэтому и в ответе пишите про него: <b>he</b>, <b>his</b>, <b>her</b>. Не «I am from Italy», а «He is from Italy».</div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Tom is from Spain.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Tom is a cook.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">His city is big.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">His mother is a doctor.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">His sister is a nurse.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">His son is nine.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">His boss is sixty.</div></div>
+  </div>
 
   <div class="tag sp">Голосовое</div>
   <h2><span class="num">04</span>Ответьте на вопросы голосом</h2>
@@ -172,8 +195,9 @@
 
   <div class="hw">
     <h3>Что прислать</h3>
+    <p><b>Текстом в телеграм:</b> задание 03, семь строк. На true просто true, на false ещё и предложение, как на самом деле.</p>
     <p><b>Голосовым в телеграм:</b> ответы на семь вопросов из задания 04.</p>
-    <p class="small">Задания 01 и 03 проверяются кнопками прямо здесь, присылать их не надо.</p>
+    <p class="small">Задание 01 проверяется кнопками прямо здесь, присылать его не надо.</p>
   </div>
 
   <div class="foot">English from scratch &middot; домашняя работа к уроку 3</div>
@@ -246,40 +270,6 @@
       no:"Нет, правильный второй. В первом прочитали gh, а эти буквы в слове не звучат."}
   ]);
 
-  function tfBlock(id, items){
-    var host = document.getElementById(id);
-    if(!host) return;
-    items.forEach(function(it, i){
-      var q = document.createElement("div"); q.className = "q";
-      q.innerHTML = '<div class="stem">' + (i+1) + '. ' + it[0] + '</div>' +
-        '<div class="opts"><button class="opt" type="button">true</button>' +
-        '<button class="opt" type="button">false</button></div>' +
-        '<div class="fb"></div>';
-      var btns = q.querySelectorAll(".opt");
-      var fb = q.querySelector(".fb");
-      for(var k = 0; k < btns.length; k++){
-        (function(btn, picked){
-          btn.addEventListener("click", function(){
-            var right = (picked === it[1]);
-            btn.className = "opt " + (right ? "right" : "wrong");
-            fb.className = "fb show " + (right ? "y" : "n");
-            fb.textContent = right ? "Верно" : it[2];
-          });
-        })(btns[k], k === 0);
-      }
-      host.appendChild(q);
-    });
-  }
-
-  tfBlock("tf1", [
-    ["Tom is from Spain.", false, "Послушайте начало ещё раз: он называет другую страну."],
-    ["Tom is a cook.", true, "Послушайте второй кусок: он говорит, кем работает."],
-    ["His city is big.", false, "В начале он говорит про город два слова, одно из них про размер."],
-    ["His mother is a doctor.", true, "Про маму он говорит в середине записи."],
-    ["His sister is a nurse.", false, "Про сестру сказано другое слово, не про больницу."],
-    ["His son is nine.", false, "Девять лет не сыну. Послушайте про детей ещё раз."],
-    ["His boss is sixty.", true, "Про начальника он называет имя и возраст."]
-  ]);
 
 })();
 </script>
