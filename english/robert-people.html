@@ -12,7 +12,7 @@
     --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
     --accent:#c2185b; --deep:#7a1038;
     --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
-    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0;
     --paper:#fff;
   }
   *{box-sizing:border-box}
@@ -67,25 +67,6 @@
   /* ---------- вопросы ---------- */
   .card{background:var(--paper); border-radius:14px; padding:6px 18px 10px; margin:14px 0;
     box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
-  .q{padding:16px 0; border-bottom:1px solid var(--line)}
-  .q:last-child{border-bottom:none}
-  .q .stem{font-size:19px; font-weight:700; margin-bottom:10px}
-  .opts{display:flex; gap:8px; flex-wrap:wrap}
-  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
-    font-weight:700; padding:9px 15px; border-radius:10px; cursor:pointer; color:var(--ink)}
-  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
-  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
-  .opt:disabled{opacity:.45; cursor:default}
-  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
-  .fb.show{display:block}
-  .fb.y{color:var(--ok)}
-  .fb.n{color:var(--no)}
-
-  .final{background:var(--deep); color:#fff; border-radius:16px; padding:20px 20px 18px; margin:24px 0 0}
-  .final h3{margin:0 0 8px; font-size:19px; font-weight:800}
-  .final p{margin:0 0 10px; color:#f3d7e2; font-size:15px}
-  .final ul{margin:0; padding-left:20px; color:#ffd1e2; font-size:16px}
-  .final ul li{margin:4px 0}
 
   .foot{color:var(--mute); font-size:13px; text-align:center; margin-top:34px}
 
@@ -94,9 +75,6 @@
     .person img{height:210px}
     .rev{flex-direction:column; gap:2px; align-items:flex-start}
     .rev .lab{min-width:0}
-    .q .stem{font-size:18px}
-    .opts{gap:6px}
-    .opt{font-size:15px; padding:9px 12px}
   }
 </style>
 </head>
@@ -120,54 +98,27 @@
   </div>
 
   <h2><span class="num">01</span>Peter</h2>
-  <p class="lead">Один человек, мужчина. Значит <b>he</b> и <b>is</b>.</p>
-
   <div class="person">
     <img src="robert-peter.jpg" alt="Мужчина за рулём">
     <div class="body" id="p1"></div>
   </div>
 
   <h2><span class="num">02</span>Emma</h2>
-  <p class="lead">Одна женщина. Значит <b>she</b> и <b>is</b>.</p>
-
   <div class="person">
     <img src="robert-emma.jpg" alt="Медсестра в больнице">
     <div class="body" id="p2"></div>
   </div>
 
   <h2><span class="num">03</span>Dan and Mia</h2>
-  <p class="lead">Их двое. Здесь всё меняется.</p>
-
-  <div class="note warn">
-    <b>Двое - значит they и are.</b> И профессия идёт <b>без a</b>:
-    <b>they are students</b>, а не «they are a students». Маленькое <b>a</b> живёт
-    только там, где человек один: <b>he is a driver</b>.
-  </div>
-
   <div class="person">
     <img src="robert-students.jpg" alt="Парень и девушка с ноутбуком">
     <div class="body" id="p3"></div>
   </div>
 
   <h2><span class="num">04</span>Теперь спрашиваю я</h2>
-  <p class="lead">Ответь вслух, потом выбери. Где ответ «нет», скажи вслух
-  и как на самом деле: <b>No, he isn't. He is from England.</b></p>
+  <p class="lead">Ответь вслух целиком, потом нажми на вопрос и проверь себя.</p>
 
   <div class="card"><div id="qa"></div></div>
-
-  <div class="final">
-    <h3>А теперь всё подряд</h3>
-    <p>Закрой подсказки и расскажи про всех троих без остановки. Про каждого
-    четыре вещи, в любом порядке:</p>
-    <ul>
-      <li>как зовут</li>
-      <li>сколько лет</li>
-      <li>откуда</li>
-      <li>кем работает</li>
-    </ul>
-    <p style="margin-top:12px">Получилось двенадцать предложений подряд. Это и есть
-    цель: не вспомнить слово, а не останавливаться между ними.</p>
-  </div>
 
   <div class="foot">English from scratch &middot; тренажёр к глаголу to be</div>
 
@@ -214,76 +165,30 @@
     {lab:"работа",  val:"студенты",    en:"They are students."}
   ]);
 
-  function choiceBlock(id, items){
+  function asks(id, items){
     var host = document.getElementById(id);
     if(!host) return;
     items.forEach(function(it){
-      var q = document.createElement("div"); q.className = "q";
-      var stem = document.createElement("div"); stem.className = "stem";
-      stem.textContent = it.stem;
-      q.appendChild(stem);
-      var opts = document.createElement("div"); opts.className = "opts";
-      var fb = document.createElement("div"); fb.className = "fb";
-      it.opts.forEach(function(o, idx){
-        var b = document.createElement("button");
-        b.className = "opt"; b.type = "button"; b.textContent = o;
-        b.addEventListener("click", function(){
-          var right = idx === it.ok;
-          b.className = "opt " + (right ? "right" : "wrong");
-          fb.className = "fb show " + (right ? "y" : "n");
-          fb.textContent = right ? it.why : (it.no || "Не то, попробуй другой");
-          if(right){
-            var all = opts.querySelectorAll(".opt");
-            for(var k = 0; k < all.length; k++) if(all[k] !== b) all[k].disabled = true;
-          }
-        });
-        opts.appendChild(b);
-      });
-      q.appendChild(opts); q.appendChild(fb);
-      host.appendChild(q);
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      var v = document.createElement("span"); v.className = "val"; v.textContent = it.q;
+      b.appendChild(v);
+      var a = document.createElement("div"); a.className = "ans"; a.textContent = it.a;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
     });
   }
 
-  choiceBlock("qa", [
-    {stem:"Is Peter a driver?",
-     opts:["Yes, he is.", "Yes, he's.", "No, he isn't."], ok:0,
-     why:"Верно. И главное: в коротком «да» не сокращают, Yes, he's так не говорят",
-     no:"Смотри на карточку 01 и помни: в коротком «да» сокращения нет"},
-
-    {stem:"Is Peter from Italy?",
-     opts:["Yes, he is.", "No, he isn't.", "No, he not."], ok:1,
-     why:"Верно. Он из Англии. Из Италии Emma",
-     no:"Он из Англии. И «не» это isn't, одним словом"},
-
-    {stem:"Is Emma a nurse?",
-     opts:["Yes, she's.", "Yes, she is.", "Yes, she are."], ok:1,
-     why:"Верно. Она одна, значит is, и без сокращения",
-     no:"Она одна и она медсестра. Значит Yes, she is"},
-
-    {stem:"Is Emma twenty?",
-     opts:["Yes, she is.", "No, she isn't."], ok:1,
-     why:"Верно. Ей тридцать. Вслух добавь: No, she isn't. She is thirty",
-     no:"Посмотри возраст на карточке 02"},
-
-    {stem:"Are Dan and Mia students?",
-     opts:["Yes, they're.", "Yes, they are.", "Yes, they is."], ok:1,
-     why:"Верно. Их двое, значит are, и в коротком «да» не сокращают",
-     no:"Их двое. Значит are, и без сокращения"},
-
-    {stem:"Are Dan and Mia from England?",
-     opts:["Yes, they are.", "No, they aren't."], ok:1,
-     why:"Верно. Они из Испании, из Англии Peter",
-     no:"Из Англии у нас Peter. Они из Испании"},
-
-    {stem:"Is Peter thirty?",
-     opts:["Yes, he is.", "No, he isn't."], ok:1,
-     why:"Верно. Ему сорок. Тридцать это Emma",
-     no:"Сорок у Peter, тридцать у Emma"},
-
-    {stem:"Are Dan and Mia twenty-four?",
-     opts:["Yes, they are.", "No, they aren't."], ok:0,
-     why:"Верно. Обоим по двадцать четыре",
-     no:"Посмотри возраст на карточке 03"}
+  asks("qa", [
+    {q:"Is Peter a driver?",             a:"Yes, he is."},
+    {q:"Is Peter from Italy?",           a:"No, he isn't. He is from England."},
+    {q:"Is Emma a nurse?",               a:"Yes, she is."},
+    {q:"Is Emma twenty?",                a:"No, she isn't. She is thirty."},
+    {q:"Are Dan and Mia students?",      a:"Yes, they are."},
+    {q:"Are Dan and Mia from England?",  a:"No, they aren't. They are from Spain."},
+    {q:"Is Peter thirty?",               a:"No, he isn't. He is forty."},
+    {q:"Are Dan and Mia twenty-four?",   a:"Yes, they are."}
   ]);
 
 })();
