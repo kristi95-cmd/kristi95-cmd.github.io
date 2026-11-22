@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашняя работа к уроку 2. Present Simple и текст на слух</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .gap .q{padding:11px 0; border-bottom:1px solid var(--line)}
+  .gap .q:last-child{border-bottom:none}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:12px 15px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .rev:hover{background:var(--tile-2)}
+  .hid{display:none; margin-top:12px}
+  .hid.open{display:block}
+  .hid p{margin:0 0 10px; font-size:17px; line-height:1.6}
+  .hid p:last-child{margin-bottom:0}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашняя работа к уроку 2</div>
+    <h1>Present Simple.<em>Скобки, текст на слух и твои ответы</em></h1>
+    <p>Три задания, минут тридцать. Первое делаешь прямо здесь, кнопками. Второе пишешь текстом, третье голосовым, и то и другое присылаешь мне в телеграм.</p>
+  </div>
+
+  <div class="tag">письменно, здесь</div>
+  <h2><span class="num">01</span>Раскрой скобки</h2>
+  <p class="lead">Десять предложений, всё Present Simple, вперемешку: где-то утверждение, где-то отрицание, где-то вопрос. Глагол стоит в начале строки, поставь его в нужную форму. Короткую форму можно писать и полностью: <b>doesn&rsquo;t</b> и <b>does not</b> оба верные. Вписала - нажми Enter или просто ткни мимо поля, оно сразу подсветится.</p>
+
+  <div class="card gap" id="g1"></div>
+
+  <div class="note"><b>Два места, где легко промахнуться.</b> В третьем лице (he, she, it) у глагола появляется <b>-s</b>, а в вопросе и отрицании это <b>-s</b> забирает себе <b>does</b>, и сам глагол остаётся без него: <b>does</b> she <b>check</b>, а не <i>does she checks</i>.</p>
+
+  <div class="tag pr">на слух</div>
+  <h2><span class="num">02</span>Текст на слух: минута про Макса</h2>
+  <p class="lead">Мужчина рассказывает про свою работу и свой день. Текста перед глазами нет, и это нормально: с первого раза всё понимать не нужно. Послушай три раза - первый просто так, второй с остановками, третий целиком. Транскрипция лежит в самом низу страницы, под кнопкой, но открывай её только после того, как сделаешь задания.</p>
+
+  <div class="card">
+    <div class="player"><audio controls preload="none" src="travel-homework-1.mp3?v=1"></audio>
+      <div class="cap">Max про свою работу и свой день &middot; 0:59</div></div>
+  </div>
+
+  <div class="note"><b>Что ловить.</b> Где он живёт и кем работает, во сколько встаёт и во сколько начинает работу, как добирается до работы, сколько языков знает, что ест на обед, кем работает его жена и как часто они путешествуют.</div>
+
+  <div class="tag wr">письменно, текстом мне</div>
+  <h2><span class="num">03</span>True or false</h2>
+  <p class="lead">Правда или неправда. Запись можно включать сколько угодно раз, и если сомневаешься - слушай только то место.</p>
+
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <p>Если <b>true</b>, пишешь просто true. Если <b>false</b>, этого мало: нужно <b>написать, как на самом деле</b>, целым предложением. Вот так, на другом примере:</p>
+    <div class="form">Anna works in a bank.<span class="ex">false. She works in a school.</span></div>
+    <div class="form">Anna lives in Rome.<span class="ex">true.</span></div>
+    <p>То есть на каждое false получается слово <b>false</b> и одно предложение в Present Simple.</p>
+    <div class="note">В записи Макс говорит про себя: «<b>I</b> live in Dubai», «<b>my</b> work». А в заданиях написано про него: «Max lives...», «his wife». Поэтому и в ответе пиши про него: <b>he</b>, <b>his</b>, <b>she</b>, <b>her</b>. И не теряй <b>-s</b>: не «he work», а <b>he works</b>.</div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Max lives in Dubai.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">He works in a hotel.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">He gets up at five o&rsquo;clock.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">He has a car.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">He speaks three languages.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">He likes early mornings.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">His wife works in a shop.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">They travel in the summer.</div></div>
+  </div>
+
+  <div class="tag sp">голосовым мне</div>
+  <h2><span class="num">04</span>Ответь на вопросы вслух</h2>
+  <p class="lead">Вопросы по тому же тексту. Отвечай целым предложением, не одним словом: не «Dubai», а «He lives in Dubai». Запиши одно голосовое подряд и пришли мне в телеграм.</p>
+
+  <div class="card">
+    <ol class="qlist">
+      <li>Where does Max live?<span>где он живёт</span></li>
+      <li>Where does he work?<span>где он работает</span></li>
+      <li>What time does he get up?<span>во сколько он встаёт</span></li>
+      <li>How does he get to work?<span>как он добирается до работы</span></li>
+      <li>How many languages does he speak?<span>сколько языков он знает</span></li>
+      <li>Who is Dina?<span>кто такая Дина</span></li>
+      <li>How often do they travel?<span>как часто они путешествуют</span></li>
+    </ol>
+  </div>
+
+  <div class="note"><b>Если что-то не расслышала</b> - скажи то, что поняла. На занятии послушаем это место вместе.</div>
+
+  <div class="tag">после заданий</div>
+  <h2><span class="num">05</span>Транскрипция</h2>
+  <p class="lead">Открывай только когда задания готовы. Прочитай текст глазами и проверь себя: что ты услышала, а что нет.</p>
+
+  <div class="card">
+    <button class="rev" type="button" id="revbtn">Показать транскрипцию &rarr;</button>
+    <div class="hid" id="scrpt">
+      <p>Hello. My name is Max. I live in Dubai and I work at the airport. I am a check-in agent.</p>
+      <p>I get up at five o&rsquo;clock every morning. I take a bus to work, because I do not have a car. I start work at seven.</p>
+      <p>I talk to passengers all day. I ask them about their bags and I give them their boarding passes. I speak three languages: Arabic, English and Hindi. I like my job, but I do not like early mornings.</p>
+      <p>I usually eat lunch at twelve. I eat a sandwich and I drink tea.</p>
+      <p>My wife Dina works at the airport too. She works in a shop and she sells coffee and water.</p>
+      <p>We never travel in the summer, because Dubai is very hot in July and August. We travel twice a year, in winter. I do not like planes. I prefer trains.</p>
+    </div>
+  </div>
+
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/travel-lesson-1.html" target="_blank" rel="noopener">
+    <div class="t">Страница занятия &rarr;</div>
+    <div class="u">kristi95-cmd.github.io/english/travel-lesson-1.html</div>
+  </a>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом в телеграм:</b> задание 03, восемь строк. На true просто true, на false ещё и предложение, как на самом деле.</p>
+    <p><b>Голосовым в телеграм:</b> ответы на семь вопросов из задания 04, одним сообщением.</p>
+    <p class="small">Задание 01 проверяется кнопками прямо здесь, присылать его не надо.</p>
+  </div>
+
+  <div class="foot">English for travel &amp; speaking up &middot; домашняя работа к уроку 2</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function norm(s){
+    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
+  }
+  function expand(a){
+    var out = [];
+    a.forEach(function(v){
+      out.push(v);
+      var m = norm(v);
+      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
+                   ["aren't","are not"],["i'm","i am"]];
+      pairs.forEach(function(p){
+        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
+        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
+      });
+    });
+    return out.map(norm);
+  }
+
+  function makeGap(item, idx){
+    var q = document.createElement("div"); q.className = "q";
+    var line = document.createElement("div"); line.className = "line";
+    var n = document.createElement("span"); n.className = "n";
+    n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
+    line.appendChild(n);
+    if(item.pre){
+      var pre = document.createElement("span"); pre.className = "hint";
+      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
+      pre.textContent = "(" + item.pre + ")";
+      line.appendChild(pre);
+    }
+    var parts = item.s.split("%");
+    var answers = item.ok.slice();
+    var inputs = [];
+    parts.forEach(function(txt, i){
+      line.appendChild(document.createTextNode(txt));
+      if(i < parts.length - 1){
+        var inp = document.createElement("input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        if((answers[i] || "").length > 12) inp.className = "wide";
+        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
+        (function(inp, ok){
+          function check(){
+            var v = norm(inp.value);
+            if(!v){ inp.classList.remove("y","n"); return; }
+            var right = ok.indexOf(v) >= 0;
+            inp.classList.toggle("y", right);
+            inp.classList.toggle("n", !right);
+          }
+          inp.addEventListener("blur", check);
+          inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+        })(inp, ok);
+        inp.dataset.ans = answers[i];
+        line.appendChild(inp);
+        inputs.push(inp);
+      }
+    });
+    q.appendChild(line);
+    if(item.ru){
+      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
+      q.appendChild(ru);
+    }
+    q._inputs = inputs;
+    return q;
+  }
+
+  function gapBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    var all = [];
+    items.forEach(function(it, i){
+      var q = makeGap(it, i);
+      host.appendChild(q);
+      all = all.concat(q._inputs);
+    });
+    var bar = document.createElement("div"); bar.className = "score";
+    var cnt = document.createElement("span"); cnt.className = "cnt";
+    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
+    chk.textContent = "Проверить";
+    chk.addEventListener("click", function(){
+      var right = 0, filled = 0;
+      all.forEach(function(inp){
+        inp.dispatchEvent(new Event("blur"));
+        if(inp.value) filled++;
+        if(inp.classList.contains("y")) right++;
+      });
+      cnt.textContent = right + " из " + all.length + " верно" +
+        (filled < all.length ? ", пустых " + (all.length - filled) : "");
+    });
+    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
+    btn.textContent = "Показать ответы";
+    var shown = false;
+    btn.addEventListener("click", function(){
+      shown = !shown;
+      all.forEach(function(inp){
+        if(shown){
+          if(!inp.value){ inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
+          inp.classList.remove("n"); inp.classList.add("y");
+        } else if(inp.dataset.filled === "1"){
+          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
+        }
+      });
+      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
+      btn.classList.toggle("on", shown);
+    });
+    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
+    host.appendChild(bar);
+  }
+
+  gapBlock("g1", [
+    {pre:"work", s:"My brother % in a hotel.", ok:["works"],
+      ru:"мой брат работает в отеле"},
+    {pre:"not / like", s:"I % early mornings.", ok:["do not like"], alt:{0:["don't like"]},
+      ru:"я не люблю раннее утро"},
+    {pre:"speak", s:"% you % English at work?", ok:["Do","speak"],
+      ru:"ты говоришь по-английски на работе?"},
+    {pre:"get up", s:"Anna % at seven every day.", ok:["gets up"],
+      ru:"Анна встаёт в семь каждый день"},
+    {pre:"not / have", s:"We % a car.", ok:["do not have"], alt:{0:["don't have"]},
+      ru:"у нас нет машины"},
+    {pre:"start", s:"What time % your day %?", ok:["does","start"],
+      ru:"во сколько начинается твой день?"},
+    {pre:"sell", s:"This shop % coffee and water.", ok:["sells"],
+      ru:"этот магазин продаёт кофе и воду"},
+    {pre:"not / work", s:"My sister % every day.", ok:["does not work"], alt:{0:["doesn't work"]},
+      ru:"моя сестра работает не каждый день"},
+    {pre:"travel", s:"How often % your parents %?", ok:["do","travel"],
+      ru:"как часто путешествуют твои родители?"},
+    {pre:"check", s:"% she % her bags at the desk?", ok:["Does","check"],
+      ru:"она сдаёт свои сумки на стойке?"}
+  ]);
+
+  var rb = document.getElementById("revbtn"), sc = document.getElementById("scrpt");
+  rb.addEventListener("click", function(){
+    var open = sc.classList.toggle("open");
+    rb.textContent = open ? "Спрятать транскрипцию" : "Показать транскрипцию →";
+  });
+
+})();
+</script>
+
+</body>
+</html>
