@@ -12,7 +12,7 @@
     --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
     --accent:#c2185b; --deep:#7a1038;
     --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
-    --ok:#1b7a4b; --ok-bg:#eaf7f0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
     --paper:#fff;
   }
   *{box-sizing:border-box}
@@ -64,6 +64,23 @@
   .ans{display:none; padding:9px 15px 2px; font-size:19px; font-weight:700; color:var(--ok)}
   .ans.show{display:block}
 
+  /* ---------- вопросы ---------- */
+  .card{background:var(--paper); border-radius:14px; padding:6px 18px 10px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:19px; font-weight:700; margin-bottom:10px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 15px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt:disabled{opacity:.45; cursor:default}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
   .final{background:var(--deep); color:#fff; border-radius:16px; padding:20px 20px 18px; margin:24px 0 0}
   .final h3{margin:0 0 8px; font-size:19px; font-weight:800}
   .final p{margin:0 0 10px; color:#f3d7e2; font-size:15px}
@@ -77,6 +94,9 @@
     .person img{height:210px}
     .rev{flex-direction:column; gap:2px; align-items:flex-start}
     .rev .lab{min-width:0}
+    .q .stem{font-size:18px}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 12px}
   }
 </style>
 </head>
@@ -128,6 +148,12 @@
     <img src="robert-students.jpg" alt="Парень и девушка с ноутбуком">
     <div class="body" id="p3"></div>
   </div>
+
+  <h2><span class="num">04</span>Теперь спрашиваю я</h2>
+  <p class="lead">Ответь вслух, потом выбери. Где ответ «нет», скажи вслух
+  и как на самом деле: <b>No, he isn't. He is from England.</b></p>
+
+  <div class="card"><div id="qa"></div></div>
 
   <div class="final">
     <h3>А теперь всё подряд</h3>
@@ -186,6 +212,78 @@
     {lab:"возраст", val:"24",          en:"They are twenty-four."},
     {lab:"откуда",  val:"Spain",       en:"They are from Spain."},
     {lab:"работа",  val:"студенты",    en:"They are students."}
+  ]);
+
+  function choiceBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.textContent = it.stem;
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt"; b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt " + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? it.why : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k = 0; k < all.length; k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  choiceBlock("qa", [
+    {stem:"Is Peter a driver?",
+     opts:["Yes, he is.", "Yes, he's.", "No, he isn't."], ok:0,
+     why:"Верно. И главное: в коротком «да» не сокращают, Yes, he's так не говорят",
+     no:"Смотри на карточку 01 и помни: в коротком «да» сокращения нет"},
+
+    {stem:"Is Peter from Italy?",
+     opts:["Yes, he is.", "No, he isn't.", "No, he not."], ok:1,
+     why:"Верно. Он из Англии. Из Италии Emma",
+     no:"Он из Англии. И «не» это isn't, одним словом"},
+
+    {stem:"Is Emma a nurse?",
+     opts:["Yes, she's.", "Yes, she is.", "Yes, she are."], ok:1,
+     why:"Верно. Она одна, значит is, и без сокращения",
+     no:"Она одна и она медсестра. Значит Yes, she is"},
+
+    {stem:"Is Emma twenty?",
+     opts:["Yes, she is.", "No, she isn't."], ok:1,
+     why:"Верно. Ей тридцать. Вслух добавь: No, she isn't. She is thirty",
+     no:"Посмотри возраст на карточке 02"},
+
+    {stem:"Are Dan and Mia students?",
+     opts:["Yes, they're.", "Yes, they are.", "Yes, they is."], ok:1,
+     why:"Верно. Их двое, значит are, и в коротком «да» не сокращают",
+     no:"Их двое. Значит are, и без сокращения"},
+
+    {stem:"Are Dan and Mia from England?",
+     opts:["Yes, they are.", "No, they aren't."], ok:1,
+     why:"Верно. Они из Испании, из Англии Peter",
+     no:"Из Англии у нас Peter. Они из Испании"},
+
+    {stem:"Is Peter thirty?",
+     opts:["Yes, he is.", "No, he isn't."], ok:1,
+     why:"Верно. Ему сорок. Тридцать это Emma",
+     no:"Сорок у Peter, тридцать у Emma"},
+
+    {stem:"Are Dan and Mia twenty-four?",
+     opts:["Yes, they are.", "No, they aren't."], ok:0,
+     why:"Верно. Обоим по двадцать четыре",
+     no:"Посмотри возраст на карточке 03"}
   ]);
 
 })();
