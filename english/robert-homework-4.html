@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка к уроку 4. Роберт</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.08em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin:32px 0 0}
+  .tag.rd{background:#eef0fa; color:#3a4a8a}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .read p{font-size:19px; line-height:1.7; margin:0 0 14px; position:relative; padding-left:30px}
+  .read p:last-child{margin-bottom:0}
+  .read .pn{position:absolute; left:0; top:4px; width:22px; height:22px; border-radius:50%;
+    background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+  .read .nw{border-bottom:2px dotted var(--accent)}
+
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .voc .vi{display:flex; gap:10px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .voc .w{font-weight:800; font-size:17px}
+  .voc .t{color:var(--soft); font-size:15px}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} }
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .read p{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .card{break-inside:auto; box-shadow:none; border:1px solid var(--line)}
+    .scr,.note,.hw,.form{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .read p{font-size:17px; line-height:1.6}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашка &middot; урок 4</div>
+    <h1>Один текст<em>и два задания к нему</em></h1>
+    <p>Читаешь текст и делаешь два задания письменно. Присылай текстом в телеграм, списком с номерами.</p>
+  </div>
+
+  <div class="note">Новой грамматики здесь нет. Всё знакомое: <b>to be</b>, отрицание, вопрос «да или нет», короткие ответы и слова <b>my, your, his, her, our, their</b>.</div>
+
+  <div class="tag rd">чтение</div>
+  <h2><span class="num">01</span>Текст: Оскар и его люди</h2>
+  <p class="lead">Прочитай вслух, целиком, не торопясь. Потом ещё раз. Слова, подчёркнутые точками, новые, перевод под текстом.</p>
+
+  <div class="card read">
+    <p><span class="pn">1</span>Hello! My name is Oscar. I am thirty-two. I am from Spain, and I live in Barcelona. I am a coach. My <span class="nw">gym</span> is big. My friends are coaches too.</p>
+    <p><span class="pn">2</span>This is my girlfriend. Her name is Nina. She is twenty-nine. She is a nurse, and she is from Italy. Her <span class="nw">family</span> is in Rome.</p>
+    <p><span class="pn">3</span>This is my <span class="nw">neighbour</span>. His name is Victor. He is a driver. He is forty-five. He isn't from Spain, he is from Poland. We are friends.</p>
+    <p><span class="pn">4</span>This is my brother. His name is Max. He is a photographer. And this is his girlfriend Lucy. She is a student. They are in Madrid <span class="nw">today</span>. They aren't here.</p>
+    <p><span class="pn">5</span>My mother and my father are at home. Her name is Carmen. She is a teacher. His name is Pablo. He is an engineer. They are not <span class="nw">young</span>, they are <span class="nw">strong</span>. Nice to meet you!</p>
+  </div>
+
+  <div class="card">
+    <h3>Новые слова из текста</h3>
+    <div class="voc">
+      <div class="vi"><span class="w">gym</span><span class="t">спортзал</span></div>
+      <div class="vi"><span class="w">family</span><span class="t">семья</span></div>
+      <div class="vi"><span class="w">neighbour</span><span class="t">сосед</span></div>
+      <div class="vi"><span class="w">today</span><span class="t">сегодня</span></div>
+      <div class="vi"><span class="w">young</span><span class="t">молодой</span></div>
+      <div class="vi"><span class="w">strong</span><span class="t">сильный</span></div>
+    </div>
+  </div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">02</span>True or false</h2>
+  <p class="lead">Правда или неправда. <b>True</b> это правда, <b>false</b> неправда.</p>
+
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <p>Если <b>true</b>, пиши просто true. Если <b>false</b>, этого мало: нужно <b>написать предложение из текста</b>, где сказано, как на самом деле. Вот так:</p>
+    <div class="form">Oscar is in Barcelona.<span class="ex">true.</span></div>
+    <div class="form">Victor is twenty.<span class="ex">false. He is forty-five.</span></div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Oscar is from Italy.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Oscar is a coach.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Nina is a nurse.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Victor is from Spain.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Max is a student.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Max and Lucy are in Madrid.</div></div>
+  </div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">03</span>Ответь на вопросы по тексту</h2>
+  <p class="lead">Коротким ответом, как мы делали на занятии. Если ответ «нет», добавь одно предложение, как на самом деле.</p>
+
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <div class="form">Is Oscar from Spain?<span class="ex">Yes, he is.</span></div>
+    <div class="form">Is Nina twenty?<span class="ex">No, she isn't. She is twenty-nine.</span></div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Is Oscar a coach?</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Is Nina from Italy?</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Is Victor a photographer?</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Are Max and Lucy in Madrid?</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Is Pablo a teacher?</div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом</b> - задания 2 и 3, списком с номерами.</p>
+    <p>Задание 1 это чтение, присылать нечего. Прочитай вслух хотя бы два раза.</p>
+  </div>
+
+  <div class="foot">English from scratch &middot; домашка к уроку 4</div>
+
+</div>
+</body>
+</html>
