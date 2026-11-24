@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 3. Мы, они и это всё</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+  .foot .ver{display:block; margin-top:4px; font-size:.82em; opacity:.75}
+</style>
+<style>
+  /* числа */
+  .nums{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:2px 0}
+  .ni{display:flex; gap:10px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line)}
+  .ni .d{font-weight:800; color:var(--accent); min-width:28px; font-size:17px}
+  .ni .w{font-weight:700; font-size:17px}
+  .story{font-size:18px; line-height:1.85; margin:0}
+  .story p{margin:0 0 15px}
+  .story p:last-child{margin-bottom:0}
+  .story b{color:var(--deep)}
+  .story .nm{color:var(--accent); font-weight:800}
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for travel &middot; урок 3</div>
+    <h1>We, they, these.<em>Мы, они и когда всего много</em></h1>
+    <p>Два занятия мы говорили про одного человека: я, вы, он, она. Сегодня добавляем множество: <b>мы</b>, <b>они</b>, <b>это всё</b>. А чтобы сказать, сколько кому лет, берём числа и вопрос <b>How old are you?</b> В конце читаем первый настоящий текст.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Рассказать не про одного человека, а про своих: <b>we are</b>, <b>they are</b>.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Сказать «это мои дети», «это мои билеты»: <b>this is</b> и <b>these are</b>.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Спросить и ответить, сколько лет: <b>How old are you?</b></div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Начало занятия целиком уходит на повтор: проговариваем вслух всё, что уже знаем, без новых слов. Дальше как обычно - правило, сразу упражнение, потом говорим. Текст в конце читаем вместе.</div>
+
+  <div class="tag">повтор</div>
+  <h2><span class="num">01</span>Разогрев: что мы уже умеем</h2>
+
+  <div class="card">
+    <p>Прежде чем брать новое, соберём в одну картинку то, что уже стоит на месте. Это не новая тема, а разминка: проговариваем вслух.</p>
+
+    <h3>Глагол to be: три формы</h3>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am</div><div class="r">I am Irina. I am a teacher.</div>
+      <div class="p">you</div><div class="v">are</div><div class="r">You are my teacher.</div>
+      <div class="p">he / she / it</div><div class="v">is</div><div class="r">He is a doctor. It is a big city.</div>
+    </div>
+
+    <h3>Чьё это</h3>
+    <div class="conj">
+      <div class="p">my</div><div class="v">мой, моя, моё</div><div class="r">my name, my city, my friend</div>
+      <div class="p">your</div><div class="v">ваш, ваша, ваше</div><div class="r">your name, your city</div>
+    </div>
+
+    <h3>Что мы умеем спросить</h3>
+    <table class="tbl">
+      <tr><th>вопрос</th><th>что значит</th><th>как отвечаем</th></tr>
+      <tr><td class="v">What is your name?</td><td class="r">как вас зовут</td><td class="ex">My name is Irina.</td></tr>
+      <tr><td class="v">Where are you from?</td><td class="r">откуда вы</td><td class="ex">I am from Russia.</td></tr>
+      <tr><td class="v">How are you?</td><td class="r">как дела</td><td class="ex">I am fine, thank you.</td></tr>
+      <tr><td class="v">What do you do?</td><td class="r">кем вы работаете</td><td class="ex">I am a nurse.</td></tr>
+    </table>
+
+    <div class="note"><b>И маленькое слово <em>a</em>.</b> Перед профессией оно обязательно: <b>I am a doctor</b>, а не <i>I am doctor</i>. Перед гласным звуком становится <b>an</b>: <b>an engineer</b>.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">02</span>Разогрев: am, is или are</h2>
+  <p class="lead screen-only">Быстро, вслух, не задумываясь. Это то, что мы уже проходили.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>Разогрев: скажите вслух</h2>
+  <p class="lead screen-only">Сначала скажите сами, потом открывайте ответ и сверяйте. Если фраза не идёт - загляните в табличку выше.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Мы и они: we и they</h2>
+
+  <div class="card">
+    <p>До сих пор мы говорили про одного: я, вы, он, она, это. Но часто речь идёт про нескольких сразу - про себя со своими, про чужих людей, про вещи. Для этого есть два слова.</p>
+    <div class="conj">
+      <div class="p">we</div><div class="v">мы</div><div class="r">я и кто-то ещё: я с мужем, я с детьми, я с коллегами</div>
+      <div class="p">they</div><div class="v">они</div><div class="r">любые несколько, кроме меня: люди, дети, сумки, города</div>
+    </div>
+
+    <p><b>Важная разница с русским.</b> Русское «они» мы говорим только про людей и предметы одинаково, и английское <b>they</b> тоже: оно годится и про людей, и про вещи. Живое или нет - неважно, важно только количество.</p>
+    <div class="form">they <span class="plus">=</span> и люди, и вещи
+      <span class="ex">My children - they &middot; My parents - they &middot; My bags - they &middot; Moscow and Khimki - they</span></div>
+
+    <h3>Теперь вся картинка целиком</h3>
+    <p>Шесть слов, больше в английском местоимений нет. Первые четыре вы уже знаете, два последних - новые.</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am</div><div class="r">я</div>
+      <div class="p">you</div><div class="v">are</div><div class="r">вы, ты, и вы все вместе</div>
+      <div class="p">he / she / it</div><div class="v">is</div><div class="r">он, она, оно</div>
+      <div class="p">we</div><div class="v">are</div><div class="r">мы</div>
+      <div class="p">they</div><div class="v">are</div><div class="r">они</div>
+    </div>
+    <div class="note"><b>Форму запоминать почти не нужно.</b> У <b>we</b> и <b>they</b> тот же глагол, что у <b>you</b>: <b>are</b>. Отдельная форма только у <b>I</b> (am) и у одного человека или предмета (is).</div>
+
+    <div class="wrong-right">
+      <div class="wr n">We is a big family.<small>is только про одного</small></div>
+      <div class="wr y">We are a big family.<small>нас несколько, значит are</small></div>
+    </div>
+
+    <h3>Сокращения, как говорят вслух</h3>
+    <table class="tbl">
+      <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
+      <tr><td class="k">we are</td><td class="v">we're</td><td class="ex">We're from Khimki.</td></tr>
+      <tr><td class="k">they are</td><td class="v">they're</td><td class="ex">They're my friends.</td></tr>
+    </table>
+    <div class="note">Полная форма не ошибка, она просто звучит официальнее. На письме пишите как удобно, в разговоре короткая сама приживётся.</div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">05</span>Мои люди: семья и те, кто рядом</h2>
+  <p class="lead">Эти слова нужны, чтобы было про кого говорить «мы» и «они». Читаем вслух по очереди.</p>
+
+  <div class="card">
+    <div class="voc" id="voc1"></div>
+    <div class="note"><b>Два слова ведут себя особенно.</b> <b>parents</b> и <b>children</b> - это уже «несколько», поэтому с ними всегда <b>are</b>: <b>My parents are kind</b>, <b>My children are students</b>.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>he, she, it, we или they</h2>
+  <p class="lead screen-only">Смотрим, про кого речь: один человек, вещь, я со своими или чужие несколько.</p>
+  <div class="card" id="ex3"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">07</span>Вставьте am, is или are</h2>
+  <p class="lead screen-only">Теперь со всеми шестью словами сразу.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">08</span>Когда предметов много: буква s на конце</h2>
+
+  <div class="card">
+    <p>В русском «сумка - сумки, ключ - ключи, ребёнок - дети»: слово меняется по-разному и предсказать трудно. В английском почти всегда одно действие - добавить <b>s</b>.</p>
+    <div class="form">слово <span class="plus">+</span> s
+      <span class="ex">a bag - bags &middot; a ticket - tickets &middot; a key - keys &middot; a friend - friends</span></div>
+
+    <p><b>И сразу главное.</b> Когда предметов много, маленькое слово <b>a</b> исчезает. Оно значит «один», а их уже не один.</p>
+    <div class="wrong-right">
+      <div class="wr n">These are a bags.</div>
+      <div class="wr y">These are bags.</div>
+    </div>
+
+    <h3>Три случая, когда добавляется не s, а es</h3>
+    <p>Если слово кончается на шипящий или свистящий звук, одна <b>s</b> к нему не приклеивается, язык не успевает. Тогда ставим <b>es</b>, и получается лишний слог.</p>
+    <table class="tbl">
+      <tr><th>на что кончается</th><th>что добавляем</th><th>пример</th></tr>
+      <tr><td class="k">s, ss, x, ch, sh</td><td class="v">es</td><td class="ex">a bus - buses, a box - boxes, a watch - watches, a dish - dishes</td></tr>
+      <tr><td class="k">согласная и y</td><td class="v">y уходит, ставим ies</td><td class="ex">a city - cities, a family - families</td></tr>
+      <tr><td class="k">гласная и y</td><td class="v">просто s</td><td class="ex">a day - days, a key - keys</td></tr>
+    </table>
+
+    <h3>Четыре слова меняются целиком</h3>
+    <p>Их немного, и они как раз самые частые. Проще запомнить парами.</p>
+    <table class="tbl">
+      <tr><th>один</th><th>несколько</th><th>перевод</th></tr>
+      <tr><td class="k">a man</td><td class="v">men</td><td class="r">мужчина - мужчины</td></tr>
+      <tr><td class="k">a woman</td><td class="v">women</td><td class="r">женщина - женщины</td></tr>
+      <tr><td class="k">a child</td><td class="v">children</td><td class="r">ребёнок - дети</td></tr>
+      <tr><td class="k">a person</td><td class="v">people</td><td class="r">человек - люди</td></tr>
+    </table>
+    <div class="note"><b>people</b> - это уже «люди», поэтому <b>peoples</b> не говорят. И глагол с ним <b>are</b>: <b>The people are nice</b>.</div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">09</span>Вещи, которые ездят с вами</h2>
+  <p class="lead">Эти слова почти всегда нужны во множественном числе: билеты, ключи, сумки. На них и отработаем.</p>
+
+  <div class="card">
+    <div class="voc" id="voc2"></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">10</span>Один или несколько</h2>
+  <p class="lead screen-only">Выбираем правильную форму слова.</p>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">11</span>This is и these are: это и это всё</h2>
+
+  <div class="card">
+    <p>Когда показываете на что-то рядом - на человека, на сумку, на документ - по-русски это одно слово «это». В английском их два, и выбор зависит только от количества.</p>
+    <div class="conj">
+      <div class="p">this is</div><div class="v">это, один</div><div class="r">This is my bag. This is my daughter.</div>
+      <div class="p">these are</div><div class="v">это, несколько</div><div class="r">These are my bags. These are my children.</div>
+    </div>
+
+    <p><b>Смотрите, что меняется.</b> Меняются сразу два слова: <b>this</b> становится <b>these</b>, а <b>is</b> становится <b>are</b>. Половинчатого варианта не бывает.</p>
+    <div class="wrong-right">
+      <div class="wr n">This are my keys.<small>одно слово поменяли, другое забыли</small></div>
+      <div class="wr y">These are my keys.<small>поменялись оба</small></div>
+    </div>
+
+    <h3>Как это звучит</h3>
+    <table class="tbl">
+      <tr><th>слово</th><th>звук</th><th>на что похоже</th></tr>
+      <tr><td class="v">this</td><td class="r">короткое i</td><td class="ex">как в его паре с it: this - it</td></tr>
+      <tr><td class="v">these</td><td class="r">длинное и</td><td class="ex">тянется: th-ии-з</td></tr>
+    </table>
+    <div class="note"><b>Начало у обоих одинаковое</b> - тот самый звук, где кончик языка между зубами, как в <b>thank you</b>. Русское «з» или «д» вместо него выдаёт сразу, поэтому проговариваем медленно.</div>
+
+    <h3>Чем this отличается от it</h3>
+    <p><b>This</b> - когда показываете или знакомите: «вот это», «вот он». <b>It</b> - когда предмет уже назвали и говорим про него дальше.</p>
+    <div class="form">This is my city. <span class="plus">&rarr;</span> It is beautiful.
+      <span class="ex">Сначала показали, потом продолжили про него.</span></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">12</span>this is или these are</h2>
+  <div class="card" id="ex6"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">13</span>Соберите фразу</h2>
+  <p class="lead screen-only">Нажимайте слова в нужном порядке. Если собралось не то - нажмите слово ещё раз, оно вернётся.</p>
+  <div class="card build" id="ex7"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">14</span>Числа от 1 до 20</h2>
+
+  <div class="card">
+    <div class="nums">
+      <div class="ni"><span class="d">1</span><span class="w">one</span></div>
+      <div class="ni"><span class="d">2</span><span class="w">two</span></div>
+      <div class="ni"><span class="d">3</span><span class="w">three</span></div>
+      <div class="ni"><span class="d">4</span><span class="w">four</span></div>
+      <div class="ni"><span class="d">5</span><span class="w">five</span></div>
+      <div class="ni"><span class="d">6</span><span class="w">six</span></div>
+      <div class="ni"><span class="d">7</span><span class="w">seven</span></div>
+      <div class="ni"><span class="d">8</span><span class="w">eight</span></div>
+      <div class="ni"><span class="d">9</span><span class="w">nine</span></div>
+      <div class="ni"><span class="d">10</span><span class="w">ten</span></div>
+    </div>
+    <div class="note">Эти десять слов дальше работают как детали конструктора: из них собираются и подростковые числа, и десятки. Выучить их один раз выгоднее всего.</div>
+
+    <h3>От 11 до 20</h3>
+    <p>Первые два числа запоминаются отдельно, а с 13 начинается система: берём маленькое число и добавляем хвостик <b>-teen</b>.</p>
+    <div class="nums">
+      <div class="ni"><span class="d">11</span><span class="w">eleven</span></div>
+      <div class="ni"><span class="d">12</span><span class="w">twelve</span></div>
+      <div class="ni"><span class="d">13</span><span class="w">thirteen</span></div>
+      <div class="ni"><span class="d">14</span><span class="w">fourteen</span></div>
+      <div class="ni"><span class="d">15</span><span class="w">fifteen</span></div>
+      <div class="ni"><span class="d">16</span><span class="w">sixteen</span></div>
+      <div class="ni"><span class="d">17</span><span class="w">seventeen</span></div>
+      <div class="ni"><span class="d">18</span><span class="w">eighteen</span></div>
+      <div class="ni"><span class="d">19</span><span class="w">nineteen</span></div>
+      <div class="ni"><span class="d">20</span><span class="w">twenty</span></div>
+    </div>
+    <div class="note"><b>Три слова меняются сильнее остальных.</b> three становится <b>thirteen</b>, five становится <b>fifteen</b>, а в eight буква t не удваивается: <b>eighteen</b>. Остальные собираются ровно: four - fourteen, six - sixteen.</div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">15</span>Десятки и числа между ними</h2>
+
+  <div class="card">
+    <p>У десятков свой хвостик: <b>-ty</b>. Он очень похож на -teen, и именно на этой паре все спотыкаются.</p>
+    <div class="nums">
+      <div class="ni"><span class="d">20</span><span class="w">twenty</span></div>
+      <div class="ni"><span class="d">30</span><span class="w">thirty</span></div>
+      <div class="ni"><span class="d">40</span><span class="w">forty</span></div>
+      <div class="ni"><span class="d">50</span><span class="w">fifty</span></div>
+      <div class="ni"><span class="d">60</span><span class="w">sixty</span></div>
+      <div class="ni"><span class="d">70</span><span class="w">seventy</span></div>
+      <div class="ni"><span class="d">80</span><span class="w">eighty</span></div>
+      <div class="ni"><span class="d">90</span><span class="w">ninety</span></div>
+    </div>
+
+    <h3>13 или 30: как не перепутать</h3>
+    <table class="tbl">
+      <tr><th>число</th><th>слово</th><th>на что смотреть</th></tr>
+      <tr><td class="k">13</td><td class="v">thirteen</td><td class="r">длинный хвостик <b>-teen</b>, ударение падает на него: thir-<b>TEEN</b></td></tr>
+      <tr><td class="k">30</td><td class="v">thirty</td><td class="r">короткий хвостик <b>-ty</b>, ударение в начале: <b>THIR</b>-ty</td></tr>
+      <tr><td class="k">15</td><td class="v">fifteen</td><td class="r">fif-<b>TEEN</b></td></tr>
+      <tr><td class="k">50</td><td class="v">fifty</td><td class="r"><b>FIF</b>-ty</td></tr>
+    </table>
+    <div class="note"><b>40 пишется без u.</b> four, но <b>forty</b>. Это единственное число, где буква теряется, запомнить придётся отдельно.</div>
+
+    <h3>Составные числа: 21, 35, 48</h3>
+    <p>Берём десяток, ставим дефис, добавляем маленькое число. Никаких «и» между ними нет.</p>
+    <div class="form">десяток <span class="plus">-</span> число
+      <span class="ex">21 twenty-one &middot; 35 thirty-five &middot; 48 forty-eight &middot; 72 seventy-two</span></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">16</span>Какое это число</h2>
+  <p class="lead screen-only">Главное тут не спутать похожие и не забыть дефис в составных.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">17</span>Сколько лет: How old are you?</h2>
+
+  <div class="card">
+    <p>Возраст по-английски собирается через тот же глагол to be, который мы знаем с первого занятия. Дословно получается «я есть тридцать».</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am 35</div><div class="r">мне тридцать пять</div>
+      <div class="p">he</div><div class="v">is 40</div><div class="r">ему сорок</div>
+      <div class="p">she</div><div class="v">is 25</div><div class="r">ей двадцать пять</div>
+      <div class="p">they</div><div class="v">are 9 and 16</div><div class="r">им девять и шестнадцать</div>
+    </div>
+    <p>Можно добавить <b>years old</b>: <b>I am thirty-five years old</b>. Это полный вариант, он чуть официальнее. В обычном разговоре хватает короткого: <b>I am thirty-five</b>.</p>
+
+    <div class="wrong-right">
+      <div class="wr n">I have 35 years.</div>
+      <div class="wr y">I am 35.</div>
+    </div>
+    <p>«Иметь годы» по-английски не говорят, хотя по-русски мы говорим «мне есть тридцать пять» через «есть». Запомните один раз: возраст это <b>am</b>, <b>is</b>, <b>are</b>.</p>
+
+    <h3>Как спросить</h3>
+    <div class="conj conj4">
+      <div class="p">How old are you?</div><div class="v">сколько вам лет</div><div class="sh">собеседнику</div><div class="r">I am 35. And you?</div>
+      <div class="p">How old is he?</div><div class="v">сколько ему лет</div><div class="sh">про мужчину</div><div class="r">He is 45.</div>
+      <div class="p">How old is she?</div><div class="v">сколько ей лет</div><div class="sh">про женщину</div><div class="r">She is 32.</div>
+      <div class="p">How old are they?</div><div class="v">сколько им лет</div><div class="sh">про нескольких</div><div class="r">They are 9 and 16.</div>
+    </div>
+    <div class="note"><b>Порядок в вопросе всегда один:</b> How old - потом глагол - потом кто. С <b>you</b>, <b>we</b> и <b>they</b> это are, с <b>he</b>, <b>she</b> и <b>it</b> это is. Больше ничего менять не нужно.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">18</span>Возраст: вставьте нужное слово</h2>
+  <div class="card" id="ex9"></div>
+
+  <div class="tag">чтение</div>
+  <h2><span class="num">19</span>Текст: My family</h2>
+  <p class="lead">Здесь нет ни одного слова и ни одного правила, которых мы не разобрали. Читаем вслух по абзацу, незнакомое смотрим вместе.</p>
+
+  <div class="card">
+    <div class="story">
+      <p>Hello! My name is <span class="nm">Olga</span>. I am forty-two. I am from Russia, from Khimki. I am a nurse.</p>
+      <p>This is my husband. He is <span class="nm">Pavel</span>. He is forty-five. He is an engineer. He is tall and kind.</p>
+      <p>These are my children, <span class="nm">Anna</span> and <span class="nm">Max</span>. Anna is sixteen. She is a student. She is smart and funny. Max is nine. He is a happy boy.</p>
+      <p>These are my parents. My mother is seventy. My father is seventy-three. They are from Khimki too. They are kind and funny.</p>
+      <p>We are a big family. We are happy together.</p>
+    </div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">20</span>True or false</h2>
+  <p class="lead screen-only">Читаем фразу и решаем: так в тексте или нет. Если нет - скажите вслух, как на самом деле.</p>
+  <div class="card" id="ex10"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">21</span>Ответьте на вопросы по тексту</h2>
+  <p class="lead screen-only">Сначала ответьте вслух полной фразой, потом открывайте и сверяйте.</p>
+  <div class="card" id="ex11"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">22</span>Скажите вслух по-английски</h2>
+  <p class="lead screen-only">Это самое важное упражнение занятия. Говорите сами, подглядывайте только после.</p>
+  <div class="card" id="ex12"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">23</span>Диалог: знакомимся и рассказываем про своих</h2>
+  <p class="lead screen-only">Сначала прочитайте целиком. Потом закройте одну из реплик кнопкой и проговорите её сами.</p>
+
+  <div class="card">
+    <div class="dlg" id="dlg">
+      <div class="a"><span class="who">A</span><span class="ln">Hello! How are you?</span><span class="tr">Здравствуйте! Как дела?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am fine, thank you. And you?</span><span class="tr">Всё хорошо, спасибо. А вы?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am fine too. What is your name?</span><span class="tr">Тоже хорошо. Как вас зовут?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">My name is Irina. Nice to meet you.</span><span class="tr">Меня зовут Ирина. Приятно познакомиться.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Nice to meet you too. Where are you from?</span><span class="tr">И мне приятно. Откуда вы?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am from Russia, from Khimki. And you?</span><span class="tr">Я из России, из Химок. А вы?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am from Italy. How old are you?</span><span class="tr">Я из Италии. Сколько вам лет?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am thirty-five. And you?</span><span class="tr">Мне тридцать пять. А вам?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am forty. What do you do?</span><span class="tr">Мне сорок. Кем вы работаете?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">I am a teacher. These are my children, Anna and Max.</span><span class="tr">Я учитель. А это мои дети, Анна и Макс.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">How old are they?</span><span class="tr">Сколько им лет?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Anna is sixteen and Max is nine. Anna is a student.</span><span class="tr">Анне шестнадцать, Максу девять. Анна учится.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">They are nice! And these are my parents.</span><span class="tr">Какие славные! А это мои родители.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Nice to meet you! We are happy here.</span><span class="tr">Приятно познакомиться! Нам здесь хорошо.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Goodbye! Have a nice day!</span><span class="tr">До свидания! Хорошего дня!</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Bye! See you!</span><span class="tr">Пока! Увидимся!</span></div>
+    </div>
+    <div class="bar screen-only">
+      <button class="btn" type="button" data-hide="a">Спрятать реплики A</button>
+      <button class="btn" type="button" data-hide="b">Спрятать реплики B</button>
+    </div>
+  </div>
+
+  <h2><span class="num">24</span>Фразы занятия</h2>
+  <p class="lead">Всё, что сегодня было, одним списком. Кнопка убирает перевод: открывайте её, когда захотите проверить себя.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">We are from Russia.</div><div class="ru">Мы из России.</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">We are a big family.</div><div class="ru">Мы большая семья.</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">They are my parents.</div><div class="ru">Они мои родители.</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">My children are students.</div><div class="ru">Мои дети студенты.</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">This is my husband.</div><div class="ru">Это мой муж.</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">These are my children.</div><div class="ru">Это мои дети.</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">These are my tickets.</div><div class="ru">Это мои билеты.</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">My friends are kind.</div><div class="ru">Мои друзья добрые.</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">How old are you?</div><div class="ru">Сколько вам лет?</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I am thirty-five.</div><div class="ru">Мне тридцать пять.</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">How old is he?</div><div class="ru">Сколько ему лет?</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">He is forty years old.</div><div class="ru">Ему сорок лет.</div></div></div>
+    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">How old are they?</div><div class="ru">Сколько им лет?</div></div></div>
+    <div class="ph"><div class="n">14</div><div class="txt"><div class="en">They are nine and sixteen.</div><div class="ru">Им девять и шестнадцать.</div></div></div>
+    <div class="bar screen-only"><button class="btn" id="hideRu" type="button">Спрятать перевод</button></div>
+  </div>
+
+  <div class="note" style="margin-top:28px">
+    <b>Если захочется повторить самой.</b> Пройдите страницу второй раз через день и третий раз через неделю. На второй заход закрывайте русский перевод рукой и смотрите только на английскую фразу.</div>
+
+  <div class="foot">English for travel &middot; урок 3 &middot; Кристина</div>
+
+</div>
+
+<script>
+function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+function vocab(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var d = document.createElement("div"); d.className = "vi";
+    d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+    host.appendChild(d);
+  });
+}
+
+function choiceBlock(id, items, tall){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var q = document.createElement("div"); q.className = "q";
+    var stem = document.createElement("div"); stem.className = "stem";
+    stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+    q.appendChild(stem);
+    var opts = document.createElement("div"); opts.className = "opts";
+    var fb = document.createElement("div"); fb.className = "fb";
+    it.opts.forEach(function(o, idx){
+      var b = document.createElement("button");
+      b.className = "opt" + (tall ? " tall" : "");
+      b.type = "button"; b.textContent = o;
+      b.addEventListener("click", function(){
+        var right = idx === it.ok;
+        b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+        fb.className = "fb show " + (right ? "y" : "n");
+        fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуйте другой вариант");
+        if(right){
+          var all = opts.querySelectorAll(".opt");
+          for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+        }
+      });
+      opts.appendChild(b);
+    });
+    q.appendChild(opts); q.appendChild(fb);
+    host.appendChild(q);
+  });
+}
+
+function buildBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(b){
+    var q = document.createElement("div"); q.className = "q";
+    var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+    var slot = document.createElement("div"); slot.className = "slot";
+    var pool = document.createElement("div"); pool.className = "pool";
+    var res = document.createElement("div"); res.className = "res";
+    function check(){
+      var got = [], t = slot.querySelectorAll(".tok");
+      for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+      if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+      if(got.join(" ") === b.ok){
+        res.className = "res y"; res.textContent = "Верно: " + b.ok;
+      } else {
+        res.className = "res n"; res.textContent = "Пока не то. Верните слова и попробуйте иначе";
+      }
+    }
+    b.words.forEach(function(w){
+      var t = document.createElement("button");
+      t.className = "tok"; t.type = "button"; t.textContent = w;
+      t.addEventListener("click", function(){
+        if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+        check();
+      });
+      pool.appendChild(t);
+    });
+    q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+    host.appendChild(q);
+  });
+}
+
+function revealBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var w = document.createElement("div"); w.className = "pair";
+    var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+    b.textContent = p.ru;
+    var a = document.createElement("div"); a.className = "ans";
+    a.innerHTML = p.en;
+    b.addEventListener("click", function(){ a.classList.toggle("show"); });
+    w.appendChild(b); w.appendChild(a);
+    host.appendChild(w);
+  });
+}
+
+onClick("hideRu", function(){
+  var card = document.getElementById("phrasesCard");
+  var on = card.classList.toggle("hidden-ru");
+  this.classList.toggle("on", on);
+  this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+});
+
+var dlg = document.getElementById("dlg");
+var hideBtns = document.querySelectorAll("[data-hide]");
+for (var hb = 0; hb < hideBtns.length; hb++){
+  hideBtns[hb].addEventListener("click", function(){
+    var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+    this.classList.toggle("on", on);
+  });
+}
+/* ========== 02. разогрев: am, is, are ========== */
+choiceBlock("ex1", [
+  {stem:'I <u></u> Irina.', ru:'я Ирина', opts:["am","is","are"], ok:0, why:"Верно. am живёт только с I"},
+  {stem:'You <u></u> my teacher.', ru:'вы мой преподаватель', opts:["am","is","are"], ok:2, why:"Верно. с you всегда are"},
+  {stem:'He <u></u> a driver.', ru:'он водитель', opts:["am","is","are"], ok:1, why:"Верно"},
+  {stem:'She <u></u> a nurse.', ru:'она медсестра', opts:["am","is","are"], ok:1, why:"Верно"},
+  {stem:'My city <u></u> beautiful.', ru:'мой город красивый', opts:["am","is","are"], ok:1, why:"Верно. город это «он», значит is"},
+  {stem:'I <u></u> a teacher.', ru:'я учитель', opts:["am","is","are"], ok:0, why:"Верно"},
+  {stem:'It <u></u> my phone.', ru:'это мой телефон', opts:["am","is","are"], ok:1, why:"Верно"}
+]);
+
+/* ========== 03. разогрев: скажите вслух ========== */
+revealBlock("ex2", [
+  {ru:"Меня зовут Ирина.", en:"My name is Irina."},
+  {ru:"Я из России.", en:"I am from Russia."},
+  {ru:"Я живу в Химках.", en:"I live in Khimki."},
+  {ru:"Приятно познакомиться.", en:"Nice to meet you."},
+  {ru:"Как вас зовут?", en:"What is your name?"},
+  {ru:"Откуда вы?", en:"Where are you from?"},
+  {ru:"Кем вы работаете?", en:"What do you do?"},
+  {ru:"Он архитектор.", en:"He is an architect."},
+  {ru:"Она добрая и смешная.", en:"She is kind and funny."},
+  {ru:"Мой город красивый.", en:"My city is beautiful."},
+  {ru:"Извините, повторите, пожалуйста.", en:"Sorry, can you repeat, please?"},
+  {ru:"Хорошего дня!", en:"Have a nice day!"}
+]);
+
+/* ========== 05. слова: семья и люди рядом ========== */
+vocab("voc1", [
+  ["my husband","мой муж"],
+  ["my wife","моя жена"],
+  ["my mother","моя мама"],
+  ["my father","мой папа"],
+  ["my parents","мои родители"],
+  ["my son","мой сын"],
+  ["my daughter","моя дочь"],
+  ["my children","мои дети"],
+  ["a boy","мальчик"],
+  ["a girl","девочка"],
+  ["my colleagues","мои коллеги"],
+  ["my neighbours","мои соседи"],
+  ["people","люди"]
+]);
+
+/* ========== 06. he, she, it, we или they ========== */
+choiceBlock("ex3", [
+  {stem:'My husband is a doctor. <u></u> is kind.', ru:'мой муж врач, он добрый', opts:["he","she","it","we","they"], ok:0, why:"Верно. про одного мужчину he"},
+  {stem:'My children are students. <u></u> are smart.', ru:'мои дети студенты, они умные', opts:["he","she","it","we","they"], ok:4, why:"Верно. детей несколько, значит they"},
+  {stem:'My sister and I are from Khimki. <u></u> are happy here.', ru:'моя сестра и я из Химок, нам тут хорошо', opts:["he","she","it","we","they"], ok:3, why:"Верно. если в списке есть «я», это we"},
+  {stem:'My phone is new. <u></u> is small.', ru:'мой телефон новый, он маленький', opts:["he","she","it","we","they"], ok:2, why:"Верно. вещь это it"},
+  {stem:'My mother is a nurse. <u></u> is forty-five.', ru:'моя мама медсестра, ей сорок пять', opts:["he","she","it","we","they"], ok:1, why:"Верно"},
+  {stem:'My bags are big. <u></u> are new.', ru:'мои сумки большие, они новые', opts:["he","she","it","we","they"], ok:4, why:"Верно. вещей несколько, и про них тоже they"},
+  {stem:'My parents are from Khimki. <u></u> are kind.', ru:'мои родители из Химок, они добрые', opts:["he","she","it","we","they"], ok:4, why:"Верно"},
+  {stem:'My friends and I are teachers. <u></u> are busy today.', ru:'мои друзья и я учителя, мы сегодня заняты', opts:["he","she","it","we","they"], ok:3, why:"Верно. я в компании значит we"},
+  {stem:'Moscow is a big city. <u></u> is beautiful.', ru:'Москва большой город, он красивый', opts:["he","she","it","we","they"], ok:2, why:"Верно. город это it"},
+  {stem:'My son is nine. <u></u> is a happy boy.', ru:'моему сыну девять, он счастливый мальчик', opts:["he","she","it","we","they"], ok:0, why:"Верно"}
+]);
+
+/* ========== 07. am, is или are со всеми ========== */
+choiceBlock("ex4", [
+  {stem:'We <u></u> a big family.', ru:'мы большая семья', opts:["am","is","are"], ok:2, why:"Верно. нас несколько, значит are"},
+  {stem:'They <u></u> my parents.', ru:'они мои родители', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'I <u></u> thirty-five.', ru:'мне тридцать пять', opts:["am","is","are"], ok:0, why:"Верно. возраст тоже через to be"},
+  {stem:'My children <u></u> students.', ru:'мои дети студенты', opts:["am","is","are"], ok:2, why:"Верно. children это уже несколько"},
+  {stem:'He <u></u> an engineer.', ru:'он инженер', opts:["am","is","are"], ok:1, why:"Верно"},
+  {stem:'You <u></u> my neighbour.', ru:'вы мой сосед', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'My bag <u></u> new.', ru:'моя сумка новая', opts:["am","is","are"], ok:1, why:"Верно. сумка одна, значит is"},
+  {stem:'My parents <u></u> kind.', ru:'мои родители добрые', opts:["am","is","are"], ok:2, why:"Верно. parents это тоже уже несколько"},
+  {stem:'We <u></u> from Russia.', ru:'мы из России', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'It <u></u> my room.', ru:'это мой номер', opts:["am","is","are"], ok:1, why:"Верно"}
+]);
+
+/* ========== 09. слова: вещи в поездке ========== */
+vocab("voc2", [
+  ["a bag","сумка"],
+  ["a suitcase","чемодан"],
+  ["a ticket","билет"],
+  ["a passport","паспорт"],
+  ["a key","ключ"],
+  ["a phone","телефон"],
+  ["a photo","фотография"],
+  ["a room","номер, комната"],
+  ["a bus","автобус"],
+  ["a taxi","такси"]
+]);
+
+/* ========== 10. один или несколько ========== */
+choiceBlock("ex5", [
+  {stem:'These are my <u></u>.', ru:'это мои ключи', opts:["key","keys"], ok:1, why:"Верно. их несколько, добавляем s"},
+  {stem:'This is my <u></u>.', ru:'это мой билет', opts:["ticket","tickets"], ok:0, why:"Верно. он один, никакой s не нужно"},
+  {stem:'Khimki and Moscow are <u></u>.', ru:'Химки и Москва это города', opts:["citys","cities"], ok:1, why:"Верно. согласная и y на конце, значит ies"},
+  {stem:'These are my <u></u>.', ru:'это мои дети', opts:["childs","children"], ok:1, why:"Верно. это слово меняется целиком"},
+  {stem:'They are <u></u>.', ru:'они женщины', opts:["womans","women"], ok:1, why:"Верно. ещё одно слово из тех четырёх"},
+  {stem:'These are <u></u>.', ru:'это автобусы', opts:["buss","buses"], ok:1, why:"Верно. после s ставим es"},
+  {stem:'My <u></u> are kind.', ru:'мои друзья добрые', opts:["friend","friends"], ok:1, why:"Верно"},
+  {stem:'This is a <u></u>.', ru:'это телефон', opts:["phone","phones"], ok:0, why:"Верно. один телефон, и перед ним a"},
+  {stem:'We are nice <u></u>.', ru:'мы славные люди', opts:["persons","people"], ok:1, why:"Верно. «люди» это people, и s к нему не добавляют"},
+  {stem:'These are my <u></u>.', ru:'это мои фотографии', opts:["photo","photos"], ok:1, why:"Верно"}
+]);
+
+/* ========== 12. this is или these are ========== */
+choiceBlock("ex6", [
+  {stem:'<u></u> my husband.', ru:'это мой муж', opts:["This is","These are"], ok:0, why:"Верно. он один"},
+  {stem:'<u></u> my children.', ru:'это мои дети', opts:["This is","These are"], ok:1, why:"Верно. их несколько, поменялись оба слова"},
+  {stem:'<u></u> my passport.', ru:'это мой паспорт', opts:["This is","These are"], ok:0, why:"Верно"},
+  {stem:'<u></u> my keys.', ru:'это мои ключи', opts:["This is","These are"], ok:1, why:"Верно"},
+  {stem:'<u></u> my parents.', ru:'это мои родители', opts:["This is","These are"], ok:1, why:"Верно. parents это несколько"},
+  {stem:'<u></u> my daughter.', ru:'это моя дочь', opts:["This is","These are"], ok:0, why:"Верно"},
+  {stem:'<u></u> my bags.', ru:'это мои сумки', opts:["This is","These are"], ok:1, why:"Верно"},
+  {stem:'<u></u> my room.', ru:'это мой номер', opts:["This is","These are"], ok:0, why:"Верно"},
+  {stem:'<u></u> my colleagues.', ru:'это мои коллеги', opts:["This is","These are"], ok:1, why:"Верно"},
+  {stem:'<u></u> my phone.', ru:'это мой телефон', opts:["This is","These are"], ok:0, why:"Верно"}
+]);
+
+/* ========== 13. соберите фразу ========== */
+buildBlock("ex7", [
+  {words:["are","We","family","a","big"], ok:"We are a big family", ru:"мы большая семья"},
+  {words:["my","These","children","are"], ok:"These are my children", ru:"это мои дети"},
+  {words:["parents","My","kind","are"], ok:"My parents are kind", ru:"мои родители добрые"},
+  {words:["are","How","you","old"], ok:"How old are you", ru:"сколько вам лет"},
+  {words:["sixteen","She","is"], ok:"She is sixteen", ru:"ей шестнадцать"},
+  {words:["tickets","are","my","These"], ok:"These are my tickets", ru:"это мои билеты"},
+  {words:["from","We","Khimki","are"], ok:"We are from Khimki", ru:"мы из Химок"},
+  {words:["is","This","husband","my"], ok:"This is my husband", ru:"это мой муж"}
+]);
+
+/* ========== 16. какое это число ========== */
+choiceBlock("ex8", [
+  {stem:'13', opts:["thirty","thirteen"], ok:1, why:"Верно. длинный хвостик teen, ударение на него"},
+  {stem:'30', opts:["thirty","thirteen"], ok:0, why:"Верно. короткий хвостик ty"},
+  {stem:'15', opts:["fifty","fifteen"], ok:1, why:"Верно"},
+  {stem:'50', opts:["fifty","fifteen"], ok:0, why:"Верно"},
+  {stem:'40', opts:["fourty","forty"], ok:1, why:"Верно. в сороковке буква u теряется"},
+  {stem:'12', opts:["twelve","twenteen"], ok:0, why:"Верно. двенадцать своё отдельное слово"},
+  {stem:'21', opts:["twenty one","twenty-one"], ok:1, why:"Верно. в составных стоит дефис"},
+  {stem:'48', opts:["forty-eight","four-eight"], ok:0, why:"Верно"},
+  {stem:'70', opts:["seventeen","seventy"], ok:1, why:"Верно"},
+  {stem:'19', opts:["ninety","nineteen"], ok:1, why:"Верно"}
+]);
+
+/* ========== 18. возраст ========== */
+choiceBlock("ex9", [
+  {stem:'How old <u></u> you?', ru:'сколько вам лет', opts:["am","is","are"], ok:2, why:"Верно. с you всегда are"},
+  {stem:'I <u></u> thirty-five.', ru:'мне тридцать пять', opts:["am","is","are"], ok:0, why:"Верно"},
+  {stem:'How old <u></u> he?', ru:'сколько ему лет', opts:["am","is","are"], ok:1, why:"Верно"},
+  {stem:'They <u></u> nine and sixteen.', ru:'им девять и шестнадцать', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'My daughter <u></u> sixteen.', ru:'моей дочери шестнадцать', opts:["am","is","are"], ok:1, why:"Верно. дочь одна, значит is"},
+  {stem:'How old <u></u> they?', ru:'сколько им лет', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'I am thirty-five <u></u> old.', ru:'мне тридцать пять лет', opts:["year","years"], ok:1, why:"Верно. лет несколько, значит years"},
+  {stem:'I <u></u> 35.', ru:'мне тридцать пять', opts:["have","am"], ok:1, why:"Верно. возраст это am, а не «иметь годы»"}
+]);
+
+/* ========== 20. true or false ========== */
+choiceBlock("ex10", [
+  {stem:'Olga is a nurse.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Olga is from Moscow.', opts:["true","false"], ok:1, why:"Верно, не так: she is from Khimki"},
+  {stem:'Olga is forty-two.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Pavel is a driver.', opts:["true","false"], ok:1, why:"Верно, не так: he is an engineer"},
+  {stem:'Pavel is tall and kind.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Anna is a student.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Anna is nine.', opts:["true","false"], ok:1, why:"Верно, не так: Anna is sixteen, Max is nine"},
+  {stem:'Max is a happy boy.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Anna and Max are children.', opts:["true","false"], ok:0, why:"Верно, так в тексте"},
+  {stem:'Olga is a big family.', opts:["true","false"], ok:1, why:"Верно, не так: we are a big family, одна Ольга семьёй быть не может"}
+]);
+
+/* ========== 21. вопросы по тексту ========== */
+revealBlock("ex11", [
+  {ru:"How old is Olga?", en:"She is forty-two."},
+  {ru:"Where is Olga from?", en:"She is from Russia, from Khimki."},
+  {ru:"What does Olga do?", en:"She is a nurse."},
+  {ru:"What does Pavel do?", en:"He is an engineer."},
+  {ru:"How old is Pavel?", en:"He is forty-five."},
+  {ru:"How old is Anna?", en:"She is sixteen."},
+  {ru:"How old is Max?", en:"He is nine."},
+  {ru:"How old are Anna and Max?", en:"They are sixteen and nine."},
+  {ru:"Who are Anna and Max?", en:"They are children. Anna is a student."},
+  {ru:"Where are Olga and Pavel from?", en:"They are from Khimki."}
+]);
+
+/* ========== 22. скажите вслух по-английски ========== */
+revealBlock("ex12", [
+  {ru:"Мы из Химок.", en:"We are from Khimki."},
+  {ru:"Мы большая семья.", en:"We are a big family."},
+  {ru:"Они мои родители.", en:"They are my parents."},
+  {ru:"Мои дети умные.", en:"My children are smart."},
+  {ru:"Мои коллеги добрые.", en:"My colleagues are kind."},
+  {ru:"Это мой муж.", en:"This is my husband."},
+  {ru:"Это моя дочь.", en:"This is my daughter."},
+  {ru:"Это мои сумки.", en:"These are my bags."},
+  {ru:"Это мои билеты и мой паспорт.", en:"These are my tickets and my passport."},
+  {ru:"Сколько вам лет?", en:"How old are you?"},
+  {ru:"Мне тридцать пять.", en:"I am thirty-five."},
+  {ru:"Сколько ей лет?", en:"How old is she?"},
+  {ru:"Ей шестнадцать лет.", en:"She is sixteen years old."},
+  {ru:"Сколько им лет?", en:"How old are they?"},
+  {ru:"Им девять и шестнадцать.", en:"They are nine and sixteen."}
+]);
+</script>
+</body>
+</html>
