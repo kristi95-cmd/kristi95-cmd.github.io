@@ -230,6 +230,20 @@
   .story b{color:var(--deep)}
   .story .nm{color:var(--accent); font-weight:800}
 
+  .wr-row{display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; align-items:center;
+    padding:11px 0; border-bottom:1px solid var(--line)}
+  .wr-row:last-child{border-bottom:none}
+  .wr-row .one{font-weight:700; font-size:17px}
+  .wr-row .one em{display:block; font-style:normal; font-weight:500; color:var(--soft); font-size:14px; margin-top:2px}
+  .wr-row input{font:inherit; font-size:17px; font-weight:700; color:var(--deep);
+    width:100%; padding:9px 12px; border:2px solid var(--line); border-radius:10px;
+    background:#fff; outline:none; transition:border-color .15s, background .15s}
+  .wr-row input:focus{border-color:var(--accent)}
+  .wr-row input.ok{border-color:var(--ok); background:var(--ok-bg); color:var(--ok)}
+  @media (max-width:520px){ .wr-row{grid-template-columns:1fr; gap:6px} }
+  @media print{ .wr-row input{border:none; border-bottom:1.5px solid #bbb; border-radius:0; background:none}
+    .wr-row input::placeholder{color:transparent} }
+
 </style>
 </head>
 <body>
@@ -303,7 +317,7 @@
 
     <p><b>Важная разница с русским.</b> Русское «они» мы говорим только про людей и предметы одинаково, и английское <b>they</b> тоже: оно годится и про людей, и про вещи. Живое или нет - неважно, важно только количество.</p>
     <div class="form">they <span class="plus">=</span> и люди, и вещи
-      <span class="ex">My children - they &middot; My parents - they &middot; My bags - they &middot; Moscow and Khimki - they</span></div>
+      <span class="ex">My children - they &middot; My parents - they &middot; my phone and my bag - they &middot; Moscow and Khimki - they</span></div>
 
     <h3>Теперь вся картинка целиком</h3>
     <p>Шесть слов, больше в английском местоимений нет. Первые четыре вы уже знаете, два последних - новые.</p>
@@ -325,7 +339,7 @@
     <table class="tbl">
       <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
       <tr><td class="k">we are</td><td class="v">we're</td><td class="ex">We're from Khimki.</td></tr>
-      <tr><td class="k">they are</td><td class="v">they're</td><td class="ex">They're my friends.</td></tr>
+      <tr><td class="k">they are</td><td class="v">they're</td><td class="ex">They're my parents.</td></tr>
     </table>
     <div class="note">Полная форма не ошибка, она просто звучит официальнее. На письме пишите как удобно, в разговоре короткая сама приживётся.</div>
   </div>
@@ -336,7 +350,7 @@
 
   <div class="card">
     <div class="voc" id="voc1"></div>
-    <div class="note"><b>Два слова ведут себя особенно.</b> <b>parents</b> и <b>children</b> - это уже «несколько», поэтому с ними всегда <b>are</b>: <b>My parents are kind</b>, <b>My children are students</b>.</div>
+    <div class="note"><b>Два слова ведут себя особенно.</b> <b>parents</b> и <b>children</b> - это уже «несколько», поэтому с ними всегда <b>are</b>: <b>My parents are kind</b>, <b>My children are smart</b>.</div>
   </div>
 
   <div class="tag pr">практика</div>
@@ -359,8 +373,8 @@
 
     <p><b>И сразу главное.</b> Когда предметов много, маленькое слово <b>a</b> исчезает. Оно значит «один», а их уже не один.</p>
     <div class="wrong-right">
-      <div class="wr n">These are a bags.</div>
-      <div class="wr y">These are bags.</div>
+      <div class="wr n">a bags<small>одной и многих сразу не бывает</small></div>
+      <div class="wr y">bags<small>просто слово с s на конце</small></div>
     </div>
 
     <h3>Три случая, когда добавляется не s, а es</h3>
@@ -385,20 +399,13 @@
   </div>
 
   <div class="tag wd">слова</div>
-  <h2><span class="num">09</span>Вещи, которые ездят с вами</h2>
-  <p class="lead">Эти слова почти всегда нужны во множественном числе: билеты, ключи, сумки. На них и отработаем.</p>
+  <h2><span class="num">09</span>Вещи в поездке: сделайте из одной несколько</h2>
+  <p class="lead">Слева слово в единственном числе. Впишите справа то же слово, но когда их много. Правило только что разобрали: обычно <b>s</b>, после шипящего <b>es</b>, согласная и y дают <b>ies</b>.</p>
 
-  <div class="card">
-    <div class="voc" id="voc2"></div>
-  </div>
-
-  <div class="tag pr">практика</div>
-  <h2><span class="num">10</span>Один или несколько</h2>
-  <p class="lead screen-only">Выбираем правильную форму слова.</p>
-  <div class="card" id="ex5"></div>
+  <div class="card" id="voc2"></div>
 
   <div class="tag">правило</div>
-  <h2><span class="num">11</span>This is и these are: это и это всё</h2>
+  <h2><span class="num">10</span>This is и these are: это и это всё</h2>
 
   <div class="card">
     <p>Когда показываете на что-то рядом - на человека, на сумку, на документ - по-русски это одно слово «это». В английском их два, и выбор зависит только от количества.</p>
@@ -426,6 +433,11 @@
     <div class="form">This is my city. <span class="plus">&rarr;</span> It is beautiful.
       <span class="ex">Сначала показали, потом продолжили про него.</span></div>
   </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">11</span>Один или несколько</h2>
+  <p class="lead screen-only">Теперь обе темы вместе: и форма слова, и this или these.</p>
+  <div class="card" id="ex5"></div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">12</span>this is или these are</h2>
@@ -640,6 +652,27 @@ function vocab(id, items){
   });
 }
 
+function writeBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var r = document.createElement("div"); r.className = "wr-row";
+    var one = document.createElement("div"); one.className = "one";
+    one.innerHTML = it.one + '<em>' + it.ru + '</em>';
+    var inp = document.createElement("input");
+    inp.type = "text"; inp.placeholder = "когда их много";
+    inp.setAttribute("autocomplete", "off");
+    inp.setAttribute("autocapitalize", "off");
+    inp.spellcheck = false;
+    inp.addEventListener("input", function(){
+      var v = inp.value.trim().toLowerCase();
+      if(v === it.many) inp.className = "ok"; else inp.className = "";
+    });
+    r.appendChild(one); r.appendChild(inp);
+    host.appendChild(r);
+  });
+}
+
 function choiceBlock(id, items, tall){
   var host = document.getElementById(id);
   if(!host) return;
@@ -781,23 +814,23 @@ vocab("voc1", [
 /* ========== 06. he, she, it, we или they ========== */
 choiceBlock("ex3", [
   {stem:'My husband is a doctor. <u></u> is kind.', ru:'мой муж врач, он добрый', opts:["he","she","it","we","they"], ok:0, why:"Верно. про одного мужчину he"},
-  {stem:'My children are students. <u></u> are smart.', ru:'мои дети студенты, они умные', opts:["he","she","it","we","they"], ok:4, why:"Верно. детей несколько, значит they"},
-  {stem:'My sister and I are from Khimki. <u></u> are happy here.', ru:'моя сестра и я из Химок, нам тут хорошо', opts:["he","she","it","we","they"], ok:3, why:"Верно. если в списке есть «я», это we"},
+  {stem:'My children are smart. <u></u> are funny.', ru:'мои дети умные, они смешные', opts:["he","she","it","we","they"], ok:4, why:"Верно. детей несколько, значит they"},
+  {stem:'My sister and I are from Khimki. <u></u> are happy.', ru:'моя сестра и я из Химок, нам хорошо', opts:["he","she","it","we","they"], ok:3, why:"Верно. если в списке есть «я», это we"},
   {stem:'My phone is new. <u></u> is small.', ru:'мой телефон новый, он маленький', opts:["he","she","it","we","they"], ok:2, why:"Верно. вещь это it"},
-  {stem:'My mother is a nurse. <u></u> is forty-five.', ru:'моя мама медсестра, ей сорок пять', opts:["he","she","it","we","they"], ok:1, why:"Верно"},
-  {stem:'My bags are big. <u></u> are new.', ru:'мои сумки большие, они новые', opts:["he","she","it","we","they"], ok:4, why:"Верно. вещей несколько, и про них тоже they"},
+  {stem:'My mother is a nurse. <u></u> is kind.', ru:'моя мама медсестра, она добрая', opts:["he","she","it","we","they"], ok:1, why:"Верно"},
+  {stem:'My phone and my bag are new. <u></u> are small.', ru:'мой телефон и моя сумка новые, они маленькие', opts:["he","she","it","we","they"], ok:4, why:"Верно. вещей несколько, и про них тоже they"},
   {stem:'My parents are from Khimki. <u></u> are kind.', ru:'мои родители из Химок, они добрые', opts:["he","she","it","we","they"], ok:4, why:"Верно"},
-  {stem:'My friends and I are teachers. <u></u> are busy today.', ru:'мои друзья и я учителя, мы сегодня заняты', opts:["he","she","it","we","they"], ok:3, why:"Верно. я в компании значит we"},
+  {stem:'My colleagues and I are from Khimki. <u></u> are busy.', ru:'мои коллеги и я из Химок, мы заняты', opts:["he","she","it","we","they"], ok:3, why:"Верно. я в компании значит we"},
   {stem:'Moscow is a big city. <u></u> is beautiful.', ru:'Москва большой город, он красивый', opts:["he","she","it","we","they"], ok:2, why:"Верно. город это it"},
-  {stem:'My son is nine. <u></u> is a happy boy.', ru:'моему сыну девять, он счастливый мальчик', opts:["he","she","it","we","they"], ok:0, why:"Верно"}
+  {stem:'My son is a student. <u></u> is a happy boy.', ru:'мой сын студент, он счастливый мальчик', opts:["he","she","it","we","they"], ok:0, why:"Верно"}
 ]);
 
 /* ========== 07. am, is или are со всеми ========== */
 choiceBlock("ex4", [
   {stem:'We <u></u> a big family.', ru:'мы большая семья', opts:["am","is","are"], ok:2, why:"Верно. нас несколько, значит are"},
   {stem:'They <u></u> my parents.', ru:'они мои родители', opts:["am","is","are"], ok:2, why:"Верно"},
-  {stem:'I <u></u> thirty-five.', ru:'мне тридцать пять', opts:["am","is","are"], ok:0, why:"Верно. возраст тоже через to be"},
-  {stem:'My children <u></u> students.', ru:'мои дети студенты', opts:["am","is","are"], ok:2, why:"Верно. children это уже несколько"},
+  {stem:'I <u></u> a teacher.', ru:'я учитель', opts:["am","is","are"], ok:0, why:"Верно. am живёт только с I"},
+  {stem:'My children <u></u> smart.', ru:'мои дети умные', opts:["am","is","are"], ok:2, why:"Верно. children это уже несколько"},
   {stem:'He <u></u> an engineer.', ru:'он инженер', opts:["am","is","are"], ok:1, why:"Верно"},
   {stem:'You <u></u> my neighbour.', ru:'вы мой сосед', opts:["am","is","are"], ok:2, why:"Верно"},
   {stem:'My bag <u></u> new.', ru:'моя сумка новая', opts:["am","is","are"], ok:1, why:"Верно. сумка одна, значит is"},
@@ -806,18 +839,20 @@ choiceBlock("ex4", [
   {stem:'It <u></u> my room.', ru:'это мой номер', opts:["am","is","are"], ok:1, why:"Верно"}
 ]);
 
-/* ========== 09. слова: вещи в поездке ========== */
-vocab("voc2", [
-  ["a bag","сумка"],
-  ["a suitcase","чемодан"],
-  ["a ticket","билет"],
-  ["a passport","паспорт"],
-  ["a key","ключ"],
-  ["a phone","телефон"],
-  ["a photo","фотография"],
-  ["a room","номер, комната"],
-  ["a bus","автобус"],
-  ["a taxi","такси"]
+/* ========== 09. вещи в поездке: впишите множественное ========== */
+writeBlock("voc2", [
+  {one:"a bag", ru:"сумка", many:"bags"},
+  {one:"a suitcase", ru:"чемодан", many:"suitcases"},
+  {one:"a ticket", ru:"билет", many:"tickets"},
+  {one:"a passport", ru:"паспорт", many:"passports"},
+  {one:"a key", ru:"ключ", many:"keys"},
+  {one:"a phone", ru:"телефон", many:"phones"},
+  {one:"a photo", ru:"фотография", many:"photos"},
+  {one:"a room", ru:"номер, комната", many:"rooms"},
+  {one:"a taxi", ru:"такси", many:"taxis"},
+  {one:"a bus", ru:"автобус", many:"buses"},
+  {one:"a city", ru:"город", many:"cities"},
+  {one:"a man", ru:"мужчина", many:"men"}
 ]);
 
 /* ========== 10. один или несколько ========== */
@@ -853,8 +888,8 @@ buildBlock("ex7", [
   {words:["are","We","family","a","big"], ok:"We are a big family", ru:"мы большая семья"},
   {words:["my","These","children","are"], ok:"These are my children", ru:"это мои дети"},
   {words:["parents","My","kind","are"], ok:"My parents are kind", ru:"мои родители добрые"},
-  {words:["are","How","you","old"], ok:"How old are you", ru:"сколько вам лет"},
-  {words:["sixteen","She","is"], ok:"She is sixteen", ru:"ей шестнадцать"},
+  {words:["keys","are","my","These"], ok:"These are my keys", ru:"это мои ключи"},
+  {words:["children","My","students","are"], ok:"My children are students", ru:"мои дети студенты"},
   {words:["tickets","are","my","These"], ok:"These are my tickets", ru:"это мои билеты"},
   {words:["from","We","Khimki","are"], ok:"We are from Khimki", ru:"мы из Химок"},
   {words:["is","This","husband","my"], ok:"This is my husband", ru:"это мой муж"}
