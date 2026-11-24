@@ -230,12 +230,31 @@
   .story b{color:var(--deep)}
   .story .nm{color:var(--accent); font-weight:800}
 
+  .say{display:flex; gap:10px; align-items:baseline; font-size:17px; font-weight:600;
+    padding:10px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; color:var(--mute); font-weight:700; font-size:13px; min-width:28px}
+  .say .t{flex:1; font-weight:700}
+
+  .wr-row{display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; align-items:center;
+    padding:11px 0; border-bottom:1px solid var(--line)}
+  .wr-row:last-child{border-bottom:none}
+  .wr-row .one{font-weight:700; font-size:17px}
+  .wr-row .one em{display:block; font-style:normal; font-weight:500; color:var(--soft); font-size:14px; margin-top:2px}
+  .wr-row input{font:inherit; font-size:17px; font-weight:700; color:var(--deep);
+    width:100%; padding:9px 12px; border:2px solid var(--line); border-radius:10px;
+    background:#fff; outline:none; transition:border-color .15s, background .15s}
+  .wr-row input:focus{border-color:var(--accent)}
+  .wr-row input.ok{border-color:var(--ok); background:var(--ok-bg); color:var(--ok)}
+  @media (max-width:520px){ .wr-row{grid-template-columns:1fr; gap:6px} }
+  @media print{ .wr-row input{border:none; border-bottom:1.5px solid #bbb; border-radius:0; background:none}
+    .wr-row input::placeholder{color:transparent} }
+
 </style>
 </head>
 <body>
 
 <div class="wrap">
-
   <div class="top">
     <div class="kicker">English from scratch &middot; урок 4</div>
     <h1>Мы, они, это всё.<em>И первое слово, которым можно возразить</em></h1>
@@ -249,130 +268,220 @@
     <div class="goal"><span>&rarr;</span><div>Возразить: <b>This is not my bag.</b></div></div>
   </div>
 
-  <div class="tag pr">вслух</div>
+  <div class="note"><b>Как мы работаем.</b> Сначала разогрев вслух, без новых слов. Дальше правило, сразу упражнение, потом говорим. Если что-то идёт тяжело, останавливаемся и добиваем, объём не главное.</div>
+
+  <div class="tag sp">вслух</div>
   <h2><span class="num">01</span>Разогрев: четыре вопроса про себя</h2>
   <p class="lead">Отвечайте целой фразой, не одним словом. Это то, что у вас уже стоит.</p>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">What is your name?</div></div>
-    <div class="ph"><div class="n">2</div><div class="t">How old are you?</div></div>
-    <div class="ph"><div class="n">3</div><div class="t">Where are you from?</div></div>
-    <div class="ph"><div class="n">4</div><div class="t">What is your work?<span class="ru">отвечайте через место: My work is in...</span></div></div>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">What is your name?</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">How old are you?</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Where are you from?</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">What is your work?</div><div class="ru">отвечайте через место: My work is in...</div></div></div>
   </div>
 
-  <div class="tag pr">вслух</div>
+  <div class="tag sp">вслух</div>
   <h2><span class="num">02</span>Разогрев: Том из домашки</h2>
-  <p class="lead">Вы слушали его на прошлой неделе. Скажите ответ вслух, потом нажмите на вопрос и проверьте себя.</p>
+  <p class="lead">Вы слушали его на прошлой неделе. Скажите ответ вслух, потом нажмите на строчку и проверьте себя.</p>
 
   <div class="card" id="tom"></div>
 
   <div class="note"><b>Два вопроса здесь похожи, но спрашивают разное.</b> <b>What is his work?</b> это «кем он работает», ответ <b>He is a cook</b>. <b>Where is his work?</b> это «где он работает», ответ <b>His work is in a restaurant</b>. В домашке вы ответили профессией на второй вопрос, поэтому сегодня он тут стоит.</div>
 
-  <div class="tag pr">вслух</div>
-  <h2><span class="num">03</span>Разогрев: числа, которые путаются</h2>
-  <p class="lead">Читайте парами вслух. Разница в конце слова и в том, какой слог тянется: в коротком числе ударение уходит на конец.</p>
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">03</span>Разогрев: прочитайте числа</h2>
+  <p class="lead">Просто читайте вслух по порядку, я слушаю. Ничего выбирать не нужно.</p>
 
   <div class="card">
-    <div class="ph"><div class="n">13</div><div class="t">thirteen - thirty<span class="ru">тринадцать и тридцать</span></div></div>
-    <div class="ph"><div class="n">15</div><div class="t">fifteen - fifty<span class="ru">пятнадцать и пятьдесят</span></div></div>
-    <div class="ph"><div class="n">17</div><div class="t">seventeen - seventy<span class="ru">семнадцать и семьдесят</span></div></div>
-    <div class="ph"><div class="n">19</div><div class="t">nineteen - ninety<span class="ru">девятнадцать и девяносто</span></div></div>
-  </div>
-
-  <a class="lnk" href="https://kristi95-cmd.github.io/english/meeting-drill-1.html" target="_blank" rel="noopener">
-    <div class="t">Тренажёр: три человека по фото &rarr;</div>
-    <div class="u">расскажите про каждого сами, потом проверьте себя</div>
-  </a>
-
-  <div class="tag wd">теория</div>
-  <h2><span class="num">04</span>Мы и они: we и they</h2>
-  <p class="lead">У глагола <b>to be</b> три формы, и вы знаете две из них. Сегодня третья форма получает ещё двух хозяев.</p>
-
-  <div class="card">
-    <div class="conj">
-      <div class="ci"><span class="p">I</span><span class="v">am</span><span class="x">я</span></div>
-      <div class="ci"><span class="p">you</span><span class="v">are</span><span class="x">вы</span></div>
-      <div class="ci"><span class="p">he</span><span class="v">is</span><span class="x">он</span></div>
-      <div class="ci"><span class="p">she</span><span class="v">is</span><span class="x">она</span></div>
-      <div class="ci"><span class="p">it</span><span class="v">is</span><span class="x">оно</span></div>
-      <div class="ci new"><span class="p">we</span><span class="v">are</span><span class="x">мы</span></div>
-      <div class="ci new"><span class="p">they</span><span class="v">are</span><span class="x">они</span></div>
+    <div class="nums">
+      <div class="ni"><div class="d">1</div><div class="w">13</div></div>
+      <div class="ni"><div class="d">2</div><div class="w">30</div></div>
+      <div class="ni"><div class="d">3</div><div class="w">15</div></div>
+      <div class="ni"><div class="d">4</div><div class="w">50</div></div>
+      <div class="ni"><div class="d">5</div><div class="w">17</div></div>
+      <div class="ni"><div class="d">6</div><div class="w">70</div></div>
+      <div class="ni"><div class="d">7</div><div class="w">19</div></div>
+      <div class="ni"><div class="d">8</div><div class="w">90</div></div>
+      <div class="ni"><div class="d">9</div><div class="w">14</div></div>
+      <div class="ni"><div class="d">10</div><div class="w">40</div></div>
+      <div class="ni"><div class="d">11</div><div class="w">16</div></div>
+      <div class="ni"><div class="d">12</div><div class="w">60</div></div>
+      <div class="ni"><div class="d">13</div><div class="w">18</div></div>
+      <div class="ni"><div class="d">14</div><div class="w">80</div></div>
+      <div class="ni"><div class="d">15</div><div class="w">12</div></div>
+      <div class="ni"><div class="d">16</div><div class="w">20</div></div>
     </div>
-    <div class="note"><b>Правило короткое.</b> Один человек или одна вещь берут <b>is</b>. Несколько берут <b>are</b>. И <b>you</b> тоже <b>are</b>, хотя это один человек: так в английском сложилось исторически, тут просто запомнить.</div>
   </div>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">We are from Russia.<span class="ru">мы из России</span></div></div>
-    <div class="ph"><div class="n">2</div><div class="t">We are friends.<span class="ru">мы друзья</span></div></div>
-    <div class="ph"><div class="n">3</div><div class="t">They are my family.<span class="ru">они моя семья</span></div></div>
-    <div class="ph"><div class="n">4</div><div class="t">They are students.<span class="ru">они студенты</span></div></div>
-    <div class="ph"><div class="n">5</div><div class="t">My son and my daughter are at home.<span class="ru">сын и дочь дома</span></div></div>
+    <h3>Теперь посложнее</h3>
+    <div class="nums">
+      <div class="ni"><div class="d">17</div><div class="w">21</div></div>
+      <div class="ni"><div class="d">18</div><div class="w">35</div></div>
+      <div class="ni"><div class="d">19</div><div class="w">42</div></div>
+      <div class="ni"><div class="d">20</div><div class="w">58</div></div>
+      <div class="ni"><div class="d">21</div><div class="w">63</div></div>
+      <div class="ni"><div class="d">22</div><div class="w">76</div></div>
+      <div class="ni"><div class="d">23</div><div class="w">84</div></div>
+      <div class="ni"><div class="d">24</div><div class="w">99</div></div>
+    </div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Мы и они: we и they</h2>
+
+  <div class="card">
+    <p>Все четыре занятия мы говорили про одного: я, вы, он, она, это. Но часто речь идёт про нескольких сразу - про себя со своими, про чужих людей, про вещи. Для этого есть два слова, и сегодня они новые.</p>
+    <div class="conj">
+      <div class="p">we</div><div class="v">мы</div><div class="r">я и кто-то ещё: я с сыном, я с друзьями, я с вами</div>
+      <div class="p">they</div><div class="v">они</div><div class="r">любые несколько, кроме меня: люди, дети, сумки, города</div>
+    </div>
+
+    <p><b>Важная разница с русским.</b> Русское «они» годится и для людей, и для вещей - английское <b>they</b> точно так же. Живое или нет, неважно. Важно только количество.</p>
+    <div class="form">they <span class="plus">=</span> и люди, и вещи
+      <span class="ex">my friends - they &middot; my son and my daughter - they &middot; my bags - they &middot; Moscow and Saint Petersburg - they</span></div>
+
+    <h3>Теперь вся картинка целиком</h3>
+    <p>Шесть слов, больше в английском местоимений нет. Первые четыре строчки вы уже знаете, две последние - новые.</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am</div><div class="r">я</div>
+      <div class="p">you</div><div class="v">are</div><div class="r">вы</div>
+      <div class="p">he / she / it</div><div class="v">is</div><div class="r">он, она, оно</div>
+      <div class="p">we</div><div class="v">are</div><div class="r">мы - новое</div>
+      <div class="p">they</div><div class="v">are</div><div class="r">они - новое</div>
+    </div>
+    <div class="note"><b>Форму запоминать почти не нужно.</b> У <b>we</b> и <b>they</b> тот же глагол, что у <b>you</b>: <b>are</b>. Отдельная форма только у <b>I</b> (am) и у одного человека или предмета (is).</div>
+
+    <div class="wrong-right">
+      <div class="wr n">We is friends.<small>is только про одного</small></div>
+      <div class="wr y">We are friends.<small>нас несколько, значит are</small></div>
+    </div>
+
+    <h3>Сокращения, как говорят вслух</h3>
+    <table class="tbl">
+      <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
+      <tr><td class="k">we are</td><td class="v">we're</td><td class="ex">We're from Russia.</td></tr>
+      <tr><td class="k">they are</td><td class="v">they're</td><td class="ex">They're my friends.</td></tr>
+    </table>
+    <div class="note">Полная форма не ошибка, она просто звучит официальнее. На письме пишите как удобно, в разговоре короткая сама приживётся.</div>
+  </div>
+
+  <div class="card">
+    <h3>Послушайте, как это работает</h3>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">We are from Russia.</div><div class="ru">мы из России</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">We are friends.</div><div class="ru">мы друзья</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">They are my family.</div><div class="ru">они моя семья</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">They are students.</div><div class="ru">они студенты</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">My son and my daughter are at home.</div><div class="ru">сын и дочь дома, at home - дома</div></div></div>
   </div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">05</span>he, she, it, we или they</h2>
-  <p class="lead">Кем заменить подчёркнутое. Нажмите вариант и сразу увидите, верно ли.</p>
+  <p class="lead">Кем заменить подчёркнутое. Смотрим: один человек, вещь, я со своими или чужие несколько.</p>
 
   <div class="card" id="pron"></div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">06</span>am, is или are</h2>
-  <p class="lead">Поставьте нужную форму. Смотрите только на то, кто стоит перед пропуском.</p>
+  <p class="lead">Теперь со всеми шестью словами сразу. Смотрите только на то, кто стоит перед пропуском.</p>
 
   <div class="card" id="tobe"></div>
 
-  <div class="tag wd">теория</div>
+  <div class="tag">правило</div>
   <h2><span class="num">07</span>Когда вещей много: буква s на конце</h2>
-  <p class="lead">В русском слово меняется целиком: собака, собаки. В английском почти всегда добавляется одна буква.</p>
 
   <div class="card">
-    <div class="conj4">
-      <div class="ci"><span class="p">a dog</span><span class="v">dogs</span><span class="x">собака, собаки</span></div>
-      <div class="ci"><span class="p">a cat</span><span class="v">cats</span><span class="x">кошка, кошки</span></div>
-      <div class="ci"><span class="p">a friend</span><span class="v">friends</span><span class="x">друг, друзья</span></div>
-      <div class="ci"><span class="p">a photo</span><span class="v">photos</span><span class="x">фото, фотографии</span></div>
+    <p>В русском слово меняется целиком и предсказать трудно: «сумка - сумки, ключ - ключи, ребёнок - дети». В английском почти всегда одно действие - добавить <b>s</b>.</p>
+    <div class="form">слово <span class="plus">+</span> s
+      <span class="ex">a bag - bags &middot; a ticket - tickets &middot; a key - keys &middot; a friend - friends</span></div>
+
+    <p><b>И сразу главное.</b> Когда вещей много, маленькое слово <b>a</b> исчезает. Оно значит «один», а их уже не один.</p>
+    <div class="wrong-right">
+      <div class="wr n">a bags<small>одной и многих сразу не бывает</small></div>
+      <div class="wr y">bags<small>просто слово с s на конце</small></div>
     </div>
-    <div class="note"><b>Куда девается a.</b> Маленькое <b>a</b> значит «один», поэтому вместе с <b>s</b> оно уходит: <b>a dog</b>, но просто <b>dogs</b>. Сказать <b>a dogs</b> нельзя никогда.</div>
+
+    <h3>Три случая, когда добавляется не s, а es</h3>
+    <p>Если слово кончается на шипящий или свистящий звук, одна <b>s</b> к нему не приклеивается, язык не успевает. Тогда ставим <b>es</b>, и получается лишний слог.</p>
+    <table class="tbl">
+      <tr><th>на что кончается</th><th>что добавляем</th><th>пример</th></tr>
+      <tr><td class="k">s, ss, x, ch, sh</td><td class="v">es</td><td class="ex">a bus - buses, a box - boxes, a watch - watches, a dish - dishes</td></tr>
+      <tr><td class="k">согласная и y</td><td class="v">y уходит, ставим ies</td><td class="ex">a city - cities, a family - families</td></tr>
+      <tr><td class="k">гласная и y</td><td class="v">просто s</td><td class="ex">a day - days, a key - keys</td></tr>
+    </table>
+
+    <h3>Четыре слова меняются целиком</h3>
+    <p>Их немного, и они как раз самые частые. Проще запомнить парами.</p>
+    <table class="tbl">
+      <tr><th>один</th><th>несколько</th><th>перевод</th></tr>
+      <tr><td class="k">a man</td><td class="v">men</td><td class="r">мужчина - мужчины</td></tr>
+      <tr><td class="k">a woman</td><td class="v">women</td><td class="r">женщина - женщины</td></tr>
+      <tr><td class="k">a child</td><td class="v">children</td><td class="r">ребёнок - дети</td></tr>
+      <tr><td class="k">a person</td><td class="v">people</td><td class="r">человек - люди</td></tr>
+    </table>
+    <div class="note"><b>people</b> - это уже «люди», поэтому <b>peoples</b> не говорят. И глагол с ним <b>are</b>: <b>The people are nice</b>.</div>
   </div>
 
   <div class="card">
     <h3>Как звучит это s</h3>
     <p>Буква одна, а звука два, и выбирает их не правило в голове, а ваш собственный язык. Произнесите подряд:</p>
-    <div class="ph"><div class="n">з</div><div class="t">dogs, friends, sons, photos<span class="ru">после звонкого звука: догз, френдз</span></div></div>
-    <div class="ph"><div class="n">с</div><div class="t">cats, students, tickets, books<span class="ru">после глухого звука: кэтс, стьюдентс</span></div></div>
+    <div class="ph"><div class="n">з</div><div class="txt"><div class="en">dogs, friends, sons, photos</div><div class="ru">после звонкого звука: догз, френдз</div></div></div>
+    <div class="ph"><div class="n">с</div><div class="txt"><div class="en">cats, students, tickets, books</div><div class="ru">после глухого звука: кэтс, стьюдентс</div></div></div>
     <p>Проверка пальцами на горле та же, что мы делали с <b>th</b>: если на последнем звуке перед <b>s</b> горло дрожит, дальше будет «з».</p>
   </div>
 
-  <div class="tag wd">слова</div>
-  <h2><span class="num">08</span>Слова, которые пригодятся во множественном</h2>
-  <p class="lead">Выпишите столбиком: слово и перевод. Все они дальше в упражнениях.</p>
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">08</span>Сделайте из одной несколько</h2>
+  <p class="lead">Слева слово про одно. Впишите справа то же слово, но когда их много. Правило только что разобрали: обычно <b>s</b>, после шипящего <b>es</b>, согласная и y дают <b>ies</b>, а четыре слова меняются целиком.</p>
 
-  <div class="voc" id="plurals"></div>
+  <div class="card" id="plurwrite"></div>
+  <div class="note">Поле подсвечивается зелёным, когда слово написано верно. Если не выходит - вернитесь на правило выше, там есть нужная строчка.</div>
 
   <div class="tag pr">практика</div>
   <h2><span class="num">09</span>Один или несколько</h2>
-  <p class="lead">Выберите правильную форму.</p>
+  <p class="lead">Здесь подсказка - глагол. Если стоит <b>is</b>, речь про одного, если <b>are</b> - про нескольких.</p>
 
   <div class="card" id="plur"></div>
 
-  <div class="tag wd">теория</div>
-  <h2><span class="num">10</span>This is и these are</h2>
-  <p class="lead">Вы уже слышали <b>this is</b> в тексте про Нину: <b>This is my family</b>. Теперь к нему добавляется множественное.</p>
+  <div class="tag">правило</div>
+  <h2><span class="num">10</span>This is и these are: это и это всё</h2>
 
   <div class="card">
+    <p>Когда показываете на что-то рядом - на человека, на сумку, на фотографию - по-русски это одно слово «это». В английском их два, и выбор зависит только от количества.</p>
     <div class="conj">
-      <div class="ci"><span class="p">this is</span><span class="v">одна вещь</span><span class="x">это, вот это</span></div>
-      <div class="ci new"><span class="p">these are</span><span class="v">несколько</span><span class="x">это, вот эти</span></div>
+      <div class="p">this is</div><div class="v">это, один</div><div class="r">This is my bag. This is my daughter.</div>
+      <div class="p">these are</div><div class="v">это, несколько</div><div class="r">These are my bags. These are my children.</div>
     </div>
-    <div class="note">По-русски в обоих случаях «это»: это моя собака, это мои собаки. Поэтому русский человек говорит <b>this is my dogs</b>. В английском выбор обязателен: одна вещь или несколько.</div>
+
+    <p><b>Смотрите, что меняется.</b> Меняются сразу два слова: <b>this</b> становится <b>these</b>, а <b>is</b> становится <b>are</b>. Половинчатого варианта не бывает.</p>
+    <div class="wrong-right">
+      <div class="wr n">This are my keys.<small>одно слово поменяли, другое забыли</small></div>
+      <div class="wr y">These are my keys.<small>поменялись оба</small></div>
+    </div>
+    <div class="note"><b>Откуда берётся ошибка.</b> По-русски «это моя собака» и «это мои собаки» начинаются одинаково, поэтому рука сама пишет <b>this is my dogs</b>. В английском так нельзя: сначала решаем, сколько их, и только потом открываем рот.</div>
+
+    <h3>Как это звучит</h3>
+    <table class="tbl">
+      <tr><th>слово</th><th>звук</th><th>на что похоже</th></tr>
+      <tr><td class="v">this</td><td class="r">короткое i</td><td class="ex">как в его паре с it: this - it</td></tr>
+      <tr><td class="v">these</td><td class="r">длинное и</td><td class="ex">тянется: th-ии-з</td></tr>
+    </table>
+    <div class="note"><b>Начало у обоих одинаковое</b> - тот самый звук, где кончик языка между зубами, как в <b>thank you</b>. Русское «з» или «д» вместо него выдаёт сразу, поэтому проговариваем медленно.</div>
+
+    <h3>Чем this отличается от it</h3>
+    <p><b>This</b> - когда показываете или знакомите: «вот это», «вот он». <b>It</b> - когда вещь уже назвали и говорим про неё дальше.</p>
+    <div class="form">This is my city. <span class="plus">&rarr;</span> It is beautiful.
+      <span class="ex">Сначала показали, потом продолжили про него.</span></div>
   </div>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">This is my dog.<span class="ru">это моя собака</span></div></div>
-    <div class="ph"><div class="n">2</div><div class="t">These are my dogs.<span class="ru">это мои собаки</span></div></div>
-    <div class="ph"><div class="n">3</div><div class="t">This is my photo.<span class="ru">это моё фото</span></div></div>
-    <div class="ph"><div class="n">4</div><div class="t">These are my photos.<span class="ru">это мои фотографии</span></div></div>
-    <div class="ph"><div class="n">5</div><div class="t">These are my son and my daughter.<span class="ru">это мой сын и моя дочь</span></div></div>
+    <h3>Послушайте, как это работает</h3>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">This is my dog.</div><div class="ru">это моя собака</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">These are my dogs.</div><div class="ru">это мои собаки</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">This is my photo.</div><div class="ru">это моё фото</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">These are my photos.</div><div class="ru">это мои фотографии</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">These are my son and my daughter.</div><div class="ru">это мой сын и моя дочь</div></div></div>
   </div>
 
   <div class="tag pr">практика</div>
@@ -382,183 +491,219 @@
   <div class="card" id="tt"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">12</span>Соберите фразу</h2>
-  <p class="lead">Нажимайте слова по порядку. Нажали не то, нажмите ещё раз и слово вернётся.</p>
+  <h2><span class="num">12</span>Теперь обе темы вместе</h2>
+  <p class="lead">Здесь нужно выбрать всю фразу целиком: и <b>this</b> или <b>these</b>, и форму слова. Русская строчка говорит, сколько их.</p>
 
-  <div class="card" id="b1"></div>
+  <div class="card" id="mix"></div>
 
-  <div class="tag wd">теория</div>
-  <h2><span class="num">13</span>Not: как сказать, что это не так</h2>
+  <div class="tag pr">практика</div>
+  <h2><span class="num">13</span>Соберите фразу</h2>
+  <p class="lead">Нажимайте слова по порядку. Нажали не то - нажмите ещё раз, слово вернётся.</p>
+
+  <div class="card build" id="b1"></div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">14</span>Покажите мне свои вещи</h2>
+  <p class="lead">Возьмите в руки или покажите в камеру. Одну вещь - через <b>this is</b>, несколько - через <b>these are</b>. Пять штук, своими словами.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">одна вещь</div><div class="ru">This is my phone.</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">несколько одинаковых</div><div class="ru">These are my books.</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">фотография на телефоне</div><div class="ru">This is my son. / These are my friends.</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">что-то в комнате</div><div class="ru">скажите сами</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">что-то, чего много</div><div class="ru">скажите сами</div></div></div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">15</span>Not: как сказать, что это не так</h2>
   <p class="lead">Самое простое отрицание в английском. Никаких новых слов, одно короткое <b>not</b> сразу после формы <b>to be</b>.</p>
 
   <div class="card">
     <div class="conj">
-      <div class="ci"><span class="p">I am</span><span class="v">I am not</span><span class="x">я не</span></div>
-      <div class="ci"><span class="p">you are</span><span class="v">you are not</span><span class="x">вы не</span></div>
-      <div class="ci"><span class="p">he is</span><span class="v">he is not</span><span class="x">он не</span></div>
-      <div class="ci"><span class="p">we are</span><span class="v">we are not</span><span class="x">мы не</span></div>
-      <div class="ci"><span class="p">they are</span><span class="v">they are not</span><span class="x">они не</span></div>
-      <div class="ci"><span class="p">this is</span><span class="v">this is not</span><span class="x">это не</span></div>
-      <div class="ci"><span class="p">these are</span><span class="v">these are not</span><span class="x">это не</span></div>
+      <div class="p">I am</div><div class="v">I am not</div><div class="r">я не</div>
+      <div class="p">you are</div><div class="v">you are not</div><div class="r">вы не</div>
+      <div class="p">he is</div><div class="v">he is not</div><div class="r">он не</div>
+      <div class="p">she is</div><div class="v">she is not</div><div class="r">она не</div>
+      <div class="p">it is</div><div class="v">it is not</div><div class="r">оно не</div>
+      <div class="p">we are</div><div class="v">we are not</div><div class="r">мы не</div>
+      <div class="p">they are</div><div class="v">they are not</div><div class="r">они не</div>
+      <div class="p">this is</div><div class="v">this is not</div><div class="r">это не, одно</div>
+      <div class="p">these are</div><div class="v">these are not</div><div class="r">это не, несколько</div>
     </div>
-    <div class="note"><b>Порядок жёсткий: кто, потом форма, потом not.</b> Русское «я не повар» в английском звучит «я есть не повар»: <b>I am not a cook</b>. Выкинуть <b>am</b> нельзя, иначе фраза рассыпается.</div>
+    <div class="note"><b>Порядок жёсткий: кто, потом форма, потом not.</b> Русское «я не повар» в английском звучит буквально «я есть не повар»: <b>I am not a cook</b>. Выкинуть <b>am</b> нельзя, иначе фраза рассыпается.</div>
+    <div class="wrong-right">
+      <div class="wr n">I not a cook.<small>форму потеряли</small></div>
+      <div class="wr y">I am not a cook.<small>кто, форма, not</small></div>
+    </div>
   </div>
 
   <div class="card">
     <h3>Как это говорят живьём</h3>
     <p>В разговоре два слова сливаются в одно. Понимать нужно и то, и другое, говорить можно как удобнее.</p>
-    <div class="conj4">
-      <div class="ci"><span class="p">is not</span><span class="v">isn't</span><span class="x">«изнт»</span></div>
-      <div class="ci"><span class="p">are not</span><span class="v">aren't</span><span class="x">«арнт»</span></div>
-      <div class="ci"><span class="p">I am not</span><span class="v">I'm not</span><span class="x">«аймнот»</span></div>
-    </div>
-    <div class="note">У <b>am not</b> короткой пары нет: говорят <b>I'm not</b>, но не «I amn't». Такого слова в языке просто нет.</div>
+    <table class="tbl">
+      <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
+      <tr><td class="k">is not</td><td class="v">isn't</td><td class="ex">This isn't my bag.</td></tr>
+      <tr><td class="k">are not</td><td class="v">aren't</td><td class="ex">They aren't students.</td></tr>
+      <tr><td class="k">am not</td><td class="v">I'm not</td><td class="ex">I'm not a cook.</td></tr>
+    </table>
+
+    <h3>Исключение, одно на всю тему</h3>
+    <p>Два слова из трёх сокращаются по общему правилу, а третье - нет. Запомнить придётся только нижнюю строчку.</p>
+    <table class="tbl">
+      <tr><th>кто</th><th>короткая форма</th><th>так нельзя</th></tr>
+      <tr><td class="k">he, she, it, this</td><td class="v">isn't</td><td class="r">aren't - чужая форма</td></tr>
+      <tr><td class="k">you, we, they, these</td><td class="v">aren't</td><td class="r">isn't - чужая форма</td></tr>
+      <tr><td class="k">I</td><td class="v">I'm not</td><td class="r">amn't - такого слова в языке нет</td></tr>
+    </table>
+    <div class="note"><b>Почему так.</b> У <b>am not</b> общей короткой пары просто не сложилось. Поэтому сокращают не глагол, а само <b>I am</b>: получается <b>I'm</b>, а <b>not</b> остаётся целым словом.</div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">14</span>Поставьте в отрицание</h2>
-  <p class="lead">Вставьте пропущенное. Здесь важно не ошибиться формой: сначала смотрите, кто действует.</p>
+  <h2><span class="num">16</span>Поставьте в отрицание</h2>
+  <p class="lead">Вставьте пропущенное. Сначала смотрите, кто действует, и только потом выбирайте.</p>
 
   <div class="card" id="neg1"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">15</span>Длинное или короткое</h2>
-  <p class="lead">Одна и та же фраза в двух видах. Выберите тот, который существует.</p>
+  <h2><span class="num">17</span>Длинное или короткое</h2>
+  <p class="lead">Одна и та же фраза в двух видах. Выберите тот, который в языке существует.</p>
 
   <div class="card" id="neg2"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">16</span>Скажите по-английски</h2>
-  <p class="lead">Сначала скажите сами вслух, потом нажмите и проверьте.</p>
+  <h2><span class="num">18</span>Скажите по-английски</h2>
+  <p class="lead">Сначала скажите сами вслух, потом нажмите на строчку и проверьте.</p>
 
   <div class="card" id="neg3"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">17</span>Нет, и сразу как на самом деле</h2>
-  <p class="lead">В жизни одного «нет» мало: за ним идёт правда. Соберите по образцу <b>No, this is not a cat. This is a dog.</b></p>
+  <h2><span class="num">19</span>Сначала не так, потом как надо</h2>
+  <p class="lead">В жизни одного «не так» мало: за ним идёт правда. Две фразы подряд, по образцу <b>This is not a cat. This is a dog.</b></p>
 
   <div class="card" id="neg4"></div>
 
   <div class="tag sp">вслух</div>
-  <h2><span class="num">18</span>Про себя: правда или нет</h2>
-  <p class="lead">Я говорю фразу про вас, вы соглашаетесь или возражаете и сразу говорите, как на самом деле.</p>
+  <h2><span class="num">20</span>Про себя: правда или нет</h2>
+  <p class="lead">Я говорю фразу про вас. Если она неверная, возразите и сразу скажите, как на самом деле.</p>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">You are from Italy.<span class="ru">No, I am not from Italy. I am from Russia.</span></div></div>
-    <div class="ph"><div class="n">2</div><div class="t">You are a doctor.<span class="ru">возразите и скажите, кем работаете</span></div></div>
-    <div class="ph"><div class="n">3</div><div class="t">Your city is small.<span class="ru">возразите и скажите, какой он</span></div></div>
-    <div class="ph"><div class="n">4</div><div class="t">You are twenty.<span class="ru">возразите и скажите возраст</span></div></div>
-    <div class="ph"><div class="n">5</div><div class="t">Your dog is small.<span class="ru">согласитесь или возразите</span></div></div>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">You are from Italy.</div><div class="ru">No, I am not from Italy. I am from Russia.</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">You are a doctor.</div><div class="ru">возразите и скажите, кем работаете</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Your city is small.</div><div class="ru">возразите и скажите, какой он</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">You are twenty.</div><div class="ru">возразите и скажите возраст</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">These are your books.</div><div class="ru">согласитесь или возразите</div></div></div>
   </div>
 
   <div class="note"><b>Дальше начинается продолжение.</b> Вопрос, цены и заказ еды мы берём, когда с <b>not</b> станет легко. Эти разделы можно читать и дома: там есть и теория, и упражнения с проверкой.</div>
 
-  <div class="tag wd">теория</div>
-  <h2><span class="num">19</span>Вопрос: просто поменять местами</h2>
+  <div class="tag">правило</div>
+  <h2><span class="num">21</span>Вопрос: просто поменять местами</h2>
   <p class="lead">В английском вопрос с <b>to be</b> не требует новых слов. Берём фразу и ставим форму на первое место.</p>
 
   <div class="card">
     <div class="conj">
-      <div class="ci"><span class="p">You are a teacher.</span><span class="v">Are you a teacher?</span><span class="x">вы учитель?</span></div>
-      <div class="ci"><span class="p">He is from Italy.</span><span class="v">Is he from Italy?</span><span class="x">он из Италии?</span></div>
-      <div class="ci"><span class="p">This is your bag.</span><span class="v">Is this your bag?</span><span class="x">это ваша сумка?</span></div>
-      <div class="ci"><span class="p">These are your keys.</span><span class="v">Are these your keys?</span><span class="x">это ваши ключи?</span></div>
+      <div class="p">You are a teacher.</div><div class="v">Are you a teacher?</div><div class="r">вы учитель?</div>
+      <div class="p">He is from Italy.</div><div class="v">Is he from Italy?</div><div class="r">он из Италии?</div>
+      <div class="p">This is your bag.</div><div class="v">Is this your bag?</div><div class="r">это ваша сумка?</div>
+      <div class="p">These are your keys.</div><div class="v">Are these your keys?</div><div class="r">это ваши ключи?</div>
     </div>
-    <div class="note">Голос в конце вопроса идёт вверх. В русском вопрос без слов тоже слышно по голосу, здесь работает так же.</div>
+    <div class="note">Голос в конце вопроса идёт вверх. В русском вопрос тоже слышно по голосу, без всяких лишних слов - здесь работает так же.</div>
   </div>
 
   <div class="card">
     <h3>Короткий ответ</h3>
     <p>На такой вопрос по-английски не отвечают одним <b>yes</b>: это звучит грубовато. Ответ короткий, но с местоимением и формой.</p>
-    <div class="conj4">
-      <div class="ci"><span class="p">Are you a cook?</span><span class="v">Yes, I am. / No, I am not.</span><span class="x"></span></div>
-      <div class="ci"><span class="p">Is she a nurse?</span><span class="v">Yes, she is. / No, she isn't.</span><span class="x"></span></div>
-      <div class="ci"><span class="p">Is this your dog?</span><span class="v">Yes, it is. / No, it isn't.</span><span class="x"></span></div>
-      <div class="ci"><span class="p">Are these your photos?</span><span class="v">Yes, they are. / No, they aren't.</span><span class="x"></span></div>
-    </div>
-    <div class="note"><b>Про this и these в ответе.</b> Вопрос был <b>Is this...</b>, а отвечаем <b>Yes, it is</b>: вещь уже названа, и она становится <b>it</b>. Про несколько то же самое: <b>Are these...</b> и <b>Yes, they are</b>.</div>
+    <table class="tbl">
+      <tr><th>вопрос</th><th>да</th><th>нет</th></tr>
+      <tr><td class="k">Are you a cook?</td><td class="v">Yes, I am.</td><td class="r">No, I am not.</td></tr>
+      <tr><td class="k">Is she a nurse?</td><td class="v">Yes, she is.</td><td class="r">No, she isn't.</td></tr>
+      <tr><td class="k">Is this your dog?</td><td class="v">Yes, it is.</td><td class="r">No, it isn't.</td></tr>
+      <tr><td class="k">Are these your photos?</td><td class="v">Yes, they are.</td><td class="r">No, they aren't.</td></tr>
+    </table>
+    <div class="note"><b>Про this и these в ответе.</b> Вопрос был <b>Is this...</b>, а отвечаем <b>Yes, it is</b>: вещь уже назвали, и она стала <b>it</b>. Про несколько то же самое: <b>Are these...</b> и <b>Yes, they are</b>.</div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">20</span>Соберите вопрос</h2>
+  <h2><span class="num">22</span>Соберите вопрос</h2>
   <p class="lead">Те же слова, что в утверждении, только порядок другой.</p>
 
-  <div class="card" id="b2"></div>
+  <div class="card build" id="b2"></div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">21</span>Короткий ответ</h2>
+  <h2><span class="num">23</span>Короткий ответ</h2>
   <p class="lead">Выберите ответ, который подходит к вопросу.</p>
 
   <div class="card" id="short"></div>
 
   <div class="tag sp">вслух</div>
-  <h2><span class="num">22</span>Теперь спрашиваете вы</h2>
+  <h2><span class="num">24</span>Теперь спрашиваете вы</h2>
   <p class="lead">Задайте мне пять вопросов, на которые я отвечу <b>yes</b> или <b>no</b>. Про меня, про мою работу, про мой город, про моих людей.</p>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">Are you...?<span class="ru">профессия</span></div></div>
-    <div class="ph"><div class="n">2</div><div class="t">Are you from...?<span class="ru">страна или город</span></div></div>
-    <div class="ph"><div class="n">3</div><div class="t">Is your city...?<span class="ru">какой он</span></div></div>
-    <div class="ph"><div class="n">4</div><div class="t">Is this...?<span class="ru">покажите на вещь в камере</span></div></div>
-    <div class="ph"><div class="n">5</div><div class="t">Are these...?<span class="ru">покажите на несколько вещей</span></div></div>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">Are you...?</div><div class="ru">профессия</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">Are you from...?</div><div class="ru">страна или город</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Is your city...?</div><div class="ru">какой он</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">Is this...?</div><div class="ru">покажите на вещь в камере</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">Are these...?</div><div class="ru">покажите на несколько вещей</div></div></div>
   </div>
 
-  <div class="tag wd">теория</div>
-  <h2><span class="num">23</span>Сколько стоит: how much</h2>
+  <div class="tag">правило</div>
+  <h2><span class="num">25</span>Сколько стоит: how much</h2>
   <p class="lead">Это тот же вопрос, что в предыдущем разделе, только впереди стоят два слова: <b>how much</b>, «сколько».</p>
 
   <div class="card">
     <div class="conj">
-      <div class="ci"><span class="p">одна вещь</span><span class="v">How much is this?</span><span class="x">сколько это стоит?</span></div>
-      <div class="ci"><span class="p">несколько</span><span class="v">How much are these?</span><span class="x">сколько они стоят?</span></div>
-      <div class="ci"><span class="p">с названием</span><span class="v">How much is this bag?</span><span class="x">сколько стоит эта сумка?</span></div>
-      <div class="ci"><span class="p">ответ</span><span class="v">It is ten dollars.</span><span class="x">десять долларов</span></div>
+      <div class="p">одна вещь</div><div class="v">How much is this?</div><div class="r">сколько это стоит?</div>
+      <div class="p">несколько</div><div class="v">How much are these?</div><div class="r">сколько они стоят?</div>
+      <div class="p">с названием</div><div class="v">How much is this bag?</div><div class="r">сколько стоит эта сумка?</div>
+      <div class="p">ответ</div><div class="v">It is ten dollars.</div><div class="r">десять долларов</div>
     </div>
-    <div class="note">Выбор <b>is</b> или <b>are</b> тот же, что был с <b>this</b> и <b>these</b>: одна вещь или несколько. Поэтому этот вопрос стоит сразу после них, а не отдельной темой.</div>
+    <div class="note">Выбор <b>is</b> или <b>are</b> тот же, что был с <b>this</b> и <b>these</b>: одна вещь или несколько. Поэтому цены стоят сразу после них, а не отдельной темой.</div>
   </div>
 
   <div class="card">
-    <div class="ph"><div class="n">1</div><div class="t">How much is this coffee?<span class="ru">сколько стоит этот кофе</span></div></div>
-    <div class="ph"><div class="n">2</div><div class="t">How much are these tickets?<span class="ru">сколько стоят эти билеты</span></div></div>
-    <div class="ph"><div class="n">3</div><div class="t">It is three dollars.<span class="ru">три доллара</span></div></div>
-    <div class="ph"><div class="n">4</div><div class="t">They are twenty dollars.<span class="ru">двадцать долларов</span></div></div>
-    <div class="ph"><div class="n">5</div><div class="t">It is too expensive.<span class="ru">это слишком дорого</span></div></div>
+    <h3>Послушайте, как это работает</h3>
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">How much is this coffee?</div><div class="ru">сколько стоит этот кофе</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">How much are these tickets?</div><div class="ru">сколько стоят эти билеты</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">It is three dollars.</div><div class="ru">три доллара</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">They are twenty dollars.</div><div class="ru">двадцать долларов</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">It is too expensive.</div><div class="ru">это слишком дорого</div></div></div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">24</span>is или are в цене</h2>
+  <h2><span class="num">26</span>is или are в цене</h2>
   <p class="lead">Решает слово после пропуска.</p>
 
   <div class="card" id="price"></div>
 
   <div class="tag wd">слова</div>
-  <h2><span class="num">25</span>Еда и напитки</h2>
+  <h2><span class="num">27</span>Еда и напитки</h2>
   <p class="lead">Минимум, которого хватает, чтобы заказать себе завтрак и обед.</p>
 
   <div class="voc" id="food"></div>
 
-  <div class="tag wd">теория</div>
-  <h2><span class="num">26</span>Как заказать: can I have и would like</h2>
+  <div class="tag">правило</div>
+  <h2><span class="num">28</span>Как заказать: can I have и would like</h2>
   <p class="lead">Три вежливые отмычки. Говорить можно любую, разница только в том, насколько официально звучит.</p>
 
   <div class="card">
     <div class="conj">
-      <div class="ci"><span class="p">обычно</span><span class="v">Can I have a coffee, please?</span><span class="x">можно мне кофе</span></div>
-      <div class="ci"><span class="p">вежливее</span><span class="v">Could I have a coffee, please?</span><span class="x">то же, но мягче</span></div>
-      <div class="ci"><span class="p">в кафе и в ресторане</span><span class="v">I would like a coffee, please.</span><span class="x">я бы хотела кофе</span></div>
-      <div class="ci"><span class="p">вживую</span><span class="v">I'd like a coffee, please.</span><span class="x">«айд лайк»</span></div>
+      <div class="p">обычно</div><div class="v">Can I have a coffee, please?</div><div class="r">можно мне кофе</div>
+      <div class="p">вежливее</div><div class="v">Could I have a coffee, please?</div><div class="r">то же, но мягче</div>
+      <div class="p">в кафе и в ресторане</div><div class="v">I would like a coffee, please.</div><div class="r">я бы хотела кофе</div>
+      <div class="p">вживую</div><div class="v">I'd like a coffee, please.</div><div class="r">«айд лайк»</div>
     </div>
     <div class="note"><b>Please в конце и ничего больше не нужно.</b> После этих слов всегда идёт сама вещь: <b>a coffee</b>, <b>a sandwich</b>, <b>water</b>. И никакого <b>to be</b>: тут другой глагол, разбирать его сегодня не будем, берём готовым блоком.</div>
   </div>
 
   <div class="tag pr">практика</div>
-  <h2><span class="num">27</span>Соберите заказ</h2>
+  <h2><span class="num">29</span>Соберите заказ</h2>
   <p class="lead">Слова те же, порядок другой.</p>
 
-  <div class="card" id="b3"></div>
+  <div class="card build" id="b3"></div>
 
   <div class="tag sp">вслух</div>
-  <h2><span class="num">28</span>Диалог в кафе</h2>
+  <h2><span class="num">30</span>Диалог в кафе</h2>
   <p class="lead">Прочитайте за обе роли, потом сыграем его со мной. Ваши строчки собраны только из того, что уже есть на этой странице.</p>
 
   <div class="card">
@@ -571,16 +716,15 @@
   </div>
 
   <div class="tag sp">вслух</div>
-  <h2><span class="num">29</span>Фразы занятия</h2>
+  <h2><span class="num">31</span>Фразы занятия</h2>
   <p class="lead">Нажмите на русскую строчку и проверьте себя. Кнопкой можно спрятать перевод и пройти всё заново.</p>
 
-  <button class="hide" id="hideRu" type="button">Спрятать перевод</button>
+  <div class="bar screen-only"><button class="btn" id="hideRu" type="button">Спрятать перевод</button></div>
   <div class="card" id="phrasesCard">
     <div id="phrases"></div>
   </div>
 
   <div class="foot">English from scratch &middot; урок 4<span class="ver">множественное, this и these, отрицание, вопрос, цены, заказ</span></div>
-
 </div>
 
 <script>
@@ -596,6 +740,27 @@ function vocab(id, items){
     var d = document.createElement("div"); d.className = "vi";
     d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
     host.appendChild(d);
+  });
+}
+
+function writeBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var r = document.createElement("div"); r.className = "wr-row";
+    var one = document.createElement("div"); one.className = "one";
+    one.innerHTML = it.one + '<em>' + it.ru + '</em>';
+    var inp = document.createElement("input");
+    inp.type = "text"; inp.placeholder = "когда их много";
+    inp.setAttribute("autocomplete", "off");
+    inp.setAttribute("autocapitalize", "off");
+    inp.spellcheck = false;
+    inp.addEventListener("input", function(){
+      var v = inp.value.trim().toLowerCase();
+      if(v === it.many) inp.className = "ok"; else inp.className = "";
+    });
+    r.appendChild(one); r.appendChild(inp);
+    host.appendChild(r);
   });
 }
 
@@ -678,216 +843,295 @@ function revealBlock(id, items){
   });
 }
 
-  revealBlock("tom", [
-    {ru:"What is his name?", en:"His name is Tom."},
-    {ru:"How old is he?", en:"He is forty-two."},
-    {ru:"Where is he from?", en:"He is from Italy."},
-    {ru:"What is his work?", en:"He is a cook."},
-    {ru:"Where is his work?", en:"His work is in a restaurant."},
-    {ru:"Who is Mike?", en:"Mike is his boss."},
-    {ru:"Where is her work? (his mother)", en:"Her work is in a hospital."}
-  ]);
+/* ========== 02. Том из домашки ========== */
+revealBlock("tom", [
+  {ru:"What is his name?", en:"His name is Tom."},
+  {ru:"How old is he?", en:"He is forty-two."},
+  {ru:"Where is he from?", en:"He is from Italy."},
+  {ru:"What is his work?", en:"He is a cook."},
+  {ru:"Where is his work?", en:"His work is in a restaurant."},
+  {ru:"Who is Mike?", en:"Mike is his boss."},
+  {ru:"Where is her work? (his mother)", en:"Her work is in a hospital."}
+]);
 
-  choiceBlock("pron", [
-    {stem:"<u>My son and my daughter</u> are at home.", ru:"сын и дочь", opts:["they","he","it"], ok:0,
-      why:"Верно. Два человека это they.", no:"Их двое, значит they."},
-    {stem:"<u>My husband</u> is a cook.", ru:"муж", opts:["she","he","they"], ok:1,
-      why:"Верно, один мужчина это he.", no:"Один мужчина это he."},
-    {stem:"<u>You and I</u> are friends.", ru:"вы и я", opts:["we","they","you"], ok:0,
-      why:"Верно. Я плюс кто-то это we.", no:"Если в группе есть я, это we."},
-    {stem:"<u>My photos</u> are in my phone.", ru:"мои фотографии", opts:["it","they","these"], ok:1,
-      why:"Верно. Вещей много, значит they.", no:"Вещи во множественном это they."},
-    {stem:"<u>My city</u> is big.", ru:"мой город", opts:["he","it","they"], ok:1,
-      why:"Верно. Не человек, значит it.", no:"Город это не он и не она, это it."},
-    {stem:"<u>My mother and my father</u> are teachers.", ru:"мама и папа", opts:["we","they","she"], ok:1,
-      why:"Верно, двое других людей это they.", no:"Меня в этой группе нет, значит they."},
-    {stem:"<u>My dog</u> is big.", ru:"моя собака", opts:["it","they","he"], ok:0,
-      why:"Верно. Про животное обычно говорят it.", no:"Животное это it, если мы не знаем его как человека."},
-    {stem:"<u>Anna and I</u> are from Russia.", ru:"Анна и я", opts:["they","we","you"], ok:1,
-      why:"Верно, we.", no:"Там есть я, значит we."}
-  ]);
+/* ========== 05. he, she, it, we или they ========== */
+choiceBlock("pron", [
+  {stem:"<u>My son and my daughter</u> are at home.", ru:"сын и дочь", opts:["they","he","it"], ok:0,
+    why:"Верно. Два человека это they.", no:"Их двое, значит they."},
+  {stem:"<u>My husband</u> is a cook.", ru:"муж", opts:["she","he","they"], ok:1,
+    why:"Верно, один мужчина это he.", no:"Один мужчина это he."},
+  {stem:"<u>You and I</u> are friends.", ru:"вы и я", opts:["we","they","you"], ok:0,
+    why:"Верно. Я плюс кто-то это we.", no:"Если в группе есть я, это we."},
+  {stem:"<u>My photos</u> are in my phone.", ru:"мои фотографии", opts:["it","they","these"], ok:1,
+    why:"Верно. Вещей много, значит they.", no:"Вещи во множественном это they."},
+  {stem:"<u>My city</u> is big.", ru:"мой город", opts:["he","it","they"], ok:1,
+    why:"Верно. Не человек, значит it.", no:"Город это не он и не она, это it."},
+  {stem:"<u>My mother and my father</u> are teachers.", ru:"мама и папа", opts:["we","they","she"], ok:1,
+    why:"Верно, двое других людей это they.", no:"Меня в этой группе нет, значит they."},
+  {stem:"<u>My dog</u> is big.", ru:"моя собака", opts:["it","they","he"], ok:0,
+    why:"Верно. Про животное обычно говорят it.", no:"Животное это it, если мы не знаем его как человека."},
+  {stem:"<u>Anna and I</u> are from Russia.", ru:"Анна и я", opts:["they","we","you"], ok:1,
+    why:"Верно, we.", no:"Там есть я, значит we."},
+  {stem:"<u>My friends</u> are from Moscow.", ru:"мои друзья", opts:["he","they","we"], ok:1,
+    why:"Верно, друзей несколько, значит they.", no:"Их несколько и меня среди них нет, значит they."},
+  {stem:"<u>My son and I</u> are at home.", ru:"сын и я", opts:["we","they","he"], ok:0,
+    why:"Верно, со мной это we.", no:"Там есть я, значит we."}
+]);
 
-  choiceBlock("tobe", [
-    {stem:"I ___ a teacher.", opts:["am","is","are"], ok:0, why:"Верно, I всегда am.", no:"У I своя форма: am."},
-    {stem:"We ___ from Russia.", opts:["am","is","are"], ok:2, why:"Верно, we берёт are.", no:"Нас несколько, значит are."},
-    {stem:"They ___ my friends.", opts:["is","are","am"], ok:1, why:"Верно.", no:"They это несколько, значит are."},
-    {stem:"My son ___ fifteen.", opts:["is","are","am"], ok:0, why:"Верно, один человек.", no:"Один сын, значит is."},
-    {stem:"My sons ___ fifteen and nine.", opts:["is","are","am"], ok:1, why:"Верно, сыновей двое.", no:"Слово с s на конце: их несколько, значит are."},
-    {stem:"You ___ my teacher.", opts:["is","are","am"], ok:1, why:"Верно, you всегда are.", no:"You берёт are, даже про одного человека."},
-    {stem:"This ___ my photo.", opts:["is","are","am"], ok:0, why:"Верно, одна вещь.", no:"This это одна вещь, значит is."},
-    {stem:"These ___ my photos.", opts:["is","are","am"], ok:1, why:"Верно, вещей много.", no:"These это несколько, значит are."},
-    {stem:"My husband and I ___ at home.", opts:["is","are","am"], ok:1, why:"Верно, нас двое.", no:"Нас двое, значит are."},
-    {stem:"My cat ___ white.", opts:["is","are","am"], ok:0, why:"Верно.", no:"Одна кошка, значит is."}
-  ]);
+/* ========== 06. am, is или are ========== */
+choiceBlock("tobe", [
+  {stem:"I <u></u> a teacher.", opts:["am","is","are"], ok:0, why:"Верно, I всегда am.", no:"У I своя форма: am."},
+  {stem:"We <u></u> from Russia.", opts:["am","is","are"], ok:2, why:"Верно, we берёт are.", no:"Нас несколько, значит are."},
+  {stem:"They <u></u> my friends.", opts:["is","are","am"], ok:1, why:"Верно.", no:"They это несколько, значит are."},
+  {stem:"My son <u></u> fifteen.", opts:["is","are","am"], ok:0, why:"Верно, один человек.", no:"Один сын, значит is."},
+  {stem:"My sons <u></u> fifteen and nine.", opts:["is","are","am"], ok:1, why:"Верно, сыновей двое.", no:"Слово с s на конце: их несколько, значит are."},
+  {stem:"You <u></u> my teacher.", opts:["is","are","am"], ok:1, why:"Верно, you всегда are.", no:"You берёт are, даже про одного человека."},
+  {stem:"This <u></u> my photo.", opts:["is","are","am"], ok:0, why:"Верно, одна вещь.", no:"This это одна вещь, значит is."},
+  {stem:"These <u></u> my photos.", opts:["is","are","am"], ok:1, why:"Верно, вещей много.", no:"These это несколько, значит are."},
+  {stem:"My husband and I <u></u> at home.", opts:["is","are","am"], ok:1, why:"Верно, нас двое.", no:"Нас двое, значит are."},
+  {stem:"My cat <u></u> white.", opts:["is","are","am"], ok:0, why:"Верно.", no:"Одна кошка, значит is."}
+]);
 
-  vocab("plurals", [
-    ["a friend / friends","друг, друзья"],
-    ["a photo / photos","фото, фотографии"],
-    ["a ticket / tickets","билет, билеты"],
-    ["a bag / bags","сумка, сумки"],
-    ["a key / keys","ключ, ключи"],
-    ["a book / books","книга, книги"],
-    ["a student / students","студент, студенты"],
-    ["a dollar / dollars","доллар, доллары"],
-    ["at home","дома"],
-    ["together","вместе"]
-  ]);
+/* ========== 08. впишите множественное ========== */
+writeBlock("plurwrite", [
+  {one:"a friend", ru:"друг", many:"friends"},
+  {one:"a photo", ru:"фотография", many:"photos"},
+  {one:"a ticket", ru:"билет", many:"tickets"},
+  {one:"a bag", ru:"сумка", many:"bags"},
+  {one:"a key", ru:"ключ", many:"keys"},
+  {one:"a book", ru:"книга", many:"books"},
+  {one:"a student", ru:"студент", many:"students"},
+  {one:"a dog", ru:"собака", many:"dogs"},
+  {one:"a bus", ru:"автобус", many:"buses"},
+  {one:"a city", ru:"город", many:"cities"},
+  {one:"a child", ru:"ребёнок", many:"children"},
+  {one:"a man", ru:"мужчина", many:"men"}
+]);
 
-  choiceBlock("plur", [
-    {stem:"This is ___.", ru:"это собака", opts:["a dog","dogs"], ok:0, why:"Верно, одна собака.", no:"Одна вещь берёт a."},
-    {stem:"These are ___.", ru:"это собаки", opts:["a dog","dogs"], ok:1, why:"Верно.", no:"Их несколько: s на конце и без a."},
-    {stem:"I have two ___.", ru:"две кошки", opts:["cat","cats"], ok:1, why:"Верно, после two всегда множественное.", no:"После числа больше одного идёт s."},
-    {stem:"My ___ are in my bag.", ru:"мои ключи", opts:["key","keys"], ok:1, why:"Верно.", no:"Ключей несколько, значит keys."},
-    {stem:"This is ___.", ru:"это билет", opts:["a ticket","tickets"], ok:0, why:"Верно.", no:"Один билет: a ticket."},
-    {stem:"We are ___.", ru:"мы друзья", opts:["a friend","friends"], ok:1, why:"Верно, нас несколько.", no:"Нас двое или больше, значит friends."},
-    {stem:"My son is ___.", ru:"мой сын студент", opts:["a student","students"], ok:0, why:"Верно, он один.", no:"Он один, значит a student."},
-    {stem:"They are ___.", ru:"они студенты", opts:["a student","students"], ok:1, why:"Верно.", no:"Их несколько, значит students."},
-    {stem:"It is ten ___.", ru:"десять долларов", opts:["dollar","dollars"], ok:1, why:"Верно.", no:"Десять это больше одного, значит dollars."},
-    {stem:"This is ___.", ru:"это моё фото", opts:["my photo","my photos"], ok:0, why:"Верно, одно фото.", no:"This is про одну вещь."}
-  ]);
+/* ========== 09. один или несколько ========== */
+choiceBlock("plur", [
+  {stem:"My <u></u> are in my bag.", ru:"мои ключи", opts:["key","keys"], ok:1,
+    why:"Верно. Стоит are, значит их несколько: keys.", no:"Перед пропуском нет, а после стоит are: их несколько, нужно keys."},
+  {stem:"My <u></u> is in my bag.", ru:"моя книга", opts:["book","books"], ok:0,
+    why:"Верно. Стоит is, значит одна книга.", no:"Глагол is говорит, что она одна: book."},
+  {stem:"My son is <u></u>.", ru:"мой сын студент", opts:["a student","students"], ok:0,
+    why:"Верно, он один.", no:"Он один, значит a student."},
+  {stem:"They are <u></u>.", ru:"они студенты", opts:["a student","students"], ok:1,
+    why:"Верно.", no:"Их несколько: s на конце и без a."},
+  {stem:"We are <u></u>.", ru:"мы друзья", opts:["a friend","friends"], ok:1,
+    why:"Верно, нас несколько.", no:"Нас двое или больше, значит friends."},
+  {stem:"My mother is <u></u>.", ru:"моя мама медсестра", opts:["a nurse","nurses"], ok:0,
+    why:"Верно.", no:"Мама одна, значит a nurse."},
+  {stem:"It is ten <u></u>.", ru:"десять долларов", opts:["dollar","dollars"], ok:1,
+    why:"Верно, после числа больше одного идёт s.", no:"Десять это больше одного, значит dollars."},
+  {stem:"My <u></u> are in my phone.", ru:"мои фотографии", opts:["photo","photos"], ok:1,
+    why:"Верно.", no:"Стоит are, значит photos."},
+  {stem:"My <u></u> are at home.", ru:"мои собаки", opts:["dog","dogs"], ok:1,
+    why:"Верно.", no:"Стоит are, значит dogs."},
+  {stem:"Tom is <u></u>.", ru:"Том повар", opts:["a cook","cooks"], ok:0,
+    why:"Верно, он один.", no:"Он один человек, значит a cook."},
+  {stem:"My <u></u> are from Moscow.", ru:"мои друзья", opts:["friend","friends"], ok:1,
+    why:"Верно.", no:"Стоит are, значит friends."},
+  {stem:"My <u></u> is big.", ru:"мой город", opts:["city","cities"], ok:0,
+    why:"Верно, город один.", no:"Глагол is говорит, что он один: city."}
+]);
 
-  choiceBlock("tt", [
-    {stem:"___ my bag.", ru:"это моя сумка", opts:["This is","These are"], ok:0, why:"Верно, одна сумка.", no:"Сумка одна, значит this is."},
-    {stem:"___ my bags.", ru:"это мои сумки", opts:["This is","These are"], ok:1, why:"Верно.", no:"Сумок несколько, значит these are."},
-    {stem:"___ my son.", ru:"это мой сын", opts:["This is","These are"], ok:0, why:"Верно.", no:"Один человек, значит this is."},
-    {stem:"___ my son and my daughter.", ru:"это мой сын и моя дочь", opts:["This is","These are"], ok:1, why:"Верно, их двое.", no:"Их двое, значит these are."},
-    {stem:"___ my keys.", ru:"это мои ключи", opts:["This is","These are"], ok:1, why:"Верно.", no:"Ключей несколько."},
-    {stem:"___ my photo.", ru:"это моё фото", opts:["This is","These are"], ok:0, why:"Верно.", no:"Фото одно."},
-    {stem:"___ my friends.", ru:"это мои друзья", opts:["This is","These are"], ok:1, why:"Верно.", no:"Друзей несколько."},
-    {stem:"___ my dog.", ru:"это моя собака", opts:["This is","These are"], ok:0, why:"Верно.", no:"Собака одна."},
-    {stem:"___ my tickets.", ru:"это мои билеты", opts:["This is","These are"], ok:1, why:"Верно.", no:"Билетов несколько."},
-    {stem:"___ my family.", ru:"это моя семья", opts:["This is","These are"], ok:0, why:"Верно. Family это одно слово про группу, поэтому this is.", no:"Семья тут одно целое, одно слово, значит this is."}
-  ]);
+/* ========== 11. this is или these are ========== */
+choiceBlock("tt", [
+  {stem:"<u></u> my bag.", ru:"это моя сумка", opts:["This is","These are"], ok:0, why:"Верно, одна сумка.", no:"Сумка одна, значит this is."},
+  {stem:"<u></u> my bags.", ru:"это мои сумки", opts:["This is","These are"], ok:1, why:"Верно.", no:"Сумок несколько, значит these are."},
+  {stem:"<u></u> my son.", ru:"это мой сын", opts:["This is","These are"], ok:0, why:"Верно.", no:"Один человек, значит this is."},
+  {stem:"<u></u> my son and my daughter.", ru:"это мой сын и моя дочь", opts:["This is","These are"], ok:1, why:"Верно, их двое.", no:"Их двое, значит these are."},
+  {stem:"<u></u> my keys.", ru:"это мои ключи", opts:["This is","These are"], ok:1, why:"Верно.", no:"Ключей несколько."},
+  {stem:"<u></u> my photo.", ru:"это моё фото", opts:["This is","These are"], ok:0, why:"Верно.", no:"Фото одно."},
+  {stem:"<u></u> my friends.", ru:"это мои друзья", opts:["This is","These are"], ok:1, why:"Верно.", no:"Друзей несколько."},
+  {stem:"<u></u> my dog.", ru:"это моя собака", opts:["This is","These are"], ok:0, why:"Верно.", no:"Собака одна."},
+  {stem:"<u></u> my tickets.", ru:"это мои билеты", opts:["This is","These are"], ok:1, why:"Верно.", no:"Билетов несколько."},
+  {stem:"<u></u> my children.", ru:"это мои дети", opts:["This is","These are"], ok:1, why:"Верно. Children это уже «несколько», s на конце не нужен.", no:"Children это дети, их много, значит these are."},
+  {stem:"<u></u> my book.", ru:"это моя книга", opts:["This is","These are"], ok:0, why:"Верно.", no:"Книга одна."},
+  {stem:"<u></u> my family.", ru:"это моя семья", opts:["This is","These are"], ok:0, why:"Верно. Family это одно слово про всю группу, поэтому this is.", no:"Семья тут одно целое, одно слово, значит this is."}
+]);
 
-  buildBlock("b1", [
-    {ru:"Это мои фотографии.", words:["These","are","my","photos"], ok:"These are my photos"},
-    {ru:"Это моя собака.", words:["This","is","my","dog"], ok:"This is my dog"},
-    {ru:"Мы друзья.", words:["We","are","friends"], ok:"We are friends"},
-    {ru:"Они из Италии.", words:["They","are","from","Italy"], ok:"They are from Italy"},
-    {ru:"Это мои ключи.", words:["These","are","my","keys"], ok:"These are my keys"},
-    {ru:"Мой сын и моя дочь дома.", words:["My","son","and","my","daughter","are","at","home"], ok:"My son and my daughter are at home"}
-  ]);
+/* ========== 12. обе темы вместе ========== */
+choiceBlock("mix", [
+  {stem:"это мои билеты",
+    opts:["This is my tickets","These are my tickets","These are my ticket"], ok:1,
+    why:"Верно. Их много, поэтому these are и s на конце.", no:"Нужно поменять оба слова и добавить s: These are my tickets."},
+  {stem:"это моя сумка",
+    opts:["This is my bag","These are my bag","This is my bags"], ok:0,
+    why:"Верно, одна сумка.", no:"Она одна: this is и слово без s."},
+  {stem:"это мои дети",
+    opts:["This is my children","These are my children","These are my childrens"], ok:1,
+    why:"Верно. Children уже «несколько», лишний s не нужен.", no:"Детей много, значит these are, а children уже во множественном."},
+  {stem:"это мои ключи",
+    opts:["These are my keys","This is my keys","These is my keys"], ok:0,
+    why:"Верно.", no:"Поменяться должны оба слова: These are my keys."},
+  {stem:"это мой сын",
+    opts:["This is my son","These are my son","This is my sons"], ok:0,
+    why:"Верно, он один.", no:"Он один: this is и son без s."},
+  {stem:"это мои фотографии",
+    opts:["This is my photos","These are my photos","These are my photo"], ok:1,
+    why:"Верно.", no:"Их много: these are и photos."},
+  {stem:"это мои друзья",
+    opts:["These are my friends","This is my friends","These are my friend"], ok:0,
+    why:"Верно.", no:"Друзей много: These are my friends."},
+  {stem:"это моя книга",
+    opts:["This is my book","These are my books","This is my books"], ok:0,
+    why:"Верно. Книга одна, поэтому this is и book.", no:"По-русски сказано «книга», она одна: This is my book."},
+  {stem:"это мои собаки",
+    opts:["These are my dogs","This is my dogs","These are my dog"], ok:0,
+    why:"Верно.", no:"Собак много: These are my dogs."},
+  {stem:"это моя дочь",
+    opts:["This is my daughter","These are my daughters","This is my daughters"], ok:0,
+    why:"Верно, дочь одна.", no:"Она одна: This is my daughter."}
+], true);
 
-  choiceBlock("neg1", [
-    {stem:"I ___ a doctor.", ru:"я не врач", opts:["am not","is not","are not"], ok:0, why:"Верно, у I форма am.", no:"С I идёт am, значит am not."},
-    {stem:"He ___ from Spain.", ru:"он не из Испании", opts:["am not","is not","are not"], ok:1, why:"Верно.", no:"Он один, значит is not."},
-    {stem:"They ___ my friends.", ru:"они не мои друзья", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"Их несколько, значит are not."},
-    {stem:"This ___ my bag.", ru:"это не моя сумка", opts:["is not","are not","am not"], ok:0, why:"Верно, одна вещь.", no:"This берёт is, значит is not."},
-    {stem:"These ___ my keys.", ru:"это не мои ключи", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"These берёт are, значит are not."},
-    {stem:"We ___ tired.", ru:"мы не устали", opts:["am not","are not","is not"], ok:1, why:"Верно.", no:"We берёт are."},
-    {stem:"My city ___ small.", ru:"мой город не маленький", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Город один, значит is not."},
-    {stem:"My photos ___ in my phone.", ru:"моих фотографий нет в телефоне", opts:["is not","are not","am not"], ok:1, why:"Верно, их много.", no:"Слово с s на конце берёт are not."},
-    {stem:"You ___ late.", ru:"вы не опоздали", opts:["is not","are not","am not"], ok:1, why:"Верно, you всегда are.", no:"You берёт are, значит are not."},
-    {stem:"It ___ expensive.", ru:"это не дорого", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"It берёт is, значит is not."},
-    {stem:"My mother ___ a nurse.", ru:"моя мама не медсестра", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Один человек, значит is not."},
-    {stem:"My son and my daughter ___ at school.", ru:"сына и дочери нет в школе", opts:["is not","are not","am not"], ok:1, why:"Верно, их двое.", no:"Их двое, значит are not."}
-  ]);
+/* ========== 13. соберите фразу ========== */
+buildBlock("b1", [
+  {ru:"Это мои фотографии.", words:["These","are","my","photos"], ok:"These are my photos"},
+  {ru:"Это моя собака.", words:["This","is","my","dog"], ok:"This is my dog"},
+  {ru:"Мы друзья.", words:["We","are","friends"], ok:"We are friends"},
+  {ru:"Они из Италии.", words:["They","are","from","Italy"], ok:"They are from Italy"},
+  {ru:"Это мои ключи.", words:["These","are","my","keys"], ok:"These are my keys"},
+  {ru:"Это мои дети.", words:["These","are","my","children"], ok:"These are my children"},
+  {ru:"Мои друзья из Москвы.", words:["My","friends","are","from","Moscow"], ok:"My friends are from Moscow"},
+  {ru:"Мой сын и моя дочь дома.", words:["My","son","and","my","daughter","are","at","home"], ok:"My son and my daughter are at home"}
+]);
 
-  choiceBlock("neg2", [
-    {stem:"he ___ a cook", opts:["isn't","amn't"], ok:0, why:"Верно. Is not сокращается в isn't.", no:"Слова amn't в языке нет совсем."},
-    {stem:"I ___ a teacher", opts:["I'm not","I amn't"], ok:0, why:"Верно. У am короткой пары нет, говорят I'm not.", no:"Правильно только I'm not."},
-    {stem:"they ___ my friends", opts:["aren't","isn't"], ok:0, why:"Верно, are not это aren't.", no:"Их несколько: aren't."},
-    {stem:"this ___ my bag", opts:["isn't","aren't"], ok:0, why:"Верно.", no:"This берёт is, значит isn't."},
-    {stem:"these ___ my keys", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"These берёт are, значит aren't."},
-    {stem:"we ___ tired", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"We берёт are, значит aren't."}
-  ]);
+/* ========== 16. поставьте в отрицание ========== */
+choiceBlock("neg1", [
+  {stem:"I <u></u> a doctor.", ru:"я не врач", opts:["am not","is not","are not"], ok:0, why:"Верно, у I форма am.", no:"С I идёт am, значит am not."},
+  {stem:"He <u></u> from Spain.", ru:"он не из Испании", opts:["am not","is not","are not"], ok:1, why:"Верно.", no:"Он один, значит is not."},
+  {stem:"They <u></u> my friends.", ru:"они не мои друзья", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"Их несколько, значит are not."},
+  {stem:"This <u></u> my bag.", ru:"это не моя сумка", opts:["is not","are not","am not"], ok:0, why:"Верно, одна вещь.", no:"This берёт is, значит is not."},
+  {stem:"These <u></u> my keys.", ru:"это не мои ключи", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"These берёт are, значит are not."},
+  {stem:"We <u></u> tired.", ru:"мы не устали", opts:["am not","are not","is not"], ok:1, why:"Верно.", no:"We берёт are."},
+  {stem:"My city <u></u> small.", ru:"мой город не маленький", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Город один, значит is not."},
+  {stem:"My photos <u></u> in my phone.", ru:"моих фотографий нет в телефоне", opts:["is not","are not","am not"], ok:1, why:"Верно, их много.", no:"Слово с s на конце берёт are not."},
+  {stem:"You <u></u> late.", ru:"вы не опоздали", opts:["is not","are not","am not"], ok:1, why:"Верно, you всегда are.", no:"You берёт are, значит are not."},
+  {stem:"It <u></u> expensive.", ru:"это не дорого", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"It берёт is, значит is not."},
+  {stem:"My mother <u></u> a nurse.", ru:"моя мама не медсестра", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Один человек, значит is not."},
+  {stem:"My children <u></u> at home.", ru:"детей нет дома", opts:["is not","are not","am not"], ok:1, why:"Верно, их несколько.", no:"Children это несколько, значит are not."}
+]);
 
-  revealBlock("neg3", [
-    {ru:"Я не повар.", en:"I am not a cook. / I'm not a cook."},
-    {ru:"Он не из Англии.", en:"He is not from England. / He isn't from England."},
-    {ru:"Это не моя сумка.", en:"This is not my bag. / This isn't my bag."},
-    {ru:"Это не мои ключи.", en:"These are not my keys. / These aren't my keys."},
-    {ru:"Мы не устали.", en:"We are not tired. / We aren't tired."},
-    {ru:"Они не студенты.", en:"They are not students. / They aren't students."},
-    {ru:"Моя мама не врач.", en:"My mother is not a doctor."},
-    {ru:"Мой город не маленький.", en:"My city is not small."},
-    {ru:"Это не дорого.", en:"It is not expensive."},
-    {ru:"Я не из Италии, я из России.", en:"I am not from Italy, I am from Russia."}
-  ]);
+/* ========== 17. длинное или короткое ========== */
+choiceBlock("neg2", [
+  {stem:"He <u></u> a cook.", ru:"он не повар", opts:["isn't","amn't"], ok:0, why:"Верно. Is not сокращается в isn't.", no:"Слова amn't в языке нет совсем."},
+  {stem:"I <u></u> a teacher.", ru:"я не учитель", opts:["I'm not","I amn't"], ok:0, why:"Верно. У am короткой пары нет, говорят I'm not.", no:"Правильно только I'm not: сокращается I am, а not остаётся."},
+  {stem:"They <u></u> my friends.", ru:"они не мои друзья", opts:["aren't","isn't"], ok:0, why:"Верно, are not это aren't.", no:"Их несколько, значит aren't."},
+  {stem:"This <u></u> my bag.", ru:"это не моя сумка", opts:["isn't","aren't"], ok:0, why:"Верно.", no:"This берёт is, значит isn't."},
+  {stem:"These <u></u> my keys.", ru:"это не мои ключи", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"These берёт are, значит aren't."},
+  {stem:"We <u></u> tired.", ru:"мы не устали", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"We берёт are, значит aren't."}
+]);
 
-  revealBlock("neg4", [
-    {ru:"Это кошка? Нет, это собака.", en:"No, this is not a cat. This is a dog."},
-    {ru:"Он врач? Нет, он водитель.", en:"No, he is not a doctor. He is a driver."},
-    {ru:"Они из Испании? Нет, они из Италии.", en:"No, they are not from Spain. They are from Italy."},
-    {ru:"Это ваши билеты? Нет, это мои фотографии.", en:"No, these are not my tickets. These are my photos."},
-    {ru:"Ей тридцать? Нет, ей тринадцать.", en:"No, she is not thirty. She is thirteen."},
-    {ru:"Мама учитель? Нет, мама медсестра.", en:"No, my mother is not a teacher. My mother is a nurse."}
-  ]);
+/* ========== 18. скажите по-английски ========== */
+revealBlock("neg3", [
+  {ru:"Я не повар.", en:"I am not a cook. / I'm not a cook."},
+  {ru:"Он не из Англии.", en:"He is not from England. / He isn't from England."},
+  {ru:"Это не моя сумка.", en:"This is not my bag. / This isn't my bag."},
+  {ru:"Это не мои ключи.", en:"These are not my keys. / These aren't my keys."},
+  {ru:"Мы не устали.", en:"We are not tired. / We aren't tired."},
+  {ru:"Они не студенты.", en:"They are not students. / They aren't students."},
+  {ru:"Моя мама не врач.", en:"My mother is not a doctor."},
+  {ru:"Мой город не маленький.", en:"My city is not small."},
+  {ru:"Это не дорого.", en:"It is not expensive."},
+  {ru:"Я не из Италии, я из России.", en:"I am not from Italy, I am from Russia."}
+]);
 
-  buildBlock("b2", [
-    {ru:"Вы учитель?", words:["Are","you","a","teacher"], ok:"Are you a teacher"},
-    {ru:"Он из Италии?", words:["Is","he","from","Italy"], ok:"Is he from Italy"},
-    {ru:"Это ваша сумка?", words:["Is","this","your","bag"], ok:"Is this your bag"},
-    {ru:"Это ваши ключи?", words:["Are","these","your","keys"], ok:"Are these your keys"},
-    {ru:"Они ваши друзья?", words:["Are","they","your","friends"], ok:"Are they your friends"},
-    {ru:"Ваш город большой?", words:["Is","your","city","big"], ok:"Is your city big"},
-    {ru:"Вы устали?", words:["Are","you","tired"], ok:"Are you tired"},
-    {ru:"Это дорого?", words:["Is","it","expensive"], ok:"Is it expensive"}
-  ]);
+/* ========== 19. сначала не так, потом как надо ========== */
+revealBlock("neg4", [
+  {ru:"Это не кошка. Это собака.", en:"This is not a cat. This is a dog."},
+  {ru:"Он не врач. Он водитель.", en:"He is not a doctor. He is a driver."},
+  {ru:"Они не из Испании. Они из Италии.", en:"They are not from Spain. They are from Italy."},
+  {ru:"Это не мои билеты. Это мои фотографии.", en:"These are not my tickets. These are my photos."},
+  {ru:"Ей не тридцать. Ей тринадцать.", en:"She is not thirty. She is thirteen."},
+  {ru:"Моя мама не учитель. Она медсестра.", en:"My mother is not a teacher. She is a nurse."},
+  {ru:"Мы не студенты. Мы друзья.", en:"We are not students. We are friends."},
+  {ru:"Мой город не маленький. Он большой.", en:"My city is not small. It is big."}
+]);
 
-  choiceBlock("short", [
-    {stem:"Are you a teacher?", ru:"да", opts:["Yes, I am.","Yes, I is."], ok:0, why:"Верно.", no:"С I идёт am."},
-    {stem:"Is he a cook?", ru:"да", opts:["Yes, he is.","Yes, he are."], ok:0, why:"Верно.", no:"Он один, значит is."},
-    {stem:"Is this your bag?", ru:"нет", opts:["No, it isn't.","No, this isn't."], ok:0, why:"Верно. Вещь уже назвали, дальше она it.", no:"В коротком ответе this превращается в it."},
-    {stem:"Are these your keys?", ru:"да", opts:["Yes, they are.","Yes, these are."], ok:0, why:"Верно, дальше они they.", no:"В коротком ответе these превращается в they."},
-    {stem:"Are they students?", ru:"нет", opts:["No, they aren't.","No, they isn't."], ok:0, why:"Верно.", no:"Их несколько, значит aren't."},
-    {stem:"Are you from Spain?", ru:"нет", opts:["No, I am not.","No, I not am."], ok:0, why:"Верно.", no:"Порядок жёсткий: I am not."},
-    {stem:"Is your city big?", ru:"да", opts:["Yes, it is.","Yes, is it."], ok:0, why:"Верно. Yes, it is: сначала кто, потом форма.", no:"В ответе порядок обычный, не как в вопросе."},
-    {stem:"Is she your daughter?", ru:"да", opts:["Yes, she is.","Yes, it is."], ok:0, why:"Верно, про человека she.", no:"Про человека говорим she, а не it."}
-  ]);
+/* ========== 22. соберите вопрос ========== */
+buildBlock("b2", [
+  {ru:"Вы учитель?", words:["Are","you","a","teacher"], ok:"Are you a teacher"},
+  {ru:"Он из Италии?", words:["Is","he","from","Italy"], ok:"Is he from Italy"},
+  {ru:"Это ваша сумка?", words:["Is","this","your","bag"], ok:"Is this your bag"},
+  {ru:"Это ваши ключи?", words:["Are","these","your","keys"], ok:"Are these your keys"},
+  {ru:"Они ваши друзья?", words:["Are","they","your","friends"], ok:"Are they your friends"},
+  {ru:"Ваш город большой?", words:["Is","your","city","big"], ok:"Is your city big"},
+  {ru:"Вы устали?", words:["Are","you","tired"], ok:"Are you tired"},
+  {ru:"Это дорого?", words:["Is","it","expensive"], ok:"Is it expensive"}
+]);
 
-  choiceBlock("price", [
-    {stem:"How much ___ this coffee?", opts:["is","are"], ok:0, why:"Верно, один кофе.", no:"Одна вещь, значит is."},
-    {stem:"How much ___ these tickets?", opts:["is","are"], ok:1, why:"Верно.", no:"Билетов несколько, значит are."},
-    {stem:"How much ___ this bag?", opts:["is","are"], ok:0, why:"Верно.", no:"Сумка одна."},
-    {stem:"How much ___ these books?", opts:["is","are"], ok:1, why:"Верно.", no:"Книг несколько."},
-    {stem:"It ___ five dollars.", ru:"про одну вещь", opts:["is","are"], ok:0, why:"Верно.", no:"It берёт is."},
-    {stem:"They ___ twenty dollars.", ru:"про несколько", opts:["is","are"], ok:1, why:"Верно.", no:"They берёт are."}
-  ]);
+/* ========== 23. короткий ответ ========== */
+choiceBlock("short", [
+  {stem:"Are you a teacher?", ru:"да", opts:["Yes, I am.","Yes, I is."], ok:0, why:"Верно.", no:"С I идёт am."},
+  {stem:"Is he a cook?", ru:"да", opts:["Yes, he is.","Yes, he are."], ok:0, why:"Верно.", no:"Он один, значит is."},
+  {stem:"Is this your bag?", ru:"нет", opts:["No, it isn't.","No, this isn't."], ok:0, why:"Верно. Вещь уже назвали, дальше она it.", no:"В коротком ответе this превращается в it."},
+  {stem:"Are these your keys?", ru:"да", opts:["Yes, they are.","Yes, these are."], ok:0, why:"Верно, дальше они they.", no:"В коротком ответе these превращается в they."},
+  {stem:"Are they students?", ru:"нет", opts:["No, they aren't.","No, they isn't."], ok:0, why:"Верно.", no:"Их несколько, значит aren't."},
+  {stem:"Are you from Spain?", ru:"нет", opts:["No, I am not.","No, I not am."], ok:0, why:"Верно.", no:"Порядок жёсткий: I am not."},
+  {stem:"Is your city big?", ru:"да", opts:["Yes, it is.","Yes, is it."], ok:0, why:"Верно. Сначала кто, потом форма.", no:"В ответе порядок обычный, не как в вопросе."},
+  {stem:"Is she your daughter?", ru:"да", opts:["Yes, she is.","Yes, it is."], ok:0, why:"Верно, про человека she.", no:"Про человека говорим she, а не it."}
+]);
 
-  vocab("food", [
-    ["a coffee","кофе"],
-    ["a tea","чай"],
-    ["water","вода"],
-    ["a bottle of water","бутылка воды"],
-    ["a sandwich","сандвич"],
-    ["a salad","салат"],
-    ["a soup","суп"],
-    ["a cake","пирожное, торт"],
-    ["a juice","сок"],
-    ["please","пожалуйста"],
-    ["thank you","спасибо"],
-    ["expensive","дорогой"],
-    ["cheap","дешёвый"],
-    ["How much is it?","сколько это стоит?"]
-  ]);
+/* ========== 26. is или are в цене ========== */
+choiceBlock("price", [
+  {stem:"How much <u></u> this coffee?", opts:["is","are"], ok:0, why:"Верно, один кофе.", no:"Одна вещь, значит is."},
+  {stem:"How much <u></u> these tickets?", opts:["is","are"], ok:1, why:"Верно.", no:"Билетов несколько, значит are."},
+  {stem:"How much <u></u> this bag?", opts:["is","are"], ok:0, why:"Верно.", no:"Сумка одна."},
+  {stem:"How much <u></u> these books?", opts:["is","are"], ok:1, why:"Верно.", no:"Книг несколько."},
+  {stem:"It <u></u> five dollars.", ru:"про одну вещь", opts:["is","are"], ok:0, why:"Верно.", no:"It берёт is."},
+  {stem:"They <u></u> twenty dollars.", ru:"про несколько", opts:["is","are"], ok:1, why:"Верно.", no:"They берёт are."}
+]);
 
-  buildBlock("b3", [
-    {ru:"Можно мне кофе, пожалуйста?", words:["Can","I","have","a","coffee","please"], ok:"Can I have a coffee please"},
-    {ru:"Я бы хотела чай, пожалуйста.", words:["I","would","like","a","tea","please"], ok:"I would like a tea please"},
-    {ru:"Можно мне воды, пожалуйста?", words:["Could","I","have","water","please"], ok:"Could I have water please"},
-    {ru:"Я бы хотела салат и сок.", words:["I","would","like","a","salad","and","a","juice"], ok:"I would like a salad and a juice"},
-    {ru:"Сколько стоит этот сандвич?", words:["How","much","is","this","sandwich"], ok:"How much is this sandwich"},
-    {ru:"Это слишком дорого.", words:["It","is","too","expensive"], ok:"It is too expensive"}
-  ]);
+/* ========== 27. еда и напитки ========== */
+vocab("food", [
+  ["a coffee","кофе"],
+  ["a tea","чай"],
+  ["water","вода"],
+  ["a bottle of water","бутылка воды"],
+  ["a sandwich","сандвич"],
+  ["a salad","салат"],
+  ["a soup","суп"],
+  ["a cake","пирожное, торт"],
+  ["a juice","сок"],
+  ["please","пожалуйста"],
+  ["thank you","спасибо"],
+  ["expensive","дорогой"],
+  ["cheap","дешёвый"],
+  ["How much is it?","сколько это стоит?"]
+]);
 
-  revealBlock("phrases", [
-    {ru:"мы друзья", en:"We are friends."},
-    {ru:"они моя семья", en:"They are my family."},
-    {ru:"это моя собака", en:"This is my dog."},
-    {ru:"это мои фотографии", en:"These are my photos."},
-    {ru:"это не моя сумка", en:"This is not my bag."},
-    {ru:"я не повар", en:"I am not a cook. / I'm not a cook."},
-    {ru:"они не студенты", en:"They are not students. / They aren't students."},
-    {ru:"вы учитель?", en:"Are you a teacher?"},
-    {ru:"это ваши ключи?", en:"Are these your keys?"},
-    {ru:"да, это так / нет, не так", en:"Yes, it is. / No, it isn't."},
-    {ru:"сколько это стоит?", en:"How much is this?"},
-    {ru:"сколько они стоят?", en:"How much are these?"},
-    {ru:"можно мне кофе, пожалуйста?", en:"Can I have a coffee, please?"},
-    {ru:"я бы хотела чай, пожалуйста", en:"I would like a tea, please."},
-    {ru:"это слишком дорого", en:"It is too expensive."}
-  ]);
+/* ========== 29. соберите заказ ========== */
+buildBlock("b3", [
+  {ru:"Можно мне кофе, пожалуйста?", words:["Can","I","have","a","coffee","please"], ok:"Can I have a coffee please"},
+  {ru:"Я бы хотела чай, пожалуйста.", words:["I","would","like","a","tea","please"], ok:"I would like a tea please"},
+  {ru:"Можно мне воды, пожалуйста?", words:["Could","I","have","water","please"], ok:"Could I have water please"},
+  {ru:"Я бы хотела салат и сок.", words:["I","would","like","a","salad","and","a","juice"], ok:"I would like a salad and a juice"},
+  {ru:"Сколько стоит этот сандвич?", words:["How","much","is","this","sandwich"], ok:"How much is this sandwich"},
+  {ru:"Это слишком дорого.", words:["It","is","too","expensive"], ok:"It is too expensive"}
+]);
+
+/* ========== 31. фразы занятия ========== */
+revealBlock("phrases", [
+  {ru:"мы друзья", en:"We are friends."},
+  {ru:"они моя семья", en:"They are my family."},
+  {ru:"мои друзья из Москвы", en:"My friends are from Moscow."},
+  {ru:"это моя собака", en:"This is my dog."},
+  {ru:"это мои фотографии", en:"These are my photos."},
+  {ru:"это мои дети", en:"These are my children."},
+  {ru:"это не моя сумка", en:"This is not my bag."},
+  {ru:"я не повар", en:"I am not a cook. / I'm not a cook."},
+  {ru:"они не студенты", en:"They are not students. / They aren't students."},
+  {ru:"вы учитель?", en:"Are you a teacher?"},
+  {ru:"это ваши ключи?", en:"Are these your keys?"},
+  {ru:"да, это так / нет, не так", en:"Yes, it is. / No, it isn't."},
+  {ru:"сколько это стоит?", en:"How much is this?"},
+  {ru:"сколько они стоят?", en:"How much are these?"},
+  {ru:"можно мне кофе, пожалуйста?", en:"Can I have a coffee, please?"},
+  {ru:"я бы хотела чай, пожалуйста", en:"I would like a tea, please."},
+  {ru:"это слишком дорого", en:"It is too expensive."}
+]);
 
   onClick("hideRu", function(){
     var card = document.getElementById("phrasesCard");
