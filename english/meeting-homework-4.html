@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашняя работа к уроку 4. Мы, они и это всё</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  .pool{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
+  .tok{border:1.5px solid var(--line); background:var(--tile); font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; color:var(--ink)}
+
+  .say{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; font-size:13px; font-weight:800; color:var(--mute); min-width:22px; padding-top:3px}
+  .say div{font-size:18px; font-weight:600}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .steps{margin:0; padding-left:7mm; font-size:17px}
+  .steps li{margin:0 0 10px; padding-left:4px}
+  .steps li::marker{color:var(--accent); font-weight:800}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+  }
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+  .aq{padding:16px 0; border-bottom:1px solid var(--line)}
+  .aq:last-child{border-bottom:none}
+  .aq .w{font-size:20px; font-weight:800}
+  .aq .w span{font-size:14px; font-weight:600; color:var(--mute); margin-left:8px}
+  .aq .player{margin:8px 0 10px}
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .form .plus{color:var(--accent); margin:0 10px}
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+  .scr .t .ru{display:block; font-weight:500; color:var(--soft); font-size:14px; letter-spacing:0; margin-top:2px}
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="kicker">Домашняя работа к уроку 4</div>
+    <h1>Мы, они и это всё.<em>Множественное число, this is и these are</em></h1>
+    <p>Три задания. Второе делаете прямо здесь, кнопками: нажали вариант и сразу видно, верно или нет. Первое и третье пишете текстом и присылаете мне в телеграм.</p>
+  </div>
+
+  <a class="lnk" href="https://kristi95-cmd.github.io/english/meeting-lesson-4.html" target="_blank" rel="noopener">
+    <div class="t">Страница урока 4 &rarr;</div>
+    <div class="u">kristi95-cmd.github.io/english/meeting-lesson-4.html</div>
+  </a>
+
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">01</span>Переведите на английский</h2>
+  <p class="lead">Десять строк. Пишите их подряд одним сообщением, номера ставьте. Все слова тут знакомые, ничего нового искать не нужно.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Мы из Санкт-Петербурга.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Они мои друзья.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Это моя сумка.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Это мои ключи.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Мои друзья из Москвы.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Это мои дети.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Мой сын и моя дочь дома.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Моя мама медсестра, а мой папа повар.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Это мои фотографии. Они красивые.</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Это мой телефон. Он белый.</div></div>
+  </div>
+
+  <div class="tag pr">кнопками</div>
+  <h2><span class="num">02</span>This is или these are</h2>
+  <p class="lead">Двенадцать строк. Смотрите на слово после пропуска: оно одно или их несколько. Нажали вариант и сразу видите, верно или нет.</p>
+
+  <div class="card" id="tt"></div>
+
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">03</span>Сделайте из одной несколько</h2>
+  <p class="lead">Двенадцать слов. Напишите рядом с каждым то же слово, но когда их много, и пришлите мне списком.</p>
+
+  <div class="card">
+    <h3>Как писать</h3>
+    <div class="form">a ticket<span class="plus">&rarr;</span>tickets</div>
+    <div class="form">a dish<span class="plus">&rarr;</span>dishes</div>
+    <div class="note">Правило с урока: обычно <b>s</b>, после шипящего или свистящего <b>es</b>, согласная и <b>y</b> дают <b>ies</b>, а четыре слова меняются целиком. Нужная строчка есть в разделе 07 урока.</div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">a book<span class="ru">книга</span></div></div>
+    <div class="scr"><div class="n">2</div><div class="t">a photo<span class="ru">фотография</span></div></div>
+    <div class="scr"><div class="n">3</div><div class="t">a cat<span class="ru">кошка</span></div></div>
+    <div class="scr"><div class="n">4</div><div class="t">a city<span class="ru">город</span></div></div>
+    <div class="scr"><div class="n">5</div><div class="t">a family<span class="ru">семья</span></div></div>
+    <div class="scr"><div class="n">6</div><div class="t">a bus<span class="ru">автобус</span></div></div>
+    <div class="scr"><div class="n">7</div><div class="t">a box<span class="ru">коробка</span></div></div>
+    <div class="scr"><div class="n">8</div><div class="t">a watch<span class="ru">часы, одни</span></div></div>
+    <div class="scr"><div class="n">9</div><div class="t">a key<span class="ru">ключ</span></div></div>
+    <div class="scr"><div class="n">10</div><div class="t">a child<span class="ru">ребёнок</span></div></div>
+    <div class="scr"><div class="n">11</div><div class="t">a woman<span class="ru">женщина</span></div></div>
+    <div class="scr"><div class="n">12</div><div class="t">a person<span class="ru">человек</span></div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом в телеграм:</b> задание 01, десять строк перевода.</p>
+    <p><b>Тоже текстом:</b> задание 03, двенадцать слов во множественном числе.</p>
+    <p class="small">Задание 02 проверяется кнопками прямо здесь, присылать его не надо.</p>
+  </div>
+
+  <div class="foot">English from scratch &middot; домашняя работа к уроку 4</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function choiceBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt"; b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt " + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? it.why : it.no;
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k = 0; k < all.length; k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  choiceBlock("tt", [
+    {stem:"<u></u> my book.", ru:"это моя книга", opts:["This is","These are"], ok:0, why:"Верно, книга одна.", no:"Слово book без s, значит она одна: this is."},
+    {stem:"<u></u> my books.", ru:"это мои книги", opts:["This is","These are"], ok:1, why:"Верно.", no:"На конце s, значит их несколько: these are."},
+    {stem:"<u></u> my dog.", ru:"это моя собака", opts:["This is","These are"], ok:0, why:"Верно.", no:"Собака одна, значит this is."},
+    {stem:"<u></u> my cats.", ru:"это мои кошки", opts:["This is","These are"], ok:1, why:"Верно.", no:"На конце s, значит these are."},
+    {stem:"<u></u> my phone.", ru:"это мой телефон", opts:["This is","These are"], ok:0, why:"Верно.", no:"Телефон один, значит this is."},
+    {stem:"<u></u> my friends.", ru:"это мои друзья", opts:["This is","These are"], ok:1, why:"Верно.", no:"Друзей несколько, значит these are."},
+    {stem:"<u></u> my daughter.", ru:"это моя дочь", opts:["This is","These are"], ok:0, why:"Верно, она одна.", no:"Один человек, значит this is."},
+    {stem:"<u></u> my children.", ru:"это мои дети", opts:["This is","These are"], ok:1, why:"Верно. Children это уже «несколько», лишний s не нужен.", no:"Children это дети, их много, значит these are."},
+    {stem:"<u></u> my tickets.", ru:"это мои билеты", opts:["This is","These are"], ok:1, why:"Верно.", no:"Билетов несколько, значит these are."},
+    {stem:"<u></u> my family.", ru:"это моя семья", opts:["This is","These are"], ok:0, why:"Верно. Family это одно слово про всю группу.", no:"Семья тут одно целое, одно слово, значит this is."},
+    {stem:"<u></u> my photo.", ru:"это моё фото", opts:["This is","These are"], ok:0, why:"Верно, фото одно.", no:"Фото одно, значит this is."},
+    {stem:"<u></u> my keys.", ru:"это мои ключи", opts:["This is","These are"], ok:1, why:"Верно.", no:"Ключей несколько, значит these are."}
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
