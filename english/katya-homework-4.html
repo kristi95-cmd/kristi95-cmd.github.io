@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка после урока 3. Катя</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.08em; text-transform:uppercase; padding:5px 11px; border-radius:999px; margin:32px 0 0}
+  .tag.ls{background:#f4f0ea; color:#6b5435}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .pl{width:100%; margin:4px 0 2px}
+  .steps{counter-reset:s; margin:6px 0 0}
+  .steps div{position:relative; padding:9px 0 9px 34px; font-size:16px; border-bottom:1px solid var(--line)}
+  .steps div:last-child{border-bottom:none}
+  .steps div::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:9px;
+    width:23px; height:23px; border-radius:50%; background:var(--tile-2); color:var(--deep);
+    font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+  .scr .t b{color:var(--accent); font-weight:800}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:12px 16px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; margin-top:12px}
+  .ans.show{display:block}
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:52px; font-weight:800; color:var(--accent)}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .scr .t{font-size:17px}
+  }
+  @media print{
+    body{background:#fff}
+    .card{box-shadow:none; border:1px solid var(--line)}
+    .scr,.note,.hw,.form{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    .rev{display:none}
+    .ans{display:block !important}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашка &middot; после урока 3</div>
+    <h1>Слушаем разговор<em>и отвечаем на вопросы</em></h1>
+    <p>Сначала аудирование, потом два письменных задания. Присылай текстом в телеграм, списком с номерами.</p>
+  </div>
+
+  <div class="note">Новой грамматики нет. Всё знакомое: <b>to be</b>, отрицание, вопрос, короткие ответы и слова <b>my, your, his, her, our, their</b>.</div>
+
+  <div class="tag ls">аудирование</div>
+  <h2><span class="num">01</span>Разговор: Сара и Ник знакомятся</h2>
+  <p class="lead">Запись чуть больше минуты. Они знакомятся и расспрашивают друг друга.</p>
+
+  <div class="card">
+    <audio class="pl" controls preload="none" src="katya-dialogue.mp3?v=1"></audio>
+    <div class="steps">
+      <div>Послушай целиком, не останавливая. С первого раза понятно не всё, это нормально.</div>
+      <div>Послушай второй раз и останавливай там, где не разобрала.</div>
+      <div>Теперь переходи к заданию 02 и отвечай на вопросы. Можно слушать ещё раз, сколько нужно.</div>
+      <div>Текст разговора есть в самом низу страницы. Открывай его только после того, как написала ответы.</div>
+    </div>
+  </div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">02</span>Ответь на вопросы по записи</h2>
+  <p class="lead">Целым предложением, не одним словом. Где вопрос «да или нет», отвечай коротким ответом и, если «нет», добавь, как на самом деле.</p>
+
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <div class="form">Is Max a driver?<span class="ex">Yes, he is.</span></div>
+    <div class="form">Is Lena a teacher?<span class="ex">No, she isn't. She is a doctor.</span></div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Is Sara from Spain?</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Where is Nick from?</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Is Sara a student?</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">How old is Nick?</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Is Pablo here?</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">How old is Pablo?</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Is Anna a teacher?</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Where is her school?</div></div>
+  </div>
+
+  <div class="tag wd">письменно</div>
+  <h2><span class="num">03</span>Раскрой скобки</h2>
+  <p class="lead">В скобках стоит глагол. Поставь его в нужную форму, а в вопросах ещё и на нужное место.</p>
+
+  <div class="card">
+    <h3>Как делать</h3>
+    <div class="form">Max (be) a driver.<span class="ex">Max is a driver.</span></div>
+    <div class="form">We (be / not) at work.<span class="ex">We are not at work. &nbsp;·&nbsp; We aren't at work.</span></div>
+    <div class="form">(be) they at home?<span class="ex">Are they at home?</span></div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">My name <b>(be)</b> Katya.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">We <b>(be / not)</b> at home.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t"><b>(be)</b> you a teacher?</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">His sister <b>(be)</b> nineteen.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">They <b>(be / not)</b> from Spain.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t"><b>(be)</b> your brother at work?</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">I <b>(be / not)</b> a doctor.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Her friends <b>(be)</b> here.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t"><b>(be)</b> it your photo?</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Our teacher <b>(be / not)</b> from Russia.</div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом</b> - задания 2 и 3, списком с номерами.</p>
+    <p>Задание 1 это слушание, присылать нечего.</p>
+  </div>
+
+  <h2><span class="num">04</span>Текст разговора</h2>
+  <p class="lead">Открывай после того, как написала ответы. Потом послушай запись ещё раз с текстом перед глазами.</p>
+
+  <div class="card">
+    <button class="rev" type="button" id="tr">Показать текст разговора</button>
+    <div class="ans dlg" id="trans">
+      <div><span class="who">Sara</span>Hello! My name is Sara. What is your name?</div>
+      <div><span class="who">Nick</span>Hi! I am Nick. Nice to meet you.</div>
+      <div><span class="who">Sara</span>Nice to meet you too. Where are you from?</div>
+      <div><span class="who">Nick</span>I am from Ireland. And you?</div>
+      <div><span class="who">Sara</span>I am from Spain. My city is Valencia.</div>
+      <div><span class="who">Nick</span>Cool. Are you a student?</div>
+      <div><span class="who">Sara</span>No, I am not. I am a photographer. And you?</div>
+      <div><span class="who">Nick</span>Yes, I am. I am a student. I am twenty-one.</div>
+      <div><span class="who">Sara</span>My brother is a student too. His name is Pablo.</div>
+      <div><span class="who">Nick</span>Is he here?</div>
+      <div><span class="who">Sara</span>No, he isn't. He is at home.</div>
+      <div><span class="who">Nick</span>How old is he?</div>
+      <div><span class="who">Sara</span>He is nineteen.</div>
+      <div><span class="who">Nick</span>Are your friends here?</div>
+      <div><span class="who">Sara</span>Yes, they are. They are here too.</div>
+      <div><span class="who">Nick</span>Is your friend Anna a photographer too?</div>
+      <div><span class="who">Sara</span>No, she isn't. She is a teacher. Her school is in Madrid.</div>
+      <div><span class="who">Nick</span>Really? My mother is a teacher too.</div>
+      <div><span class="who">Sara</span>Is she from Ireland?</div>
+      <div><span class="who">Nick</span>Yes, she is.</div>
+    </div>
+  </div>
+
+  <div class="foot">English from scratch &middot; домашка после урока 3</div>
+
+</div>
+
+<script>
+document.getElementById("tr").addEventListener("click", function(){
+  var box = document.getElementById("trans");
+  var on = box.classList.toggle("show");
+  this.textContent = on ? "Спрятать текст разговора" : "Показать текст разговора";
+});
+</script>
+</body>
+</html>
