@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 2. He, she, it, we, they</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+  .foot .ver{display:block; margin-top:4px; font-size:12px; color:var(--mute)}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Олеся &middot; урок 2</div>
+    <h1>He, she, it.<em>Весь глагол to be и чьё это</em></h1>
+    <p>На прошлом занятии были только я и ты. Сегодня добавляем всех остальных: он, она, оно, мы, они. И учимся говорить «не», спрашивать и коротко отвечать.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>К концу занятия ты рассказываешь не только про себя, но и про своих людей: кто они, откуда, кем работают.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Глагол <b>to be</b> закрываем целиком: все три формы, сокращения, «не», вопрос и короткий ответ.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Шесть слов на принадлежность: <b>my, your, his, her, our, their</b>.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Разбираем вместе на занятии: правило, сразу упражнение к нему, говорим вслух. Дома повторяешь по этому же листу, искать ничего не нужно.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>Слова вместо имени: he, she, it, we, they</h2>
+  <p class="lead">Пять новых слов. На них держится весь урок.</p>
+
+  <div class="card">
+    <table class="tbl">
+      <tr><th>слово</th><th>перевод</th><th>когда берём</th></tr>
+      <tr><td class="k">He</td><td class="v">он</td><td class="r">про мужчину: Robert, my brother, Tom</td></tr>
+      <tr><td class="k">She</td><td class="v">она</td><td class="r">про женщину: Anna, my sister, Maria</td></tr>
+      <tr><td class="k">It</td><td class="v">оно</td><td class="r">одна вещь: город, страна, погода</td></tr>
+      <tr><td class="k">We</td><td class="v">мы</td><td class="r">я и кто-то ещё</td></tr>
+      <tr><td class="k">They</td><td class="v">они</td><td class="r">несколько людей или несколько вещей</td></tr>
+    </table>
+    <p>Вместе с <b>I</b> и <b>you</b>, которые ты уже знаешь, это весь список. Других местоимений в английском нет.</p>
+
+    <h3>Вот где русский мешает</h3>
+    <p>По-русски род есть у всего подряд. Стол «он», книга «она», окно «оно». Мы к этому привыкли и тащим ту же привычку в английский.</p>
+    <p>В английском так нельзя. <b>He</b> и <b>she</b> живут только там, где настоящий мужчина или настоящая женщина. Всё остальное, без единого исключения, это <b>it</b>. Москва не «она», кофе не «он», погода не «она». Всё это <b>it</b>.</p>
+    <div class="wrong-right">
+      <div class="wr n">Moscow? She is big<small>Москва не женщина</small></div>
+      <div class="wr y">Moscow? It is big<small>город, значит it</small></div>
+    </div>
+    <p>Правило простое: прежде чем сказать <b>he</b> или <b>she</b>, спроси себя, человек ли это. Нет - значит <b>it</b>.</p>
+
+    <h3>It или they</h3>
+    <p><b>It</b> годится только про одну вещь. Две вещи это уже <b>they</b>. А вот про людей <b>they</b> работает ровно как русское «они»: и про сестёр, и про чемоданы одно и то же слово.</p>
+    <table class="tbl">
+      <tr><th>о ком речь</th><th>какое слово</th><th>почему</th></tr>
+      <tr><td class="k">My sister</td><td class="v">she</td><td class="r">одна женщина</td></tr>
+      <tr><td class="k">My sisters</td><td class="v">they</td><td class="r">две сестры, значит they</td></tr>
+      <tr><td class="k">My phone</td><td class="v">it</td><td class="r">одна вещь</td></tr>
+      <tr><td class="k">My phones</td><td class="v">they</td><td class="r">две вещи, значит they</td></tr>
+    </table>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">02</span>He, she, it, we или they</h2>
+  <p class="lead">Смотри на первое предложение и подставь слово во второе.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">03</span>Is: третья форма to be</h2>
+  <p class="lead">Две формы ты уже знаешь. Сегодня третья, и глагол закрыт целиком.</p>
+
+  <div class="card">
+    <p>В прошлый раз мы разобрали <b>I am</b> и <b>you are</b>. У глагола <b>to be</b> в настоящем времени всего три формы, и третья это <b>is</b>. Вот они все:</p>
+    <table class="tbl">
+      <tr><th>кто</th><th>форма</th><th>перевод</th></tr>
+      <tr><td class="k">I</td><td class="v">am</td><td class="r">я</td></tr>
+      <tr><td class="k">You</td><td class="v">are</td><td class="r">ты, вы</td></tr>
+      <tr><td class="k">He</td><td class="v">is</td><td class="r">он</td></tr>
+      <tr><td class="k">She</td><td class="v">is</td><td class="r">она</td></tr>
+      <tr><td class="k">It</td><td class="v">is</td><td class="r">оно: город, страна, вещь</td></tr>
+      <tr><td class="k">We</td><td class="v">are</td><td class="r">мы</td></tr>
+      <tr><td class="k">They</td><td class="v">are</td><td class="r">они</td></tr>
+    </table>
+
+    <h3>Как запомнить без зубрёжки</h3>
+    <p>Семь строчек выглядят страшно, но правил тут всего два с половиной:</p>
+    <div class="form">am живёт только с I и больше ни с кем<span class="ex">I am Anna. Больше нигде am не встретится.</span></div>
+    <div class="form">is - там, где один: он, она, оно<span class="ex">He is a doctor. She is a teacher. It is Moscow.</span></div>
+    <div class="form">are - всё остальное: ты, мы, они<span class="ex">You are a blogger. We are from Russia. They are at home.</span></div>
+    <p>Вместо <b>he</b>, <b>she</b> и <b>it</b> может стоять имя или любое слово. Главное - один человек или одна вещь, и тогда <b>is</b>.</p>
+    <table class="tbl">
+      <tr><th>кто</th><th>форма</th><th>почему</th></tr>
+      <tr><td class="k">Anna</td><td class="v">is</td><td class="r">один человек</td></tr>
+      <tr><td class="k">My sister</td><td class="v">is</td><td class="r">один человек</td></tr>
+      <tr><td class="k">Moscow</td><td class="v">is</td><td class="r">одна вещь</td></tr>
+    </table>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">04</span>Вставь am, is или are</h2>
+  <p class="lead">Десять предложений. Смотри только на то, кто стоит в начале.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">05</span>Люди вокруг тебя</h2>
+  <p class="lead">Четырнадцать слов, без которых не о ком рассказывать. Дальше весь урок идёт на них.</p>
+  <div class="card" id="voc1"></div>
+  <div class="note"><b>Про -s.</b> Если людей несколько, к слову добавляется <b>s</b>: <b>my friend</b> это один, <b>my friends</b> это несколько. Так же с остальными: <b>sisters</b>, <b>neighbours</b>.</div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>Собери предложение</h2>
+  <p class="lead">Нажимай слова по порядку. Здесь we и they вместе с остальными.</p>
+  <div class="card build" id="ex3"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">07</span>Сокращения: как говорят на самом деле</h2>
+  <p class="lead">Полные формы пишут. В разговоре почти всегда сокращают.</p>
+
+  <div class="card">
+    <p>Если ты услышишь живую английскую речь, полного <b>I am</b> ты там почти не встретишь. Говорят <b>I'm</b>. Это не другая грамматика и не разговорная небрежность, это нормальная форма, её пишут и в книгах, и в переписке.</p>
+    <table class="tbl">
+      <tr><th>полная форма</th><th>короткая</th><th>перевод</th></tr>
+      <tr><td class="k">I am</td><td class="v">I'm</td><td class="r">я</td></tr>
+      <tr><td class="k">You are</td><td class="v">You're</td><td class="r">ты, вы</td></tr>
+      <tr><td class="k">He is</td><td class="v">He's</td><td class="r">он</td></tr>
+      <tr><td class="k">She is</td><td class="v">She's</td><td class="r">она</td></tr>
+      <tr><td class="k">It is</td><td class="v">It's</td><td class="r">оно</td></tr>
+      <tr><td class="k">We are</td><td class="v">We're</td><td class="r">мы</td></tr>
+      <tr><td class="k">They are</td><td class="v">They're</td><td class="r">они</td></tr>
+    </table>
+    <p>Апостроф стоит ровно там, где выпала буква. В <b>I'm</b> пропало <b>a</b> из <b>am</b>, в <b>he's</b> пропало <b>i</b> из <b>is</b>. Больше ничего не меняется.</p>
+    <div class="note"><b>Где путаются.</b> <b>It's</b> с апострофом это всегда <b>it is</b>, а не принадлежность. «Его, её» у вещи пишется <b>its</b>, без апострофа. Пока тебе нужна только первая, с апострофом.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">08</span>Сократи</h2>
+  <p class="lead">Скажи вслух коротко, и только потом открывай ответ.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">09</span>Отрицание: ставим not</h2>
+  <p class="lead">Одна операция, и ты умеешь говорить «не».</p>
+
+  <div class="card">
+    <p>Чтобы сказать «не», в английском не нужно ничего перестраивать. Берёшь обычное предложение и ставишь <b>not</b> сразу <u>после</u> am, is или are.</p>
+    <div class="form">кто <span class="plus">+</span> am / is / are <span class="plus">+</span> not <span class="plus">+</span> всё остальное<span class="ex">She is a teacher. &rarr; She is not a teacher.</span></div>
+    <div class="wrong-right">
+      <div class="wr n">She not is a teacher<small>not перед глаголом не ставят</small></div>
+      <div class="wr y">She is not a teacher<small>сначала глагол, потом not</small></div>
+    </div>
+
+    <h3>Два способа сократить</h3>
+    <p>В разговоре отрицание почти всегда сокращают, и способов два. Оба правильные, выбирай любой.</p>
+    <table class="tbl">
+      <tr><th>полная форма</th><th>первый способ</th><th>второй способ</th></tr>
+      <tr><td class="k">I am not</td><td class="v">I'm not</td><td class="no">второго нет</td></tr>
+      <tr><td class="k">You are not</td><td class="v">You're not</td><td class="v">You aren't</td></tr>
+      <tr><td class="k">He is not</td><td class="v">He's not</td><td class="v">He isn't</td></tr>
+      <tr><td class="k">She is not</td><td class="v">She's not</td><td class="v">She isn't</td></tr>
+      <tr><td class="k">It is not</td><td class="v">It's not</td><td class="v">It isn't</td></tr>
+      <tr><td class="k">We are not</td><td class="v">We're not</td><td class="v">We aren't</td></tr>
+      <tr><td class="k">They are not</td><td class="v">They're not</td><td class="v">They aren't</td></tr>
+    </table>
+    <div class="note"><b>Исключение одно, и оно про тебя.</b> С <b>I</b> второго способа нет. Говорят <b>I'm not</b>, и всё. Слова <b>amn't</b> в английском не существует.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">10</span>Скажи «не»</h2>
+  <p class="lead">Сначала вслух сама, потом проверь себя.</p>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">11</span>Вопрос: меняем местами</h2>
+  <p class="lead">Сейчас станет понятно, как устроены фразы, которые ты уже говоришь.</p>
+
+  <div class="card">
+    <p>Чтобы получился вопрос, в английском ничего не добавляют. Просто меняют местами два первых слова: глагол выходит вперёд, человек встаёт после него.</p>
+    <table class="tbl">
+      <tr><th>обычное предложение</th><th>вопрос</th></tr>
+      <tr><td class="k">You are from Russia.</td><td class="v">Are you from Russia?</td></tr>
+      <tr><td class="k">She is a teacher.</td><td class="v">Is she a teacher?</td></tr>
+      <tr><td class="k">They are at home.</td><td class="v">Are they at home?</td></tr>
+    </table>
+    <p>Голосом в конце идём вверх, как и по-русски.</p>
+
+    <h3>Вопрос со словом в начале</h3>
+    <p>Если нужно спросить не «да или нет», а «где», «как» или «сколько», вопросительное слово встаёт впереди, а дальше всё та же перестановка.</p>
+    <div class="form">вопросительное слово <span class="plus">+</span> am / is / are <span class="plus">+</span> кто<span class="ex">Where are you from? &middot; What is your name? &middot; How old is your son?</span></div>
+
+    <h3>Вопросительные слова</h3>
+    <table class="tbl">
+      <tr><th>слово</th><th>перевод</th><th>пример</th></tr>
+      <tr><td class="k">What</td><td class="v">что, какой</td><td class="ex">What is your name?</td></tr>
+      <tr><td class="k">Where</td><td class="v">где, откуда</td><td class="ex">Where are you from?</td></tr>
+      <tr><td class="k">Who</td><td class="v">кто</td><td class="ex">Who is she?</td></tr>
+      <tr><td class="k">How</td><td class="v">как</td><td class="ex">How are you?</td></tr>
+      <tr><td class="k">How old</td><td class="v">сколько лет</td><td class="ex">How old is your son?</td></tr>
+      <tr><td class="k">Why</td><td class="v">почему</td><td class="ex">Why are you here?</td></tr>
+    </table>
+    <p>Посмотри внимательно на вторую и пятую строчку. Ты говорила эти фразы с первого занятия как одно слово, целиком. Теперь видно, что они собраны по тому же правилу, что и всё остальное, и ты можешь собрать такую же сама.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">12</span>Собери вопрос</h2>
+  <p class="lead">Нажимай слова по порядку.</p>
+  <div class="card build" id="ex6"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">13</span>Короткие ответы</h2>
+  <p class="lead">Чтобы не отвечать одним «yes» и не казаться резкой.</p>
+
+  <div class="card">
+    <p>На вопрос с <b>am</b>, <b>is</b> или <b>are</b> в английском отвечают не просто «да», а «да» плюс тот же глагол. Звучит это вежливее и естественнее, чем сухое <b>yes</b>.</p>
+    <table class="tbl">
+      <tr><th>вопрос</th><th>да</th><th>нет</th></tr>
+      <tr><td class="k">Are you from Russia?</td><td class="v">Yes, I am.</td><td class="v">No, I'm not.</td></tr>
+      <tr><td class="k">Is she a teacher?</td><td class="v">Yes, she is.</td><td class="v">No, she isn't.</td></tr>
+      <tr><td class="k">Is he at work?</td><td class="v">Yes, he is.</td><td class="v">No, he isn't.</td></tr>
+      <tr><td class="k">Are they at home?</td><td class="v">Yes, they are.</td><td class="v">No, they aren't.</td></tr>
+    </table>
+    <p>Глагол берёшь тот же, что был в вопросе, а человека меняешь на себя или на того, о ком речь.</p>
+    <div class="note"><b>Главная ловушка.</b> В коротком «да» сокращать нельзя. Говорят <b>Yes, I am</b>, а не <b>Yes, I'm</b>. В коротком «нет» сокращать можно и нужно: <b>No, I'm not</b>.</div>
+    <div class="wrong-right">
+      <div class="wr n">Yes, she's<small>в коротком «да» не сокращают</small></div>
+      <div class="wr y">Yes, she is<small>полная форма</small></div>
+    </div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">14</span>Ответь коротко</h2>
+  <p class="lead">Выбери правильный ответ.</p>
+  <div class="card" id="ex7"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">15</span>Чьё это: my, your, his, her, our, their</h2>
+  <p class="lead">Два слова отсюда ты уже знаешь. Добавляем остальные четыре.</p>
+
+  <div class="card">
+    <p>Чтобы сказать, чей это брат, чьё имя, чей дом, перед словом ставят одно короткое слово. Оно никогда не меняется и не зависит от того, что идёт следом.</p>
+    <table class="tbl">
+      <tr><th>кто</th><th>чьё</th><th>перевод</th><th>пример</th></tr>
+      <tr><td class="k">I</td><td class="v">my</td><td class="r">мой, моя</td><td class="ex">My name is Anna.</td></tr>
+      <tr><td class="k">You</td><td class="v">your</td><td class="r">твой, ваш</td><td class="ex">Your sister is a teacher.</td></tr>
+      <tr><td class="k">He</td><td class="v">his</td><td class="r">его</td><td class="ex">His name is Robert.</td></tr>
+      <tr><td class="k">She</td><td class="v">her</td><td class="r">её</td><td class="ex">Her name is Lena.</td></tr>
+      <tr><td class="k">It</td><td class="v">its</td><td class="r">его, её у вещи</td><td class="no">встречается редко</td></tr>
+      <tr><td class="k">We</td><td class="v">our</td><td class="r">наш, наша</td><td class="ex">Our city is Moscow.</td></tr>
+      <tr><td class="k">They</td><td class="v">their</td><td class="r">их</td><td class="ex">Their son is a doctor.</td></tr>
+    </table>
+
+    <h3>Ловушка, на которой спотыкаются все</h3>
+    <p><b>His</b> или <b>her</b> выбирают по хозяину, а не по предмету. По-русски мы говорим «её имя», и имя для нас среднего рода. По-английски смотрят только на то, чьё оно.</p>
+    <div class="wrong-right">
+      <div class="wr n">Her name is Max<small>если Макс мужчина, так нельзя</small></div>
+      <div class="wr y">His name is Max<small>хозяин имени мужчина, значит his</small></div>
+    </div>
+    <p>Сначала спроси себя: чьё? Если мужчины - <b>his</b>, если женщины - <b>her</b>, и никак иначе.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">16</span>Чьё это</h2>
+  <p class="lead">Смотри на первое предложение, оно подсказывает, кто хозяин.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">17</span>Порядок слов: где что стоит</h2>
+  <p class="lead">Коротко про то, что собиралось весь урок. Эту страницу стоит пересматривать дома.</p>
+
+  <div class="card">
+    <p>Английское предложение жёстче русского: слова нельзя переставлять как хочется. Зато схем всего четыре, и они на всю жизнь.</p>
+    <div class="form">кто <span class="plus">+</span> am / is / are <span class="plus">+</span> кто он такой, какой или где<span class="ex">My sister is a teacher. &middot; We are at home.</span></div>
+    <div class="form">кто <span class="plus">+</span> am / is / are <span class="plus">+</span> not <span class="plus">+</span> остальное<span class="ex">He is not at work. &middot; I'm not a doctor.</span></div>
+    <div class="form">am / is / are <span class="plus">+</span> кто <span class="plus">+</span> остальное<span class="ex">Is your brother here? &middot; Are they from Italy?</span></div>
+    <div class="form">вопросительное слово <span class="plus">+</span> am / is / are <span class="plus">+</span> кто<span class="ex">Where is your mum? &middot; How old is your son?</span></div>
+    <p>И сквозное правило, которое мы взяли ещё на первом занятии: в английском предложении глагол обязателен. По-русски «она учитель» звучит нормально, по-английски без <b>is</b> предложение просто не собралось.</p>
+    <div class="wrong-right">
+      <div class="wr n">My sister teacher<small>глагола нет</small></div>
+      <div class="wr y">My sister is a teacher<small>вот теперь это предложение</small></div>
+    </div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">18</span>Собери фразу</h2>
+  <p class="lead">Здесь вперемешку: утверждение, отрицание и вопрос.</p>
+  <div class="card build" id="ex9"></div>
+
+  <div class="tag sp">разговор</div>
+  <h2><span class="num">19</span>Скажи вслух по-английски</h2>
+  <p class="lead">Сначала говори сама, вслух, и только потом открывай ответ.</p>
+  <div class="card" id="ex10"></div>
+
+  <div class="tag sp">разговор</div>
+  <h2><span class="num">20</span>Диалог: знакомим со своими</h2>
+  <p class="lead">Прочитай вслух по ролям, потом спрячь одну роль и говори за неё сама.</p>
+
+  <div class="card">
+    <div class="dlg" id="dlg">
+      <div class="a"><span class="who">A</span><span class="ln">Hi, Anna! How are you?</span><span class="tr">привет, Анна, как дела</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Hi! I am fine, thank you. And you?</span><span class="tr">привет, хорошо, спасибо, а у тебя</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">I am fine too. Is this your sister?</span><span class="tr">тоже хорошо, это твоя сестра</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Yes, she is. Her name is Lena.</span><span class="tr">да, её зовут Лена</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Nice to meet you, Lena. Where are you from?</span><span class="tr">приятно познакомиться, откуда вы</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">We are from Moscow.</span><span class="tr">мы из Москвы</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Is Lena a blogger?</span><span class="tr">Лена блогер</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">No, she isn't. She is a teacher.</span><span class="tr">нет, она учитель</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">And your brother? Is he here?</span><span class="tr">а твой брат, он здесь</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">No, he isn't. He is at work.</span><span class="tr">нет, он на работе</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">How old is he?</span><span class="tr">сколько ему лет</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">He is thirty.</span><span class="tr">тридцать</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Thank you! See you!</span><span class="tr">спасибо, увидимся</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">See you!</span><span class="tr">увидимся</span></div>
+    </div>
+    <div class="bar">
+      <button class="btn" data-hide="a" type="button">Спрятать роль A</button>
+      <button class="btn" data-hide="b" type="button">Спрятать роль B</button>
+    </div>
+  </div>
+
+  <div class="tag wd">фразы</div>
+  <h2><span class="num">21</span>Фразы занятия</h2>
+  <p class="lead">Двенадцать фраз, которые мы сегодня говорим вслух много раз. Кнопка пригодится дома, когда будешь проверять себя.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">This is my sister.</div><div class="ru">это моя сестра</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">Her name is Lena.</div><div class="ru">её зовут Лена</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">She is a teacher.</div><div class="ru">она учитель</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">They are my friends.</div><div class="ru">они мои друзья</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">We are from Moscow.</div><div class="ru">мы из Москвы</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">He is not at home.</div><div class="ru">его нет дома</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">She isn't at work.</div><div class="ru">её нет на работе</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">Is this your sister?</div><div class="ru">это твоя сестра</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">Yes, she is.</div><div class="ru">да</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">No, she isn't.</div><div class="ru">нет</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">Where is your brother?</div><div class="ru">где твой брат</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">How old is your son?</div><div class="ru">сколько лет твоему сыну</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu" type="button">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="tag sp">домашка</div>
+  <h2><span class="num">22</span>Домашнее задание</h2>
+
+  <div class="hw">
+    <h3>Что сделать</h3>
+    <p><b>Голосовым.</b> Расскажи про троих своих людей: кто это, как зовут, кем работает, откуда, сколько лет. Про каждого три-четыре предложения.</p>
+    <p><b>Письменно.</b> Подробное задание пришлю отдельной ссылкой.</p>
+    <p class="small">Если захочется ещё потренироваться, ниже открытые тренажёры. Они сами проверяют ответы, регистрация не нужна.</p>
+  </div>
+
+  <div class="card">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en"><a href="https://www.englisch-hilfen.de/en/exercises/tenses/be.htm">Формы am, is, are</a></div><div class="ru">десять предложений, выбрать форму</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en"><a href="https://www.englisch-hilfen.de/en/exercises/structures/contracted_forms_be_negation.htm">Сокращения с not</a></div><div class="ru">isn't, aren't, I'm not</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en"><a href="https://www.englisch-hilfen.de/en/exercises/questions/am_are_is.htm">Вопросы</a></div><div class="ru">собрать вопрос из слов</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en"><a href="https://www.englisch-hilfen.de/en/exercises/pronouns/possessive_determiners3.htm">My, your, his, her, our, their</a></div><div class="ru">подставить нужное слово</div></div></div>
+  </div>
+
+  <div class="foot">Олеся &middot; урок 2<span class="ver">обновлено 26.11.2026, 18:02</span></div>
+
+</div>
+
+<script>
+function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+
+function revealBlock(id, items, withSound){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = withSound
+        ? p.en + ' '
+        : p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+onClick("hideRu", function(){
+  var card = document.getElementById("phrasesCard");
+  var on = card.classList.toggle("hidden-ru");
+  this.classList.toggle("on", on);
+  this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+});
+
+var dlg = document.getElementById("dlg");
+var hideBtns = document.querySelectorAll("[data-hide]");
+for (var hb = 0; hb < hideBtns.length; hb++){
+  hideBtns[hb].addEventListener("click", function(){
+    var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+    this.classList.toggle("on", on);
+  });
+}
+
+/* 05. слова */
+vocab("voc1", [
+  ["my mum","мама"],["my dad","папа"],["my sister","сестра"],["my brother","брат"],
+  ["my husband","муж"],["my son","сын"],["my daughter","дочь"],["my friend","друг, подруга"],
+  ["my neighbour","сосед, соседка"],["my boss","начальник"],
+  ["at home","дома"],["at work","на работе"],["here","здесь"],["together","вместе"]
+]);
+
+/* 02. he / she / it / we / they */
+var P5 = ["He","She","It","We","They"];
+choiceBlock("ex1", [
+  {stem:'Anna is a blogger. <u></u> is from Moscow.', ru:'Анна блогер', opts:P5, ok:1, why:"Верно. Anna женщина, значит she.", full:"She is from Moscow."},
+  {stem:'Robert is a coach. <u></u> is from Russia.', ru:'Роберт тренер', opts:P5, ok:0, why:"Верно. Robert мужчина, значит he.", full:"He is from Russia."},
+  {stem:'My sisters are teachers. <u></u> are at work.', ru:'мои сёстры учителя', opts:P5, ok:4, why:"Верно. Сестёр несколько, значит they.", full:"They are at work."},
+  {stem:'Rome is a big city. <u></u> is in Italy.', ru:'Рим большой город', opts:P5, ok:2, why:"Верно. Город не человек, значит it.", full:"It is in Italy."},
+  {stem:'Maria is a cook. <u></u> is from Spain.', ru:'Мария повар', opts:P5, ok:1, why:"Верно, Maria это she.", full:"She is from Spain."},
+  {stem:'My friend and I are at home. <u></u> are together.', ru:'я и мой друг дома', opts:P5, ok:3, why:"Верно. Я и кто-то ещё это we.", full:"We are together."},
+  {stem:'Tom is a waiter. <u></u> is twenty.', ru:'Том официант', opts:P5, ok:0, why:"Верно, Tom это he.", full:"He is twenty."},
+  {stem:'My mum and my dad are at home. <u></u> are together.', ru:'мама и папа дома', opts:P5, ok:4, why:"Верно. Их двое, значит they.", full:"They are together."},
+  {stem:'Berlin is in Germany. <u></u> is a big city.', ru:'Берлин в Германии', opts:P5, ok:2, why:"Верно. Берлин это it, хотя по-русски «он».", full:"It is a big city."},
+  {stem:'My husband and I are from Russia. <u></u> are here.', ru:'я и муж из России', opts:P5, ok:3, why:"Верно. Я и муж вместе это we.", full:"We are here."},
+  {stem:'Olga is an architect. <u></u> is forty.', ru:'Ольга архитектор', opts:P5, ok:1, why:"Верно, Olga это she.", full:"She is forty."}
+]);
+
+/* 04. am / is / are */
+choiceBlock("ex2", [
+  {stem:'I <u></u> Anna.', ru:'я Анна', opts:["am","is","are"], ok:0, why:"Верно. am живёт только с I.", full:"I am Anna."},
+  {stem:'She <u></u> a teacher.', ru:'она учитель', opts:["am","is","are"], ok:1, why:"Верно. She это один человек, значит is.", full:"She is a teacher."},
+  {stem:'You <u></u> from Russia.', ru:'ты из России', opts:["am","is","are"], ok:2, why:"Верно. С you всегда are.", full:"You are from Russia."},
+  {stem:'He <u></u> a doctor.', ru:'он врач', opts:["am","is","are"], ok:1, why:"Верно, he это is.", full:"He is a doctor."},
+  {stem:'It <u></u> Moscow.', ru:'это Москва', opts:["am","is","are"], ok:1, why:"Верно, it это is.", full:"It is Moscow."},
+  {stem:'We <u></u> from Italy.', ru:'мы из Италии', opts:["am","is","are"], ok:2, why:"Верно. We идёт с are.", full:"We are from Italy."},
+  {stem:'They <u></u> at home.', ru:'они дома', opts:["am","is","are"], ok:2, why:"Верно. They идёт с are.", full:"They are at home."},
+  {stem:'My sister <u></u> a cook.', ru:'моя сестра повар', opts:["am","is","are"], ok:1, why:"Верно. Сестра одна, значит is.", full:"My sister is a cook."},
+  {stem:'Tom <u></u> a waiter.', ru:'Том официант', opts:["am","is","are"], ok:1, why:"Верно. Имя одного человека это is.", full:"Tom is a waiter."},
+  {stem:'I <u></u> twenty.', ru:'мне двадцать', opts:["am","is","are"], ok:0, why:"Верно. Возраст говорят через to be, и с I это am.", full:"I am twenty."}
+]);
+
+/* 06. сборка: we / they */
+buildBlock("ex3", [
+  {words:["are","We","home","at"], ok:"We are at home", ru:"мы дома"},
+  {words:["a","She","teacher","is"], ok:"She is a teacher", ru:"она учитель"},
+  {words:["work","They","at","are"], ok:"They are at work", ru:"они на работе"},
+  {words:["We","Moscow","are","from"], ok:"We are from Moscow", ru:"мы из Москвы"},
+  {words:["here","They","are"], ok:"They are here", ru:"они здесь"},
+  {words:["my","They","friends","are"], ok:"They are my friends", ru:"они мои друзья"},
+  {words:["together","We","are"], ok:"We are together", ru:"мы вместе"},
+  {words:["work","He","at","is"], ok:"He is at work", ru:"он на работе"},
+  {words:["is","It","Moscow"], ok:"It is Moscow", ru:"это Москва"}
+]);
+
+/* 08. сокращения */
+revealBlock("ex4", [
+  {ru:"I am Anna.", en:"I'm Anna."},
+  {ru:"She is a teacher.", en:"She's a teacher."},
+  {ru:"He is at work.", en:"He's at work."},
+  {ru:"They are my friends.", en:"They're my friends."},
+  {ru:"We are from Russia.", en:"We're from Russia."},
+  {ru:"It is Moscow.", en:"It's Moscow."},
+  {ru:"You are my neighbour.", en:"You're my neighbour."}
+]);
+
+/* 10. отрицание */
+revealBlock("ex5", [
+  {ru:"я не учитель", en:"I'm not a teacher."},
+  {ru:"её нет дома", en:"She isn't at home."},
+  {ru:"он не врач", en:"He isn't a doctor."},
+  {ru:"мы не из Италии", en:"We aren't from Italy."},
+  {ru:"их нет на работе", en:"They aren't at work."},
+  {ru:"это не Берлин", en:"It isn't Berlin."},
+  {ru:"ты не мой сосед", en:"You aren't my neighbour."},
+  {ru:"моя сестра не блогер", en:"My sister isn't a blogger."}
+]);
+
+/* 12. вопрос */
+buildBlock("ex6", [
+  {words:["you","Are","Moscow","from"], ok:"Are you from Moscow", ru:"ты из Москвы?"},
+  {words:["Is","sister","your","teacher","a"], ok:"Is your sister a teacher", ru:"твоя сестра учитель?"},
+  {words:["home","Are","at","they"], ok:"Are they at home", ru:"они дома?"},
+  {words:["is","Where","brother","your"], ok:"Where is your brother", ru:"где твой брат?"},
+  {words:["old","How","your","is","son"], ok:"How old is your son", ru:"сколько лет твоему сыну?"},
+  {words:["is","What","name","her"], ok:"What is her name", ru:"как её зовут?"},
+  {words:["work","Is","at","he"], ok:"Is he at work", ru:"он на работе?"}
+]);
+
+/* 14. короткие ответы */
+choiceBlock("ex7", [
+  {stem:'Are you from Russia?', ru:'ответь «да»', opts:["Yes, I am.","Yes, I'm."], ok:0, why:"Верно. В коротком «да» не сокращают."},
+  {stem:'Is your brother at home?', ru:'ответь «нет»', opts:["No, he isn't.","No, he not is."], ok:0, why:"Верно. not идёт после is."},
+  {stem:'Are they your friends?', ru:'ответь «да»', opts:["Yes, they are.","Yes, they're."], ok:0, why:"Верно. Снова полная форма."},
+  {stem:'Is this Moscow?', ru:'ответь «нет»', opts:["No, it isn't.","No, is not."], ok:0, why:"Верно. Без it предложение не собралось."},
+  {stem:'Is he a doctor?', ru:'ответь «да»', opts:["Yes, he is.","Yes, he's."], ok:0, why:"Верно. В коротком «да» сокращать нельзя."},
+  {stem:'Are you at work?', ru:'ответь «нет»', opts:["No, I'm not.","No, I amn't."], ok:0, why:"Верно. Слова amn't не существует."},
+  {stem:'Is your sister twenty?', ru:'ответь «да»', opts:["Yes, she is.","Yes, she are."], ok:0, why:"Верно. She идёт с is."},
+  {stem:'Are we together?', ru:'ответь «да»', opts:["Yes, we are.","Yes, we're."], ok:0, why:"Верно, и снова без сокращения."}
+]);
+
+/* 16. притяжательные */
+choiceBlock("ex8", [
+  {stem:'This is Robert. <u></u> name is Robert.', ru:'его зовут Роберт', opts:["His","Her","Their"], ok:0, why:"Верно. Хозяин мужчина, значит his."},
+  {stem:'This is Anna. <u></u> name is Anna.', ru:'её зовут Анна', opts:["His","Her","Its"], ok:1, why:"Верно. Хозяйка женщина, значит her."},
+  {stem:'This is my sister. <u></u> name is Lena.', ru:'её зовут Лена', opts:["His","Her","Our"], ok:1, why:"Верно. Сестра женщина, значит her."},
+  {stem:'This is my brother. <u></u> name is Max.', ru:'его зовут Макс', opts:["His","Her","Your"], ok:0, why:"Верно. Брат мужчина, значит his. По-русски «его имя», но смотрим на хозяина."},
+  {stem:'We are from Moscow. <u></u> city is Moscow.', ru:'наш город', opts:["Our","Their","Your"], ok:0, why:"Верно. We даёт our."},
+  {stem:'They are my neighbours. <u></u> son is a doctor.', ru:'их сын', opts:["Our","Their","His"], ok:1, why:"Верно. They даёт their."},
+  {stem:'I am Anna. <u></u> mum is a teacher.', ru:'моя мама', opts:["My","Her","Your"], ok:0, why:"Верно. I даёт my."},
+  {stem:'You are Robert. <u></u> dad is a coach.', ru:'твой папа', opts:["My","Your","His"], ok:1, why:"Верно. You даёт your."},
+  {stem:'This is my dad. <u></u> name is Oleg.', ru:'его зовут Олег', opts:["His","Her","Its"], ok:0, why:"Верно. Папа мужчина, значит his."},
+  {stem:'This is Maria. <u></u> daughter is here.', ru:'её дочь', opts:["His","Her","Their"], ok:1, why:"Верно. Хозяйка женщина, значит her."}
+]);
+
+/* 18. собери фразу */
+buildBlock("ex9", [
+  {words:["is","This","sister","my"], ok:"This is my sister", ru:"это моя сестра"},
+  {words:["name","Her","Lena","is"], ok:"Her name is Lena", ru:"её зовут Лена"},
+  {words:["not","He","home","at","is"], ok:"He is not at home", ru:"его нет дома"},
+  {words:["are","They","friends","my"], ok:"They are my friends", ru:"они мои друзья"},
+  {words:["your","Is","a","sister","teacher"], ok:"Is your sister a teacher", ru:"твоя сестра учитель?"},
+  {words:["is","Where","dad","your"], ok:"Where is your dad", ru:"где твой папа?"},
+  {words:["at","We","work","aren't"], ok:"We aren't at work", ru:"мы не на работе"},
+  {words:["son","Their","doctor","a","is"], ok:"Their son is a doctor", ru:"их сын врач"}
+]);
+
+/* 19. скажи вслух */
+revealBlock("ex10", [
+  {ru:"Это мой брат. Его зовут Макс.", en:"This is my brother. His name is Max."},
+  {ru:"Она моя сестра. Она учитель.", en:"She is my sister. She is a teacher."},
+  {ru:"Они дома.", en:"They are at home."},
+  {ru:"Мы не на работе.", en:"We aren't at work."},
+  {ru:"Твой папа врач?", en:"Is your dad a doctor?"},
+  {ru:"Где твоя мама?", en:"Where is your mum?"},
+  {ru:"Сколько лет твоей дочери?", en:"How old is your daughter?"},
+  {ru:"Их сосед из Италии.", en:"Their neighbour is from Italy."},
+  {ru:"Нет, его нет дома.", en:"No, he isn't at home."},
+  {ru:"Да, мы вместе.", en:"Yes, we are together."}
+]);
+
+</script>
+</body>
+</html>
