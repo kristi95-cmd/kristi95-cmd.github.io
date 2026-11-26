@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Глагол to be. am, is, are</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .gap .q{padding:11px 0; border-bottom:1px solid var(--line)}
+  .gap .q:last-child{border-bottom:none}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:12px 15px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .rev:hover{background:var(--tile-2)}
+  .hid{display:none; margin-top:12px}
+  .hid.open{display:block}
+  .hid p{margin:0 0 10px; font-size:17px; line-height:1.6}
+  .hid p:last-child{margin-bottom:0}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+  .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .res{font-size:14px; font-weight:700; margin-top:9px; min-height:19px}
+  .res.y{color:var(--ok)}
+  .res.n{color:var(--no)}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .tbl{width:100%; border-collapse:collapse; font-size:17px; margin:4px 0 2px}
+  .tbl td{padding:8px 6px; border-bottom:1px solid var(--line)}
+  .tbl td:first-child{font-weight:700; color:var(--deep); width:42%}
+  .tbl tr:last-child td{border-bottom:none}
+  .scr .t span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .wrong-right{display:flex; gap:10px; align-items:baseline; padding:10px 0;
+    border-bottom:1px solid var(--line); flex-wrap:wrap}
+  .wrong-right:last-child{border-bottom:none}
+  .wrong-right .w{color:var(--no); font-weight:700; text-decoration:line-through}
+  .wrong-right .r{color:var(--ok); font-weight:700}
+  .wrong-right .c{color:var(--mute); font-size:14px; width:100%}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Грамматика одной страницей</div>
+    <h1>Глагол to be.<em>am, is, are и где он теряется</em></h1>
+    <p>Повторяем глагол, без которого не собирается ни одна фраза про то, кто ты, какой ты и где ты. Сначала правило целиком, потом три блока упражнений.</p>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>Зачем вообще нужен этот глагол</h2>
+  <div class="card">
+    <p>По-русски мы спокойно говорим без глагола: «я врач», «она в аэропорту», «сумка тяжёлая». Глагол «есть» там подразумевается, но вслух его никто не произносит.</p>
+    <p>В английском так нельзя. В предложении обязан быть глагол, и если действия нет, его место занимает <b>to be</b>. Поэтому выходит дословно «я <b>есть</b> врач», «она <b>есть</b> в аэропорту»:</p>
+    <table class="tbl">
+      <tr><td>I am a doctor.</td><td>я врач</td></tr>
+      <tr><td>She is at the airport.</td><td>она в аэропорту</td></tr>
+      <tr><td>The bag is heavy.</td><td>сумка тяжёлая</td></tr>
+      <tr><td>We are late.</td><td>мы опаздываем</td></tr>
+    </table>
+    <p>То есть to be отвечает не за действие, а за связку: <b>кто это, какой он и где он</b>.</p>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>Три формы и сокращения</h2>
+  <div class="card">
+    <p>Форм всего три, и они делятся по лицам раз и навсегда:</p>
+    <table class="tbl">
+      <tr><td>I am</td><td>I&rsquo;m</td></tr>
+      <tr><td>you are</td><td>you&rsquo;re</td></tr>
+      <tr><td>he is, she is, it is</td><td>he&rsquo;s, she&rsquo;s, it&rsquo;s</td></tr>
+      <tr><td>we are</td><td>we&rsquo;re</td></tr>
+      <tr><td>they are</td><td>they&rsquo;re</td></tr>
+    </table>
+    <p><b>it</b> это всё неживое: рейс, сумка, город, погода. <b>The flight is late</b> и <b>it is late</b> это одно и то же.</p>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">03</span>Отрицание, вопрос и короткий ответ</h2>
+  <div class="card">
+    <p><b>Отрицание.</b> Ставим <b>not</b> сразу после глагола, ничего больше не добавляем:</p>
+    <table class="tbl">
+      <tr><td>I am not tired.</td><td>я не устал</td></tr>
+      <tr><td>She is not at home.</td><td>её нет дома</td></tr>
+      <tr><td>They are not ready.</td><td>они не готовы</td></tr>
+    </table>
+    <p>Сокращать можно двумя способами, оба правильные: <b>she isn&rsquo;t</b> и <b>she&rsquo;s not</b>, <b>they aren&rsquo;t</b> и <b>they&rsquo;re not</b>. А вот <b>amn&rsquo;t</b> не существует, для первого лица есть только <b>I&rsquo;m not</b>.</p>
+    <p><b>Вопрос.</b> Никаких do и does, просто меняем местами глагол и того, кто это делает:</p>
+    <table class="tbl">
+      <tr><td>Are you ready?</td><td>ты готов?</td></tr>
+      <tr><td>Is the flight on time?</td><td>рейс по расписанию?</td></tr>
+      <tr><td>Where are my bags?</td><td>где мои сумки?</td></tr>
+    </table>
+    <p><b>Короткий ответ.</b> Yes, I am. No, I&rsquo;m not. В положительном коротком ответе не сокращают: <b>Yes, I am</b>, но не <i>Yes, I&rsquo;m</i>.</p>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Где to be путают с обычным глаголом</h2>
+  <div class="card">
+    <p>Главное правило, из-за которого всё и ломается: <b>to be и обычный глагол вместе не ставятся</b>. Либо есть действие, и тогда работает сам глагол, либо действия нет, и тогда нужен am, is, are.</p>
+    <div class="wrong-right"><span class="w">I am work in a hotel.</span><span class="r">I work in a hotel.</span><span class="c">есть действие «работаю», значит to be не нужен</span></div>
+    <div class="wrong-right"><span class="w">He is not speak English.</span><span class="r">He does not speak English.</span><span class="c">действие отрицаем через does not</span></div>
+    <div class="wrong-right"><span class="w">We at the airport.</span><span class="r">We are at the airport.</span><span class="c">действия нет, пропущен are</span></div>
+    <div class="wrong-right"><span class="w">I am agree.</span><span class="r">I agree.</span><span class="c">agree это глагол «соглашаюсь», а не прилагательное</span></div>
+    <div class="wrong-right"><span class="w">I feel myself good.</span><span class="r">I feel good.</span><span class="c">myself тут лишнее, по-английски так не говорят</span></div>
+    <div class="note">Проверка на ходу: посмотри, есть ли в предложении действие. Нет действия - ставь am, is, are. Есть - глагол справляется сам.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">05</span>Вставь am, is или are</h2>
+  <p class="lead">Вписывай прямо в строку, поле подсветится само.</p>
+  <div class="card gap" id="g1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>Собери отрицание и вопрос</h2>
+  <p class="lead">Нажимай на слова в нужном порядке. Нажал не то - нажми ещё раз, слово вернётся обратно.</p>
+  <div class="card" id="b1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">07</span>to be или обычный глагол</h2>
+  <p class="lead">Два варианта, верный один. Это те самые места, где фраза чаще всего ломается.</p>
+  <div class="card" id="c1"></div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">08</span>Фразы урока</h2>
+  <p class="lead">Всё, что мы сегодня разобрали, одним списком. Дома закрывай перевод и проговаривай вслух.</p>
+  <div class="card">
+    <div class="scr"><div class="n">01</div><div class="t">I am at the airport.<span>я в аэропорту</span></div></div>
+    <div class="scr"><div class="n">02</div><div class="t">I am not tired.<span>я не устал</span></div></div>
+    <div class="scr"><div class="n">03</div><div class="t">My flight is at seven.<span>мой рейс в семь</span></div></div>
+    <div class="scr"><div class="n">04</div><div class="t">The bags are not here.<span>сумок тут нет</span></div></div>
+    <div class="scr"><div class="n">05</div><div class="t">Are you ready?<span>ты готов?</span></div></div>
+    <div class="scr"><div class="n">06</div><div class="t">Yes, I am. No, I&rsquo;m not.<span>да / нет, короткий ответ</span></div></div>
+    <div class="scr"><div class="n">07</div><div class="t">Is this your seat?<span>это ваше место?</span></div></div>
+    <div class="scr"><div class="n">08</div><div class="t">I agree.<span>я согласна</span></div></div>
+    <div class="scr"><div class="n">09</div><div class="t">I feel good.<span>я хорошо себя чувствую</span></div></div>
+    <div class="scr"><div class="n">10</div><div class="t">It is very hot here.<span>тут очень жарко</span></div></div>
+  </div>
+
+  <div class="foot">English for travel &amp; speaking up &middot; глагол to be</div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function norm(s){
+    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
+  }
+  function expand(a){
+    var out = [];
+    a.forEach(function(v){
+      out.push(v);
+      var m = norm(v);
+      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
+                   ["aren't","are not"],["i'm","i am"]];
+      pairs.forEach(function(p){
+        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
+        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
+      });
+    });
+    return out.map(norm);
+  }
+
+  function makeGap(item, idx){
+    var q = document.createElement("div"); q.className = "q";
+    var line = document.createElement("div"); line.className = "line";
+    var n = document.createElement("span"); n.className = "n";
+    n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
+    line.appendChild(n);
+    if(item.pre){
+      var pre = document.createElement("span"); pre.className = "hint";
+      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
+      pre.textContent = "(" + item.pre + ")";
+      line.appendChild(pre);
+    }
+    var parts = item.s.split("%");
+    var answers = item.ok.slice();
+    var inputs = [];
+    parts.forEach(function(txt, i){
+      line.appendChild(document.createTextNode(txt));
+      if(i < parts.length - 1){
+        var inp = document.createElement("input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        if((answers[i] || "").length > 12) inp.className = "wide";
+        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
+        (function(inp, ok){
+          function check(){
+            var v = norm(inp.value);
+            if(!v){ inp.classList.remove("y","n"); return; }
+            var right = ok.indexOf(v) >= 0;
+            inp.classList.toggle("y", right);
+            inp.classList.toggle("n", !right);
+          }
+          inp.addEventListener("blur", check);
+          inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+        })(inp, ok);
+        inp.dataset.ans = answers[i];
+        line.appendChild(inp);
+        inputs.push(inp);
+      }
+    });
+    q.appendChild(line);
+    if(item.ru){
+      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
+      q.appendChild(ru);
+    }
+    q._inputs = inputs;
+    return q;
+  }
+
+  function gapBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    var all = [];
+    items.forEach(function(it, i){
+      var q = makeGap(it, i);
+      host.appendChild(q);
+      all = all.concat(q._inputs);
+    });
+    var bar = document.createElement("div"); bar.className = "score";
+    var cnt = document.createElement("span"); cnt.className = "cnt";
+    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
+    chk.textContent = "Проверить";
+    chk.addEventListener("click", function(){
+      var right = 0, filled = 0;
+      all.forEach(function(inp){
+        inp.dispatchEvent(new Event("blur"));
+        if(inp.value) filled++;
+        if(inp.classList.contains("y")) right++;
+      });
+      cnt.textContent = right + " из " + all.length + " верно" +
+        (filled < all.length ? ", пустых " + (all.length - filled) : "");
+    });
+    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
+    btn.textContent = "Показать ответы";
+    var shown = false;
+    btn.addEventListener("click", function(){
+      shown = !shown;
+      all.forEach(function(inp){
+        if(shown){
+          if(!inp.value){ inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
+          inp.classList.remove("n"); inp.classList.add("y");
+        } else if(inp.dataset.filled === "1"){
+          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
+        }
+      });
+      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
+      btn.classList.toggle("on", shown);
+    });
+    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
+    host.appendChild(bar);
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+
+  gapBlock("g1", [
+    {s:"I % at the airport.", ok:["am"], ru:"я в аэропорту"},
+    {s:"My suitcase % very heavy.", ok:["is"], ru:"мой чемодан очень тяжёлый"},
+    {s:"We % in Dubai.", ok:["are"], ru:"мы в Дубае"},
+    {s:"The gate % number twelve.", ok:["is"], ru:"выход номер двенадцать"},
+    {s:"My parents % at home.", ok:["are"], ru:"мои родители дома"},
+    {s:"It % very hot in summer.", ok:["is"], ru:"летом очень жарко"},
+    {s:"You % late.", ok:["are"], ru:"ты опаздываешь"},
+    {s:"The flight % not on time.", ok:["is"], ru:"рейс не по расписанию"},
+    {s:"I % not hungry.", ok:["am"], ru:"я не голодна"},
+    {s:"My bags % not here.", ok:["are"], ru:"моих сумок тут нет"}
+  ]);
+
+  buildBlock("b1", [
+    {ru:"Я не голодна.", words:["not","I","hungry","am"], ok:"I am not hungry"},
+    {ru:"Ты из Москвы?", words:["from","Are","Moscow","you"], ok:"Are you from Moscow"},
+    {ru:"Её нет в аэропорту.", words:["is","She","at","not","the","airport"], ok:"She is not at the airport"},
+    {ru:"Это ваша сумка?", words:["your","Is","bag","this"], ok:"Is this your bag"},
+    {ru:"Мы не опаздываем.", words:["are","late","not","We"], ok:"We are not late"},
+    {ru:"Твой рейс в семь?", words:["your","Is","at","flight","seven"], ok:"Is your flight at seven"}
+  ]);
+
+  choiceBlock("c1", [
+    {stem:"я работаю в отеле", opts:["I am work in a hotel.","I work in a hotel."], ok:1,
+      why:"Верно. Есть действие «работаю», значит to be не нужен.",
+      no:"Нет. Тут уже есть глагол work, и am рядом с ним не ставится."},
+    {stem:"я согласна", opts:["I am agree.","I agree."], ok:1,
+      why:"Верно. Agree это глагол «соглашаюсь», он работает сам.",
+      no:"Нет. Это ловушка русского: по-английски agree уже глагол, am перед ним лишнее."},
+    {stem:"она врач", opts:["She is a doctor.","She doctor."], ok:0,
+      why:"Верно. Действия нет, значит нужен is.",
+      no:"Нет. Без is предложение разваливается: глагола в нём не остаётся."},
+    {stem:"он не говорит по-английски", opts:["He is not speak English.","He does not speak English."], ok:1,
+      why:"Верно. Действие отрицаем через does not.",
+      no:"Нет. Speak это действие, его отрицает does not, а не is."},
+    {stem:"мы в аэропорту", opts:["We are at the airport.","We at the airport."], ok:0,
+      why:"Верно. Действия нет, место занимает are.",
+      no:"Нет. По-русски глагол пропадает, по-английски нет: нужен are."},
+    {stem:"я хорошо себя чувствую", opts:["I feel good.","I feel myself good."], ok:0,
+      why:"Верно. Feel уже значит «чувствую себя».",
+      no:"Нет. Myself тут лишнее, это калька с русского."},
+    {stem:"их нет дома", opts:["They are not at home.","They do not at home."], ok:0,
+      why:"Верно. Действия нет, значит are not.",
+      no:"Нет. Do not отрицает действие, а тут действия нет."},
+    {stem:"ты устал?", opts:["Are you tired?","Do you tired?"], ok:0,
+      why:"Верно. Вопрос с to be строится перестановкой, без do.",
+      no:"Нет. Tired это не действие, поэтому вопрос начинается с are."},
+    {stem:"он часто летает", opts:["He is fly often.","He flies often."], ok:1,
+      why:"Верно. Есть действие, глагол справляется сам.",
+      no:"Нет. Fly это действие, is рядом с ним не нужен."},
+    {stem:"моя сестра не учительница", opts:["My sister does not a teacher.","My sister is not a teacher."], ok:1,
+      why:"Верно. Действия нет, значит is not.",
+      no:"Нет. Does not отрицает действие, а «учительница» это не действие."}
+  ], true);
+
+})();
+</script>
+
+</body>
+</html>
