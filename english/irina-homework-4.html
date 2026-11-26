@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашняя работа к уроку 3. Мы, они и это всё</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  .pool{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
+  .tok{border:1.5px solid var(--line); background:var(--tile); font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; color:var(--ink)}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0;
+    font-size:17px; font-weight:700; line-height:1.5}
+  .say{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; font-size:13px; font-weight:800; color:var(--mute); min-width:22px; padding-top:3px}
+  .say div{font-size:18px; font-weight:600}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .steps{margin:0; padding-left:7mm; font-size:17px}
+  .steps li{margin:0 0 10px; padding-left:4px}
+  .steps li::marker{color:var(--accent); font-weight:800}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+  }
+  .foot .ver{display:block; margin-top:4px; font-size:.82em; opacity:.75}
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+  .chain{padding:14px 0; border-bottom:1px solid var(--line)}
+  .chain:last-child{border-bottom:none}
+  .chain .n{font-size:13px; font-weight:800; color:var(--mute); margin-bottom:6px}
+  .chain div.l{font-size:18px; font-weight:600; padding:3px 0}
+</style></head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Домашняя работа к уроку 4</div>
+    <h1>Not.<em>Сказать, что это не так</em></h1>
+    <p>Два задания, минут двадцать. Первое с кнопками, прямо здесь. Второе письменно, присылаете мне текстом в телеграм.</p>
+  </div>
+
+  <div class="note">Всё отсюда мы разобрали на занятии: <b>am not</b>, <b>is not</b>, <b>are not</b>, короткие формы <b>isn't</b> и <b>aren't</b> и новые слова. Ничего нового здесь нет.</div>
+
+  <div class="tag pr">Упражнение 1</div>
+  <h2><span class="num">01</span>Какая форма отрицания</h2>
+  <p class="lead">Десять предложений. Смотрите только на то, кто стоит в начале: один человек, несколько или я. Нажимайте кнопку и сразу увидите, верно или нет. Присылать это задание не надо.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag wr">Письменно</div>
+  <h2><span class="num">02</span>Переведите, а потом скажите то же самое с «не»</h2>
+  <p class="lead">Десять предложений, к каждому две строки: сначала обычное предложение, потом оно же с отрицанием. Получится двадцать строк.</p>
+
+  <div class="card">
+    <h3>Как это выглядит</h3>
+    <div class="chain">
+      <div class="n">Анна медсестра.</div>
+      <div class="l">Anna is a nurse.</div>
+      <div class="l">Anna isn't a nurse.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Я устала.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Мой муж дома.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Это мои ключи.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Мои родители на работе.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Это дорого.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Моя сестра свободна.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Моя дочь студентка.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Мы опоздали.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Моей дочери шестнадцать.</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Вы мой друг.</div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом</b> - задание 2, двадцать строк с номерами: на каждый номер две строки.</p>
+    <p class="small">Задание 1 страница проверяет сама, присылать его не надо.</p>
+  </div>
+
+  <div class="foot">Домашняя работа к уроку 4 &middot; Not</div>
+</div>
+<script>
+function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуйте другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+var NEG = ["isn't","aren't","'m not"];
+choiceBlock("ex1", [
+  {stem:'You <u></u> late.', ru:'вы не опоздали', opts:NEG, ok:1,
+   why:"Верно: You aren't late. С you всегда are, даже когда человек один.",
+   no:"Смотрите на you: с ним всегда are, значит aren't."},
+  {stem:'I <u></u> tired.', ru:'я не устала', opts:NEG, ok:2,
+   why:"Верно: I'm not tired. У am короткой пары нет, слова amn't в языке не существует.",
+   no:"С I идёт только am, а короткой формы у него нет: I'm not."},
+  {stem:'My children <u></u> at home.', ru:'детей нет дома', opts:NEG, ok:1,
+   why:"Верно. Children это сразу несколько, значит aren't.",
+   no:"Children это несколько детей, значит aren't."},
+  {stem:'My sister <u></u> at work.', ru:'моей сестры нет на работе', opts:NEG, ok:0,
+   why:"Верно. Сестра одна, это she, с ней isn't.",
+   no:"Сестра одна, значит isn't."},
+  {stem:'These <u></u> my tickets.', ru:'это не мои билеты', opts:NEG, ok:1,
+   why:"Верно. These и are всегда вместе, значит aren't.",
+   no:"После these идёт are, значит aren't."},
+  {stem:'My husband and I <u></u> free.', ru:'мы с мужем не свободны', opts:NEG, ok:1,
+   why:"Верно. Муж и я - это we, с we aren't.",
+   no:"Муж и я - это мы, we, а с ним aren't."},
+  {stem:'This <u></u> my suitcase.', ru:'это не мой чемодан', opts:NEG, ok:0,
+   why:"Верно. Чемодан один, после this идёт is, значит isn't.",
+   no:"После this идёт is, значит isn't."},
+  {stem:'My parents <u></u> from Khimki.', ru:'мои родители не из Химок', opts:NEG, ok:1,
+   why:"Верно. Parents это всегда несколько, значит aren't.",
+   no:"Родителей двое, значит aren't."},
+  {stem:'My daughter <u></u> a student.', ru:'моя дочь не студентка', opts:NEG, ok:0,
+   why:"Верно. Дочь одна, значит isn't.",
+   no:"Дочь одна, это she, с ней isn't."},
+  {stem:'I <u></u> at work.', ru:'меня нет на работе', opts:NEG, ok:2,
+   why:"Верно: I'm not at work. Опять I, опять 'm not.",
+   no:"С I ни isn't, ни aren't не ставятся. Только I'm not."}
+]);
+</script>
+</body>
+</html>
