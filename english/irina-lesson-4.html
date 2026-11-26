@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 4. Числа и слово not</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.rev,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- таблицы ---------- */
+  .tbl{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:17px}
+  .tbl th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); padding:0 12px 9px 0; border-bottom:2px solid var(--line); white-space:nowrap}
+  .tbl td{padding:11px 12px 11px 0; border-bottom:1px solid var(--line); vertical-align:top}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl th:last-child, .tbl td:last-child{padding-right:0}
+  .tbl .k{font-weight:800}
+  .tbl .v{font-weight:800; color:var(--deep); white-space:nowrap}
+  .tbl .r{color:var(--soft); font-size:15px}
+  .tbl .ex{color:var(--mute); font-size:15px}
+  .tbl .no{color:var(--mute); font-size:14px; font-style:italic}
+  @media (max-width:540px){
+    .tbl{font-size:15px; margin-top:10px}
+    .tbl th{font-size:10px; letter-spacing:.06em; padding-right:8px; padding-bottom:7px}
+    .tbl td{padding:9px 8px 9px 0}
+    .tbl .r, .tbl .ex{font-size:13px}
+    .tbl .v{white-space:normal}
+    .opts{gap:6px}
+    .opt{font-size:15px; padding:9px 11px}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+  .foot .ver{display:block; margin-top:4px; font-size:.82em; opacity:.75}
+</style>
+<style>
+  /* числа */
+  .nums{display:grid; grid-template-columns:repeat(2,1fr); gap:0 16px; margin:2px 0}
+  .ni{display:flex; gap:10px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line)}
+  .ni .d{font-weight:800; color:var(--accent); min-width:28px; font-size:17px}
+  .ni .w{font-weight:700; font-size:17px}
+  .story{font-size:18px; line-height:1.85; margin:0}
+  .story p{margin:0 0 15px}
+  .story p:last-child{margin-bottom:0}
+  .story b{color:var(--deep)}
+  .story .nm{color:var(--accent); font-weight:800}
+
+  .say{display:flex; gap:10px; align-items:baseline; font-size:17px; font-weight:600;
+    padding:10px 0; border-bottom:1px solid var(--line)}
+  .say:last-child{border-bottom:none}
+  .say i{font-style:normal; color:var(--mute); font-weight:700; font-size:13px; min-width:28px}
+  .say .t{flex:1; font-weight:700}
+
+  .wr-row{display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; align-items:center;
+    padding:11px 0; border-bottom:1px solid var(--line)}
+  .wr-row:last-child{border-bottom:none}
+  .wr-row .one{font-weight:700; font-size:17px}
+  .wr-row .one em{display:block; font-style:normal; font-weight:500; color:var(--soft); font-size:14px; margin-top:2px}
+  .wr-row input{font:inherit; font-size:17px; font-weight:700; color:var(--deep);
+    width:100%; padding:9px 12px; border:2px solid var(--line); border-radius:10px;
+    background:#fff; outline:none; transition:border-color .15s, background .15s}
+  .wr-row input:focus{border-color:var(--accent)}
+  .wr-row input.ok{border-color:var(--ok); background:var(--ok-bg); color:var(--ok)}
+  @media (max-width:520px){ .wr-row{grid-template-columns:1fr; gap:6px} }
+  @media print{ .wr-row input{border:none; border-bottom:1.5px solid #bbb; border-radius:0; background:none}
+    .wr-row input::placeholder{color:transparent} }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top">
+    <div class="kicker">English for travel &middot; урок 4</div>
+    <h1>Числа и слово not.<em>Сказать свой возраст и возразить</em></h1>
+    <p>Начинаем с чисел: без них в поездке никуда, с них считают деньги, время и возраст. А потом берём самое нужное короткое слово в языке: <b>not</b>. С ним можно не только соглашаться, но и сказать, что всё не так.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Назвать любое число и не спутать <b>13</b> с <b>30</b>.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Ответить, сколько вам лет: <b>How old are you? I am ...</b></div></div>
+    <div class="goal"><span>&rarr;</span><div>Возразить: <b>This is not my bag.</b></div></div>
+    <div class="goal"><span>&rarr;</span><div>Говорить коротко, как говорят живьём: <b>I'm</b>, <b>isn't</b>, <b>aren't</b>.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы работаем.</b> Сначала разогрев вслух, без новых слов. Дальше правило, сразу упражнение, потом говорим. Если что-то идёт тяжело, останавливаемся и добиваем, объём не главное.</div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">01</span>Разогрев: четыре вопроса про себя</h2>
+  <p class="lead">Отвечайте целой фразой, не одним словом. Это то, что у вас уже стоит.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">What is your name?</div><div class="ru">как вас зовут</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">Where are you from?</div><div class="ru">откуда вы</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">What is your work?</div><div class="ru">кем вы работаете</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">Who are your people?</div><div class="ru">расскажите про своих: муж, дети, родители</div></div></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">02</span>Разогрев: один или несколько</h2>
+  <p class="lead screen-only">Домашка тем же набором, только вперемешку. Нажимайте и смотрите, что выйдет.</p>
+  <div class="card" id="warm1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>Разогрев: впишите множественное</h2>
+  <p class="lead screen-only">Слева одна вещь, справа впишите, как будет, когда их много. Поле подсветится зелёным, когда форма верная.</p>
+  <div class="card" id="warm2"></div>
+
+<div class="tag">правило</div>
+  <h2><span class="num">04</span>Числа от 1 до 20</h2>
+
+  <div class="card">
+    <div class="nums">
+      <div class="ni"><span class="d">1</span><span class="w">one</span></div>
+      <div class="ni"><span class="d">2</span><span class="w">two</span></div>
+      <div class="ni"><span class="d">3</span><span class="w">three</span></div>
+      <div class="ni"><span class="d">4</span><span class="w">four</span></div>
+      <div class="ni"><span class="d">5</span><span class="w">five</span></div>
+      <div class="ni"><span class="d">6</span><span class="w">six</span></div>
+      <div class="ni"><span class="d">7</span><span class="w">seven</span></div>
+      <div class="ni"><span class="d">8</span><span class="w">eight</span></div>
+      <div class="ni"><span class="d">9</span><span class="w">nine</span></div>
+      <div class="ni"><span class="d">10</span><span class="w">ten</span></div>
+    </div>
+    <div class="note">Эти десять слов дальше работают как детали конструктора: из них собираются и подростковые числа, и десятки. Выучить их один раз выгоднее всего.</div>
+
+    <h3>От 11 до 20</h3>
+    <p>Первые два числа запоминаются отдельно, а с 13 начинается система: берём маленькое число и добавляем хвостик <b>-teen</b>.</p>
+    <div class="nums">
+      <div class="ni"><span class="d">11</span><span class="w">eleven</span></div>
+      <div class="ni"><span class="d">12</span><span class="w">twelve</span></div>
+      <div class="ni"><span class="d">13</span><span class="w">thirteen</span></div>
+      <div class="ni"><span class="d">14</span><span class="w">fourteen</span></div>
+      <div class="ni"><span class="d">15</span><span class="w">fifteen</span></div>
+      <div class="ni"><span class="d">16</span><span class="w">sixteen</span></div>
+      <div class="ni"><span class="d">17</span><span class="w">seventeen</span></div>
+      <div class="ni"><span class="d">18</span><span class="w">eighteen</span></div>
+      <div class="ni"><span class="d">19</span><span class="w">nineteen</span></div>
+      <div class="ni"><span class="d">20</span><span class="w">twenty</span></div>
+    </div>
+    <div class="note"><b>Три слова меняются сильнее остальных.</b> three становится <b>thirteen</b>, five становится <b>fifteen</b>, а в eight буква t не удваивается: <b>eighteen</b>. Остальные собираются ровно: four - fourteen, six - sixteen.</div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">05</span>Десятки и числа между ними</h2>
+
+  <div class="card">
+    <p>У десятков свой хвостик: <b>-ty</b>. Он очень похож на -teen, и именно на этой паре все спотыкаются.</p>
+    <div class="nums">
+      <div class="ni"><span class="d">20</span><span class="w">twenty</span></div>
+      <div class="ni"><span class="d">30</span><span class="w">thirty</span></div>
+      <div class="ni"><span class="d">40</span><span class="w">forty</span></div>
+      <div class="ni"><span class="d">50</span><span class="w">fifty</span></div>
+      <div class="ni"><span class="d">60</span><span class="w">sixty</span></div>
+      <div class="ni"><span class="d">70</span><span class="w">seventy</span></div>
+      <div class="ni"><span class="d">80</span><span class="w">eighty</span></div>
+      <div class="ni"><span class="d">90</span><span class="w">ninety</span></div>
+    </div>
+
+    <h3>13 или 30: как не перепутать</h3>
+    <table class="tbl">
+      <tr><th>число</th><th>слово</th><th>на что смотреть</th></tr>
+      <tr><td class="k">13</td><td class="v">thirteen</td><td class="r">длинный хвостик <b>-teen</b>, ударение падает на него: thir-<b>TEEN</b></td></tr>
+      <tr><td class="k">30</td><td class="v">thirty</td><td class="r">короткий хвостик <b>-ty</b>, ударение в начале: <b>THIR</b>-ty</td></tr>
+      <tr><td class="k">15</td><td class="v">fifteen</td><td class="r">fif-<b>TEEN</b></td></tr>
+      <tr><td class="k">50</td><td class="v">fifty</td><td class="r"><b>FIF</b>-ty</td></tr>
+    </table>
+    <div class="note"><b>40 пишется без u.</b> four, но <b>forty</b>. Это единственное число, где буква теряется, запомнить придётся отдельно.</div>
+
+    <h3>Составные числа: 21, 35, 48</h3>
+    <p>Берём десяток, ставим дефис, добавляем маленькое число. Никаких «и» между ними нет.</p>
+    <div class="form">десяток <span class="plus">-</span> число
+      <span class="ex">21 twenty-one &middot; 35 thirty-five &middot; 48 forty-eight &middot; 72 seventy-two</span></div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">06</span>Какое это число</h2>
+  <p class="lead screen-only">Главное тут не спутать похожие и не забыть дефис в составных.</p>
+  <div class="card" id="nums1"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">07</span>Сколько лет: How old are you?</h2>
+
+  <div class="card">
+    <p>Возраст по-английски собирается через тот же глагол to be, который мы знаем с первого занятия. Дословно получается «я есть тридцать».</p>
+    <div class="conj">
+      <div class="p">I</div><div class="v">am 35</div><div class="r">мне тридцать пять</div>
+      <div class="p">he</div><div class="v">is 40</div><div class="r">ему сорок</div>
+      <div class="p">she</div><div class="v">is 25</div><div class="r">ей двадцать пять</div>
+      <div class="p">they</div><div class="v">are 9 and 16</div><div class="r">им девять и шестнадцать</div>
+    </div>
+    <p>Можно добавить <b>years old</b>: <b>I am thirty-five years old</b>. Это полный вариант, он чуть официальнее. В обычном разговоре хватает короткого: <b>I am thirty-five</b>.</p>
+
+    <div class="wrong-right">
+      <div class="wr n">I have 35 years.</div>
+      <div class="wr y">I am 35.</div>
+    </div>
+    <p>«Иметь годы» по-английски не говорят, хотя по-русски мы говорим «мне есть тридцать пять» через «есть». Запомните один раз: возраст это <b>am</b>, <b>is</b>, <b>are</b>.</p>
+
+    <h3>Как спросить</h3>
+    <div class="conj conj4">
+      <div class="p">How old are you?</div><div class="v">сколько вам лет</div><div class="sh">собеседнику</div><div class="r">I am 35. And you?</div>
+      <div class="p">How old is he?</div><div class="v">сколько ему лет</div><div class="sh">про мужчину</div><div class="r">He is 45.</div>
+      <div class="p">How old is she?</div><div class="v">сколько ей лет</div><div class="sh">про женщину</div><div class="r">She is 32.</div>
+      <div class="p">How old are they?</div><div class="v">сколько им лет</div><div class="sh">про нескольких</div><div class="r">They are 9 and 16.</div>
+    </div>
+    <div class="note"><b>Порядок в вопросе всегда один:</b> How old - потом глагол - потом кто. С <b>you</b>, <b>we</b> и <b>they</b> это are, с <b>he</b>, <b>she</b> и <b>it</b> это is. Больше ничего менять не нужно.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">08</span>Возраст: вставьте нужное слово</h2>
+  <div class="card" id="age1"></div>
+
+    <div class="tag sp">вслух</div>
+  <h2><span class="num">09</span>Скажите вслух: числа и возраст</h2>
+  <p class="lead screen-only">Сначала скажите сами, потом нажмите на строчку и проверьте.</p>
+  <div class="card" id="numsay"></div>
+
+<div class="tag">правило</div>
+  <h2><span class="num">10</span>Not: как сказать, что это не так</h2>
+  <p class="lead">Самое простое отрицание в английском. Никаких новых слов, одно короткое <b>not</b> сразу после формы <b>to be</b>.</p>
+
+  <div class="card">
+    <div class="conj">
+      <div class="p">I am</div><div class="v">I am not</div><div class="r">я не</div>
+      <div class="p">you are</div><div class="v">you are not</div><div class="r">вы не</div>
+      <div class="p">he is</div><div class="v">he is not</div><div class="r">он не</div>
+      <div class="p">she is</div><div class="v">she is not</div><div class="r">она не</div>
+      <div class="p">it is</div><div class="v">it is not</div><div class="r">оно не</div>
+      <div class="p">we are</div><div class="v">we are not</div><div class="r">мы не</div>
+      <div class="p">they are</div><div class="v">they are not</div><div class="r">они не</div>
+      <div class="p">this is</div><div class="v">this is not</div><div class="r">это не, одно</div>
+      <div class="p">these are</div><div class="v">these are not</div><div class="r">это не, несколько</div>
+    </div>
+    <div class="note"><b>Порядок жёсткий: кто, потом форма, потом not.</b> Русское «я не повар» в английском звучит буквально «я есть не повар»: <b>I am not a cook</b>. Выкинуть <b>am</b> нельзя, иначе фраза рассыпается.</div>
+    <div class="wrong-right">
+      <div class="wr n">I not a cook.<small>форму потеряли</small></div>
+      <div class="wr y">I am not a cook.<small>кто, форма, not</small></div>
+    </div>
+  </div>
+
+
+  <div class="tag">правило</div>
+  <h2><span class="num">11</span>Сокращения: I'm, isn't, aren't</h2>
+  <p class="lead">До сих пор мы всё писали полностью. В речи два слова сливаются в одно, и касается это не только отрицания: с <b>to be</b> сокращается всё.</p>
+
+  <div class="card">
+    <h3>Как это звучит живьём</h3>
+    <p>Сначала обычные фразы, без всякого отрицания.</p>
+    <table class="tbl">
+      <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
+      <tr><td class="k">I am</td><td class="v">I'm</td><td class="ex">I'm a teacher.</td></tr>
+      <tr><td class="k">you are</td><td class="v">you're</td><td class="ex">You're my teacher.</td></tr>
+      <tr><td class="k">he is, she is, it is</td><td class="v">he's, she's, it's</td><td class="ex">She's a nurse.</td></tr>
+      <tr><td class="k">we are</td><td class="v">we're</td><td class="ex">We're from Russia.</td></tr>
+      <tr><td class="k">they are</td><td class="v">they're</td><td class="ex">They're my parents.</td></tr>
+    </table>
+    <div class="note"><b>Два места, где сокращения нет.</b> <b>This is</b> и <b>these are</b> в письме не сокращают: говорим и пишем целиком. И полная форма нигде не ошибка, она просто звучит официальнее.</div>
+
+    <h3>Теперь то же самое с not</h3>
+    <table class="tbl">
+      <tr><th>полностью</th><th>в речи</th><th>пример</th></tr>
+      <tr><td class="k">is not</td><td class="v">isn't</td><td class="ex">This isn't my bag.</td></tr>
+      <tr><td class="k">are not</td><td class="v">aren't</td><td class="ex">They aren't students.</td></tr>
+      <tr><td class="k">am not</td><td class="v">I'm not</td><td class="ex">I'm not a cook.</td></tr>
+    </table>
+
+    <h3>Исключение, одно на всю тему</h3>
+    <p>Два слова из трёх сокращаются по общему правилу, а третье - нет. Запомнить придётся только нижнюю строчку.</p>
+    <table class="tbl">
+      <tr><th>кто</th><th>короткая форма</th><th>так нельзя</th></tr>
+      <tr><td class="k">he, she, it, this</td><td class="v">isn't</td><td class="r">aren't - чужая форма</td></tr>
+      <tr><td class="k">you, we, they, these</td><td class="v">aren't</td><td class="r">isn't - чужая форма</td></tr>
+      <tr><td class="k">I</td><td class="v">I'm not</td><td class="r">amn't - такого слова в языке нет</td></tr>
+    </table>
+    <div class="note"><b>Почему так.</b> У <b>am not</b> общей короткой пары просто не сложилось. Поэтому сокращают не глагол, а само <b>I am</b>: получается <b>I'm</b>, а <b>not</b> остаётся целым словом.</div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">12</span>Слова, которыми удобно возражать</h2>
+  <p class="lead">Слова, которые в поездке звучат чаще всего именно с <b>not</b>: «не дорого», «не опоздали», «не закрыто». Дальше они будут в упражнениях и в диалоге.</p>
+  <div class="card" id="voc1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">13</span>Поставьте в отрицание</h2>
+  <p class="lead">Вставьте пропущенное. Сначала смотрите, кто действует, и только потом выбирайте.</p>
+
+  <div class="card" id="neg1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">14</span>Длинное или короткое</h2>
+  <p class="lead">Одна и та же фраза в двух видах. Выберите тот, который в языке существует.</p>
+
+  <div class="card" id="neg2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">15</span>Скажите по-английски</h2>
+  <p class="lead">Сначала скажите сами вслух, потом нажмите на строчку и проверьте.</p>
+
+  <div class="card" id="neg3"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">16</span>Сначала не так, потом как надо</h2>
+  <p class="lead">В жизни одного «не так» мало: за ним идёт правда. Две фразы подряд, по образцу <b>This is not my suitcase. This is my bag.</b></p>
+
+  <div class="card" id="neg4"></div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">17</span>Про себя: правда или нет</h2>
+  <p class="lead">Я говорю фразу про вас. Если она неверная, возразите и сразу скажите, как на самом деле.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">You are from Italy.</div><div class="ru">No, I am not from Italy. I am from Russia.</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">You are a doctor.</div><div class="ru">возразите и скажите, кем работаете</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Your city is small.</div><div class="ru">возразите и скажите, какой он</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">You are twenty.</div><div class="ru">возразите и скажите возраст</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">These are your keys.</div><div class="ru">согласитесь или возразите</div></div></div>
+  </div>
+
+    <div class="note"><b>Дальше начинается продолжение.</b> Вопрос перестановкой и короткий ответ мы берём, когда с <b>not</b> станет легко: может быть, в конце этого занятия, может быть, в начале следующего. Эти разделы можно читать и дома, там есть и правило, и упражнения с проверкой.</div>
+
+<div class="tag">правило</div>
+  <h2><span class="num">18</span>Вопрос: просто поменять местами</h2>
+  <p class="lead">В английском вопрос с <b>to be</b> не требует новых слов. Берём фразу и ставим форму на первое место.</p>
+
+  <div class="card">
+    <div class="conj">
+      <div class="p">You are a teacher.</div><div class="v">Are you a teacher?</div><div class="r">вы учитель?</div>
+      <div class="p">He is from Italy.</div><div class="v">Is he from Italy?</div><div class="r">он из Италии?</div>
+      <div class="p">This is your bag.</div><div class="v">Is this your bag?</div><div class="r">это ваша сумка?</div>
+      <div class="p">These are your keys.</div><div class="v">Are these your keys?</div><div class="r">это ваши ключи?</div>
+    </div>
+    <div class="note">Один такой вопрос вы уже знаете с этого занятия: <b>How old are you?</b> Там форма тоже стоит впереди. Голос в конце вопроса идёт вверх. В русском вопрос тоже слышно по голосу, без всяких лишних слов - здесь работает так же.</div>
+  </div>
+
+  <div class="card">
+    <h3>Короткий ответ</h3>
+    <p>На такой вопрос по-английски не отвечают одним <b>yes</b>: это звучит грубовато. Ответ короткий, но с местоимением и формой.</p>
+    <table class="tbl">
+      <tr><th>вопрос</th><th>да</th><th>нет</th></tr>
+      <tr><td class="k">Are you a cook?</td><td class="v">Yes, I am.</td><td class="r">No, I am not.</td></tr>
+      <tr><td class="k">Is she a nurse?</td><td class="v">Yes, she is.</td><td class="r">No, she isn't.</td></tr>
+      <tr><td class="k">Is this your bag?</td><td class="v">Yes, it is.</td><td class="r">No, it isn't.</td></tr>
+      <tr><td class="k">Are these your photos?</td><td class="v">Yes, they are.</td><td class="r">No, they aren't.</td></tr>
+    </table>
+    <div class="note"><b>Про this и these в ответе.</b> Вопрос был <b>Is this...</b>, а отвечаем <b>Yes, it is</b>: вещь уже назвали, и она стала <b>it</b>. Про несколько то же самое: <b>Are these...</b> и <b>Yes, they are</b>.</div>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">19</span>Соберите вопрос</h2>
+  <p class="lead">Те же слова, что в утверждении, только порядок другой.</p>
+
+  <div class="card build" id="b2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">20</span>Короткий ответ</h2>
+  <p class="lead">Выберите ответ, который подходит к вопросу.</p>
+
+  <div class="card" id="short"></div>
+
+  <div class="tag sp">вслух</div>
+  <h2><span class="num">21</span>Теперь спрашиваете вы</h2>
+  <p class="lead">Задайте мне пять вопросов, на которые я отвечу <b>yes</b> или <b>no</b>. Про меня, про мою работу, про мой город, про моих людей.</p>
+
+  <div class="card">
+    <div class="ph"><div class="n">1</div><div class="txt"><div class="en">Are you...?</div><div class="ru">профессия</div></div></div>
+    <div class="ph"><div class="n">2</div><div class="txt"><div class="en">Are you from...?</div><div class="ru">страна или город</div></div></div>
+    <div class="ph"><div class="n">3</div><div class="txt"><div class="en">Is your city...?</div><div class="ru">какой он</div></div></div>
+    <div class="ph"><div class="n">4</div><div class="txt"><div class="en">Is this...?</div><div class="ru">покажите на вещь в камере</div></div></div>
+    <div class="ph"><div class="n">5</div><div class="txt"><div class="en">Are these...?</div><div class="ru">покажите на несколько вещей</div></div></div>
+  </div>
+
+    <div class="tag sp">вслух</div>
+  <h2><span class="num">22</span>Диалог: знакомство, в котором не всё так</h2>
+  <p class="lead">Прочитайте за обе роли, потом сыграем со мной. Ваши строчки собраны только из того, что есть на этой странице.</p>
+
+  <div class="card" id="dlgCard">
+    <div class="say"><i>он</i><div class="t">Hello! Are you Irina?</div></div>
+    <div class="say"><i>вы</i><div class="t">Yes, I am. Nice to meet you.</div></div>
+    <div class="say"><i>он</i><div class="t">Nice to meet you too. Are you from Moscow?</div></div>
+    <div class="say"><i>вы</i><div class="t">No, I am not. I am from Khimki.</div></div>
+    <div class="say"><i>он</i><div class="t">Is this your suitcase?</div></div>
+    <div class="say"><i>вы</i><div class="t">No, it isn't. This is my bag. These are my tickets.</div></div>
+    <div class="say"><i>он</i><div class="t">Are you tired?</div></div>
+    <div class="say"><i>вы</i><div class="t">Yes, I am. But I am happy.</div></div>
+    <div class="say"><i>он</i><div class="t">How old are your children?</div></div>
+    <div class="say"><i>вы</i><div class="t">They are nine and sixteen. They are at home.</div></div>
+    <div class="say"><i>он</i><div class="t">Have a nice day!</div></div>
+    <div class="say"><i>вы</i><div class="t">Thank you! See you.</div></div>
+  </div>
+
+  <h2><span class="num">23</span>Фразы занятия</h2>
+  <p class="lead">Всё, что сегодня было, одним списком. Кнопка убирает перевод: открывайте её, когда захотите проверить себя.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">How old are you?</div><div class="ru">Сколько вам лет?</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">I am thirty-five.</div><div class="ru">Мне тридцать пять.</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">How old is your daughter?</div><div class="ru">Сколько лет вашей дочери?</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">She is sixteen years old.</div><div class="ru">Ей шестнадцать лет.</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">I am not a cook.</div><div class="ru">Я не повар.</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">This is not my bag.</div><div class="ru">Это не моя сумка.</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">These are not my keys.</div><div class="ru">Это не мои ключи.</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">He isn't from Russia.</div><div class="ru">Он не из России.</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">They aren't my parents.</div><div class="ru">Они не мои родители.</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I'm not tired.</div><div class="ru">Я не устала.</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">It is not expensive.</div><div class="ru">Это не дорого.</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">Are you a teacher?</div><div class="ru">Вы учитель?</div></div></div>
+    <div class="ph"><div class="n">13</div><div class="txt"><div class="en">Yes, I am. / No, I am not.</div><div class="ru">Да. / Нет.</div></div></div>
+    <div class="ph"><div class="n">14</div><div class="txt"><div class="en">Is this your ticket?</div><div class="ru">Это ваш билет?</div></div></div>
+    <div class="ph"><div class="n">15</div><div class="txt"><div class="en">No, it isn't.</div><div class="ru">Нет.</div></div></div>
+    <div class="bar screen-only"><button class="btn" id="hideRu" type="button">Спрятать перевод</button></div>
+  </div>
+
+  <div class="note" style="margin-top:28px">
+    <b>Если захочется повторить самой.</b> Пройдите страницу второй раз через день и третий раз через неделю. На второй заход закрывайте русский перевод рукой и смотрите только на английскую фразу.</div>
+
+  <div class="foot">English for travel &middot; урок 4 &middot; Кристина<span class="ver">числа, возраст, отрицание, вопрос</span></div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+function vocab(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var d = document.createElement("div"); d.className = "vi";
+    d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+    host.appendChild(d);
+  });
+}
+
+function writeBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var r = document.createElement("div"); r.className = "wr-row";
+    var one = document.createElement("div"); one.className = "one";
+    one.innerHTML = it.one + '<em>' + it.ru + '</em>';
+    var inp = document.createElement("input");
+    inp.type = "text"; inp.placeholder = "когда их много";
+    inp.setAttribute("autocomplete", "off");
+    inp.setAttribute("autocapitalize", "off");
+    inp.spellcheck = false;
+    inp.addEventListener("input", function(){
+      var v = inp.value.trim().toLowerCase();
+      if(v === it.many) inp.className = "ok"; else inp.className = "";
+    });
+    r.appendChild(one); r.appendChild(inp);
+    host.appendChild(r);
+  });
+}
+
+function choiceBlock(id, items, tall){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(it){
+    var q = document.createElement("div"); q.className = "q";
+    var stem = document.createElement("div"); stem.className = "stem";
+    stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+    q.appendChild(stem);
+    var opts = document.createElement("div"); opts.className = "opts";
+    var fb = document.createElement("div"); fb.className = "fb";
+    it.opts.forEach(function(o, idx){
+      var b = document.createElement("button");
+      b.className = "opt" + (tall ? " tall" : "");
+      b.type = "button"; b.textContent = o;
+      b.addEventListener("click", function(){
+        var right = idx === it.ok;
+        b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+        fb.className = "fb show " + (right ? "y" : "n");
+        fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуйте другой вариант");
+        if(right){
+          var all = opts.querySelectorAll(".opt");
+          for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+        }
+      });
+      opts.appendChild(b);
+    });
+    q.appendChild(opts); q.appendChild(fb);
+    host.appendChild(q);
+  });
+}
+
+function buildBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(b){
+    var q = document.createElement("div"); q.className = "q";
+    var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+    var slot = document.createElement("div"); slot.className = "slot";
+    var pool = document.createElement("div"); pool.className = "pool";
+    var res = document.createElement("div"); res.className = "res";
+    function check(){
+      var got = [], t = slot.querySelectorAll(".tok");
+      for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+      if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+      if(got.join(" ") === b.ok){
+        res.className = "res y"; res.textContent = "Верно: " + b.ok;
+      } else {
+        res.className = "res n"; res.textContent = "Пока не то. Верните слова и попробуйте иначе";
+      }
+    }
+    b.words.forEach(function(w){
+      var t = document.createElement("button");
+      t.className = "tok"; t.type = "button"; t.textContent = w;
+      t.addEventListener("click", function(){
+        if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+        check();
+      });
+      pool.appendChild(t);
+    });
+    q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+    host.appendChild(q);
+  });
+}
+
+function revealBlock(id, items){
+  var host = document.getElementById(id);
+  if(!host) return;
+  items.forEach(function(p){
+    var w = document.createElement("div"); w.className = "pair";
+    var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+    b.textContent = p.ru;
+    var a = document.createElement("div"); a.className = "ans";
+    a.innerHTML = p.en;
+    b.addEventListener("click", function(){ a.classList.toggle("show"); });
+    w.appendChild(b); w.appendChild(a);
+    host.appendChild(w);
+  });
+}
+
+
+/* ========== 02. разогрев: один или несколько ========== */
+choiceBlock("warm1", [
+  {stem:"<u></u> my husband.", ru:"это мой муж", opts:["This is","These are"], ok:0, why:"Верно, он один.", no:"Один человек, значит this is."},
+  {stem:"<u></u> my children.", ru:"это мои дети", opts:["This is","These are"], ok:1, why:"Верно, children это несколько.", no:"Детей несколько, значит these are."},
+  {stem:"My parents <u></u> from Khimki.", ru:"мои родители из Химок", opts:["is","are"], ok:1, why:"Верно.", no:"Их несколько, значит are."},
+  {stem:"We <u></u> a big family.", ru:"мы большая семья", opts:["is","are"], ok:1, why:"Верно, с we всегда are.", no:"We берёт are."},
+  {stem:"My daughter <u></u> a student.", ru:"моя дочь студентка", opts:["is","are"], ok:0, why:"Верно, она одна.", no:"Один человек, значит is."},
+  {stem:"These <u></u> my tickets.", ru:"это мои билеты", opts:["is","are"], ok:1, why:"Верно, these и are всегда вместе.", no:"После these идёт are."},
+  {stem:"My colleagues <u></u> kind.", ru:"мои коллеги добрые", opts:["is","are"], ok:1, why:"Верно.", no:"Слово с s на конце берёт are."},
+  {stem:"<u></u> my passport.", ru:"это мой паспорт", opts:["This is","These are"], ok:0, why:"Верно.", no:"Паспорт один, значит this is."}
+]);
+
+/* ========== 03. разогрев: впишите множественное ========== */
+writeBlock("warm2", [
+  {one:"a ticket", ru:"билет", many:"tickets"},
+  {one:"a suitcase", ru:"чемодан", many:"suitcases"},
+  {one:"a bus", ru:"автобус", many:"buses"},
+  {one:"a city", ru:"город", many:"cities"},
+  {one:"a photo", ru:"фотография", many:"photos"},
+  {one:"a woman", ru:"женщина", many:"women"},
+  {one:"a child", ru:"ребёнок", many:"children"},
+  {one:"a key", ru:"ключ", many:"keys"}
+]);
+
+/* ========== 09. скажите вслух: числа и возраст ========== */
+revealBlock("numsay", [
+  {ru:"Мне сорок два.", en:"I am forty-two."},
+  {ru:"Сколько вам лет?", en:"How old are you?"},
+  {ru:"Моей дочери шестнадцать.", en:"My daughter is sixteen."},
+  {ru:"Сколько лет вашему сыну?", en:"How old is your son?"},
+  {ru:"Ему девять лет.", en:"He is nine years old."},
+  {ru:"Им тридцать и тридцать пять.", en:"They are thirty and thirty-five."},
+  {ru:"Моей маме семьдесят.", en:"My mother is seventy."},
+  {ru:"Сколько лет вашим детям?", en:"How old are your children?"}
+]);
+
+/* ========== 12. слова для возражений ========== */
+vocab("voc1", [
+  ["tired","уставший, устала"],
+  ["late","поздно, опоздал"],
+  ["expensive","дорогой"],
+  ["cheap","дешёвый"],
+  ["free","свободный, бесплатный"],
+  ["a friend","друг"],
+  ["at home","дома"],
+  ["at work","на работе"],
+  ["open","открыто"],
+  ["closed","закрыто"],
+  ["but","но"]
+]);
+
+choiceBlock("nums1", [
+  {stem:'13', opts:["thirty","thirteen"], ok:1, why:"Верно. длинный хвостик teen, ударение на него"},
+  {stem:'30', opts:["thirty","thirteen"], ok:0, why:"Верно. короткий хвостик ty"},
+  {stem:'15', opts:["fifty","fifteen"], ok:1, why:"Верно"},
+  {stem:'50', opts:["fifty","fifteen"], ok:0, why:"Верно"},
+  {stem:'40', opts:["fourty","forty"], ok:1, why:"Верно. в сороковке буква u теряется"},
+  {stem:'12', opts:["twelve","twenteen"], ok:0, why:"Верно. двенадцать своё отдельное слово"},
+  {stem:'21', opts:["twenty one","twenty-one"], ok:1, why:"Верно. в составных стоит дефис"},
+  {stem:'48', opts:["forty-eight","four-eight"], ok:0, why:"Верно"},
+  {stem:'70', opts:["seventeen","seventy"], ok:1, why:"Верно"},
+  {stem:'19', opts:["ninety","nineteen"], ok:1, why:"Верно"}
+]);
+
+choiceBlock("age1", [
+  {stem:'How old <u></u> you?', ru:'сколько вам лет', opts:["am","is","are"], ok:2, why:"Верно. с you всегда are"},
+  {stem:'I <u></u> thirty-five.', ru:'мне тридцать пять', opts:["am","is","are"], ok:0, why:"Верно"},
+  {stem:'How old <u></u> he?', ru:'сколько ему лет', opts:["am","is","are"], ok:1, why:"Верно"},
+  {stem:'They <u></u> nine and sixteen.', ru:'им девять и шестнадцать', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'My daughter <u></u> sixteen.', ru:'моей дочери шестнадцать', opts:["am","is","are"], ok:1, why:"Верно. дочь одна, значит is"},
+  {stem:'How old <u></u> they?', ru:'сколько им лет', opts:["am","is","are"], ok:2, why:"Верно"},
+  {stem:'I am thirty-five <u></u> old.', ru:'мне тридцать пять лет', opts:["year","years"], ok:1, why:"Верно. лет несколько, значит years"},
+  {stem:'I <u></u> 35.', ru:'мне тридцать пять', opts:["have","am"], ok:1, why:"Верно. возраст это am, а не «иметь годы»"}
+]);
+
+/* ========== 13. поставьте в отрицание ========== */
+choiceBlock("neg1", [
+  {stem:"I <u></u> a doctor.", ru:"я не врач", opts:["am not","is not","are not"], ok:0, why:"Верно, у I форма am.", no:"С I идёт am, значит am not."},
+  {stem:"He <u></u> from Spain.", ru:"он не из Испании", opts:["am not","is not","are not"], ok:1, why:"Верно.", no:"Он один, значит is not."},
+  {stem:"They <u></u> my friends.", ru:"они не мои друзья", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"Их несколько, значит are not."},
+  {stem:"This <u></u> my bag.", ru:"это не моя сумка", opts:["is not","are not","am not"], ok:0, why:"Верно, одна вещь.", no:"This берёт is, значит is not."},
+  {stem:"These <u></u> my keys.", ru:"это не мои ключи", opts:["is not","are not","am not"], ok:1, why:"Верно.", no:"These берёт are, значит are not."},
+  {stem:"We <u></u> tired.", ru:"мы не устали", opts:["am not","are not","is not"], ok:1, why:"Верно.", no:"We берёт are."},
+  {stem:"My city <u></u> small.", ru:"мой город не маленький", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Город один, значит is not."},
+  {stem:"My photos <u></u> in my phone.", ru:"моих фотографий нет в телефоне", opts:["is not","are not","am not"], ok:1, why:"Верно, их много.", no:"Слово с s на конце берёт are not."},
+  {stem:"You <u></u> late.", ru:"вы не опоздали", opts:["is not","are not","am not"], ok:1, why:"Верно, you всегда are.", no:"You берёт are, значит are not."},
+  {stem:"It <u></u> expensive.", ru:"это не дорого", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"It берёт is, значит is not."},
+  {stem:"My mother <u></u> a nurse.", ru:"моя мама не медсестра", opts:["is not","are not","am not"], ok:0, why:"Верно.", no:"Один человек, значит is not."},
+  {stem:"My children <u></u> at home.", ru:"детей нет дома", opts:["is not","are not","am not"], ok:1, why:"Верно, их несколько.", no:"Children это несколько, значит are not."}
+]);
+
+/* ========== 14. длинное или короткое ========== */
+choiceBlock("neg2", [
+  {stem:"He <u></u> a cook.", ru:"он не повар", opts:["isn't","amn't"], ok:0, why:"Верно. Is not сокращается в isn't.", no:"Слова amn't в языке нет совсем."},
+  {stem:"I <u></u> a teacher.", ru:"я не учитель", opts:["I'm not","I amn't"], ok:0, why:"Верно. У am короткой пары нет, говорят I'm not.", no:"Правильно только I'm not: сокращается I am, а not остаётся."},
+  {stem:"They <u></u> my friends.", ru:"они не мои друзья", opts:["aren't","isn't"], ok:0, why:"Верно, are not это aren't.", no:"Их несколько, значит aren't."},
+  {stem:"This <u></u> my bag.", ru:"это не моя сумка", opts:["isn't","aren't"], ok:0, why:"Верно.", no:"This берёт is, значит isn't."},
+  {stem:"These <u></u> my keys.", ru:"это не мои ключи", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"These берёт are, значит aren't."},
+  {stem:"We <u></u> tired.", ru:"мы не устали", opts:["aren't","isn't"], ok:0, why:"Верно.", no:"We берёт are, значит aren't."}
+]);
+
+/* ========== 15. скажите по-английски ========== */
+revealBlock("neg3", [
+  {ru:"Я не повар.", en:"I am not a cook. / I'm not a cook."},
+  {ru:"Он не из Англии.", en:"He is not from England. / He isn't from England."},
+  {ru:"Это не моя сумка.", en:"This is not my bag. / This isn't my bag."},
+  {ru:"Это не мои ключи.", en:"These are not my keys. / These aren't my keys."},
+  {ru:"Мы не устали.", en:"We are not tired. / We aren't tired."},
+  {ru:"Они не студенты.", en:"They are not students. / They aren't students."},
+  {ru:"Моя мама не врач.", en:"My mother is not a doctor."},
+  {ru:"Мой город не маленький.", en:"My city is not small."},
+  {ru:"Это не дорого.", en:"It is not expensive."},
+  {ru:"Я не из Италии, я из России.", en:"I am not from Italy, I am from Russia."}
+]);
+
+/* ========== 16. сначала не так, потом как надо ========== */
+revealBlock("neg4", [
+  {ru:"Это не мой чемодан. Это моя сумка.", en:"This is not my suitcase. This is my bag."},
+  {ru:"Он не врач. Он водитель.", en:"He is not a doctor. He is a driver."},
+  {ru:"Они не из Испании. Они из Италии.", en:"They are not from Spain. They are from Italy."},
+  {ru:"Это не мои билеты. Это мои фотографии.", en:"These are not my tickets. These are my photos."},
+  {ru:"Ей не тридцать. Ей тринадцать.", en:"She is not thirty. She is thirteen."},
+  {ru:"Моя мама не учитель. Она медсестра.", en:"My mother is not a teacher. She is a nurse."},
+  {ru:"Мы не студенты. Мы учителя.", en:"We are not students. We are teachers."},
+  {ru:"Мой город не маленький. Он большой.", en:"My city is not small. It is big."}
+]);
+
+buildBlock("b2", [
+  {ru:"Вы учитель?", words:["Are","you","a","teacher"], ok:"Are you a teacher"},
+  {ru:"Он из Италии?", words:["Is","he","from","Italy"], ok:"Is he from Italy"},
+  {ru:"Это ваша сумка?", words:["Is","this","your","bag"], ok:"Is this your bag"},
+  {ru:"Это ваши ключи?", words:["Are","these","your","keys"], ok:"Are these your keys"},
+  {ru:"Они ваши друзья?", words:["Are","they","your","friends"], ok:"Are they your friends"},
+  {ru:"Ваш город большой?", words:["Is","your","city","big"], ok:"Is your city big"},
+  {ru:"Вы устали?", words:["Are","you","tired"], ok:"Are you tired"},
+  {ru:"Это дорого?", words:["Is","it","expensive"], ok:"Is it expensive"}
+]);
+
+choiceBlock("short", [
+  {stem:"Are you a teacher?", ru:"да", opts:["Yes, I am.","Yes, I is."], ok:0, why:"Верно.", no:"С I идёт am."},
+  {stem:"Is he a cook?", ru:"да", opts:["Yes, he is.","Yes, he are."], ok:0, why:"Верно.", no:"Он один, значит is."},
+  {stem:"Is this your bag?", ru:"нет", opts:["No, it isn't.","No, this isn't."], ok:0, why:"Верно. Вещь уже назвали, дальше она it.", no:"В коротком ответе this превращается в it."},
+  {stem:"Are these your keys?", ru:"да", opts:["Yes, they are.","Yes, these are."], ok:0, why:"Верно, дальше они they.", no:"В коротком ответе these превращается в they."},
+  {stem:"Are they students?", ru:"нет", opts:["No, they aren't.","No, they isn't."], ok:0, why:"Верно.", no:"Их несколько, значит aren't."},
+  {stem:"Are you from Spain?", ru:"нет", opts:["No, I am not.","No, I not am."], ok:0, why:"Верно.", no:"Порядок жёсткий: I am not."},
+  {stem:"Is your city big?", ru:"да", opts:["Yes, it is.","Yes, is it."], ok:0, why:"Верно. Сначала кто, потом форма.", no:"В ответе порядок обычный, не как в вопросе."},
+  {stem:"Is she your daughter?", ru:"да", opts:["Yes, she is.","Yes, it is."], ok:0, why:"Верно, про человека she.", no:"Про человека говорим she, а не it."}
+]);
+
+onClick("hideRu", function(){
+  var card = document.getElementById("phrasesCard");
+  if(!card) return;
+  card.classList.toggle("hide-ru");
+  this.textContent = card.classList.contains("hide-ru") ? "Показать перевод" : "Спрятать перевод";
+});
+
+})();
+</script>
+</body>
+</html>
