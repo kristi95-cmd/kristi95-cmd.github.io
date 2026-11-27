@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 3. Is there a kettle in the room?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- таблица is/are ---------- */
+  .grid3{display:grid; grid-template-columns:auto auto 1fr; gap:0 14px; font-size:19px; margin:4px 0}
+  .grid3 div{padding:8px 0; border-bottom:1px solid var(--line)}
+  .grid3 .p{font-weight:800}
+  .grid3 .v{font-weight:800; color:var(--accent)}
+  .grid3 .r{color:var(--soft); font-size:15px; align-self:center}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  /* раскрывашка */
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .ans{display:none; padding:10px 14px 2px; font-size:18px; font-weight:700}
+  .ans.show{display:block}
+  .pair{margin:10px 0}
+  .pair .ru{font-size:16px; color:var(--soft); margin-bottom:6px}
+
+  /* диалог */
+  .dlg div{padding:7px 0; font-size:17px; border-bottom:1px solid var(--line)}
+  .dlg div:last-child{border-bottom:none}
+  .dlg .who{display:inline-block; min-width:30px; font-weight:800; color:var(--accent)}
+  .dlg .tr{display:block; color:var(--mute); font-size:14px; margin-left:30px}
+  .dlg.hide-a .a .ln, .dlg.hide-a .a .tr{visibility:hidden}
+  .dlg.hide-b .b .ln, .dlg.hide-b .b .tr{visibility:hidden}
+
+  /* чек-лист */
+  .check label{display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:16px; cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{width:22px; height:22px; accent-color:var(--accent); flex:none; margin:1px 0 0}
+  .check input:checked + span{color:var(--mute); text-decoration:line-through}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .rev{background:none; padding:0 0 2px; font-weight:600; color:var(--soft); font-size:16px}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.pair,.note,.hw,.dlg div,.check label{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .ans{display:block !important}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+    .hw{background:var(--tile); color:var(--ink)}
+    .hw h3{color:var(--accent)}
+    .hw .small{color:var(--soft)}
+  }
+
+  /* ---------- спряжение ---------- */
+  .conj{display:grid; grid-template-columns:auto auto 1fr; gap:0 12px; font-size:18px; margin:2px 0}
+  .conj div{padding:9px 0; border-bottom:1px solid var(--line)}
+  .conj .p{font-weight:800}
+  .conj .v{font-weight:800; color:var(--accent)}
+  .conj .r{color:var(--soft); font-size:14px; align-self:center}
+  .conj .sh{color:var(--mute); font-size:14px; font-weight:700}
+  .conj4{grid-template-columns:auto auto auto 1fr}
+  @media (max-width:560px){
+    .conj, .conj4{grid-template-columns:1fr; gap:0}
+    .conj > div, .conj4 > div{border-bottom:none !important; padding:1px 0}
+    .conj:not(.conj4) > div:nth-child(3n+1), .conj4 > div:nth-child(4n+1){
+      border-top:1px solid var(--line); margin-top:12px; padding-top:12px}
+    .conj > div:nth-child(1){border-top:none; margin-top:0; padding-top:0}
+    .conj .r, .conj4 .r, .conj4 .sh{font-size:14px}
+    .conj > div:empty, .conj4 > div:empty{display:none}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px}
+  .tag.later{background:#eee8f3; color:#5c3d7a}
+  .tag{margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for travel &middot; урок 3</div>
+    <h1>Is there a kettle in the room?<em>There is, there are и вежливая просьба</em></h1>
+    <p>После аэропорта идёт ресепшен. Сегодня одна короткая конструкция, которой описывают любое место, слова про номер в отеле и две формы просьбы, чтобы получить то, что тебе нужно.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Говоришь, что в номере есть и чего в нём нет.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Заселяешься: бронь, паспорт, завтрак, время выезда.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Объясняешь проблему и просишь так, чтобы это звучало вежливо.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Разбираем вместе на занятии: правило, сразу упражнение к нему, говорим вслух. Дома повторяешь по этому же листу.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>There is и there are: что где есть</h2>
+  <p class="lead">Одна конструкция на всё, что находится в каком-то месте.</p>
+
+  <div class="card">
+    <div class="form">there is <span class="plus">+</span> один предмет<span class="ex">There is a kettle in the room. &middot; There is a balcony.</span></div>
+    <div class="form">there are <span class="plus">+</span> несколько<span class="ex">There are two beds. &middot; There are towels in the bathroom.</span></div>
+
+    <h3>Зачем она нужна</h3>
+    <p>Когда ты впервые называешь то, что где-то находится, по-русски ты говоришь «в номере есть чайник» или просто «в номере чайник». В английском так нельзя: предложение начинается с <b>there is</b> или <b>there are</b>.</p>
+    <div class="wrong-right">
+      <div class="wr n">In the room a kettle<small>нет начала фразы</small></div>
+      <div class="wr y">There is a kettle in the room<small>в номере есть чайник</small></div>
+    </div>
+
+    <h3>Выбор между is и are</h3>
+    <p>Смотри на слово сразу после <b>there is</b> или <b>there are</b>. Один предмет - <b>is</b>, несколько - <b>are</b>. Что стоит дальше в предложении, значения не имеет.</p>
+    <div class="conj">
+      <div class="p">один</div><div class="v">there is</div><div class="r">There is a towel on the bed.</div>
+      <div class="p">несколько</div><div class="v">there are</div><div class="r">There are two towels on the bed.</div>
+      <div class="p">без счёта</div><div class="v">there is</div><div class="r">There is hot water. There is wifi in the hotel.</div>
+    </div>
+    <p>Вода, вайфай, место, шум - это то, что не считают поштучно. С ними всегда <b>there is</b>.</p>
+
+    <h3>Чем это отличается от it is</h3>
+    <p>Разница такая же, как между «есть» и «он». <b>There is</b> называет предмет в первый раз, <b>it is</b> говорит про уже названный.</p>
+    <div class="conj">
+      <div class="p">называем</div><div class="v">There is a safe in the room.</div><div class="r">в номере есть сейф</div>
+      <div class="p">продолжаем</div><div class="v">It is very small.</div><div class="r">он очень маленький</div>
+      <div class="p">называем</div><div class="v">There are two windows.</div><div class="r">там два окна</div>
+      <div class="p">продолжаем</div><div class="v">They are big.</div><div class="r">они большие</div>
+    </div>
+  </div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>Нет, вопрос и короткий ответ</h2>
+  <p class="lead">Та же конструкция, только собранная иначе.</p>
+
+  <div class="card">
+    <h3>Чего-то нет</h3>
+    <div class="form">there is no <span class="plus">+</span> один<span class="ex">There is no hairdryer in the room.</span></div>
+    <div class="form">there are no <span class="plus">+</span> несколько<span class="ex">There are no towels in the bathroom.</span></div>
+    <p>Есть второй вариант, он звучит мягче и в речи встречается чаще: <b>there isn't a hairdryer</b>, <b>there aren't towels</b>. Оба правильные, бери тот, который быстрее вспомнится.</p>
+
+    <h3>Вопрос</h3>
+    <p>В вопросе <b>is</b> и <b>are</b> выходят вперёд, ровно как в <i>Is it cold?</i></p>
+    <div class="conj">
+      <div class="p">один</div><div class="v">Is there...?</div><div class="r">Is there a kettle in the room?</div>
+      <div class="p">несколько</div><div class="v">Are there...?</div><div class="r">Are there towels in the bathroom?</div>
+      <div class="p">сколько</div><div class="v">How many...?</div><div class="r">How many beds are there in the room?</div>
+    </div>
+
+    <h3>Короткий ответ</h3>
+    <div class="conj">
+      <div class="p">да</div><div class="v">Yes, there is.</div><div class="r">Yes, there are.</div>
+      <div class="p">нет</div><div class="v">No, there isn't.</div><div class="r">No, there aren't.</div>
+    </div>
+    <p>Отвечать одним <i>yes</i> можно, но звучит сухо. Короткий ответ целиком это то, как говорят на самом деле.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">03</span>Is или are</h2>
+  <p class="lead">Смотри на слово сразу после there.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">04</span>Скажи, что этого нет</h2>
+  <p class="lead">Выбирай правильный вариант отрицания.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">05</span>Собери вопрос</h2>
+  <p class="lead">Слова вразброс, порядок собираешь сама.</p>
+  <div class="card build" id="ex3"></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">06</span>Номер и что в нём есть</h2>
+  <p class="lead">То, про что чаще всего спрашивают на заселении.</p>
+  <div class="card voc" id="voc1"></div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">07</span>Заселение, выезд и проблемы</h2>
+  <p class="lead">Вторая половина слов: что происходит на ресепшене и что может пойти не так.</p>
+  <div class="card voc" id="voc2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">08</span>Какая фраза правильная</h2>
+  <p class="lead">По две фразы, выбирай ту, которая собрана верно.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">09</span>Can и could: просьба и разрешение</h2>
+  <p class="lead">Два слова, которыми получают всё остальное.</p>
+
+  <div class="card">
+    <div class="form">Can I <span class="plus">+</span> глагол<span class="ex">Can I have another towel? &middot; Can I pay by card?</span></div>
+    <div class="form">Could you <span class="plus">+</span> глагол<span class="ex">Could you bring me a blanket? &middot; Could you change the room?</span></div>
+
+    <h3>В чём разница</h3>
+    <p><b>Can I</b> это про себя: можно мне, могу ли я. <b>Could you</b> это просьба к другому человеку. <b>Could</b> вежливее, чем <b>can</b>, и в отеле лучше брать именно его: ты просишь незнакомого человека что-то сделать.</p>
+    <div class="conj">
+      <div class="p">можно мне</div><div class="v">Can I have the key, please?</div><div class="r">можно мне ключ</div>
+      <div class="p">можете ли вы</div><div class="v">Could you help me, please?</div><div class="r">можете мне помочь</div>
+      <div class="p">я умею</div><div class="v">I can speak a little English.</div><div class="r">я немного говорю по-английски</div>
+      <div class="p">я не могу</div><div class="v">I can't open the window.</div><div class="r">я не могу открыть окно</div>
+    </div>
+    <p>После <b>can</b> и <b>could</b> глагол всегда голый: без <b>to</b> и без <b>s</b>, даже если речь про he или she.</p>
+    <div class="wrong-right">
+      <div class="wr n">Could you to bring a towel?<small>лишнее to</small></div>
+      <div class="wr y">Could you bring a towel?<small>голый глагол</small></div>
+    </div>
+    <p>И слово <b>please</b>. В английской просьбе оно не вежливый довесок, а часть фразы: без него просьба звучит как команда.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">10</span>Can или could</h2>
+  <p class="lead">Выбери то, что уместнее в этой ситуации.</p>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">11</span>Опиши свой номер</h2>
+  <p class="lead">Вспомни отель, в котором жила, и скажи вслух целыми предложениями. Пять-шесть фраз с there is и there are, и ещё две с there is no.</p>
+  <div class="card" id="ex6"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">12</span>Диалог на ресепшене</h2>
+  <p class="lead">Сначала читаем вместе, потом ты за гостя без подглядывания.</p>
+
+  <div class="card">
+    <div class="dlg" id="dlg">
+      <div class="a"><span class="who">A</span><span class="ln">Good evening! Do you have a reservation?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Yes, I do. I have a reservation for five nights.</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Can I see your passport, please?</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Here you are. Is breakfast included?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Yes, it is. Breakfast starts at seven and finishes at ten.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Is there a kettle in the room?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Yes, there is. There is also a safe and a hairdryer.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Could you give me a room with a balcony?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Of course. Room 305. Here is your key card.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Sorry, can you repeat the room number, please?</span></div>
+      <div class="a"><span class="who">A</span><span class="ln">Three zero five. The lift is on the right.</span></div>
+      <div class="b"><span class="who">B</span><span class="ln">Thank you. What time is check-out?</span></div>
+    </div>
+    <div class="bar">
+      <button class="btn" type="button" data-hide="a">Спрятать реплики A</button>
+      <button class="btn" type="button" data-hide="b">Спрятать реплики B</button>
+    </div>
+  </div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">13</span>Ролевая: три круга</h2>
+  <p class="lead">Я на ресепшене, ты гость. Каждый круг начинаем заново.</p>
+
+  <div class="card">
+    <div class="q"><div class="stem">1. Обычное заселение. Бронь есть, тебе нужно узнать про завтрак, вайфай и время выезда.</div></div>
+    <div class="q"><div class="stem">2. Ты в номере, и там проблема. Не работает кондиционер, нет полотенец, из окна шумно. Объясни и попроси починить или поменять номер.</div></div>
+    <div class="q"><div class="stem">3. Брони не находят. Ты объясняешь, на какую фамилию и на сколько ночей, и просишь посмотреть ещё раз. Я говорю быстро, ты просишь повторить.</div></div>
+  </div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">14</span>Спроси сама</h2>
+  <p class="lead">Ситуация по-русски, вопрос по-английски. Вслух, целым предложением.</p>
+  <div class="card" id="ex7"></div>
+
+  <div class="tag sp">перевод</div>
+  <h2><span class="num">15</span>Переведи вслух</h2>
+  <p class="lead">Десять фраз подряд, без пауз на подумать.</p>
+  <div class="card" id="ex8"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">16</span>Минута без остановки</h2>
+  <p class="lead">Одна минута про отель, в котором ты хочешь жить в Индии. Что в нём есть, чего в нём нет, что для тебя важно. Молчать нельзя, ошибаться можно.</p>
+
+  <div class="card">
+    <div class="q"><div class="stem">Опорные слова: <b>there is</b>, <b>there are</b>, <b>there is no</b>, <b>near the sea</b>, <b>quiet</b>, <b>clean</b>, <b>breakfast</b>, <b>balcony</b>, <b>air conditioning</b>.</div></div>
+  </div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">17</span>Фразы урока</h2>
+  <p class="lead">Всё сегодняшнее в двенадцати фразах. Дома закрывай перевод и проговаривай вслух.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">I have a reservation for five nights.</div><div class="ru">у меня бронь на пять ночей</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">Is breakfast included?</div><div class="ru">завтрак включён</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">Is there a kettle in the room?</div><div class="ru">в номере есть чайник</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">Are there towels in the bathroom?</div><div class="ru">в ванной есть полотенца</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">There is no hot water.</div><div class="ru">нет горячей воды</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">The air conditioning doesn't work.</div><div class="ru">кондиционер не работает</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">Could you send someone, please?</div><div class="ru">можете кого-нибудь прислать</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">Can I have another towel?</div><div class="ru">можно ещё одно полотенце</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">Could you change the room?</div><div class="ru">можете поменять номер</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">What time is check-out?</div><div class="ru">во сколько выезд</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">Can I leave my luggage here?</div><div class="ru">можно оставить багаж здесь</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">Sorry, can you repeat the room number?</div><div class="ru">извините, повторите номер комнаты</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="foot">Урок 3 &middot; there is, there are &middot; отель и просьбы</div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function onClick(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+
+  var card = document.getElementById("phrasesCard");
+  onClick("hideRu", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  var dlg = document.getElementById("dlg");
+  var hideBtns = document.querySelectorAll("[data-hide]");
+  for(var h=0;h<hideBtns.length;h++){
+    hideBtns[h].addEventListener("click", function(){
+      var on = dlg.classList.toggle("hide-" + this.getAttribute("data-hide"));
+      this.classList.toggle("on", on);
+    });
+  }
+
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.innerHTML = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = (i + 1) + ". " + t;
+      q.appendChild(stem);
+      host.appendChild(q);
+    });
+  }
+
+  function revealBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var w = document.createElement("div"); w.className = "pair";
+      var b = document.createElement("button"); b.className = "rev"; b.type = "button";
+      b.textContent = p.ru;
+      var a = document.createElement("div"); a.className = "ans";
+      a.innerHTML = p.en;
+      b.addEventListener("click", function(){ a.classList.toggle("show"); });
+      w.appendChild(b); w.appendChild(a);
+      host.appendChild(w);
+    });
+  }
+
+    /* ========== 03. is или are ========== */
+  choiceBlock("ex1", [
+    {stem:'There <u></u> a balcony in my room.', ru:'в моём номере есть балкон', opts:["is","are"], ok:0, why:"Верно. Балкон один"},
+    {stem:'There <u></u> two beds.', ru:'там две кровати', opts:["is","are"], ok:1, why:"Верно. Кроватей две"},
+    {stem:'There <u></u> hot water in the morning.', ru:'утром есть горячая вода', opts:["is","are"], ok:0, why:"Верно. Воду не считают поштучно"},
+    {stem:'There <u></u> no towels in the bathroom.', ru:'в ванной нет полотенец', opts:["is","are"], ok:1, why:"Верно. Полотенец несколько"},
+    {stem:'There <u></u> a kettle and a hairdryer.', ru:'там есть чайник и фен', opts:["is","are"], ok:0, why:"Верно. Смотрим на первое слово после there, а оно одно"},
+    {stem:'There <u></u> wifi in the hotel.', ru:'в отеле есть вайфай', opts:["is","are"], ok:0, why:"Верно. Вайфай не считают"},
+    {stem:'<u></u> there a lift in the hotel?', ru:'в отеле есть лифт', opts:["Is","Are"], ok:0, why:"Верно. Лифт один"},
+    {stem:'<u></u> there sockets near the bed?', ru:'есть розетки у кровати', opts:["Is","Are"], ok:1, why:"Верно. Розеток несколько"}
+  ]);
+
+  /* ========== 04. отрицание ========== */
+  choiceBlock("ex2", [
+    {stem:'<u></u> a hairdryer in the room.', ru:'в номере нет фена', opts:["There is no","There are no"], ok:0, why:"Верно. Фен один"},
+    {stem:'<u></u> clean towels here.', ru:'здесь нет чистых полотенец', opts:["There is no","There are no"], ok:1, why:"Верно. Полотенец несколько"},
+    {stem:'<u></u> hot water now.', ru:'сейчас нет горячей воды', opts:["There isn't","There aren't"], ok:0, why:"Верно. Вода не считается поштучно"},
+    {stem:'<u></u> a safe in my room.', ru:'в моём номере нет сейфа', opts:["There isn't","There aren't"], ok:0, why:"Верно. Сейф один"},
+    {stem:'<u></u> two windows, there is only one.', ru:'там не два окна, там только одно', opts:["There aren't","There isn't"], ok:0, why:"Верно. Речь про два окна"},
+    {stem:'<u></u> wifi in the room, but there is wifi at reception.', ru:'в номере нет вайфая, но на ресепшене есть', opts:["There is no","There are no"], ok:0, why:"Верно. Вайфай не считают"}
+  ]);
+
+  /* ========== 05. собери вопрос ========== */
+  buildBlock("ex3", [
+    {ru:"В номере есть чайник?", words:["a kettle","Is","in the room","there"], ok:"Is there a kettle in the room"},
+    {ru:"В ванной есть полотенца?", words:["towels","Are","in the bathroom","there"], ok:"Are there towels in the bathroom"},
+    {ru:"В отеле есть лифт?", words:["a lift","Is","in the hotel","there"], ok:"Is there a lift in the hotel"},
+    {ru:"Сколько кроватей в номере?", words:["beds","How many","in the room","are there"], ok:"How many beds are there in the room"},
+    {ru:"Рядом с кроватью есть розетка?", words:["a socket","Is","near the bed","there"], ok:"Is there a socket near the bed"},
+    {ru:"В номере есть кондиционер?", words:["air conditioning","Is","in the room","there"], ok:"Is there air conditioning in the room"}
+  ]);
+
+  /* ========== 08. какая фраза правильная ========== */
+  choiceBlock("ex4", [
+    {stem:'1', opts:["In the room is a balcony.","There is a balcony in the room."], ok:1, why:"Верно. Фраза начинается с there is"},
+    {stem:'2', opts:["There are two towels on the bed.","There is two towels on the bed."], ok:0, why:"Верно. Полотенец два"},
+    {stem:'3', opts:["Is there a safe in the room?","There is a safe in the room?"], ok:0, why:"Верно. В вопросе is выходит вперёд"},
+    {stem:'4', opts:["There is a window. It is very big.","There is a window. There is very big."], ok:0, why:"Верно. Про уже названное говорим it"},
+    {stem:'5', opts:["There aren't hairdryer here.","There is no hairdryer here."], ok:1, why:"Верно. Фен один, и перед ним нужен артикль или no"},
+    {stem:'6', opts:["How many beds are there?","How many beds there are?"], ok:0, why:"Верно. В вопросе are стоит перед there"}
+  ], true);
+
+  /* ========== 10. can или could ========== */
+  choiceBlock("ex5", [
+    {stem:'<u></u> have the key, please?', ru:'можно мне ключ', opts:["Can I","Could you"], ok:0, why:"Верно. Просишь для себя"},
+    {stem:'<u></u> bring me a blanket, please?', ru:'можете принести мне одеяло', opts:["Can I","Could you"], ok:1, why:"Верно. Просишь другого человека"},
+    {stem:'<u></u> pay by card?', ru:'можно заплатить картой', opts:["Can I","Could you"], ok:0, why:"Верно. Про себя"},
+    {stem:'Could you <u></u> the room, please?', ru:'можете поменять номер', opts:["change","to change"], ok:0, why:"Верно. После could глагол голый"},
+    {stem:'<u></u> speak a little English.', ru:'я немного говорю по-английски', opts:["I can","Can I"], ok:0, why:"Верно. Это не вопрос, а рассказ про себя"},
+    {stem:'<u></u> open the window, it is broken.', ru:'я не могу открыть окно, оно сломано', opts:["I can't","I don't can"], ok:0, why:"Верно. can't сам по себе отрицание"}
+  ], true);
+
+  /* ========== 11. опиши свой номер ========== */
+  listBlock("ex6", [
+    "Что в номере есть: мебель, техника, вид из окна.",
+    "Сколько там кроватей, окон, полотенец.",
+    "Чего в номере нет, а тебе хотелось бы.",
+    "Что есть в самом отеле: бассейн, завтрак, лифт.",
+    "Что для тебя в номере самое важное и почему."
+  ]);
+
+  /* ========== 14. спроси сама ========== */
+  listBlock("ex7", [
+    "Ты хочешь узнать, входит ли завтрак в стоимость.",
+    "Тебе нужно знать, есть ли в номере кондиционер.",
+    "Ты спрашиваешь, во сколько выезд.",
+    "В номере нет полотенец, ты просишь принести.",
+    "Ты хочешь оставить чемодан на ресепшене после выезда.",
+    "Тебе нужен ещё один ключ, вас двое.",
+    "Ты не расслышала номер комнаты.",
+    "В номере шумно, ты просишь поменять его."
+  ]);
+
+  /* ========== 15. переведи вслух ========== */
+  listBlock("ex8", [
+    "В номере есть балкон и большое окно.",
+    "В ванной нет полотенец.",
+    "В отеле есть лифт?",
+    "Сколько кроватей в номере?",
+    "Горячей воды нет, можете кого-нибудь прислать?",
+    "Завтрак включён в стоимость?",
+    "Можно мне ещё один ключ?",
+    "Кондиционер не работает, можете поменять номер?",
+    "Во сколько выезд и можно оставить здесь багаж?",
+    "Рядом с отелем есть магазин?"
+  ]);
+
+  /* ========== слова ========== */
+  vocab("voc1", [["a room","номер, комната"],["a single room","одноместный номер"],
+    ["a double room","двухместный номер"],["a key card","ключ-карта"],["a bed","кровать"],
+    ["a towel","полотенце"],["a pillow","подушка"],["a blanket","одеяло"],
+    ["a hairdryer","фен"],["a kettle","чайник"],["a safe","сейф"],
+    ["air conditioning","кондиционер"],["a fan","вентилятор"],["a balcony","балкон"],
+    ["a view","вид из окна"],["a shower","душ"],["hot water","горячая вода"],
+    ["a socket","розетка"],["an adapter","переходник"],["a lift","лифт"],
+    ["a floor","этаж"],["the bathroom","ванная"]]);
+
+  vocab("voc2", [["a reservation","бронь"],["to book","бронировать"],
+    ["check-in","заселение"],["check-out","выезд"],["reception","ресепшен"],
+    ["included","включено"],["free","бесплатный, свободный"],["a deposit","залог"],
+    ["broken","сломан"],["dirty","грязный"],["clean","чистый"],["noisy","шумный"],
+    ["quiet","тихий"],["It doesn't work","не работает"],["to fix","починить"],
+    ["to change the room","поменять номер"],["to clean the room","убрать номер"],
+    ["to leave luggage","оставить багаж"]]);
+
+})();
+</script>
+
+</body>
+</html>
