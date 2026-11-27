@@ -161,6 +161,11 @@
   .q .stem{font-size:18px; font-weight:700}
   .gap .q{padding:13px 0}
   .ver{display:block; font-size:12px; color:var(--mute); margin-top:4px}
+</style><style>
+  #scriptBox{display:none}
+  #scriptBox.open{display:block}
+  .dial{font-size:17px; line-height:1.7}
+  .dial p{margin:0 0 7px}
 </style>
 </head>
 <body>
@@ -240,11 +245,11 @@
 
   <div class="tag pr">на слух</div>
   <h2><span class="num">03</span>Как человек собирается на рейс</h2>
-  <p class="lead">Минута и десять секунд. Британский голос, обычный темп. Послушай два-три раза: первый просто так, дальше с остановками.</p>
+  <p class="lead">Минута и девятнадцать секунд. Британский голос, обычный темп. Послушай два-три раза: первый просто так, дальше с остановками.</p>
 
   <div class="card">
-    <div class="player"><audio controls preload="none" src="airport-routine.mp3"></audio>
-      <div class="cap">Daniel собирается в аэропорт &middot; 1:10</div></div>
+    <div class="player"><audio controls preload="none" src="airport-routine.mp3?v=2"></audio>
+      <div class="cap">Daniel собирается в аэропорт &middot; 1:19</div></div>
   </div>
 
   <div class="note"><b>Что слушать.</b> Как часто он летает, когда собирает чемодан, что берёт в ручную кладь, какое место просит на регистрации и что делает после посадки самолёта.</div>
@@ -290,6 +295,29 @@
     <p><b>Текстом</b> - задание 2, пятнадцать строк с номерами, и задание 4, восемь строк.</p>
     <p><b>Голосовым</b> - задание 5, пять ответов.</p>
     <p class="small">Задание 1 страница проверяет сама, присылать его не надо. Задание 3 просто слушаешь.</p>
+  </div>
+
+  <div class="tag pr">текст записи</div>
+  <h2><span class="num">06</span>Что он говорит</h2>
+  <p class="lead">Открывай только после того, как сделаешь задания 4 и 5. Дальше можно послушать ещё раз и читать вместе с записью.</p>
+
+  <div class="card">
+    <button class="rev" id="scriptBtn" type="button">Показать текст</button>
+    <div id="scriptBox" class="dial" style="margin-top:14px">
+      <p>Hello, my name is Daniel, and I fly a lot. About once a month.</p>
+      <p>I always pack my suitcase a day before. I never pack in the morning.</p>
+      <p>My suitcase is usually heavy, but my hand luggage is small.</p>
+      <p>I take my passport, my phone and a book in my hand luggage.</p>
+      <p>I book a taxi for five o'clock in the morning. The airport is forty minutes from my house.</p>
+      <p>I like to arrive two hours before departure.</p>
+      <p>First, I go to the check-in desk. I give my passport, and I get my boarding pass.</p>
+      <p>I always ask for a window seat, because I don't sleep on planes.</p>
+      <p>Then I go through security, and after that to passport control.</p>
+      <p>Sometimes the queue is very long, so I don't buy coffee before. I buy it after.</p>
+      <p>I find my gate and I wait there. Boarding starts forty minutes before departure.</p>
+      <p>When I land, I go through customs and I collect my suitcase at baggage claim.</p>
+      <p>It usually takes about twenty minutes. And then my holiday starts.</p>
+    </div>
   </div>
 
   <div class="foot">Вероника &middot; домашка<span class="ver">27.11.2026</span></div>
@@ -374,6 +402,15 @@
       why:"Верно. Оба раза речь про время и место, действия нет.",
       no:"Не то. Do и does нужны только рядом с глаголом действия."}
   ], false);
+
+  var sb = document.getElementById("scriptBtn"), sx = document.getElementById("scriptBox");
+  if(sb && sx){
+    sb.addEventListener("click", function(){
+      var on = sx.classList.toggle("open");
+      sb.textContent = on ? "Спрятать текст" : "Показать текст";
+      sb.classList.toggle("on", on);
+    });
+  }
 
 })();
 </script>
