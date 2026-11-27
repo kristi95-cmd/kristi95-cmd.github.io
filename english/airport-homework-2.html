@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка 3. am, is, are или обычный глагол</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .gap .q{padding:11px 0; border-bottom:1px solid var(--line)}
+  .gap .q:last-child{border-bottom:none}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:12px 15px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .rev:hover{background:var(--tile-2)}
+  .hid{display:none; margin-top:12px}
+  .hid.open{display:block}
+  .hid p{margin:0 0 10px; font-size:17px; line-height:1.6}
+  .hid p:last-child{margin-bottom:0}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+  .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .res{font-size:14px; font-weight:700; margin-top:9px; min-height:19px}
+  .res.y{color:var(--ok)}
+  .res.n{color:var(--no)}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .tbl{width:100%; border-collapse:collapse; font-size:17px; margin:4px 0 2px}
+  .tbl td{padding:8px 6px; border-bottom:1px solid var(--line)}
+  .tbl td:first-child{font-weight:700; color:var(--deep); width:42%}
+  .tbl tr:last-child td{border-bottom:none}
+  .scr .t span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .wrong-right{display:flex; gap:10px; align-items:baseline; padding:10px 0;
+    border-bottom:1px solid var(--line); flex-wrap:wrap}
+  .wrong-right:last-child{border-bottom:none}
+  .wrong-right .w{color:var(--no); font-weight:700; text-decoration:line-through}
+  .wrong-right .r{color:var(--ok); font-weight:700}
+  .wrong-right .c{color:var(--mute); font-size:14px; width:100%}
+</style><style>
+  .chain{padding:9px 0; border-bottom:1px solid var(--line)}
+  .chain:last-of-type{border-bottom:none}
+  .chain .n{color:var(--mute); font-size:15px}
+  .chain .l{font-size:18px; font-weight:700; color:var(--deep); margin-top:2px}
+  .small{color:var(--mute); font-size:14px; margin:10px 0 0}
+  .q .stem{font-size:18px; font-weight:700}
+  .gap .q{padding:13px 0}
+  .ver{display:block; font-size:12px; color:var(--mute); margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Вероника &middot; домашка</div>
+    <h1>am, is, are или обычный глагол<em>и аэропорт на слух</em></h1>
+    <p>Три задания. Первое с кнопками прямо здесь, страница проверяет сама. Второе письменно. Третье на слух.</p>
+  </div>
+
+  <div class="note">Новых слов тут нет: всё из уроков про аэропорт и Present Simple.</div>
+
+  <div class="card">
+    <h3>Как выбрать между ними</h3>
+    <div class="form">есть действие &rarr; обычный глагол, <b>am, is, are</b> не нужен совсем<span class="ex">I fly to India. &middot; She works in a studio. &middot; We pack a day before.</span></div>
+    <div class="form">действия нет, говорим кто, какой или где &rarr; <b>am, is, are</b><span class="ex">I am at the airport. &middot; My suitcase is heavy. &middot; They are ready.</span></div>
+
+    <div class="wrong-right">
+      <span class="w">I am work at ten.</span><span class="r">I work at ten.</span>
+      <span class="c">Действие уже есть в глаголе work, второй глагол не нужен</span>
+    </div>
+    <div class="wrong-right">
+      <span class="w">She is works in a studio.</span><span class="r">She works in a studio.</span>
+      <span class="c">То же самое: либо is, либо глагол с действием</span>
+    </div>
+    <div class="wrong-right">
+      <span class="w">I at the airport.</span><span class="r">I am at the airport.</span>
+      <span class="c">Действия нет, значит без am предложение не собирается</span>
+    </div>
+    <div class="wrong-right">
+      <span class="w">Do you ready?</span><span class="r">Are you ready?</span>
+      <span class="c">В вопросе вперёд выходит то, что стоит в предложении: are, а не do</span>
+    </div>
+  </div>
+
+  <div class="tag pr">кнопками</div>
+  <h2><span class="num">01</span>Что тут стоит</h2>
+  <p class="lead">Четырнадцать предложений. Тыкаешь в вариант, страница сразу говорит, то или не то, и объясняет почему.</p>
+  <div class="card gap" id="c1"></div>
+
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">02</span>Переведи пятнадцать предложений</h2>
+  <p class="lead">Самое важное задание. Где-то нужен <b>am, is, are</b>, где-то обычный глагол. Где какой, решаешь сама, подсказок нет. Есть утверждения, отрицания и вопросы.</p>
+
+  <div class="card">
+    <h3>Как это выглядит</h3>
+    <div class="chain">
+      <div class="n">Том водитель.</div>
+      <div class="l">Tom is a driver.</div>
+    </div>
+    <div class="chain">
+      <div class="n">Том водит автобус.</div>
+      <div class="l">Tom drives a bus.</div>
+    </div>
+    <p class="small">В первом предложении действия нет, поэтому <b>is</b>. Во втором есть действие «водит», и тогда to be не нужен.</p>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Я в аэропорту.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Я летаю в Индию два раза в год.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Мой чемодан очень тяжёлый.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Я не беру ручную кладь.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Ты готова?</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Ты регистрируешься онлайн?</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Моя подруга тренер.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Моя подруга работает в студии.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Очередь на паспортный контроль не длинная.</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Он не завтракает в аэропорту.</div></div>
+    <div class="scr"><div class="n">11</div><div class="t">Где мой посадочный талон?</div></div>
+    <div class="scr"><div class="n">12</div><div class="t">Во сколько ты вылетаешь?</div></div>
+    <div class="scr"><div class="n">13</div><div class="t">Мой рейс не утром.</div></div>
+    <div class="scr"><div class="n">14</div><div class="t">Она не собирает чемодан накануне.</div></div>
+    <div class="scr"><div class="n">15</div><div class="t">Твои друзья в Индии?</div></div>
+  </div>
+
+  <div class="tag pr">на слух</div>
+  <h2><span class="num">03</span>Как человек собирается на рейс</h2>
+  <p class="lead">Минута и одиннадцать секунд. Британский голос, обычный темп. Послушай два-три раза: первый просто так, дальше с остановками.</p>
+
+  <div class="card">
+    <div class="player"><audio controls preload="none" src="airport-routine.mp3"></audio>
+      <div class="cap">Daniel собирается в аэропорт &middot; 1:11</div></div>
+  </div>
+
+  <div class="note"><b>Что слушать.</b> Как часто он летает, когда собирает чемодан, что берёт в ручную кладь, какое место просит на регистрации и что делает после посадки самолёта.</div>
+
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">04</span>True или False</h2>
+  <p class="lead">Восемь предложений про запись. True это правда, False это неправда.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Daniel flies about once a year.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">He packs his suitcase a day before the flight.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">His hand luggage is big and heavy.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">He goes to the airport by taxi.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">He arrives two hours before departure.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">He asks for an aisle seat.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">He buys coffee before passport control.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Boarding starts forty minutes before departure.</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Как отвечать</h3>
+    <p>На правду пишешь номер и <b>true</b>. На неправду номер, <b>false</b> и как на самом деле, целым предложением.</p>
+    <div class="chain">
+      <div class="n">Образец, в записи этого нет:</div>
+      <div class="l">2. false. He lives in London, not in Paris.</div>
+    </div>
+  </div>
+
+  <div class="tag sp">голосовым</div>
+  <h2><span class="num">05</span>Ответь на пять вопросов</h2>
+  <p class="lead">Вопросы про запись, не про тебя. Отвечай целыми предложениями, можно одним голосовым, можно пятью.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">How often does Daniel fly?</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">When does he pack his suitcase?</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">What does he take in his hand luggage?</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Why does he ask for a window seat?</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">What does he do when he lands?</div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом</b> - задание 2, пятнадцать строк с номерами, и задание 4, восемь строк.</p>
+    <p><b>Голосовым</b> - задание 5, пять ответов.</p>
+    <p class="small">Задание 1 страница проверяет сама, присылать его не надо. Задание 3 просто слушаешь.</p>
+  </div>
+
+  <div class="foot">Вероника &middot; домашка<span class="ver">27.11.2026</span></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  choiceBlock("c1", [
+    {stem:"I ___ tired after the flight.", ru:"я устала после перелёта", opts:["am","do"], ok:0,
+      why:"Верно. Действия нет, есть состояние, значит am.",
+      no:"Не то. Do нужен там, где есть действие, а тут его нет."},
+    {stem:"I ___ to Delhi twice a year.", ru:"я летаю в Дели два раза в год", opts:["am fly","fly"], ok:1,
+      why:"Верно. Действие уже в глаголе fly, am тут лишний.",
+      no:"Не то. Два глагола подряд не ставим: либо am, либо fly."},
+    {stem:"My suitcase ___ very heavy.", ru:"мой чемодан очень тяжёлый", opts:["is","takes"], ok:0,
+      why:"Верно. Говорим, какой он, значит is.",
+      no:"Не то. Тут не действие, а описание."},
+    {stem:"My husband ___ in a studio.", ru:"мой муж работает в студии", opts:["is","works"], ok:1,
+      why:"Верно. Есть действие «работает», и to be не нужен.",
+      no:"Не то. После is должно идти кто или какой, а не место работы."},
+    {stem:"I ___ not speak Hindi.", ru:"я не говорю на хинди", opts:["am","do"], ok:1,
+      why:"Верно. У обычного глагола отрицание строится через do not.",
+      no:"Не то. Am not бывает там, где глагола действия нет."},
+    {stem:"She ___ not at the gate.", ru:"её нет у выхода на посадку", opts:["is","does"], ok:0,
+      why:"Верно. Действия нет, значит is not.",
+      no:"Не то. Does появляется только рядом с глаголом действия."},
+    {stem:"___ you ready?", ru:"ты готова", opts:["Are","Do"], ok:0,
+      why:"Верно. В предложении стоял бы are, он и выходит вперёд.",
+      no:"Не то. Ready это не действие."},
+    {stem:"___ you travel a lot?", ru:"ты много путешествуешь", opts:["Are","Do"], ok:1,
+      why:"Верно. Есть действие travel, значит вопрос начинается с do.",
+      no:"Не то. Are бывает в вопросах без глагола действия."},
+    {stem:"___ she have a boarding pass?", ru:"у неё есть посадочный талон", opts:["Is","Does"], ok:1,
+      why:"Верно. Have это обычный глагол, и в вопросе перед ним does.",
+      no:"Не то. Have это действие, с ним работает does."},
+    {stem:"The plane ___ at seven in the morning.", ru:"самолёт приземляется в семь утра", opts:["is","lands"], ok:1,
+      why:"Верно. Приземляется это действие.",
+      no:"Не то. После is шло бы описание, а не то, что самолёт делает."},
+    {stem:"We ___ not at home on Sundays.", ru:"по воскресеньям нас нет дома", opts:["are","do"], ok:0,
+      why:"Верно. Говорим, где нас нет, значит are not.",
+      no:"Не то. Глагола действия в предложении нет."},
+    {stem:"We ___ not work on Sundays.", ru:"по воскресеньям мы не работаем", opts:["are","do"], ok:1,
+      why:"Верно. Есть work, значит do not work.",
+      no:"Не то. Are not work это два глагола подряд."},
+    {stem:"He ___ breakfast at the airport.", ru:"он завтракает в аэропорту", opts:["is","has"], ok:1,
+      why:"Верно. Has breakfast это действие, и у he глагол с s.",
+      no:"Не то. Завтракать это действие, а не описание."},
+    {stem:"My flight ___ at eight, and I ___ at the airport at six.", ru:"мой рейс в восемь, а я в аэропорту в шесть", opts:["is / am","does / do"], ok:0,
+      why:"Верно. Оба раза речь про время и место, действия нет.",
+      no:"Не то. Do и does нужны только рядом с глаголом действия."}
+  ], false);
+
+})();
+</script>
+
+</body>
+</html>
