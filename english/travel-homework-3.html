@@ -169,7 +169,7 @@
   <div class="top">
     <div class="kicker">Олеся &middot; говорение</div>
     <h1>Present Simple вслух<em>разогрев, тренажёр и три голосовых</em></h1>
-    <p>Пять заданий, примерно полчаса. Задания 01 и 02 для тебя, страница всё покажет сама. Три голосовых присылаешь мне.</p>
+    <p>Пять заданий, примерно полчаса. Первое для тебя, страница всё покажет сама. Остальные присылаешь мне: два текстом и два голосовых.</p>
   </div>
 
   <div class="note">Грамматика вся знакомая, ничего нового тут нет. Задача одна: чтобы фраза собиралась сразу, без паузы на перевод в голове.</div>
@@ -226,10 +226,24 @@
     </div>
   </div>
 
-  <div class="tag pr">на странице</div>
+  <div class="tag wr">письменно</div>
   <h2><span class="num">02</span>Раскрой скобки</h2>
-  <p class="lead">Двенадцать предложений. Пишешь прямо в строку, страница сразу подсвечивает зелёным или красным. Присылать не надо.</p>
-  <div class="card gap" id="g1"></div>
+  <p class="lead">Двенадцать предложений. Выписываешь каждое целиком, с номером, и присылаешь мне текстом.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">My sister ___ (work) at the airport.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">She ___ (not like) early mornings.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">___ you ___ (travel) a lot?</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">My husband ___ (drive) me to the airport.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">We ___ (not fly) in summer.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">___ your sister ___ (speak) English?</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">He ___ (get up) at five.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">The shop ___ (open) at nine.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">I ___ (not drink) coffee in the evening.</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">What time ___ the plane ___ (leave)?</div></div>
+    <div class="scr"><div class="n">11</div><div class="t">They ___ (travel) in winter.</div></div>
+    <div class="scr"><div class="n">12</div><div class="t">My friend ___ (not work) on Sunday.</div></div>
+  </div>
 
   <div class="tag sp">голосовое 1</div>
   <h2><span class="num">03</span>Расскажи про своего человека</h2>
@@ -250,9 +264,9 @@
     </ol>
   </div>
 
-  <div class="tag sp">голосовое 2</div>
+  <div class="tag wr">письменно</div>
   <h2><span class="num">04</span>Придумай вопрос</h2>
-  <p class="lead">Восемь ответов. К каждому нужно придумать вопрос и сказать его вслух. Записываешь подряд, только вопросы, ответы повторять не надо.</p>
+  <p class="lead">Восемь ответов. К каждому нужно придумать вопрос и написать его мне. Только вопросы, ответы переписывать не надо.</p>
 
   <div class="card">
     <h3>Как это выглядит</h3>
@@ -271,7 +285,7 @@
     <div class="scr"><div class="n">8</div><div class="t">Yes, I like my job.</div></div>
   </div>
 
-  <div class="tag sp">голосовое 3</div>
+  <div class="tag sp">голосовое 2</div>
   <h2><span class="num">05</span>Минута без остановки</h2>
   <p class="lead">Одна тема, минута по таймеру, не замолкать.</p>
 
@@ -282,8 +296,9 @@
 
   <div class="hw">
     <h3>Что прислать</h3>
-    <p><b>Три голосовых</b> - задания 03, 04 и 05. Можно тремя разными сообщениями.</p>
-    <p class="small">Задания 01 и 02 проверяешь сама, присылать их не надо.</p>
+    <p><b>Текстом</b> - задания 02 и 04.</p>
+    <p><b>Голосовыми</b> - задания 03 и 05, двумя разными сообщениями.</p>
+    <p class="small">Задание 01 проверяешь сама, присылать его не надо.</p>
   </div>
 
   <div class="foot">Олеся &middot; домашка на говорение<span class="ver">27.11.2026</span></div>
@@ -291,137 +306,11 @@
 <script>
 (function(){
   "use strict";
-
-  function norm(s){
-    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
-  }
-  function expand(a){
-    var out = [];
-    a.forEach(function(v){
-      out.push(v);
-      var m = norm(v);
-      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
-                   ["aren't","are not"],["i'm","i am"]];
-      pairs.forEach(function(p){
-        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
-        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
-      });
-    });
-    return out.map(norm);
-  }
-
-  function makeGap(item, idx){
-    var q = document.createElement("div"); q.className = "q";
-    var line = document.createElement("div"); line.className = "line";
-    var n = document.createElement("span"); n.className = "n";
-    n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
-    line.appendChild(n);
-    if(item.pre){
-      var pre = document.createElement("span"); pre.className = "hint";
-      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
-      pre.textContent = "(" + item.pre + ")";
-      line.appendChild(pre);
-    }
-    var parts = item.s.split("%");
-    var answers = item.ok.slice();
-    var inputs = [];
-    parts.forEach(function(txt, i){
-      line.appendChild(document.createTextNode(txt));
-      if(i < parts.length - 1){
-        var inp = document.createElement("input");
-        inp.type = "text"; inp.setAttribute("autocapitalize","off");
-        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
-        if((answers[i] || "").length > 12) inp.className = "wide";
-        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
-        (function(inp, ok){
-          function check(){
-            var v = norm(inp.value);
-            if(!v){ inp.classList.remove("y","n"); return; }
-            var right = ok.indexOf(v) >= 0;
-            inp.classList.toggle("y", right);
-            inp.classList.toggle("n", !right);
-          }
-          inp.addEventListener("blur", check);
-          inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
-        })(inp, ok);
-        inp.dataset.ans = answers[i];
-        line.appendChild(inp);
-        inputs.push(inp);
-      }
-    });
-    q.appendChild(line);
-    if(item.ru){
-      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
-      q.appendChild(ru);
-    }
-    q._inputs = inputs;
-    return q;
-  }
-
-  function gapBlock(id, items){
-    var host = document.getElementById(id);
-    if(!host) return;
-    var all = [];
-    items.forEach(function(it, i){
-      var q = makeGap(it, i);
-      host.appendChild(q);
-      all = all.concat(q._inputs);
-    });
-    var bar = document.createElement("div"); bar.className = "score";
-    var cnt = document.createElement("span"); cnt.className = "cnt";
-    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
-    chk.textContent = "Проверить";
-    chk.addEventListener("click", function(){
-      var right = 0, filled = 0;
-      all.forEach(function(inp){
-        inp.dispatchEvent(new Event("blur"));
-        if(inp.value) filled++;
-        if(inp.classList.contains("y")) right++;
-      });
-      cnt.textContent = right + " из " + all.length + " верно" +
-        (filled < all.length ? ", пустых " + (all.length - filled) : "");
-    });
-    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
-    btn.textContent = "Показать ответы";
-    var shown = false;
-    btn.addEventListener("click", function(){
-      shown = !shown;
-      all.forEach(function(inp){
-        if(shown){
-          if(!inp.value){ inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
-          inp.classList.remove("n"); inp.classList.add("y");
-        } else if(inp.dataset.filled === "1"){
-          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
-        }
-      });
-      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
-      btn.classList.toggle("on", shown);
-    });
-    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
-    host.appendChild(bar);
-  }
-
-  gapBlock("g1", [
-    {s:"My sister % at the airport.", ok:["works"], pre:"work", ru:"моя сестра работает в аэропорту"},
-    {s:"She % early mornings.", ok:["does not like"], pre:"not like", ru:"она не любит раннее утро"},
-    {s:"% you % a lot?", ok:["Do","travel"], pre:"travel", ru:"ты много путешествуешь?"},
-    {s:"My husband % me to the airport.", ok:["drives"], pre:"drive", ru:"муж отвозит меня в аэропорт"},
-    {s:"We % in summer.", ok:["do not fly"], pre:"not fly", ru:"летом мы не летаем"},
-    {s:"% your sister % English?", ok:["Does","speak"], pre:"speak", ru:"твоя сестра говорит по-английски?"},
-    {s:"He % at five.", ok:["gets up"], pre:"get up", ru:"он встаёт в пять"},
-    {s:"The shop % at nine.", ok:["opens"], pre:"open", ru:"магазин открывается в девять"},
-    {s:"I % coffee in the evening.", ok:["do not drink"], pre:"not drink", ru:"вечером я не пью кофе"},
-    {s:"What time % the plane %?", ok:["does","leave"], pre:"leave", ru:"во сколько вылетает самолёт?"},
-    {s:"They % in winter.", ok:["travel"], pre:"travel", ru:"они путешествуют зимой"},
-    {s:"My friend % on Sunday.", ok:["does not work"], pre:"not work", ru:"мой друг не работает в воскресенье"}
-  ]);
-
   var rb = document.getElementById("revbtn"), ks = document.getElementById("keys");
   rb.addEventListener("click", function(){
     var open = ks.classList.toggle("open");
     rb.textContent = open ? "Спрятать" : "Показать, как это звучит \u2192";
   });
-
 })();
 </script>
 
