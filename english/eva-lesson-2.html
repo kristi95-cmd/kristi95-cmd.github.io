@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 2. Говорим про планы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Manrope","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55; -webkit-text-size-adjust:100%}
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  h3{font-size:16px; font-weight:800; margin:18px 0 8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px; margin-right:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:600}
+
+  .frame{border-bottom:1px solid var(--line); padding:14px 0}
+  .frame:last-child{border-bottom:none}
+  .frame .f{font-size:19px; font-weight:800; color:var(--deep)}
+  .frame .f u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 20px}
+  .frame .bank{color:var(--soft); font-size:15px; margin-top:6px}
+  .frame .bank b{color:var(--ink); font-weight:700}
+
+  .rules{width:100%; border-collapse:collapse; font-size:15px; background:#fff;
+    border:1px solid var(--line); line-height:1.45; margin:10px 0}
+  .rules thead th{background:var(--deep); color:#fff; text-align:left; font-weight:700;
+    font-size:14px; padding:13px 12px; border-right:1px solid rgba(255,255,255,.25)}
+  .rules thead th:last-child{border-right:none}
+  .rules td{padding:13px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line); vertical-align:middle}
+  .rules td:last-child{border-right:none}
+  .rules td.ex{font-style:italic; color:var(--deep)}
+  @media (max-width:420px){ .rules{font-size:14px} .rules td{padding:11px 7px} .rules thead th{padding:11px 7px; font-size:13px} }
+
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px; margin-right:8px}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+  .foot .ver{display:block; margin-top:6px; font-size:12px; opacity:.6; font-weight:600}
+
+  @media (max-width:420px){ body{font-size:16px} .top h1{font-size:26px} .ph .en{font-size:18px} }
+  @media print{
+    body{background:#fff}
+    .bar{display:none !important}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)} .top h1 em{color:var(--accent)} .top p{color:var(--soft)}
+    .hidden-ru .ph .ru{visibility:visible}
+    .wrap{max-width:none; padding:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for speaking &amp; studying abroad &middot; урок 2</div>
+    <h1>Говорим про планы<em>то же будущее, только вслух и быстро</em></h1>
+    <p>Правила мы разобрали на прошлом занятии. Сегодня всё занятие идёт на речь: короткие круги на скорость, ситуации и рассказ.</p>
+  </div>
+
+  <div class="note"><b>Как работаем.</b> Говоришь целыми предложениями, а не одним словом. Посреди фразы я не перебиваю, ошибки записываю и разбираем в конце.</div>
+
+  <div class="tag sp">разогрев</div>
+  <h2><span class="num">01</span>Скоростной круг</h2>
+  <p class="lead">Ситуация по-русски, ответ сразу по-английски, без паузы на подумать. Одно предложение на каждую.</p>
+  <div class="card" id="warm"></div>
+
+  <div class="tag pr">скорость</div>
+  <h2><span class="num">02</span>Подстановка: конструкция та же, слово другое</h2>
+  <p class="lead">Произносишь фразу целиком каждый раз, не только слово из списка. Быстро, по кругу, без остановки. Предлог запоминается вместе с фразой, а не отдельно.</p>
+  <div class="card" id="drill"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">03</span>Объясни, не называя</h2>
+  <p class="lead">Я говорю слово, ты объясняешь его другими словами. Само слово называть нельзя. Это то, что выручает, когда нужное слово не вспоминается.</p>
+
+  <table class="rules">
+    <thead><tr><th>Начало</th><th>Для чего</th></tr></thead>
+    <tbody>
+      <tr><td class="ex">It's a kind of...</td><td>это что-то вроде</td></tr>
+      <tr><td class="ex">It's the thing you use for...</td><td>это штука, которой</td></tr>
+      <tr><td class="ex">It's the place where...</td><td>это место, где</td></tr>
+      <tr><td class="ex">It's when...</td><td>это когда</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card" id="words"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">04</span>Одна история в трёх временах</h2>
+  <p class="lead">Одна и та же поездка, три раза подряд, без паузы между. Меняется только время.</p>
+  <div class="card" id="three"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">05</span>Четыре, три, две</h2>
+  <p class="lead">Рассказ про поездку, в которую ты поедешь. Сначала четыре минуты, потом тот же рассказ за три, потом за две. История не меняется, меняется только время, за которое ты её укладываешь.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Куда едешь, когда и с кем.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Что уже куплено и забронировано, а что ещё нет.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Как добираешься и во сколько выезжаешь.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Что собираешься там делать и чего ждёшь больше всего.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Что будешь делать, если что-то пойдёт не так.</div></div>
+  </div>
+
+  <div class="note">Перед первым кругом минута на подготовку. Молча, про себя, только опорные слова, фразы целиком не придумывай.</div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">06</span>Два расписания</h2>
+  <p class="lead">Мы вдвоём планируем поездку на выходные. У тебя расписание поездов, у меня брони и цены. Экраны друг другу не показываем: всё, чего не хватает, надо спросить.</p>
+
+  <table class="rules">
+    <thead><tr><th>Поезд</th><th>Отправление</th><th>В пути</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>06:40</td><td>4 часа</td></tr>
+      <tr><td>2</td><td>09:15</td><td>3 часа 40 минут</td></tr>
+      <tr><td>3</td><td>13:30</td><td>4 часа 10 минут</td></tr>
+      <tr><td>4</td><td>19:05</td><td>3 часа 50 минут</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Договоритесь, каким поездом едете и во сколько встречаетесь на вокзале.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Узнай у меня, во сколько можно заселиться и сколько стоит ночь.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Реши, что делаете в первый вечер, и скажи, от чего это зависит.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Договоритесь, когда едете обратно.</div></div>
+  </div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">07</span>Фразы, чтобы не замолчать</h2>
+  <p class="lead">Всё, чем сегодня выкручивались, одним списком. Дома закрывай перевод и проговаривай вслух.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div><div class="en">Let me think for a second.</div><div class="ru">дай мне секунду подумать</div></div></div>
+    <div class="ph"><div class="n">02</div><div><div class="en">How do you say it in English?</div><div class="ru">как это будет по-английски</div></div></div>
+    <div class="ph"><div class="n">03</div><div><div class="en">It's a kind of bag.</div><div class="ru">это что-то вроде сумки</div></div></div>
+    <div class="ph"><div class="n">04</div><div><div class="en">It's the thing you use for tickets.</div><div class="ru">это штука, которой пользуются для билетов</div></div></div>
+    <div class="ph"><div class="n">05</div><div><div class="en">It's the place where you wait.</div><div class="ru">это место, где ждут</div></div></div>
+    <div class="ph"><div class="n">06</div><div><div class="en">It's when a flight is late.</div><div class="ru">это когда рейс опаздывает</div></div></div>
+    <div class="ph"><div class="n">07</div><div><div class="en">I mean...</div><div class="ru">то есть</div></div></div>
+    <div class="ph"><div class="n">08</div><div><div class="en">What I'm trying to say is...</div><div class="ru">я хочу сказать, что</div></div></div>
+    <div class="ph"><div class="n">09</div><div><div class="en">Sorry, can you repeat that, please?</div><div class="ru">извините, можете повторить</div></div></div>
+    <div class="ph"><div class="n">10</div><div><div class="en">Could you say that again more slowly?</div><div class="ru">можете сказать ещё раз помедленнее</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu" type="button">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="foot">Урок 2 &middot; говорение &middot; планы и аэропорт
+    <span class="ver">обновлено 28.11.2026</span></div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  var card = document.getElementById("phrasesCard");
+  var hideRu = document.getElementById("hideRu");
+  if(hideRu) hideRu.addEventListener("click", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var d = document.createElement("div"); d.className = "scr";
+      var n = document.createElement("div"); n.className = "n";
+      n.textContent = (i < 9 ? "0" : "") + (i + 1);
+      var x = document.createElement("div"); x.className = "t"; x.textContent = t;
+      d.appendChild(n); d.appendChild(x);
+      host.appendChild(d);
+    });
+  }
+
+  function drillBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var d = document.createElement("div"); d.className = "frame";
+      var f = document.createElement("div"); f.className = "f"; f.innerHTML = it.f;
+      var b = document.createElement("div"); b.className = "bank";
+      b.innerHTML = "меняем: <b>" + it.bank.join("</b>, <b>") + "</b>";
+      d.appendChild(f); d.appendChild(b);
+      host.appendChild(d);
+    });
+  }
+
+  listBlock("warm", [
+    "Ты только что решила поехать на такси, а не на метро.",
+    "Рейс задерживают на час, скажи об этом подруге.",
+    "Пообещай, что завтра позвонишь.",
+    "В субботу ты занята: встреча назначена давно.",
+    "Предложи помочь с чемоданом.",
+    "Скажи, что собираешься учиться за границей.",
+    "Посмотри в окно и скажи, что сейчас начнётся дождь.",
+    "Скажи, во сколько уходит поезд: так в расписании.",
+    "Откажись: туда ты больше не поедешь.",
+    "Скажи, что ещё не решила, где будешь жить."
+  ]);
+
+  drillBlock("drill", [
+    {f:"I'm flying to <u></u> on <u></u>.", bank:["Rome","Berlin","Lisbon","Friday","Monday","the fifth"]},
+    {f:"I'll be at the airport at <u></u>.", bank:["six","half past five","midnight","nine in the morning"]},
+    {f:"We arrive in <u></u> in the <u></u>.", bank:["Madrid","Prague","morning","evening"]},
+    {f:"It depends on <u></u>.", bank:["the price","the weather","my visa","how much time I have"]},
+    {f:"I'm looking forward to <u></u>.", bank:["the trip","seeing you","the weekend","moving there"]},
+    {f:"I'm going to <u></u> before I <u></u>.", bank:["pack","check in","book the hotel","leave","fly","decide"]}
+  ]);
+
+  listBlock("words", [
+    "boarding pass",
+    "aisle seat",
+    "excess baggage",
+    "baggage claim",
+    "a connecting flight",
+    "a delay",
+    "customs",
+    "a trolley"
+  ]);
+
+  listBlock("three", [
+    "Твоя последняя поездка: как это было. Куда поехала, что делала, что пошло не так.",
+    "Та же поездка, но как это бывает у тебя обычно: что ты всегда берёшь, как всегда добираешься.",
+    "Та же поездка, но как будет в следующий раз: что сделаешь иначе."
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
