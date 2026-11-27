@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 1. I'm flying on Friday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  /* ---------- шапка ---------- */
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+  .goal{display:flex; gap:10px; align-items:flex-start; margin:8px 0; font-size:15px}
+  .goal span{color:var(--accent); font-weight:800}
+
+  /* ---------- фразы ---------- */
+  .ph{border-bottom:1px solid var(--line); padding:13px 0; display:flex; gap:12px; align-items:flex-start}
+  .ph:last-child{border-bottom:none}
+  .ph .n{font-size:12px; font-weight:800; color:var(--mute); min-width:20px; padding-top:5px; margin-right:8px}
+  .ph .txt{flex:1}
+  .ph .en{font-size:19px; font-weight:700; line-height:1.3}
+  .ph .ru{color:var(--soft); font-size:15px; margin-top:2px}
+  .hidden-ru .ph .ru{visibility:hidden}
+
+  .bar{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 0}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  /* ---------- упражнения ---------- */
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .stem b{color:var(--accent); font-weight:800}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .q .line .n{margin-right:8px}
+  .n2{margin-right:10px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  /* сборка фразы */
+  .build .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .build .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .build .res{font-size:14px; font-weight:700; margin-top:6px; min-height:20px}
+  .build .res.y{color:var(--ok)}
+  .build .res.n{color:var(--no)}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+  .foot .ver{display:inline-block; margin-top:6px; font-size:12px; opacity:.6; font-weight:600}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .ph .en{font-size:18px}
+  }
+  @media print{
+    body{background:#fff}
+    .bar,.screen-only{display:none !important}
+    .card:not(.goals){break-inside:auto; box-shadow:none; border:none; padding:0; margin:6px 0 14px}
+    .q,.ph,.note,.rules tr{break-inside:avoid}
+    .wrap{max-width:none; padding:0}
+    h2{margin-top:22px}
+    .hidden-ru .ph .ru{visibility:visible}
+    .card{box-shadow:none; border:1px solid var(--line); break-inside:avoid}
+    .top{background:#fff; color:var(--ink); margin:0 0 10px; padding:0}
+    .top .kicker{color:var(--accent)}
+    .top h1 em{color:var(--accent)}
+    .top p{color:var(--soft)}
+  }
+
+  /* ---------- формулы ---------- */
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .plus{color:var(--accent); margin:0 6px}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+  .wrong-right{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0}
+  .wr{border-radius:12px; padding:12px 14px; font-size:16px; font-weight:700}
+  .wr.n{background:var(--no-bg); color:var(--no)}
+  .wr.y{background:var(--ok-bg); color:var(--ok)}
+  .wr small{display:block; font-weight:600; font-size:13px; opacity:.75; margin-top:3px}
+
+  /* ---------- словарь ---------- */
+  .voc{display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin:2px 0}
+  .vi{display:flex; gap:8px; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line)}
+  .vi .w{font-weight:700; font-size:16px}
+  .vi .t{color:var(--soft); font-size:14px}
+  @media (max-width:520px){ .voc{grid-template-columns:1fr} .wrong-right{grid-template-columns:1fr} }
+
+  /* ---------- таблицы правил ---------- */
+  .rules{width:100%; border-collapse:collapse; font-size:15px; background:#fff;
+    border:1px solid var(--line); line-height:1.45; margin:10px 0}
+  .rules thead th{background:var(--deep); color:#fff; text-align:left; font-weight:700;
+    font-size:14px; padding:13px 12px; border-right:1px solid rgba(255,255,255,.25)}
+  .rules thead th:last-child{border-right:none}
+  .rules td{padding:14px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line);
+    vertical-align:middle; color:var(--ink)}
+  .rules td:last-child{border-right:none}
+  .rules td.ex{font-style:italic; color:var(--deep)}
+  .rules td.a{color:var(--accent); font-weight:800; white-space:nowrap; font-style:normal}
+  .rules td.no{color:var(--mute); font-weight:800; white-space:nowrap; font-style:normal}
+  .rules .grp td{background:var(--tile); color:var(--deep); font-weight:800; font-size:12px;
+    letter-spacing:.07em; text-transform:uppercase; padding:9px 12px; font-style:normal}
+  .rules caption{caption-side:top; text-align:left; font-weight:800; font-size:16px;
+    color:var(--ink); padding:0 0 8px}
+  @media (max-width:420px){ .rules{font-size:14px} .rules td{padding:11px 7px} .rules thead th{padding:11px 7px; font-size:13px} }
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wd{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for speaking &amp; studying abroad &middot; урок 1</div>
+    <h1>I'm flying on Friday<em>will, going to и настоящее продолженное для планов</em></h1>
+    <p>Три способа сказать про будущее. Выбор между ними зависит не от времени, а от того, насколько план уже решён: придумала прямо сейчас, собираешься давно или билеты уже куплены.</p>
+  </div>
+
+  <div class="card goals">
+    <div class="goal"><span>&rarr;</span><div>Рассказываешь план поездки так, что слышно: это уже куплено или ты только собираешься.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Решаешь на ходу: предлагаешь помощь, обещаешь, меняешь план.</div></div>
+    <div class="goal"><span>&rarr;</span><div>Проходишь аэропорт словами: регистрация, досмотр, посадка, багаж.</div></div>
+  </div>
+
+  <div class="note"><b>Как мы с этим работаем.</b> Правило, сразу упражнение к нему, и говорим вслух. Основное время занятия это речь, не задания. Дома повторяешь по этому же листу.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">01</span>Три будущих, если коротко</h2>
+  <p class="lead">Сначала формулы, подробно разберём каждую ниже.</p>
+
+  <div class="form">will <span class="plus">+</span> глагол
+    <span class="ex">I will help you. &rarr; I'll help you. Решение, которое я приняла прямо сейчас.</span></div>
+  <div class="form">am / is / are going to <span class="plus">+</span> глагол
+    <span class="ex">I'm going to book a hotel. Намерение: решила заранее, собираюсь это сделать.</span></div>
+  <div class="form">am / is / are <span class="plus">+</span> глагол с -ing
+    <span class="ex">I'm flying on Friday. Договорено и куплено: билет есть, дата стоит.</span></div>
+
+  <div class="note">По-русски все три это одно «буду». Поэтому выбор приходится делать заново каждый раз, и именно на нём сбиваются: русский никакой подсказки не даёт.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">02</span>will: решение, обещание, мнение</h2>
+  <p class="lead">Будущее, которое рождается в момент разговора.</p>
+
+  <table class="rules">
+    <caption>Когда берём will</caption>
+    <thead><tr><th>Ситуация</th><th>Пример</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td>Решаешь прямо сейчас, пока говоришь</td><td class="ex">Ok, I'll take this one.</td><td>ладно, беру этот</td></tr>
+      <tr><td>Обещаешь</td><td class="ex">I'll send you the photos.</td><td>пришлю тебе фото</td></tr>
+      <tr><td>Предлагаешь помощь</td><td class="ex">I'll help you with your bag.</td><td>помогу тебе с сумкой</td></tr>
+      <tr><td>Говоришь, что думаешь о будущем</td><td class="ex">I think it will be cheaper in October.</td><td>думаю, в октябре будет дешевле</td></tr>
+      <tr><td>Отказываешься</td><td class="ex">I won't go there again.</td><td>я туда больше не поеду</td></tr>
+    </tbody>
+  </table>
+
+  <table class="rules">
+    <caption>Формы</caption>
+    <thead><tr><th>Что</th><th>Полная форма</th><th>Как говорят</th></tr></thead>
+    <tbody>
+      <tr><td>Утверждение</td><td class="ex">I will call you.</td><td class="ex">I'll call you.</td></tr>
+      <tr><td>Отрицание</td><td class="ex">I will not call you.</td><td class="ex">I won't call you.</td></tr>
+      <tr><td>Вопрос</td><td class="ex">Will you call me?</td><td class="no">will выходит вперёд</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">Рядом с will часто стоят <b>I think, probably, maybe, I'm sure, I hope</b>. Если в русской фразе есть «наверное», «думаю», «надеюсь», скорее всего нужен will.</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">03</span>be going to: намерение и то, что видно</h2>
+  <p class="lead">Будущее, которое решено до разговора.</p>
+
+  <table class="rules">
+    <caption>Когда берём going to</caption>
+    <thead><tr><th>Ситуация</th><th>Пример</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td>Намерение: решила раньше, собираюсь</td><td class="ex">I'm going to study abroad next year.</td><td>я собираюсь учиться за границей в следующем году</td></tr>
+      <tr><td>План без точной даты</td><td class="ex">We're going to rent a car.</td><td>мы собираемся взять машину напрокат</td></tr>
+      <tr><td>Видно по тому, что происходит сейчас</td><td class="ex">Look at the sky, it's going to rain.</td><td>посмотри на небо, сейчас пойдёт дождь</td></tr>
+      <tr><td>Отрицание</td><td class="ex">I'm not going to change the ticket.</td><td>я не собираюсь менять билет</td></tr>
+      <tr><td>Вопрос</td><td class="ex">Are you going to apply this year?</td><td>ты собираешься подавать документы в этом году</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">04</span>Настоящее продолженное для планов</h2>
+  <p class="lead">Самое неочевидное из трёх: форма настоящего, а смысл будущий.</p>
+
+  <table class="rules">
+    <caption>Когда план уже назначен</caption>
+    <thead><tr><th>Ситуация</th><th>Пример</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td>Билет куплен, дата стоит</td><td class="ex">I'm flying to Lisbon on Friday.</td><td>я лечу в Лиссабон в пятницу</td></tr>
+      <tr><td>Договорились с людьми</td><td class="ex">We're meeting at the gate at six.</td><td>встречаемся у выхода в шесть</td></tr>
+      <tr><td>Забронировано, записано</td><td class="ex">I'm taking the early train.</td><td>я еду ранним поездом</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>Расписание это другое.</b> Если время не твоё, а транспорта или учреждения, берётся простое настоящее: <b>The plane leaves at seven. The museum opens at ten.</b> Сравни: <b>I'm flying at seven</b> (мой план) и <b>The plane leaves at seven</b> (так в расписании).</div>
+
+  <div class="tag">правило</div>
+  <h2><span class="num">05</span>Три рядом: что выбрать</h2>
+  <p class="lead">Один вопрос к себе: насколько этот план уже решён.</p>
+
+  <table class="rules">
+    <caption>Сводка</caption>
+    <thead><tr><th>Что за план</th><th>Форма</th><th>Пример</th></tr></thead>
+    <tbody>
+      <tr><td>Придумала прямо сейчас, в момент разговора</td><td class="a">will</td><td class="ex">I'll pay for this.</td></tr>
+      <tr><td>Мнение или предсказание</td><td class="a">will</td><td class="ex">I think it will rain.</td></tr>
+      <tr><td>Собираюсь, решила раньше, даты нет</td><td class="a">going to</td><td class="ex">I'm going to book a hotel.</td></tr>
+      <tr><td>Видно по ситуации прямо сейчас</td><td class="a">going to</td><td class="ex">We're going to miss our flight.</td></tr>
+      <tr><td>Куплено, назначено, договорено</td><td class="a">-ing</td><td class="ex">I'm flying on Friday.</td></tr>
+      <tr><td>Расписание</td><td class="a">простое настоящее</td><td class="ex">The plane leaves at seven.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>После if и when будущего не бывает</h3>
+  <p class="lead">В той части, где стоит if или when, глагол идёт в настоящем, даже если речь про будущее. Будущее остаётся во второй половине фразы.</p>
+
+  <table class="rules">
+    <thead><tr><th>Так не говорят</th><th>Так правильно</th></tr></thead>
+    <tbody>
+      <tr><td class="no">I'll go if I will have time.</td><td class="ex">I'll go if I have time.</td></tr>
+      <tr><td class="no">I'll call you when I will arrive.</td><td class="ex">I'll call you when I arrive.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Когда план не точный</h3>
+  <p class="lead">Четыре готовые фразы, чтобы не молчать, пока решение не принято.</p>
+
+  <table class="rules">
+    <thead><tr><th>Фраза</th><th>Перевод</th></tr></thead>
+    <tbody>
+      <tr><td class="ex">I'm not sure yet.</td><td>я ещё не решила</td></tr>
+      <tr><td class="ex">I'd rather take a morning flight.</td><td>я бы лучше полетела утренним рейсом</td></tr>
+      <tr><td class="ex">It depends on the price.</td><td>это зависит от цены</td></tr>
+      <tr><td class="ex">I was going to fly on Monday, but the tickets were too expensive.</td><td>я собиралась лететь в понедельник, но билеты были слишком дорогие</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Четыре пары, на которых обычно сбиваются</h3>
+  <div class="wrong-right">
+    <div class="wr n">I will fly on Friday.<small>билеты уже куплены</small></div>
+    <div class="wr y">I'm flying on Friday.<small>дата назначена, значит -ing</small></div>
+  </div>
+  <div class="wrong-right">
+    <div class="wr n">I'm going to help you.<small>решила прямо сейчас</small></div>
+    <div class="wr y">I'll help you.<small>решение в моменте, значит will</small></div>
+  </div>
+  <div class="wrong-right">
+    <div class="wr n">When you will arrive?<small>порядок слов как в утверждении</small></div>
+    <div class="wr y">When will you arrive?<small>в вопросе will выходит вперёд</small></div>
+  </div>
+  <div class="wrong-right">
+    <div class="wr n">I'll go if I will have time.<small>будущее в обеих половинах</small></div>
+    <div class="wr y">I'll go if I have time.<small>после if настоящее</small></div>
+  </div>
+
+  <div class="tag wd">слова</div>
+  <h2><span class="num">06</span>Слова: аэропорт и дорога</h2>
+  <p class="lead">То, без чего аэропорт не проходится. Читаем вслух, перевод закрываем.</p>
+  <div class="card voc" id="voc1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">07</span>Какую форму берём</h2>
+  <p class="lead">Смотри не на время, а на то, насколько план решён.</p>
+  <div class="card" id="ex1"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">08</span>Какая фраза правильная</h2>
+  <p class="lead">В каждой паре одна фраза собрана неверно.</p>
+  <div class="card" id="ex2"></div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">09</span>Собери фразу</h2>
+  <p class="lead">Слова вразброс, порядок собираешь сама.</p>
+  <div class="card build" id="ex3"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">10</span>План поездки</h2>
+  <p class="lead">Целыми предложениями, вслух. Следи за тем, чтобы было слышно, что решено, а что нет.</p>
+  <div class="card" id="ex4"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">11</span>Ситуации в аэропорту</h2>
+  <p class="lead">Я сотрудник аэропорта, ты пассажир. Ситуация по-русски, говоришь по-английски.</p>
+  <div class="card" id="ex5"></div>
+
+  <div class="tag sp">говорение</div>
+  <h2><span class="num">12</span>Минута без остановки</h2>
+  <p class="lead">Одна минута про поездку, в которую ты хочешь поехать. Куда, когда, что уже решено, что ещё нет. Молчать нельзя, ошибаться можно, посреди фразы я не перебиваю.</p>
+
+  <div class="card">
+    <div class="q"><div class="stem">Опорные слова: <b>I'm flying</b>, <b>I'm going to</b>, <b>I'll</b>, <b>I'm not sure yet</b>, <b>it depends on</b>, <b>I'd rather</b>.</div></div>
+  </div>
+
+  <div class="tag sp">перевод</div>
+  <h2><span class="num">13</span>Переведи вслух</h2>
+  <p class="lead">Десять фраз подряд, без пауз на подумать.</p>
+  <div class="card" id="ex6"></div>
+
+  <div class="tag">итог</div>
+  <h2><span class="num">14</span>Фразы урока</h2>
+  <p class="lead">Всё, что мы сегодня разобрали, одним списком. Дома закрывай перевод и проговаривай вслух.</p>
+
+  <div class="card" id="phrasesCard">
+    <div class="ph"><div class="n">01</div><div class="txt"><div class="en">I'm flying to Lisbon on Friday.</div><div class="ru">я лечу в Лиссабон в пятницу</div></div></div>
+    <div class="ph"><div class="n">02</div><div class="txt"><div class="en">We're meeting at the gate at six.</div><div class="ru">встречаемся у выхода в шесть</div></div></div>
+    <div class="ph"><div class="n">03</div><div class="txt"><div class="en">I'm going to study abroad next year.</div><div class="ru">я собираюсь учиться за границей в следующем году</div></div></div>
+    <div class="ph"><div class="n">04</div><div class="txt"><div class="en">We're going to miss our flight.</div><div class="ru">мы опоздаем на рейс</div></div></div>
+    <div class="ph"><div class="n">05</div><div class="txt"><div class="en">Ok, I'll help you with your bag.</div><div class="ru">давай помогу тебе с сумкой</div></div></div>
+    <div class="ph"><div class="n">06</div><div class="txt"><div class="en">I think it will be cheaper in October.</div><div class="ru">думаю, в октябре будет дешевле</div></div></div>
+    <div class="ph"><div class="n">07</div><div class="txt"><div class="en">I won't go there again.</div><div class="ru">я туда больше не поеду</div></div></div>
+    <div class="ph"><div class="n">08</div><div class="txt"><div class="en">I'll go if I have time.</div><div class="ru">пойду, если будет время</div></div></div>
+    <div class="ph"><div class="n">09</div><div class="txt"><div class="en">What time will you arrive?</div><div class="ru">во сколько ты прилетишь</div></div></div>
+    <div class="ph"><div class="n">10</div><div class="txt"><div class="en">I'd rather take a morning flight.</div><div class="ru">я бы лучше полетела утренним рейсом</div></div></div>
+    <div class="ph"><div class="n">11</div><div class="txt"><div class="en">It depends on the price.</div><div class="ru">это зависит от цены</div></div></div>
+    <div class="ph"><div class="n">12</div><div class="txt"><div class="en">I'm not sure yet.</div><div class="ru">я ещё не решила</div></div></div>
+    <div class="bar">
+      <button class="btn" id="hideRu" type="button">Спрятать перевод</button>
+    </div>
+  </div>
+
+  <div class="foot">Урок 1 &middot; будущее время &middot; аэропорт и план поездки
+    <span class="ver">обновлено 27.11.2026</span></div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  var card = document.getElementById("phrasesCard");
+  var hideRu = document.getElementById("hideRu");
+  if(hideRu) hideRu.addEventListener("click", function(){
+    var on = card.classList.toggle("hidden-ru");
+    this.classList.toggle("on", on);
+    this.textContent = on ? "Показать перевод" : "Спрятать перевод";
+  });
+
+  function vocab(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(p){
+      var d = document.createElement("div"); d.className = "vi";
+      d.innerHTML = '<span class="w">' + p[0] + '</span><span class="t">' + p[1] + '</span>';
+      host.appendChild(d);
+    });
+  }
+
+  function choiceBlock(id, items, tall){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt" + (tall ? " tall" : "");
+        b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt" + (tall ? " tall " : " ") + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : (it.no || "Не то, попробуй другой");
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  function buildBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(b){
+      var q = document.createElement("div"); q.className = "q";
+      var ru = document.createElement("div"); ru.className = "stem"; ru.textContent = b.ru;
+      var slot = document.createElement("div"); slot.className = "slot";
+      var pool = document.createElement("div"); pool.className = "pool";
+      var res = document.createElement("div"); res.className = "res";
+      function check(){
+        var got = [], t = slot.querySelectorAll(".tok");
+        for(var i=0;i<t.length;i++) got.push(t[i].textContent);
+        if(got.length !== b.words.length){ res.className = "res"; res.textContent = ""; return; }
+        if(got.join(" ") === b.ok){
+          res.className = "res y"; res.textContent = "Верно: " + b.ok;
+        } else {
+          res.className = "res n"; res.textContent = "Пока не то. Верни слова и попробуй иначе";
+        }
+      }
+      b.words.forEach(function(w){
+        var t = document.createElement("button");
+        t.className = "tok"; t.type = "button"; t.textContent = w;
+        t.addEventListener("click", function(){
+          if(t.parentNode === pool) slot.appendChild(t); else pool.appendChild(t);
+          check();
+        });
+        pool.appendChild(t);
+      });
+      q.appendChild(ru); q.appendChild(slot); q.appendChild(pool); q.appendChild(res);
+      host.appendChild(q);
+    });
+  }
+
+  function listBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(t, i){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem line";
+      stem.innerHTML = '<span class="n2">' + (i < 9 ? "0" : "") + (i + 1) + '</span>' + t;
+      q.appendChild(stem);
+      host.appendChild(q);
+    });
+  }
+
+  /* ========== 06. слова ========== */
+  vocab("voc1", [
+    ["a flight","рейс"],["a boarding pass","посадочный талон"],
+    ["a check-in desk","стойка регистрации"],["to check in","зарегистрироваться на рейс"],
+    ["hand luggage","ручная кладь"],["to check in a bag","сдать чемодан в багаж"],
+    ["excess baggage","перевес"],["security","досмотр"],
+    ["passport control","паспортный контроль"],["customs","таможня"],
+    ["a gate","выход на посадку"],["boarding","посадка"],
+    ["to board","садиться в самолёт"],["a seat","место"],
+    ["an aisle seat","место у прохода"],["a window seat","место у окна"],
+    ["to take off","взлетать"],["to land","приземляться"],
+    ["a delay","задержка"],["to be delayed","быть задержанным"],
+    ["to cancel a flight","отменить рейс"],["a connecting flight","стыковочный рейс"],
+    ["baggage claim","выдача багажа"],["a one-way ticket","билет в одну сторону"],
+    ["a return ticket","билет туда и обратно"],["to miss a flight","опоздать на рейс"]
+  ]);
+
+  /* ========== 07. какую форму берём ========== */
+  choiceBlock("ex1", [
+    {stem:"I <u></u> to Lisbon on Friday, I booked the tickets last week.", ru:"я лечу в Лиссабон в пятницу", opts:["'m flying","will fly"], ok:0, why:"Верно. Билеты куплены, дата стоит"},
+    {stem:"Ok, I <u></u> you with your bag.", ru:"давай помогу тебе с сумкой", opts:["'ll help","'m helping"], ok:0, why:"Верно. Решение прямо сейчас"},
+    {stem:"Look at the queue, we <u></u> our flight.", ru:"посмотри на очередь, мы опоздаем на рейс", opts:["are going to miss","will miss"], ok:0, why:"Верно. Это видно прямо сейчас"},
+    {stem:"I <u></u> abroad next year, I'm already looking at universities.", ru:"я собираюсь учиться за границей", opts:["'m going to study","will study"], ok:0, why:"Верно. Намерение, решено заранее"},
+    {stem:"The plane <u></u> at seven, it's in the timetable.", ru:"самолёт вылетает в семь", opts:["leaves","is leaving"], ok:0, why:"Верно. Расписание, от тебя не зависит"},
+    {stem:"I think it <u></u> cheaper in October.", ru:"думаю, в октябре будет дешевле", opts:["will be","is being"], ok:0, why:"Верно. Мнение о будущем"},
+    {stem:"We <u></u> at the gate at six, we agreed yesterday.", ru:"встречаемся у выхода в шесть", opts:["'re meeting","will meet"], ok:0, why:"Верно. Договорились, время назначено"},
+    {stem:"I'll call you when I <u></u>.", ru:"позвоню, когда прилечу", opts:["arrive","will arrive"], ok:0, why:"Верно. После when будущее не ставим"},
+    {stem:"If they <u></u> the flight, I'll take a train.", ru:"если рейс отменят, поеду поездом", opts:["cancel","will cancel"], ok:0, why:"Верно. После if будущее не ставим"},
+    {stem:"A: I have no cash. B: Don't worry, I <u></u>.", ru:"не волнуйся, я заплачу", opts:["'ll pay","'m paying"], ok:0, why:"Верно. Решение в моменте"}
+  ]);
+
+  /* ========== 08. какая фраза правильная ========== */
+  choiceBlock("ex2", [
+    {stem:"1", opts:["I will fly on Friday, I have the tickets.","I'm flying on Friday, I have the tickets."], ok:1, why:"Верно. Билеты куплены, значит -ing"},
+    {stem:"2", opts:["Look, the plane is going to land.","Look, the plane will land."], ok:0, why:"Верно. Это видно прямо сейчас"},
+    {stem:"3", opts:["When will you arrive?","When you will arrive?"], ok:0, why:"Верно. В вопросе will выходит вперёд"},
+    {stem:"4", opts:["I'll go if I will have time.","I'll go if I have time."], ok:1, why:"Верно. После if настоящее"},
+    {stem:"5", opts:["I'm going to book a hotel tonight.","I go to book a hotel tonight."], ok:0, why:"Верно. Намерение это going to"},
+    {stem:"6", opts:["She doesn't will come with us.","She won't come with us."], ok:1, why:"Верно. won't это и есть отрицание"}
+  ], true);
+
+  /* ========== 09. собери фразу ========== */
+  buildBlock("ex3", [
+    {ru:"Я лечу в Лиссабон в пятницу.", words:["to Lisbon","I'm","on Friday","flying"], ok:"I'm flying to Lisbon on Friday"},
+    {ru:"Во сколько ты прилетишь?", words:["will","What time","arrive","you"], ok:"What time will you arrive"},
+    {ru:"Я собираюсь сдать чемодан в багаж.", words:["going to","I'm","my bag","check in"], ok:"I'm going to check in my bag"},
+    {ru:"Если рейс задержат, я тебе напишу.", words:["the flight","If","I'll text you","they delay"], ok:"If they delay the flight I'll text you"},
+    {ru:"Я туда больше не поеду.", words:["go","I won't","again","there"], ok:"I won't go there again"},
+    {ru:"Мы встречаемся у выхода в шесть.", words:["at the gate","We're","at six","meeting"], ok:"We're meeting at the gate at six"}
+  ]);
+
+  /* ========== 10. план поездки ========== */
+  listBlock("ex4", [
+    "Куда и когда ты полетишь в следующую поездку: что уже решено, а что нет.",
+    "Что ты уже купила и забронировала, а что только собираешься.",
+    "Как ты доберёшься до аэропорта и во сколько выедешь из дома.",
+    "Что ты будешь делать, если рейс задержат или отменят.",
+    "С кем ты поедешь и о чём вы уже договорились."
+  ]);
+
+  /* ========== 11. ситуации в аэропорту ========== */
+  listBlock("ex5", [
+    "На регистрации: у тебя только ручная кладь, и ты хочешь место у окна.",
+    "Твой рейс задержали на два часа, ты спрашиваешь, успеешь ли на стыковку.",
+    "Ты не расслышала, какой выход на посадку и во сколько начинается посадка.",
+    "У тебя перевес, спрашиваешь, сколько надо доплатить.",
+    "Объявили посадку, а ты ещё в очереди на досмотр.",
+    "Ты хочешь поменять место: тебе нужно у прохода.",
+    "Твой чемодан не приехал на ленту.",
+    "Тебя спрашивают, зачем ты летишь и насколько."
+  ]);
+
+  /* ========== 13. переведи вслух ========== */
+  listBlock("ex6", [
+    "Я лечу в Лиссабон в пятницу, билеты уже куплены.",
+    "Я собираюсь подавать документы в университет в следующем году.",
+    "Думаю, в октябре будет дешевле.",
+    "Посмотри на очередь, мы опоздаем на рейс.",
+    "Давай я помогу тебе с чемоданом.",
+    "Если рейс задержат, я тебе напишу.",
+    "Во сколько ты прилетишь?",
+    "Мы встречаемся у выхода в шесть.",
+    "Я бы лучше полетела утренним рейсом.",
+    "Это зависит от цены."
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
