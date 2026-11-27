@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка: Present Simple вслух</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Manrope","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+  h3{font-size:16px; font-weight:800; margin:20px 0 8px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+  .note{background:var(--tile); border-radius:12px; padding:14px 16px; margin:14px 0; font-size:15px; color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .gap .q{padding:11px 0; border-bottom:1px solid var(--line)}
+  .gap .q:last-child{border-bottom:none}
+  .gap .line{font-size:17px; line-height:2.1}
+  .gap .n{font-size:12px; font-weight:800; color:var(--mute); margin-right:8px}
+  .gap input{font-family:inherit; font-size:16px; font-weight:700; color:var(--deep);
+    border:none; border-bottom:2px solid var(--line); background:transparent;
+    width:124px; padding:2px 4px; text-align:center; outline:none}
+  .gap input:focus{border-bottom-color:var(--accent)}
+  .gap input.y{border-bottom-color:var(--ok); color:var(--ok)}
+  .gap input.n{border-bottom-color:var(--no); color:var(--no)}
+  .gap input.wide{width:180px}
+  .gap .hint{color:var(--mute); font-size:15px; font-weight:600; margin-left:4px}
+  .gap .ru{display:block; color:var(--mute); font-size:14px; line-height:1.4; margin-top:-4px}
+
+  .score{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:14px;
+    padding-top:12px; border-top:1px solid var(--line)}
+  .score .cnt{font-size:14px; font-weight:800; color:var(--soft)}
+  .btn{border:1.5px solid var(--line); background:#fff; color:var(--deep); font-family:inherit;
+    font-size:14px; font-weight:700; padding:9px 15px; border-radius:999px; cursor:pointer}
+  .btn.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+  .player{margin:0 0 4px}
+  .player audio{width:100%; height:40px; display:block}
+  .player .cap{font-size:13px; color:var(--mute); margin-top:6px; font-weight:600}
+
+  .form{background:var(--tile); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:17px; font-weight:700}
+  .form .ex{display:block; font-weight:500; color:var(--soft); font-size:15px; margin-top:6px}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .qlist{counter-reset:qn; list-style:none; margin:0; padding:0}
+  .qlist li{counter-increment:qn; position:relative; padding:11px 0 11px 34px; font-size:18px;
+    font-weight:700; border-bottom:1px solid var(--line)}
+  .qlist li:last-child{border-bottom:none}
+  .qlist li span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .qlist li:before{content:counter(qn); position:absolute; left:0; top:12px; width:24px; height:24px;
+    border-radius:50%; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    display:flex; align-items:center; justify-content:center}
+
+  .rev{border:none; background:var(--tile); color:var(--deep); font-family:inherit; font-size:15px;
+    font-weight:700; padding:12px 15px; border-radius:10px; cursor:pointer; width:100%; text-align:left}
+  .rev:hover{background:var(--tile-2)}
+  .hid{display:none; margin-top:12px}
+  .hid.open{display:block}
+  .hid p{margin:0 0 10px; font-size:17px; line-height:1.6}
+  .hid p:last-child{margin-bottom:0}
+
+  .lnk{display:block; text-decoration:none; color:inherit; background:var(--tile);
+    border-radius:12px; padding:15px 16px; margin:12px 0; border:1.5px solid var(--line)}
+  .lnk .t{font-size:17px; font-weight:800; color:var(--deep)}
+  .lnk .u{font-size:13px; color:var(--mute); margin-top:4px; word-break:break-all}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:16px 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag.sp{background:#f4f0ea; color:#6b5435}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .gap input{width:106px; font-size:15px}
+    .gap .line{font-size:16px}
+  }
+
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .opt.tall{font-size:15px; text-align:left; line-height:1.35}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+  .slot{min-height:48px; background:var(--tile); border-radius:10px; padding:8px;
+    display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-bottom:9px}
+  .slot .tok{border-color:var(--accent); color:var(--deep)}
+  .pool{display:flex; gap:7px; flex-wrap:wrap}
+  .tok{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:7px 13px; border-radius:9px; cursor:pointer; color:var(--ink)}
+  .res{font-size:14px; font-weight:700; margin-top:9px; min-height:19px}
+  .res.y{color:var(--ok)}
+  .res.n{color:var(--no)}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .tbl{width:100%; border-collapse:collapse; font-size:17px; margin:4px 0 2px}
+  .tbl td{padding:8px 6px; border-bottom:1px solid var(--line)}
+  .tbl td:first-child{font-weight:700; color:var(--deep); width:42%}
+  .tbl tr:last-child td{border-bottom:none}
+  .scr .t span{display:block; font-size:14px; font-weight:500; color:var(--mute); margin-top:2px}
+  .wrong-right{display:flex; gap:10px; align-items:baseline; padding:10px 0;
+    border-bottom:1px solid var(--line); flex-wrap:wrap}
+  .wrong-right:last-child{border-bottom:none}
+  .wrong-right .w{color:var(--no); font-weight:700; text-decoration:line-through}
+  .wrong-right .r{color:var(--ok); font-weight:700}
+  .wrong-right .c{color:var(--mute); font-size:14px; width:100%}
+</style><style>
+  .small{color:var(--mute); font-size:14px; margin:10px 0 0}
+  .kv{display:flex; gap:10px; padding:7px 0; border-bottom:1px solid var(--line)}
+  .kv:last-child{border-bottom:none}
+  .kv .k{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:3px}
+  .kv .v{font-size:17px; font-weight:700; color:var(--deep)}
+  .ver{display:block; font-size:12px; color:var(--mute); margin-top:4px}
+  .bullets{margin:0; padding-left:18px}
+  .bullets li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">Олеся &middot; говорение</div>
+    <h1>Present Simple вслух<em>разогрев, тренажёр и три голосовых</em></h1>
+    <p>Пять заданий, примерно полчаса. Задания 01 и 02 для тебя, страница всё покажет сама. Три голосовых присылаешь мне.</p>
+  </div>
+
+  <div class="note">Грамматика вся знакомая, ничего нового тут нет. Задача одна: чтобы фраза собиралась сразу, без паузы на перевод в голове.</div>
+
+  <div class="card">
+    <h3>Из прошлой домашки, чтобы не повторялось</h3>
+    <ul class="bullets">
+      <li><b>at the airport</b>, а не in the airport. <b>in</b> это внутри, в конкретной точке, а аэропорт как место работы - <b>at</b></li>
+      <li><b>in winter, in summer</b> - с временами года всегда in</li>
+      <li>во множественном числе <b>a</b> не ставим: <b>passengers</b>, а не a passengers</li>
+    </ul>
+  </div>
+
+  <div class="tag sp">вслух, не присылать</div>
+  <h2><span class="num">01</span>Скоростной круг</h2>
+  <p class="lead">Пятнадцать фраз. Читаешь по-русски и сразу говоришь вслух по-английски, не записывая и не обдумывая. Если фраза не идёт - не зависай, иди дальше, вернёшься в конце. Проверить себя можно кнопкой под списком, но сначала проговори все пятнадцать.</p>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Я работаю в отеле.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Он работает в аэропорту.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">Она не пьёт кофе.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Ты часто летаешь?</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Моя сестра врач.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Мы живём в Москве.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Он не говорит по-английски.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Во сколько ты встаёшь?</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Она встаёт в шесть.</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Они путешествуют зимой.</div></div>
+    <div class="scr"><div class="n">11</div><div class="t">Я не вожу машину.</div></div>
+    <div class="scr"><div class="n">12</div><div class="t">Кем он работает?</div></div>
+    <div class="scr"><div class="n">13</div><div class="t">Она любит свою работу.</div></div>
+    <div class="scr"><div class="n">14</div><div class="t">Мы не опаздываем.</div></div>
+    <div class="scr"><div class="n">15</div><div class="t">Как часто ты путешествуешь?</div></div>
+  </div>
+
+  <div class="card">
+    <button class="rev" type="button" id="revbtn">Показать, как это звучит &rarr;</button>
+    <div class="hid" id="keys">
+      <div class="kv"><span class="k">1</span><span class="v">I work in a hotel.</span></div>
+      <div class="kv"><span class="k">2</span><span class="v">He works at the airport.</span></div>
+      <div class="kv"><span class="k">3</span><span class="v">She doesn't drink coffee.</span></div>
+      <div class="kv"><span class="k">4</span><span class="v">Do you fly often?</span></div>
+      <div class="kv"><span class="k">5</span><span class="v">My sister is a doctor.</span></div>
+      <div class="kv"><span class="k">6</span><span class="v">We live in Moscow.</span></div>
+      <div class="kv"><span class="k">7</span><span class="v">He doesn't speak English.</span></div>
+      <div class="kv"><span class="k">8</span><span class="v">What time do you get up?</span></div>
+      <div class="kv"><span class="k">9</span><span class="v">She gets up at six.</span></div>
+      <div class="kv"><span class="k">10</span><span class="v">They travel in winter.</span></div>
+      <div class="kv"><span class="k">11</span><span class="v">I don't drive a car.</span></div>
+      <div class="kv"><span class="k">12</span><span class="v">What does he do?</span></div>
+      <div class="kv"><span class="k">13</span><span class="v">She likes her job.</span></div>
+      <div class="kv"><span class="k">14</span><span class="v">We aren't late.</span></div>
+      <div class="kv"><span class="k">15</span><span class="v">How often do you travel?</span></div>
+    </div>
+  </div>
+
+  <div class="tag pr">на странице</div>
+  <h2><span class="num">02</span>Раскрой скобки</h2>
+  <p class="lead">Двенадцать предложений. Пишешь прямо в строку, страница сразу подсвечивает зелёным или красным. Присылать не надо.</p>
+  <div class="card gap" id="g1"></div>
+
+  <div class="tag sp">голосовое 1</div>
+  <h2><span class="num">03</span>Расскажи про своего человека</h2>
+  <p class="lead">Выбери одного живого человека: мама, сестра, подруга, коллега. Отвечаешь на десять вопросов про неё, целыми предложениями, не одним словом. Вопросы написаны про женщину, если возьмёшь мужчину - меняй she на he. Сначала проговори про себя, потом запиши одним дублем.</p>
+
+  <div class="card">
+    <ol class="qlist">
+      <li>Who is this person and what is her name?</li>
+      <li>Where does she live?</li>
+      <li>What does she do?</li>
+      <li>Where does she work?</li>
+      <li>What time does she get up?</li>
+      <li>How does she get to work?</li>
+      <li>What does she do in the evening?</li>
+      <li>Does she speak English?</li>
+      <li>How often do you see her?</li>
+      <li>What does she like?</li>
+    </ol>
+  </div>
+
+  <div class="tag sp">голосовое 2</div>
+  <h2><span class="num">04</span>Придумай вопрос</h2>
+  <p class="lead">Восемь ответов. К каждому нужно придумать вопрос и сказать его вслух. Записываешь подряд, только вопросы, ответы повторять не надо.</p>
+
+  <div class="card">
+    <h3>Как это выглядит</h3>
+    <div class="kv"><span class="k">&rarr;</span><span class="v">Anna works in a shop.</span></div>
+    <div class="kv"><span class="k">?</span><span class="v">Where does Anna work?</span></div>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">He works at the airport.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">She gets up at six.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">They travel twice a year.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">My sister lives in Moscow.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">He speaks three languages.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">No, she doesn&rsquo;t drink coffee.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">I go to work by car.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Yes, I like my job.</div></div>
+  </div>
+
+  <div class="tag sp">голосовое 3</div>
+  <h2><span class="num">05</span>Минута без остановки</h2>
+  <p class="lead">Одна тема, минута по таймеру, не замолкать.</p>
+
+  <div class="card">
+    <div class="form">Как я обычно путешествую<span class="ex">как часто, с кем, куда, что берёшь с собой, что делаешь в самолёте</span></div>
+    <p class="small">Правила те же, что на занятии: записываем одним дублем и не перезаписываем. Кривые фразы на ходу не переделываем. Слово не идёт - говоришь <b>let me think</b> и продолжаешь дальше по-английски.</p>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Три голосовых</b> - задания 03, 04 и 05. Можно тремя разными сообщениями.</p>
+    <p class="small">Задания 01 и 02 проверяешь сама, присылать их не надо.</p>
+  </div>
+
+  <div class="foot">Олеся &middot; домашка на говорение<span class="ver">27.11.2026</span></div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function norm(s){
+    return s.toLowerCase().replace(/’/g,"'").replace(/\s+/g," ").trim();
+  }
+  function expand(a){
+    var out = [];
+    a.forEach(function(v){
+      out.push(v);
+      var m = norm(v);
+      var pairs = [["don't","do not"],["doesn't","does not"],["isn't","is not"],
+                   ["aren't","are not"],["i'm","i am"]];
+      pairs.forEach(function(p){
+        if(m.indexOf(p[0]) >= 0) out.push(m.split(p[0]).join(p[1]));
+        if(m.indexOf(p[1]) >= 0) out.push(m.split(p[1]).join(p[0]));
+      });
+    });
+    return out.map(norm);
+  }
+
+  function makeGap(item, idx){
+    var q = document.createElement("div"); q.className = "q";
+    var line = document.createElement("div"); line.className = "line";
+    var n = document.createElement("span"); n.className = "n";
+    n.textContent = (idx < 9 ? "0" : "") + (idx + 1);
+    line.appendChild(n);
+    if(item.pre){
+      var pre = document.createElement("span"); pre.className = "hint";
+      pre.style.cssText = "margin:0 8px 0 0;font-weight:700;color:var(--accent)";
+      pre.textContent = "(" + item.pre + ")";
+      line.appendChild(pre);
+    }
+    var parts = item.s.split("%");
+    var answers = item.ok.slice();
+    var inputs = [];
+    parts.forEach(function(txt, i){
+      line.appendChild(document.createTextNode(txt));
+      if(i < parts.length - 1){
+        var inp = document.createElement("input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        if((answers[i] || "").length > 12) inp.className = "wide";
+        var ok = expand([answers[i]].concat(item.alt && item.alt[i] ? item.alt[i] : []));
+        (function(inp, ok){
+          function check(){
+            var v = norm(inp.value);
+            if(!v){ inp.classList.remove("y","n"); return; }
+            var right = ok.indexOf(v) >= 0;
+            inp.classList.toggle("y", right);
+            inp.classList.toggle("n", !right);
+          }
+          inp.addEventListener("blur", check);
+          inp.addEventListener("keydown", function(e){ if(e.key === "Enter") check(); });
+        })(inp, ok);
+        inp.dataset.ans = answers[i];
+        line.appendChild(inp);
+        inputs.push(inp);
+      }
+    });
+    q.appendChild(line);
+    if(item.ru){
+      var ru = document.createElement("span"); ru.className = "ru"; ru.textContent = item.ru;
+      q.appendChild(ru);
+    }
+    q._inputs = inputs;
+    return q;
+  }
+
+  function gapBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    var all = [];
+    items.forEach(function(it, i){
+      var q = makeGap(it, i);
+      host.appendChild(q);
+      all = all.concat(q._inputs);
+    });
+    var bar = document.createElement("div"); bar.className = "score";
+    var cnt = document.createElement("span"); cnt.className = "cnt";
+    var chk = document.createElement("button"); chk.className = "btn"; chk.type = "button";
+    chk.textContent = "Проверить";
+    chk.addEventListener("click", function(){
+      var right = 0, filled = 0;
+      all.forEach(function(inp){
+        inp.dispatchEvent(new Event("blur"));
+        if(inp.value) filled++;
+        if(inp.classList.contains("y")) right++;
+      });
+      cnt.textContent = right + " из " + all.length + " верно" +
+        (filled < all.length ? ", пустых " + (all.length - filled) : "");
+    });
+    var btn = document.createElement("button"); btn.className = "btn"; btn.type = "button";
+    btn.textContent = "Показать ответы";
+    var shown = false;
+    btn.addEventListener("click", function(){
+      shown = !shown;
+      all.forEach(function(inp){
+        if(shown){
+          if(!inp.value){ inp.value = inp.dataset.ans; inp.dataset.filled = "1"; }
+          inp.classList.remove("n"); inp.classList.add("y");
+        } else if(inp.dataset.filled === "1"){
+          inp.value = ""; inp.dataset.filled = ""; inp.classList.remove("y","n");
+        }
+      });
+      btn.textContent = shown ? "Спрятать ответы" : "Показать ответы";
+      btn.classList.toggle("on", shown);
+    });
+    bar.appendChild(chk); bar.appendChild(btn); bar.appendChild(cnt);
+    host.appendChild(bar);
+  }
+
+  gapBlock("g1", [
+    {s:"My sister % at the airport.", ok:["works"], pre:"work", ru:"моя сестра работает в аэропорту"},
+    {s:"She % early mornings.", ok:["does not like"], pre:"not like", ru:"она не любит раннее утро"},
+    {s:"% you % a lot?", ok:["Do","travel"], pre:"travel", ru:"ты много путешествуешь?"},
+    {s:"My husband % me to the airport.", ok:["drives"], pre:"drive", ru:"муж отвозит меня в аэропорт"},
+    {s:"We % in summer.", ok:["do not fly"], pre:"not fly", ru:"летом мы не летаем"},
+    {s:"% your sister % English?", ok:["Does","speak"], pre:"speak", ru:"твоя сестра говорит по-английски?"},
+    {s:"He % at five.", ok:["gets up"], pre:"get up", ru:"он встаёт в пять"},
+    {s:"The shop % at nine.", ok:["opens"], pre:"open", ru:"магазин открывается в девять"},
+    {s:"I % coffee in the evening.", ok:["do not drink"], pre:"not drink", ru:"вечером я не пью кофе"},
+    {s:"What time % the plane %?", ok:["does","leave"], pre:"leave", ru:"во сколько вылетает самолёт?"},
+    {s:"They % in winter.", ok:["travel"], pre:"travel", ru:"они путешествуют зимой"},
+    {s:"My friend % on Sunday.", ok:["does not work"], pre:"not work", ru:"мой друг не работает в воскресенье"}
+  ]);
+
+  var rb = document.getElementById("revbtn"), ks = document.getElementById("keys");
+  rb.addEventListener("click", function(){
+    var open = ks.classList.toggle("open");
+    rb.textContent = open ? "Спрятать" : "Показать, как это звучит \u2192";
+  });
+
+})();
+</script>
+
+</body>
+</html>
