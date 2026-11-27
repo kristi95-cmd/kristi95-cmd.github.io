@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Домашка 1. Будущее время</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241019; --soft:#5f4a55; --mute:#8a7580;
+    --accent:#c2185b; --deep:#7a1038;
+    --tile:#fdf2f6; --tile-2:#faeaf1; --line:#ecd3e0;
+    --ok:#1b7a4b; --ok-bg:#eaf7f0; --no:#b3261e; --no-bg:#fdecea;
+    --paper:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:"Manrope","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:#f7f1f4;
+    font-size:17px; line-height:1.55; -webkit-text-size-adjust:100%}
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 64px}
+
+  .top{background:var(--deep); color:#fff; margin:0 -16px 20px; padding:30px 20px 26px}
+  .top .kicker{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:#f7c3d8; margin-bottom:10px}
+  .top h1{font-size:30px; line-height:1.12; font-weight:800; margin:0 0 6px; letter-spacing:-.02em}
+  .top h1 em{font-style:normal; display:block; color:#ffd1e2}
+  .top p{margin:10px 0 0; color:#f3d7e2; font-size:15px}
+
+  h2{font-size:21px; font-weight:800; letter-spacing:-.01em; margin:34px 0 4px}
+  h2 .num{color:var(--accent); margin-right:8px}
+  h3{font-size:16px; font-weight:800; margin:0 0 8px}
+  .lead{color:var(--soft); font-size:15px; margin:0 0 14px}
+
+  .card{background:var(--paper); border-radius:14px; padding:18px 18px 16px; margin:14px 0;
+    box-shadow:0 1px 2px rgba(36,16,25,.05), 0 8px 24px rgba(36,16,25,.05)}
+
+  .q{padding:16px 0; border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .stem{font-size:18px; font-weight:600; margin-bottom:10px}
+  .q .stem u{text-decoration:none; border-bottom:2px dotted var(--accent); padding:0 16px}
+  .q .ru{color:var(--mute); font-size:14px; font-weight:500; display:block; margin-top:3px}
+  .opts{display:flex; gap:8px; flex-wrap:wrap}
+  .opt{border:1.5px solid var(--line); background:#fff; font-family:inherit; font-size:16px;
+    font-weight:700; padding:9px 16px; border-radius:10px; cursor:pointer; color:var(--ink)}
+  .opt.right{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+  .opt.wrong{background:var(--no-bg); border-color:var(--no); color:var(--no)}
+  .fb{font-size:14px; margin-top:9px; font-weight:700; display:none}
+  .fb.show{display:block}
+  .fb.y{color:var(--ok)}
+  .fb.n{color:var(--no)}
+
+  .chain{padding:9px 0; border-bottom:1px solid var(--line)}
+  .chain:last-of-type{border-bottom:none}
+  .chain .n{color:var(--mute); font-size:15px}
+  .chain .l{font-size:18px; font-weight:700; color:var(--deep); margin-top:2px}
+  .small{color:var(--mute); font-size:14px; margin:10px 0 0}
+
+  .scr{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-bottom:1px solid var(--line)}
+  .scr:last-child{border-bottom:none}
+  .scr .n{font-size:12px; font-weight:800; color:var(--mute); min-width:22px; padding-top:4px; margin-right:4px}
+  .scr .t{flex:1; font-size:18px; font-weight:700; letter-spacing:.01em}
+
+  .hw{background:var(--deep); color:#fff; border-radius:14px; padding:20px; margin:26px 0 0}
+  .hw h3{color:#ffd1e2; margin:0 0 8px; font-size:15px; letter-spacing:.08em; text-transform:uppercase}
+  .hw p{margin:0 0 10px; font-size:17px}
+  .hw p:last-child{margin-bottom:0}
+  .hw .small{color:#f0cada; font-size:14px; margin:0}
+
+  .tag{display:inline-block; background:var(--tile-2); color:var(--deep); font-size:12px; font-weight:800;
+    letter-spacing:.07em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin:32px 0 0}
+  .tag.pr{background:#eaf7f0; color:#15663f}
+  .tag.wr{background:#eef0fa; color:#3a4a8a}
+  .tag + h2{margin-top:6px}
+  .tag + h2 + .lead{margin-top:2px}
+
+  .foot{color:var(--mute); font-size:14px; text-align:center; margin-top:40px}
+  .foot .ver{display:block; margin-top:6px; font-size:12px; opacity:.6; font-weight:600}
+
+  @media (max-width:420px){
+    body{font-size:16px}
+    .top h1{font-size:26px}
+    .scr .t{font-size:17px}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="kicker">English for speaking &amp; studying abroad &middot; домашка к уроку 1</div>
+    <h1>Будущее время<em>will, going to и настоящее продолженное</em></h1>
+    <p>Два задания. Первое страница проверяет сама, второе пишешь и присылаешь.</p>
+  </div>
+
+  <div class="tag pr">практика</div>
+  <h2><span class="num">01</span>Какую форму выбрать</h2>
+  <p class="lead">Пятнадцать предложений. Читай то, что стоит рядом: «уже куплено», «мы договорились», «посмотри» подсказывают форму не меньше, чем сам смысл.</p>
+  <div class="card" id="c1"></div>
+
+  <div class="tag wr">письменно</div>
+  <h2><span class="num">02</span>Переведи десять предложений</h2>
+  <p class="lead">Подсказок нет. Форму выбираешь сама, пишешь полными предложениями и присылаешь текстом.</p>
+
+  <div class="card">
+    <h3>Как это выглядит</h3>
+    <div class="chain">
+      <div class="n">Я позвоню тебе вечером.</div>
+      <div class="l">I'll call you in the evening.</div>
+    </div>
+    <div class="chain">
+      <div class="n">Мы собираемся переезжать летом.</div>
+      <div class="l">We're going to move in summer.</div>
+    </div>
+    <div class="chain">
+      <div class="n">В пятницу я лечу в Берлин, билеты куплены.</div>
+      <div class="l">I'm flying to Berlin on Friday, the tickets are booked.</div>
+    </div>
+    <p class="small">В первом решение принято прямо сейчас, во втором план, который был раньше, в третьем договорённость с датой.</p>
+  </div>
+
+  <div class="card">
+    <div class="scr"><div class="n">1</div><div class="t">Я собираюсь снять квартиру поближе к центру.</div></div>
+    <div class="scr"><div class="n">2</div><div class="t">Подожди, я открою тебе дверь.</div></div>
+    <div class="scr"><div class="n">3</div><div class="t">В субботу я встречаюсь с подругой в десять.</div></div>
+    <div class="scr"><div class="n">4</div><div class="t">Думаю, он опоздает.</div></div>
+    <div class="scr"><div class="n">5</div><div class="t">Осторожно, ты уронишь телефон.</div></div>
+    <div class="scr"><div class="n">6</div><div class="t">Мы не собираемся продавать машину.</div></div>
+    <div class="scr"><div class="n">7</div><div class="t">Завтра я сдаю экзамен в девять утра.</div></div>
+    <div class="scr"><div class="n">8</div><div class="t">Обещаю, я больше не опоздаю.</div></div>
+    <div class="scr"><div class="n">9</div><div class="t">Ты собираешься подавать документы этой осенью?</div></div>
+    <div class="scr"><div class="n">10</div><div class="t">Мы ужинаем у них в пятницу, мы договорились на прошлой неделе.</div></div>
+  </div>
+
+  <div class="hw">
+    <h3>Что прислать</h3>
+    <p><b>Текстом</b> - задание 2, десять строк с номерами.</p>
+    <p class="small">Задание 1 страница проверяет сама, присылать его не надо.</p>
+  </div>
+
+  <div class="foot">Домашка к уроку 1 &middot; будущее время
+    <span class="ver">обновлено 28.11.2026</span></div>
+
+</div>
+<script>
+(function(){
+  "use strict";
+
+  function choiceBlock(id, items){
+    var host = document.getElementById(id);
+    if(!host) return;
+    items.forEach(function(it){
+      var q = document.createElement("div"); q.className = "q";
+      var stem = document.createElement("div"); stem.className = "stem";
+      stem.innerHTML = it.stem + (it.ru ? '<span class="ru">' + it.ru + '</span>' : "");
+      q.appendChild(stem);
+      var opts = document.createElement("div"); opts.className = "opts";
+      var fb = document.createElement("div"); fb.className = "fb";
+      it.opts.forEach(function(o, idx){
+        var b = document.createElement("button");
+        b.className = "opt"; b.type = "button"; b.textContent = o;
+        b.addEventListener("click", function(){
+          var right = idx === it.ok;
+          b.className = "opt " + (right ? "right" : "wrong");
+          fb.className = "fb show " + (right ? "y" : "n");
+          fb.textContent = right ? (it.why || "Верно") : "Не то, попробуй другой";
+          if(right){
+            var all = opts.querySelectorAll(".opt");
+            for(var k=0;k<all.length;k++) if(all[k] !== b) all[k].disabled = true;
+          }
+        });
+        opts.appendChild(b);
+      });
+      q.appendChild(opts); q.appendChild(fb);
+      host.appendChild(q);
+    });
+  }
+
+  choiceBlock("c1", [
+    {stem:"I <u></u> to Rome on Saturday. The tickets are booked.", ru:"я лечу в Рим в субботу",
+     opts:["will fly","'m going to fly","'m flying"], ok:2, why:"Верно. Куплено и назначено"},
+    {stem:"Don't worry, I <u></u> you with the suitcase.", ru:"я помогу тебе с чемоданом",
+     opts:["'ll help","'m going to help","'m helping"], ok:0, why:"Верно. Решение прямо сейчас"},
+    {stem:"Look at the sky! It <u></u> soon.", ru:"скоро пойдёт дождь",
+     opts:["will rain","'s going to rain","'s raining"], ok:1, why:"Верно. Видно глазами"},
+    {stem:"We <u></u> at the station at seven, we agreed yesterday.", ru:"встречаемся на вокзале в семь",
+     opts:["will meet","'re going to meet","'re meeting"], ok:2, why:"Верно. Договорились, время есть"},
+    {stem:"I think she <u></u> the job.", ru:"думаю, она получит эту работу",
+     opts:["will get","'s going to get","'s getting"], ok:0, why:"Верно. Это мнение"},
+    {stem:"I <u></u> a new laptop next month, I've already chosen it.", ru:"собираюсь купить ноутбук",
+     opts:["will buy","'m going to buy","'m buying"], ok:1, why:"Верно. Решено заранее"},
+    {stem:"A: There's no bread. B: Ok, I <u></u> some on the way home.", ru:"куплю по дороге домой",
+     opts:["'ll buy","'m going to buy","'m buying"], ok:0, why:"Верно. Решение в момент разговора"},
+    {stem:"Max <u></u> thirty next week.", ru:"Максу на следующей неделе будет тридцать",
+     opts:["will be","'s going to be","'s being"], ok:0, why:"Верно. Факт, его никто не решал"},
+    {stem:"Careful! You <u></u> that glass.", ru:"ты уронишь стакан",
+     opts:["will drop","'re going to drop","'re dropping"], ok:1, why:"Верно. Видно по тому, что происходит"},
+    {stem:"I <u></u> the dentist at nine tomorrow.", ru:"я иду к стоматологу завтра в девять",
+     opts:["will see","'m going to see","'m seeing"], ok:2, why:"Верно. Запись, время назначено"},
+    {stem:"What <u></u> after university?", ru:"чем ты собираешься заниматься после университета",
+     opts:["will you do","are you going to do","are you doing"], ok:1, why:"Верно. Спрашиваем про намерение"},
+    {stem:"I promise I <u></u> late again.", ru:"обещаю, я больше не опоздаю",
+     opts:["won't be","'m not going to be","'m not being"], ok:0, why:"Верно. Обещание"},
+    {stem:"They <u></u> married in May, the invitations are out.", ru:"они женятся в мае",
+     opts:["will get","'re going to get","'re getting"], ok:2, why:"Верно. Дата есть, приглашения разосланы"},
+    {stem:"It's half past eight. We <u></u> the film.", ru:"мы опоздаем на фильм",
+     opts:["will miss","'re going to miss","'re missing"], ok:1, why:"Верно. Видно по времени на часах"},
+    {stem:"I <u></u> my parents this weekend, we arranged it last week.", ru:"еду к родителям в выходные",
+     opts:["will visit","'m going to visit","'m visiting"], ok:2, why:"Верно. Договорились заранее"}
+  ]);
+
+})();
+</script>
+
+</body>
+</html>
